@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "853650883531",
+    "firebase_url": "https://buyucoin-28d33.firebaseio.com",
+    "project_id": "buyucoin-28d33",
+    "storage_bucket": "buyucoin-28d33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853650883531:android:533f1b603923e355",
+        "android_client_info": {
+          "package_name": "com.buyucoin.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853650883531-1db6or2t8j43jkr8k62cfft0lrm5mb58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtFKn465jaOXThP4dnQl3Y102ltjB9KMg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853650883531:android:af882aa2f33c2074",
+        "android_client_info": {
+          "package_name": "com.buyucoin.buyucoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853650883531-e1s4jrs21ahprs1e8avtlb1l3aqssl0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buyucoin.buyucoin",
+            "certificate_hash": "5e64357b816021423e25ccd79b0886ddfebddc94"
+          }
+        },
+        {
+          "client_id": "853650883531-1db6or2t8j43jkr8k62cfft0lrm5mb58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtFKn465jaOXThP4dnQl3Y102ltjB9KMg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853650883531-1db6or2t8j43jkr8k62cfft0lrm5mb58.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "853650883531-qmp9mhs2p27s3pcffa1tj3rtt3eodae6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sb.BuyUcoin"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853650883531:android:5b5b55a15ddfabc4",
+        "android_client_info": {
+          "package_name": "com.shiftboolean.buyucoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853650883531-1db6or2t8j43jkr8k62cfft0lrm5mb58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtFKn465jaOXThP4dnQl3Y102ltjB9KMg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
