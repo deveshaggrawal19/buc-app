@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Account"
+        android:enabled="true"
+        android:id="@+id/acc_det"
+        android:icon="@drawable/ic_menu_camera"/>
+    <item
+        android:title="Wallet"
+        android:enabled="true"
+        android:id="@+id/wll_bal"
+        android:icon="@drawable/ic_menu_camera"/>
+    <item
+        android:title="Rates"
+        android:enabled="true"
+        android:id="@+id/_rates"
+        android:icon="@drawable/ic_menu_camera"/>
+    <item
+        android:title="P2P"
+        android:enabled="true"
+        android:id="@+id/_p2p"
+        android:icon="@drawable/ic_menu_camera"/>
+</menu>

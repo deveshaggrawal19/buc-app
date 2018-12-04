@@ -54,7 +54,6 @@
         app:itemIconTint="@drawable/bottom_navigation_colors"
         app:itemTextColor="@drawable/bottom_navigation_colors"
         android:id="@+id/_btnbar"
-        style="@style/Widget.MaterialComponents.BottomNavigationView"
         app:menu="@menu/bottom_navigation_menu">
 
     </android.support.design.widget.BottomNavigationView>
