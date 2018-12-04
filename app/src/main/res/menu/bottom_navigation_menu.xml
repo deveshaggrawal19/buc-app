@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Account Details" android:enabled="true" app:showAsAction="ifRoom" android:id="@+id/acc_det" android:icon="@android:drawable/ic_dialog_info">
+    </item>
+    <item android:title="Wallet Balance" android:enabled="true" app:showAsAction="ifRoom" android:id="@+id/wll_bal" android:icon="@android:drawable/ic_dialog_info">
+    </item>
+    <item android:title="Rates" android:enabled="true" app:showAsAction="ifRoom" android:id="@+id/_rates" android:icon="@android:drawable/ic_dialog_info">
+    </item>
+    <item android:title="P2P" android:enabled="true" app:showAsAction="ifRoom" android:id="@+id/_p2p" android:icon="@android:drawable/ic_dialog_info">
+    </item>
+</menu>
