@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -52,12 +54,14 @@ public class Dashboard extends AppCompatActivity implements
     Toolbar toolbar;
     TextView navname, navemail, tv;
     View fragView;
+    BottomNavigationView bm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        bm = findViewById(R.id._btnbar);
         setSupportActionBar(toolbar);
 
 
@@ -95,7 +99,68 @@ public class Dashboard extends AppCompatActivity implements
             tv.setVisibility(View.VISIBLE);
         }
 
+        bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                Class fragmentClass = null;
+                int id = item.getItemId();
+
+                switch (item.getItemId()){
+                    case R.id.acc_det:
+                        toolbar.setTitle("Account");
+                        setTitle(item.getTitle());
+                        item.setChecked(true);
+                        if(Utilities.isOnline(getApplicationContext())) {
+                            loadProfile();
+                        }else{
+                            fragView.setVisibility(View.GONE);
+                            tv.setVisibility(View.VISIBLE);
+                        }
+                        fragmentClass = AccountFragment.class;
+                        break;
+                    case R.id.wll_bal:
+                        toolbar.setTitle("Wallet");
+                        fragmentClass = WalletFragment.class;
+                        break;
+                    case R.id._rates:
+                        toolbar.setTitle("Rates");
+                        fragmentClass = RateFragment.class;
+                        break;
+                    case R.id._p2p:
+                        toolbar.setTitle("Create Deposit/Withdrawl");
+                        fragmentClass = P2PFragment.class;
+                        break;
+                        default:
+                            fragmentClass = AccountFragment.class;
+
+
+                }
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if(Utilities.isOnline(getApplicationContext())) {
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                    tv.setVisibility(View.GONE);
+                    fragView.setVisibility(View.VISIBLE);
+                } else{
+                    fragView.setVisibility(View.GONE);
+                    tv.setVisibility(View.VISIBLE);
+                }
+                // Set action bar title
+                setTitle(item.getTitle());
+                item.setChecked(true);
+                // Close the navigation drawer
+                return true;
+            }
+        });
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -139,6 +204,7 @@ public class Dashboard extends AppCompatActivity implements
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

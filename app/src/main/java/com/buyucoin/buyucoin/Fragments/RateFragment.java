@@ -83,9 +83,9 @@ public class RateFragment extends Fragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setLayoutManager(new GridLayoutManager(context,3));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
             }
             //recyclerView.setAdapter(new MyrateRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
