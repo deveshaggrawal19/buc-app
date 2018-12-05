@@ -1,0 +1,90 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 74448896 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2640), pid=17018, tid=0x00007f85571d0700
+#
+# JRE version: OpenJDK Runtime Environment (8.0_152-b06) (build 1.8.0_152-release-1136-b06)
+# Java VM: OpenJDK 64-Bit Server VM (25.152-b06 mixed mode linux-amd64 compressed oops)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f8570078000):  VMThread [stack: 0x00007f85570d0000,0x00007f85571d1000] [id=17026]
+
+Stack: [0x00007f85570d0000,0x00007f85571d1000],  sp=0x00007f85571cf550,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xa70d3f]  VMError::report_and_die()+0x2af
+V  [libjvm.so+0x4c7207]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x67
+V  [libjvm.so+0x8b5b70]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0x100
+V  [libjvm.so+0x8b078f]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x1f
+V  [libjvm.so+0x92e446]  PSVirtualSpace::expand_by(unsigned long)+0x56
+V  [libjvm.so+0x92f6d8]  PSYoungGen::resize(unsigned long, unsigned long)+0xd8
+V  [libjvm.so+0x92be66]  PSScavenge::invoke_no_policy()+0x1356
+V  [libjvm.so+0x9248d9]  PSParallelCompact::invoke(bool)+0x49
+V  [libjvm.so+0x4459b3]  CollectedHeap::collect_as_vm_thread(GCCause::Cause)+0x153
+V  [libjvm.so+0xa71dc1]  VM_CollectForMetadataAllocation::doit()+0x161
+V  [libjvm.so+0xa778a6]  VM_Operation::evaluate()+0x46
+V  [libjvm.so+0xa75102]  VMThread::evaluate_operation(VM_Operation*) [clone .constprop.31]+0xa2
+V  [libjvm.so+0xa7652b]  VMThread::loop()+0x37b
+V  [libjvm.so+0xa768d8]  VMThread::run()+0x78
+V  [libjvm.so+0x8b3332]  java_start(Thread*)+0x102
+
+VM_Operation (0x00007f8554ab1f60): CollectForMetadataAllocation, mode: safepoint, requested by thread 0x00007f8510006800
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f850d1d4000 JavaThread "Memory manager" [_thread_blocked, id=17110, stack(0x00007f85545b6000,0x00007f85546b7000)]
+  0x00007f850ca94800 JavaThread "Build operations Thread 4" [_thread_blocked, id=17101, stack(0x00007f84f6828000,0x00007f84f6929000)]
+  0x00007f850cd7c800 JavaThread "Build operations Thread 3" [_thread_blocked, id=17100, stack(0x00007f84f6929000,0x00007f84f6a2a000)]
+  0x00007f850c71a800 JavaThread "Build operations Thread 2" [_thread_blocked, id=17099, stack(0x00007f84f768d000,0x00007f84f778e000)]
+  0x00007f850c719800 JavaThread "Build operations" [_thread_blocked, id=17098, stack(0x00007f84f778e000,0x00007f84f788f000)]
+  0x00007f850c75e000 JavaThread "Cache worker for Artifact transforms cache (/home/devesh/.gradle/caches/transforms-1)" [_thread_blocked, id=17051, stack(0x00007f84f7eff000,0x00007f84f8000000)]
+  0x00007f850c21b000 JavaThread "Cache worker for file hash cache (/home/devesh/StudioProjects/buc-app/.gradle/4.6/fileHashes)" [_thread_blocked, id=17049, stack(0x00007f854ccfe000,0x00007f854cdff000)]
+  0x00007f850c160000 JavaThread "File lock request listener" [_thread_in_native, id=17048, stack(0x00007f85543b4000,0x00007f85544b5000)]
+  0x00007f850c143800 JavaThread "Cache worker for file hash cache (/home/devesh/.gradle/caches/4.6/fileHashes)" [_thread_blocked, id=17047, stack(0x00007f85544b5000,0x00007f85545b6000)]
+  0x00007f850c012800 JavaThread "Asynchronous log dispatcher for DefaultDaemonConnection: socket connection from /127.0.0.1:35331 to /127.0.0.1:40352" [_thread_blocked, id=17045, stack(0x00007f85546b7000,0x00007f85547b8000)]
+  0x00007f8510006800 JavaThread "Daemon worker" [_thread_blocked, id=17042, stack(0x00007f85549b8000,0x00007f8554ab9000)]
+  0x00007f8510009000 JavaThread "Cancel handler" [_thread_blocked, id=17041, stack(0x00007f8554ab9000,0x00007f8554bba000)]
+  0x00007f8510005800 JavaThread "Handler for socket connection from /127.0.0.1:35331 to /127.0.0.1:40352" [_thread_in_native, id=17040, stack(0x00007f8554bba000,0x00007f8554cbb000)]
+  0x00007f851801b800 JavaThread "Daemon" [_thread_blocked, id=17038, stack(0x00007f8554cbb000,0x00007f8554dbc000)]
+  0x00007f8570e34800 JavaThread "Daemon periodic checks" [_thread_blocked, id=17037, stack(0x00007f8554dbc000,0x00007f8554ebd000)]
+  0x00007f8570e14800 JavaThread "Incoming local TCP Connector on port 35331" [_thread_in_native, id=17036, stack(0x00007f8554ec4000,0x00007f8554fc5000)]
+  0x00007f85700c0800 JavaThread "Service Thread" daemon [_thread_blocked, id=17033, stack(0x00007f85566f1000,0x00007f85567f2000)]
+  0x00007f85700bd800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=17032, stack(0x00007f85567f2000,0x00007f85568f3000)]
+  0x00007f85700bb800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=17031, stack(0x00007f85568f3000,0x00007f85569f4000)]
+  0x00007f85700b8800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=17030, stack(0x00007f85569f4000,0x00007f8556af5000)]
+  0x00007f85700b7000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=17029, stack(0x00007f8556af5000,0x00007f8556bf6000)]
+  0x00007f8570084800 JavaThread "Finalizer" daemon [_thread_blocked, id=17028, stack(0x00007f8556ece000,0x00007f8556fcf000)]
+  0x00007f8570080000 JavaThread "Reference Handler" daemon [_thread_blocked, id=17027, stack(0x00007f8556fcf000,0x00007f85570d0000)]
+  0x00007f857000a800 JavaThread "main" [_thread_blocked, id=17021, stack(0x00007f85769fc000,0x00007f8576afd000)]
+
+Other Threads:
+=>0x00007f8570078000 VMThread [stack: 0x00007f85570d0000,0x00007f85571d1000] [id=17026]
+  0x00007f85700c3000 WatcherThread [stack: 0x00007f85565f0000,0x00007f85566f1000] [id=17034]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f8570006fb0] Threads_lock - owner thread: 0x00007f8570078000
+[0x00007f85700074b0] Heap_lock - owner thread: 0x00007f8510006800
+
+Heap:
+ PSYoungGen      total 296448K, used 1172K [0x00000000e0000000, 0x00000000f3c80000, 0x0000000100000000)
+  eden space 279040K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000f1080000)
