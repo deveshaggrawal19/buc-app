@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 
 import com.buyucoin.buyucoin.Adapters.MyrateRecyclerViewAdapter;
 import com.buyucoin.buyucoin.OkHttpHandler;
@@ -83,9 +85,9 @@ public class RateFragment extends Fragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new GridLayoutManager(context,3));
+                recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
             }
             //recyclerView.setAdapter(new MyrateRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }

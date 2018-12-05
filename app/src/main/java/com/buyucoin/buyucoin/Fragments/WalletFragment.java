@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -84,7 +85,8 @@ public class WalletFragment extends Fragment {
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
         Context context = view.getContext();
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
 

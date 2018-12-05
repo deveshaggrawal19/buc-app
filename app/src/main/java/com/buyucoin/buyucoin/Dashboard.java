@@ -300,15 +300,9 @@ public class Dashboard extends AppCompatActivity implements
                                 navemail.setText(data.getString("email"));
 
                                 Fragment fragment = null;
-                                fragment = new AccountFragment().newInstance(
-                                        data.getString("email"),
-                                        data.getString("kyc_status"),
-                                        data.getString("mob"),
-                                        data.getString("name"),
-                                        data.getJSONObject("referrals")
-                                );
+                                fragment = new WalletFragment();
 
-                                toolbar.setTitle("Account details");
+                                toolbar.setTitle("Wallet");
                                 FragmentManager fragmentManager = getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.flContent, fragment);
@@ -317,8 +311,8 @@ public class Dashboard extends AppCompatActivity implements
 
                             }catch(Exception e){
                                 e.printStackTrace();
-                                showToast("Error loading profile");
-                                finish();
+                                showToast("Error loading Wallet");
+//                                finish();
                             }
                         }
                     });
