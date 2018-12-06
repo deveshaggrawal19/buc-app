@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.buyucoin.buyucoin.MyCoustomDialogBoxClass;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Fragments.WalletFragment.OnListFragmentInteractionListener;
 import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
@@ -13,6 +14,7 @@ import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -37,7 +39,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
 
         String s1, s2, s3, s4;
@@ -49,10 +51,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         }catch(Exception e){
             s1 = s2 = s3 = s4 = "N/A";
         }
-        holder.mAddress.setText(s1);
-        holder.mMinWith.setText(s2);
-        holder.mCurrency.setText(s3);
-        holder.mFees.setText(s3);
+        holder.mAddress.setText("");
+        holder.mMinWith.setText("");
+        holder.mCurrency.setText(s3.toUpperCase());
+        holder.mFees.setText("");
+        final String finalS = s3;
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +63,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
+                    MyCoustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
                 }
             }
         });

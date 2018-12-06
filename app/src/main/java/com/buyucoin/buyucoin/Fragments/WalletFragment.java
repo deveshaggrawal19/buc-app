@@ -85,8 +85,8 @@ public class WalletFragment extends Fragment {
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
         Context context = view.getContext();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
 
