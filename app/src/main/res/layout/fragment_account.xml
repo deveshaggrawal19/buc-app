@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragments.AccountFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:gravity="center"
+        android:background="#eeeeee"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:src="@drawable/excellent"
+            android:scaleType="centerCrop"
+            android:layout_height="70dp" />
+
+
+            <TextView
+                android:id="@+id/tvAccountName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:padding="5dp"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/tvAccountEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="20sp"
+                android:padding="5dp"/>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,18 +50,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvAccountEmail"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="24sp"
-            android:padding="10dp"/>
-
-        <TextView
             android:id="@+id/tvAccountKyc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:background="@android:color/holo_red_light"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:padding="2dp"
             android:text="KYC" />
 
         <TextView
@@ -34,15 +66,10 @@
             android:padding="10dp"
             android:text="Mobile" />
 
-        <TextView
-            android:id="@+id/tvAccountName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Name" />
+
 
     </LinearLayout>
 
 
 
-</FrameLayout>
+</LinearLayout>

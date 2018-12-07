@@ -287,6 +287,7 @@ NavigationView.OnNavigationItemSelectedListener,
                     final String s = response.body().string();
                     //      Log.d("RESPONSE_____", s);
 
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -300,6 +301,7 @@ NavigationView.OnNavigationItemSelectedListener,
                                 Fragment fragment = null;
                                 fragment = new WalletFragment();
 
+
                                 toolbar.setTitle("Wallet");
                                 FragmentManager fragmentManager = getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -310,7 +312,7 @@ NavigationView.OnNavigationItemSelectedListener,
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 showToast("Error loading Wallet");
-                                //                                finish();
+                                // finish();
                             }
                         }
                     });

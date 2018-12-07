@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -44,17 +46,16 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         String s1, s2, s3, s4;
         try{
-            s1 = "Address: "+ mValues.get(position).getString("address").toUpperCase();
+            s1 = mValues.get(position).getString("available").toUpperCase();
             s2 = "Minimum Withdrawl: " + mValues.get(position).getString("min_with");
             s3 = mValues.get(position).getString("currencyname");
             s4 = "Fees: "+ mValues.get(position).getString("fees");
+            Log.d("DATA OF COIN",mValues.get(position).toString());
         }catch(Exception e){
             s1 = s2 = s3 = s4 = "N/A";
         }
-        holder.mAddress.setText("");
-        holder.mMinWith.setText("");
+        holder.mAddress.setText(s1);
         holder.mCurrency.setText(s3.toUpperCase());
-        holder.mFees.setText("");
         final String finalS = s3;
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,16 +77,16 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mCurrency, mFees, mAddress, mMinWith;
+        public final TextView mCurrency, mAddress;
         public JSONObject mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mFees = (TextView) view.findViewById(R.id.tvFees);
+//            mFees = (TextView) view.findViewById(R.id.tvFees);
             mCurrency = (TextView) view.findViewById(R.id.tvCurrency);
             mAddress = (TextView) view.findViewById(R.id.tvAddress);
-            mMinWith = (TextView) view.findViewById(R.id.tvMinWith);
+//            mMinWith = (TextView) view.findViewById(R.id.tvMinWith);
         }
 
         @Override
