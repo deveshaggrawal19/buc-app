@@ -6,17 +6,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.buyucoin.buyucoin.Adapters.BuySellRecyclerViewAdapter;
 import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
-import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 
@@ -31,19 +29,12 @@ import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class WalletFragment extends Fragment {
-
+public class BuySellFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private WalletFragment.OnListFragmentInteractionListener mListener;
     String ACCESS_TOKEN = null;
     ArrayList<JSONObject> list;
     RecyclerView recyclerView;
@@ -53,17 +44,17 @@ public class WalletFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public WalletFragment() {
+    public BuySellFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static WalletFragment newInstance(int columnCount) {
-        WalletFragment fragment = new WalletFragment();
+    public static BuySellFragment newInstance(int columnCount) {
+        BuySellFragment buySellFragment = new BuySellFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+        buySellFragment.setArguments(args);
+        return buySellFragment;
     }
 
     @Override
@@ -82,15 +73,15 @@ public class WalletFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.buysell_fragment_item_list, container, false);
 
         // Set the adapter
-        recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
+        recyclerView = view.findViewById(R.id.rvWallet);
         Context context = view.getContext();
-        GridLayoutManager  linearLayoutManager = new GridLayoutManager(context,3);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        pb = (ProgressBar) view.findViewById(R.id.pbWallet);
+        pb = view.findViewById(R.id.pbWallet);
 
         getWalletData();
         return view;
@@ -100,8 +91,8 @@ public class WalletFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof WalletFragment.OnListFragmentInteractionListener) {
+            mListener = (WalletFragment.OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -114,8 +105,6 @@ public class WalletFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-
 
     /**
      * This interface must be implemented by activities that contain this
@@ -157,7 +146,7 @@ public class WalletFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(list, mListener));
+                            recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list, mListener));
                             pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
                                 public void onAnimationEnd(Animator animator) {
                                     pb.setVisibility(View.GONE);
@@ -174,4 +163,3 @@ public class WalletFragment extends Fragment {
         });
     }
 }
-

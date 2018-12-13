@@ -12,6 +12,11 @@
         android:id="@+id/_rates"
         android:icon="@drawable/ic_timeline_black_24dp"/>
     <item
+        android:title="Buy Sell"
+        android:enabled="true"
+        android:id="@+id/_buysell"
+        android:icon="@drawable/ic_store_black_24dp"/>
+    <item
         android:title="P2P"
         android:enabled="true"
         android:id="@+id/_p2p"

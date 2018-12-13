@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Fragments.AccountFragment;
+import com.buyucoin.buyucoin.Fragments.BuySellFragment;
 import com.buyucoin.buyucoin.Fragments.HistoryFragment;
 import com.buyucoin.buyucoin.Fragments.P2PFragment;
 import com.buyucoin.buyucoin.Fragments.RateFragment;
@@ -121,6 +122,10 @@ NavigationView.OnNavigationItemSelectedListener,
                             toolbar.setTitle("Wallet");
                             fragmentClass = WalletFragment.class;
                             break;
+                        case R.id._buysell:
+                            toolbar.setTitle("Buy/Sell");
+                            fragmentClass = BuySellFragment.class;
+                            break;
                         case R.id._rates:
                             toolbar.setTitle("Rates");
                             fragmentClass = RateFragment.class;
@@ -156,6 +161,18 @@ NavigationView.OnNavigationItemSelectedListener,
                 }
             });
 
+        }
+
+    public void BuySellFragmentFun(View view) {
+        Fragment fragment  = new BuySellFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent,fragment);
+        changeTab(R.id._buysell);
+
+    }
+
+        public void changeTab(int i){
+            bm.setSelectedItemId(i);
         }
 
 
@@ -294,6 +311,8 @@ NavigationView.OnNavigationItemSelectedListener,
                             try {
                                 JSONObject jsonObject1 = new JSONObject(s);
                                 final JSONObject data = jsonObject1.getJSONObject(("data"));
+
+
 
                                 navname.setText(data.getString("name"));
                                 navemail.setText(data.getString("email"));

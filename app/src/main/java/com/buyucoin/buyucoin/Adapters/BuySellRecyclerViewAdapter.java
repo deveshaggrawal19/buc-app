@@ -1,6 +1,6 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import android.opengl.Visibility;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,41 +8,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.buyucoin.buyucoin.Fragments.WalletFragment;
 import com.buyucoin.buyucoin.MyCoustomDialogBoxClass;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.Fragments.WalletFragment.OnListFragmentInteractionListener;
-import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.util.List;
-import java.util.zip.Inflater;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecyclerViewAdapter.ViewHolder> {
 
     private final List<JSONObject> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final WalletFragment.OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<JSONObject> items, OnListFragmentInteractionListener listener) {
+    public BuySellRecyclerViewAdapter(List<JSONObject> items, WalletFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_item, parent, false);
         return new ViewHolder(view);
+
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
 
         String s1, s2, s3, s4;
@@ -102,4 +96,5 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             return super.toString() + " '" + mAddress.getText() + "'";
         }
     }
-}
+    }
+
