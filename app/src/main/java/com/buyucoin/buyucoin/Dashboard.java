@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,6 +23,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +60,7 @@ NavigationView.OnNavigationItemSelectedListener,
         TextView navname, navemail, tv;
         View fragView;
         BottomNavigationView bm;
+        AlertDialog.Builder ad;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +70,10 @@ NavigationView.OnNavigationItemSelectedListener,
             bm = findViewById(R.id._btnbar);
             setSupportActionBar(toolbar);
 
-
             SharedPreferences prefs = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
             ACCESS_TOKEN = prefs.getString("access_token", null);
+
+            ad = new AlertDialog.Builder(this);
 
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -103,47 +109,59 @@ NavigationView.OnNavigationItemSelectedListener,
             bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment fragment = null;
+                    Fragment fragment=null, aFrag=null, wFrag=null, rFrag=null, pFrag=null;
                     Class fragmentClass = null;
                     int id = item.getItemId();
 
-                    switch (item.getItemId()) {
-                        case R.id.acc_det:
-                            toolbar.setTitle("Account");
-                            setTitle(item.getTitle());
-                            item.setChecked(true);
-                            if (Utilities.isOnline(getApplicationContext())) {} else {
-                                fragView.setVisibility(View.GONE);
-                                tv.setVisibility(View.VISIBLE);
-                            }
-                            fragmentClass = AccountFragment.class;
-                            break;
-                        case R.id.wll_bal:
-                            toolbar.setTitle("Wallet");
-                            fragmentClass = WalletFragment.class;
-                            break;
-                        case R.id._buysell:
-                            toolbar.setTitle("Buy/Sell");
-                            fragmentClass = BuySellFragment.class;
-                            break;
-                        case R.id._rates:
-                            toolbar.setTitle("Rates");
-                            fragmentClass = RateFragment.class;
-                            break;
-                        case R.id._p2p:
-                            toolbar.setTitle("Create Deposit/Withdrawl");
-                            fragmentClass = P2PFragment.class;
-                            break;
-                        default:
-                            fragmentClass = AccountFragment.class;
-
-
-                    }
                     try {
-                        fragment = (Fragment) fragmentClass.newInstance();
-                    } catch (Exception e) {
+                        switch (item.getItemId()) {
+                            case R.id.acc_det:
+                                toolbar.setTitle("Account");
+                                setTitle(item.getTitle());
+                                item.setChecked(true);
+                                if (Utilities.isOnline(getApplicationContext())) {
+                                } else {
+                                    fragView.setVisibility(View.GONE);
+                                    tv.setVisibility(View.VISIBLE);
+                                }
+                                fragmentClass = AccountFragment.class;
+                                if (aFrag == null)
+                                    aFrag = (Fragment) fragmentClass.newInstance();
+                                fragment = aFrag;
+                                break;
+                            case R.id.wll_bal:
+                                toolbar.setTitle("Wallet");
+                                fragmentClass = WalletFragment.class;
+                                if (wFrag == null)
+                                    wFrag = (Fragment) fragmentClass.newInstance();
+                                fragment = wFrag;
+                                break;
+                            case R.id._rates:
+                                toolbar.setTitle("Rates");
+                                fragmentClass = RateFragment.class;
+                                if (rFrag == null)
+                                    rFrag = (Fragment) fragmentClass.newInstance();
+                                fragment = rFrag;
+                                break;
+                            case R.id._p2p:
+                                toolbar.setTitle("Create Deposit/Withdrawl");
+                                fragmentClass = P2PFragment.class;
+                                if (pFrag == null)
+                                    pFrag = (Fragment) fragmentClass.newInstance();
+                                fragment = pFrag;
+                                break;
+                            default:
+                                fragmentClass = AccountFragment.class;
+                                if (aFrag == null)
+                                    aFrag = (Fragment) fragmentClass.newInstance();
+                                fragment = aFrag;
+
+
+                        }
+                    }catch(Exception e){
                         e.printStackTrace();
                     }
+
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     if (Utilities.isOnline(getApplicationContext())) {
                         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
@@ -302,30 +320,36 @@ NavigationView.OnNavigationItemSelectedListener,
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String s = response.body().string();
-                    //      Log.d("RESPONSE_____", s);
+                          Log.d("RESPONSE_____", s);
 
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
                             try {
                                 JSONObject jsonObject1 = new JSONObject(s);
+                                if(jsonObject1.getString("status").equals("redirect")){
+                                    Utilities.showToast(Dashboard.this, jsonObject1.getJSONArray("message").getJSONArray(0).getString(0));
+                                    Utilities.getOTP(Dashboard.this, ACCESS_TOKEN, ad);
+                                    return;
+                                }
                                 final JSONObject data = jsonObject1.getJSONObject(("data"));
+                                final String email= data.getString("email");
+                                final String name = data.getString("name");
 
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        navname.setText(name);
+                                        navemail.setText(email);
 
+                                        Fragment fragment = null;
+                                        fragment = new WalletFragment();
 
-                                navname.setText(data.getString("name"));
-                                navemail.setText(data.getString("email"));
+                                        toolbar.setTitle("Wallet");
+                                        FragmentManager fragmentManager = getSupportFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        fragmentTransaction.replace(R.id.flContent, fragment);
+                                        fragmentTransaction.commit();
 
-                                Fragment fragment = null;
-                                fragment = new WalletFragment();
-
-
-                                toolbar.setTitle("Wallet");
-                                FragmentManager fragmentManager = getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.flContent, fragment);
-                                fragmentTransaction.commit();
+                                    }
+                                });
 
 
                             } catch (Exception e) {
@@ -333,11 +357,12 @@ NavigationView.OnNavigationItemSelectedListener,
                                 showToast("Error loading Wallet");
                                 // finish();
                             }
-                        }
-                    });
+
                 }
             });
         }
+
+
 
         public void showToast(final String s) {
             runOnUiThread(new Runnable() {
@@ -346,6 +371,11 @@ NavigationView.OnNavigationItemSelectedListener,
                     Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
                 }
             });
+        }
+
+        public void reload(){
+            finish();
+            startActivity(getIntent());
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin.Fragments;
 
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,11 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.Utilities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -41,6 +45,9 @@ public class AccountFragment extends Fragment {
 
     String ACCESS_TOKEN = null;
     TextView email, kyc, mob, name;
+    ProgressBar pb;
+    View ll;
+    AlertDialog.Builder ad;
 
     // TODO: Rename and change types of parameters
     private String mParam1, mParam2, mParam3, mParam4;
@@ -69,6 +76,7 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        ad = new AlertDialog.Builder(getActivity());
     }
 
     @Override
@@ -81,28 +89,9 @@ public class AccountFragment extends Fragment {
         kyc = (TextView) view.findViewById(R.id.tvAccountKyc);
         mob = (TextView) view.findViewById(R.id.tvAccountMobile);
         name = (TextView) view.findViewById(R.id.tvAccountName);
-
-        loadProfile();
-
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-
-
-            email.setText(prefs.getString("email","test"));
-            String _kyc = prefs.getString("kyc","test");
-            String kyc_test = (_kyc.equals("true"))?"KYC VERIFIED":"KYC NOT VERIFIED";
-            int color = R.color.kyc_color ;
-            Toast.makeText(this.getContext(),kyc_test, Toast.LENGTH_SHORT).show();
-            if(_kyc.equals("true")){
-                kyc.setText(kyc_test);
-                kyc.setBackgroundColor(getResources().getColor(color));
-            }else{
-                kyc.setText(kyc_test);
-
-            }
-            mob.setText(prefs.getString("mob","test"));
-            name.setText(prefs.getString("name","test"));
-
-
+        pb = (ProgressBar) view.findViewById(R.id.pbAccount);
+        ll = (View) view.findViewById(R.id.llAccount);
+        getAccountData();
         return view;
     }
 
@@ -175,4 +164,43 @@ public class AccountFragment extends Fragment {
         void onFragmentInteraction(JSONObject item);
     }
 
+    public void getAccountData(){
+        OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), "Error retreiving API", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String s = response.body().string();
+                Log.d("RESP___", s);
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                if(jsonObject.getString("status").equals("redirect")){
+                                    Utilities.getOTP(getActivity(), ACCESS_TOKEN, ad);
+                                    return;
+                                }
+                                final JSONObject data = jsonObject.getJSONObject(("data"));
+                                email.setText(data.getString("email"));
+                                name.setText(data.getString("name"));
+                                mob.setText(data.getString("mob"));
+                                kyc.setText(data.getString("kyc_status"));
+                                ll.setVisibility(View.VISIBLE);
+                                Utilities.hideProgressBar(pb);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
+            }
+        });
+    }
 }
