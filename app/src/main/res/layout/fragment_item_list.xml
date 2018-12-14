@@ -60,8 +60,13 @@
         android:layout_gravity="center"
         android:id="@+id/pbWallet"/>
 
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Server Error"
+        android:visibility="gone"
+        android:id="@+id/tvWalletError"/>
 
 
 </FrameLayout>

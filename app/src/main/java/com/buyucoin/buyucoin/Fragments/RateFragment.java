@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.ProgressBar;
 
 import com.buyucoin.buyucoin.Adapters.MyrateRecyclerViewAdapter;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.Utilities;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,6 +46,7 @@ public class RateFragment extends Fragment {
 
     String ACCESS_TOKEN = null;
     RecyclerView recyclerView;
+    ProgressBar pb;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -80,6 +83,7 @@ public class RateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rate_list, container, false);
 
         recyclerView = view.findViewById(R.id.list);
+        pb = view.findViewById(R.id.pbRate);
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -150,7 +154,7 @@ public class RateFragment extends Fragment {
                         @Override
                         public void run() {
                             recyclerView.setAdapter(new MyrateRecyclerViewAdapter(farray, mListener, getActivity().getApplicationContext()));
-
+                            Utilities.hideProgressBar(pb);
                         }
                     });
                 }catch(Exception e){

@@ -9,14 +9,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.Utilities;
 
 import org.json.JSONObject;
 
@@ -46,7 +49,7 @@ public class WalletFragment extends Fragment {
     ArrayList<JSONObject> list;
     RecyclerView recyclerView;
     ProgressBar pb;
-
+    TextView err;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -89,7 +92,7 @@ public class WalletFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
-
+        err = (TextView) view.findViewById(R.id.tvWalletError);
         getWalletData();
         return view;
     }
@@ -138,7 +141,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
-                //Log.d("RESPONSE_____", s);
+                Log.d("RESPONSE_____", s);
                 try{
                     JSONObject jsonObject = new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
@@ -154,17 +157,25 @@ public class WalletFragment extends Fragment {
                         @Override
                         public void run() {
                             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(list, mListener));
-                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
-                                public void onAnimationEnd(Animator animator) {
-                                    pb.setVisibility(View.GONE);
-                                    pb.setAlpha(1f);
-                                }
-                            });
+                            Utilities.hideProgressBar(pb);
+//                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
+//                                public void onAnimationEnd(Animator animator) {
+//                                    pb.setVisibility(View.GONE);
+//                                    pb.setAlpha(1f);
+//                                }
+//                            });
                         }
                     });
 
                 }catch(Exception e){
                     e.printStackTrace();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utilities.hideProgressBar(pb);
+                            err.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
             }
         });
