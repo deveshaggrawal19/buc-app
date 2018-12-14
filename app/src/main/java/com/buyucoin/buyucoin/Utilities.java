@@ -139,7 +139,7 @@ public class Utilities {
         builder.setView(otp);
         builder.setMessage("Enter OTP");
         builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+        builder.setPositiveButton("OK", new DialogInyterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

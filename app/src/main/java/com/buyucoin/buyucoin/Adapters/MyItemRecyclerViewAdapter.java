@@ -13,9 +13,11 @@ import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Fragments.WalletFragment.OnListFragmentInteractionListener;
 import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -26,12 +28,26 @@ import java.util.zip.Inflater;
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<JSONObject> mValues;
+    private final List<JSONObject> mValues = new ArrayList<>();
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<JSONObject> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyItemRecyclerViewAdapter(List<JSONObject> items, OnListFragmentInteractionListener listener)  {
         mListener = listener;
+        for (JSONObject js : items) {
+            try {
+                if(!js.getString("available").equals("0")) {
+                    mValues.add(js);
+                    Log.d("JSONOBJECTS:==========>","TRUE");
+                }else{
+                    Log.d("JSONOBJECTS:==========>","FALSE");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 
     @Override
@@ -51,30 +67,27 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             s2 = "Minimum Withdrawl: " + mValues.get(position).getString("min_with");
             s3 = mValues.get(position).getString("currencyname");
             s4 = "Fees: "+ mValues.get(position).getString("fees");
-            Log.d("DATA OF COIN",mValues.get(position).toString());
+            if(!s1.equals("0")){
+                holder.mAddress.setText(s1);
+                holder.mCurrency.setText(s3.toUpperCase());
+                final String finalS = s3;
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (null != mListener) {
+                            // Notify the active callbacks interface (the activity, if the
+                            // fragment is attached to one) that an item has been selected.
+                            mListener.onListFragmentInteraction(holder.mItem);
+                            MyCoustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
+                        }
+                    }
+                });
+
+            }
         }catch(Exception e){
             s1 = s2 = s3 = s4 = "N/A";
         }
-        if(!s1.equals("")){
-            holder.mAddress.setText(s1);
-            holder.mCurrency.setText(s3.toUpperCase());
-            final String finalS = s3;
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (null != mListener) {
-                        // Notify the active callbacks interface (the activity, if the
-                        // fragment is attached to one) that an item has been selected.
-                        mListener.onListFragmentInteraction(holder.mItem);
-                        MyCoustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
-                    }
-                }
-            });
 
-        }else{
-            holder.mView.setVisibility(View.GONE);
-
-        }
 
     }
 

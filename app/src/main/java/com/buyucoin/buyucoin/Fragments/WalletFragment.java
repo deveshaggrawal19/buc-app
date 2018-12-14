@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
 import com.buyucoin.buyucoin.Dashboard;
@@ -23,6 +24,7 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -49,6 +51,7 @@ public class WalletFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     String ACCESS_TOKEN = null;
     ArrayList<JSONObject> list;
+    ArrayList<JSONObject> j = new ArrayList<>();
     RecyclerView recyclerView;
     ProgressBar pb;
     TextView err;
@@ -153,26 +156,33 @@ public class WalletFragment extends Fragment {
                     for(int i=0; i<arr.length; i++){
                         try {
                             list.add(data.getJSONObject(arr[i]).put("currencyname", arr[i]));
+
+
                         }catch(Exception e){
                             e.printStackTrace();
                         }
                     }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(list, mListener));
-                            Utilities.hideProgressBar(pb);
+                    if(getActivity()!=null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(list, mListener));
+                                Utilities.hideProgressBar(pb);
 //                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
 //                                public void onAnimationEnd(Animator animator) {
 //                                    pb.setVisibility(View.GONE);
 //                                    pb.setAlpha(1f);
 //                                }
 //                            });
-                        }
-                    });
+                            }
+                        });
+                    }
 
                 }catch(Exception e){
                     e.printStackTrace();
+                    if(getActivity()!=null){
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -180,6 +190,7 @@ public class WalletFragment extends Fragment {
                             err.setVisibility(View.VISIBLE);
                         }
                     });
+                    }
                 }
             }
         });
