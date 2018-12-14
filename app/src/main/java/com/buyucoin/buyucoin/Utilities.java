@@ -75,7 +75,7 @@ public class Utilities {
             if(jsonObject.getString("status").equals("success")){
                 return true;
             }
-            Log.d("UNPARSED RESPONSE", s);
+            Log.d("UNPARSED RESPONSE iS", s);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +89,7 @@ public class Utilities {
             if(jsonObject.getString("status").equals("redirect")){
                 return jsonObject.getJSONArray("message").getJSONArray(0).getString(1).equals("success");
             }
-            Log.d("UNPARSED RESPONSE", s);
+            Log.d("UNPARSED RESPONSE iSR", s);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class Utilities {
                 else
                     return jsonObject.getJSONArray("message").getJSONArray(0).getString(0);
 
-            Log.d("UNPARSED RESPONSE", s);
+            Log.d("UNPARSED RESPONSE gEM", s);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +126,7 @@ public class Utilities {
                 if(isSuccess(s)){
                     getOTPFromUser(activity, ACCESS_TOKEN, builder);
                 }else{
-
+                    getOTPFromUser(activity, ACCESS_TOKEN, builder);
                 }
             }
         });

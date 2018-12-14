@@ -361,6 +361,19 @@ NavigationView.OnNavigationItemSelectedListener,
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 showToast("Error loading Wallet");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Fragment fragment = null;
+                                        fragment = new WalletFragment();
+
+                                        toolbar.setTitle("Wallet");
+                                        FragmentManager fragmentManager = getSupportFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        fragmentTransaction.replace(R.id.flContent, fragment);
+                                        fragmentTransaction.commitAllowingStateLoss();
+                                    }
+                                });
                                 // finish();
                             }
 
