@@ -93,7 +93,7 @@ public class WalletFragment extends Fragment {
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
         Context context = view.getContext();
-        GridLayoutManager  linearLayoutManager = new GridLayoutManager(context,3);
+        GridLayoutManager  linearLayoutManager = new GridLayoutManager(context,1);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
@@ -167,7 +167,7 @@ public class WalletFragment extends Fragment {
                             @Override
                             public void run() {
 
-                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(list, mListener));
+                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
                                 Utilities.hideProgressBar(pb);
 //                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
 //                                public void onAnimationEnd(Animator animator) {

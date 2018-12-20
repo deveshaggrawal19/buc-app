@@ -108,7 +108,7 @@ NavigationView.OnNavigationItemSelectedListener,
 
             bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment fragment=null, aFrag=null, wFrag=null, rFrag=null, pFrag=null, bFrag=null;
                     Class fragmentClass = null;
                     int id = item.getItemId();
@@ -149,6 +149,7 @@ NavigationView.OnNavigationItemSelectedListener,
                                 if(bFrag==null)
                                     bFrag = (Fragment) fragmentClass.newInstance();
                                 fragment = bFrag;
+                                break;
                             case R.id._p2p:
                                 toolbar.setTitle("Create Deposit/Withdrawl");
                                 fragmentClass = P2PFragment.class;

@@ -1,4 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:maxLevel="0">
+    <shape android:shape="rectangle" >
+        <gradient android:angle="45"
+            android:startColor="#c0392b"
+            android:endColor="#8e44ad">
 
-</selector>
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+</item>
+<item android:maxLevel="1">
+    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:angle="45"
+            android:startColor="#159957"
+            android:endColor="#155799">
+
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+
+</item>
+<item android:maxLevel="2">
+    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:angle="45"
+            android:startColor="#000046"
+            android:endColor="#1cb5e0">
+
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+
+</item>
+<item android:maxLevel="3">
+    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:angle="45"
+            android:startColor="#007991"
+            android:endColor="#78ffd6">
+
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+
+</item>
+<item android:maxLevel="4">
+    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:angle="45"
+            android:startColor="#56ccf2"
+            android:endColor="#2f80ed">
+
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+
+</item>
+<item android:maxLevel="5">
+    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:angle="45"
+            android:startColor="#0575e6"
+            android:endColor="#021b79">
+
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+
+</item>
+<item android:maxLevel="6">
+    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient android:angle="45"
+            android:startColor="#4568dc"
+            android:endColor="#b06ab3">
+
+        </gradient>
+        <corners android:radius="10dp">
+
+        </corners>
+    </shape>
+</item>
+
+
+</level-list>

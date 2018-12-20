@@ -1,44 +1,58 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import android.opengl.Visibility;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.buyucoin.buyucoin.MyCoustomDialogBoxClass;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Fragments.WalletFragment.OnListFragmentInteractionListener;
 import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
+import com.buyucoin.buyucoin.pojos.WalletCoinHorizontal;
+import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
-
-    private final List<JSONObject> mValues = new ArrayList<>();
+public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private ArrayList<ArrayList> arrayList = new ArrayList<>();
+    private ArrayList<WalletCoinVertical> wcv = new ArrayList<>();
+    private ArrayList<WalletCoinHorizontal> wch = new ArrayList<>();
     private final OnListFragmentInteractionListener mListener;
+    private  final int VERTICAL =1;
+    private  final int HORIZONTAL =2;
+     private Context context ;
 
-    public MyItemRecyclerViewAdapter(List<JSONObject> items, OnListFragmentInteractionListener listener)  {
+
+    public MyItemRecyclerViewAdapter(Context context,List<JSONObject> items, OnListFragmentInteractionListener listener)  {
         mListener = listener;
+        this.context = context;
         for (JSONObject js : items) {
             try {
                 if(!js.getString("available").equals("0")) {
-                    mValues.add(js);
+                    WalletCoinVertical wl = new WalletCoinVertical();
+                    wl.setCoinname(js.getString("currencyname"));
+                    wl.setAmount(js.getString("available"));
+                    wcv.add(wl);
+
                     Log.d("JSONOBJECTS:==========>","TRUE");
                 }else{
+                    WalletCoinHorizontal wh = new WalletCoinHorizontal();
+                    wh.setCoinname(js.getString("currencyname"));
+                    wh.setAmount(js.getString("available"));
+                    wch.add(wh);
                     Log.d("JSONOBJECTS:==========>","FALSE");
                 }
             } catch (JSONException e) {
@@ -46,73 +60,98 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             }
 
         }
+        arrayList.add(wcv);
+        arrayList.add(wch);
 
 
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater =  LayoutInflater.from(parent.getContext());
+        View view;
+        RecyclerView.ViewHolder holder;
+        switch (viewType){
+            case VERTICAL:
+                view = layoutInflater.inflate(R.layout.vertical,parent,false);
+                holder = new VerticalViewHolder(view);
+                break;
+            case  HORIZONTAL:
+                view = layoutInflater.inflate(R.layout.horizontal,parent,false);
+                holder = new HorizontalViewHolder(view);
+                break;
+             default:
+                 view = layoutInflater.inflate(R.layout.vertical,parent,false);
+                 holder = new VerticalViewHolder(view);
+                 break;
+
+        }
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.mItem = mValues.get(position);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
-        String s1, s2, s3, s4;
-        try{
-            s1 = mValues.get(position).getString("available").toUpperCase();
-            s2 = "Minimum Withdrawl: " + mValues.get(position).getString("min_with");
-            s3 = mValues.get(position).getString("currencyname");
-            s4 = "Fees: "+ mValues.get(position).getString("fees");
-            if(!s1.equals("0")){
-                holder.mAddress.setText(s1);
-                holder.mCurrency.setText(s3.toUpperCase());
-                final String finalS = s3;
-                holder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (null != mListener) {
-                            // Notify the active callbacks interface (the activity, if the
-                            // fragment is attached to one) that an item has been selected.
-                            mListener.onListFragmentInteraction(holder.mItem);
-                            MyCoustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
-                        }
-                    }
-                });
-
-            }
-        }catch(Exception e){
-            s1 = s2 = s3 = s4 = "N/A";
+        if(holder.getItemViewType()==VERTICAL){
+            verticalView((VerticalViewHolder) holder);
+        }
+        else if(holder.getItemViewType()==HORIZONTAL){
+            horizontalView((HorizontalViewHolder) holder);
         }
 
 
+    }
+
+    private void verticalView(VerticalViewHolder holder){
+        VerticalAdapter adapter1  = new VerticalAdapter(wcv);
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+        holder.recyclerView.setAdapter(adapter1);
+    }
+
+    private void horizontalView(HorizontalViewHolder holder){
+        HorizontalAdapter adapter2 = new HorizontalAdapter(wch);
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+        holder.recyclerView.setAdapter(adapter2);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mCurrency, mAddress;
-        public JSONObject mItem;
+    @Override
+    public int getItemViewType(int position) {
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-//            mFees = (TextView) view.findViewById(R.id.tvFees);
-            mCurrency = (TextView) view.findViewById(R.id.tvCurrency);
-            mAddress = (TextView) view.findViewById(R.id.tvAddress);
-//            mMinWith = (TextView) view.findViewById(R.id.tvMinWith);
+        if(arrayList.get(position).get(position) instanceof WalletCoinVertical){
+            return VERTICAL;
+        }
+        if(arrayList.get(position).get(position) instanceof WalletCoinHorizontal){
+            return HORIZONTAL;
+
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mAddress.getText() + "'";
+
+        return -1;
+    }
+
+    public class VerticalViewHolder extends RecyclerView.ViewHolder{
+        RecyclerView recyclerView;
+        VerticalViewHolder(@NonNull View itemView) {
+            super(itemView);
+            recyclerView = itemView.findViewById(R.id.inner_recyclerview);
         }
     }
+
+    public class HorizontalViewHolder extends RecyclerView.ViewHolder{
+        RecyclerView recyclerView;
+        HorizontalViewHolder(@NonNull View itemView) {
+            super(itemView);
+            recyclerView = itemView.findViewById(R.id.inner_recyclerview);
+
+        }
+    }
+
+
+
 }
