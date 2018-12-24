@@ -3,6 +3,7 @@ package com.buyucoin.buyucoin.Fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anychart.anychart.UiTitle;
 import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
 import com.buyucoin.buyucoin.Dashboard;
+import com.buyucoin.buyucoin.LoginActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
@@ -33,6 +36,7 @@ import java.util.ArrayList;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -151,6 +155,21 @@ public class WalletFragment extends Fragment {
                 Log.d("RESPONSE_____", s);
                 try{
                     JSONObject jsonObject = new JSONObject(s);
+                    if(jsonObject.getString("status").equals("error")){
+                        if(jsonObject.has("msg") && jsonObject.getString("msg").equals("The token has expired")) {
+                            SharedPreferences.Editor editor = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+                            editor.remove("access_token");
+                            editor.remove("refresh_token");
+                            editor.apply();
+                            Utilities.showToast(getActivity(), "Login again to access wallet");
+                            startActivity(new Intent(getActivity(), LoginActivity.class));
+                            getActivity().finish();
+                        }else{
+                            if(jsonObject.has("message"))
+                                Utilities.showToast(getActivity(), jsonObject.getString("message"));
+                        }
+                        return;
+                    }
                     JSONObject data = jsonObject.getJSONObject("data");
                     String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
                     for(int i=0; i<arr.length; i++){
