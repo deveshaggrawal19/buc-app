@@ -1,23 +1,22 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.pojos.WalletCoinHorizontal;
 import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
 
 import java.util.ArrayList;
 
 class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder> {
 
-    ArrayList<WalletCoinVertical> arrayList;
+    private ArrayList<WalletCoinVertical> arrayList;
 
-    public VerticalAdapter(ArrayList arrayList) {
+    VerticalAdapter(ArrayList<WalletCoinVertical> arrayList) {
         this.arrayList = arrayList;
     }
 
@@ -32,6 +31,8 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
     public void onBindViewHolder(@NonNull VerticalAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.coinname.setText(arrayList.get(i).getCoinname());
         myViewHolder.balance.setText(arrayList.get(i).getAmount());
+        int r = (int) (Math.random() * 6);
+        myViewHolder.itemView.getBackground().setLevel(r);
     }
 
     @Override
@@ -39,9 +40,9 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
         return arrayList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView coinname,balance;
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             coinname = itemView.findViewById(R.id.tvCurrency);
             balance = itemView.findViewById(R.id.balance);

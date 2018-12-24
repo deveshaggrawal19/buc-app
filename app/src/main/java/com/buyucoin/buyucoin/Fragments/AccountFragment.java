@@ -1,16 +1,21 @@
 package com.buyucoin.buyucoin.Fragments;
 
-import android.support.v7.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +32,6 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,10 +48,11 @@ public class AccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     String ACCESS_TOKEN = null;
-    TextView email, kyc, mob, name;
+    TextView email,mob, name;
     ProgressBar pb;
     View ll;
     AlertDialog.Builder ad;
+    ImageView imageView,kyc;
 
     // TODO: Rename and change types of parameters
     private String mParam1, mParam2, mParam3, mParam4;
@@ -85,12 +90,22 @@ public class AccountFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        email = (TextView) view.findViewById(R.id.tvAccountEmail);
-        kyc = (TextView) view.findViewById(R.id.tvAccountKyc);
-        mob = (TextView) view.findViewById(R.id.tvAccountMobile);
-        name = (TextView) view.findViewById(R.id.tvAccountName);
-        pb = (ProgressBar) view.findViewById(R.id.pbAccount);
-        ll = (View) view.findViewById(R.id.llAccount);
+        email =  view.findViewById(R.id.tvAccountEmail);
+        kyc =  view.findViewById(R.id.tvAccountKyc);
+        mob =  view.findViewById(R.id.tvAccountMobile);
+        name =  view.findViewById(R.id.tvAccountName);
+        pb =  view.findViewById(R.id.pbAccount);
+        ll =  view.findViewById(R.id.llAccount);
+        imageView = view.findViewById(R.id.acc_pic);
+
+        Drawable drawable = imageView.getDrawable();
+
+        Bitmap bitmap =  ((BitmapDrawable) drawable).getBitmap() ;
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        imageView.setImageDrawable(roundedBitmapDrawable);
+
+
         getAccountData();
         return view;
     }
@@ -190,7 +205,7 @@ public class AccountFragment extends Fragment {
                                 email.setText(data.getString("email"));
                                 name.setText(data.getString("name"));
                                 mob.setText(data.getString("mob"));
-                                kyc.setText(data.getString("kyc_status"));
+//                                kyc.getBackground().setTint(Color.green(R.color.kyc_color));
                                 ll.setVisibility(View.VISIBLE);
                                 Utilities.hideProgressBar(pb);
                             } catch (JSONException e) {

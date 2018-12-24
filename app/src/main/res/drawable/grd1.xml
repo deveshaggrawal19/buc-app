@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level-list xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:maxLevel="0">
-    <shape android:shape="rectangle" >
-        <gradient android:angle="45"
-            android:startColor="#c0392b"
-            android:endColor="#8e44ad">
+    <item android:maxLevel="0">
+        <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+            <gradient android:angle="45"
+                android:startColor="#4568dc"
+                android:endColor="#b06ab3">
 
-        </gradient>
-        <corners android:radius="10dp">
+            </gradient>
+            <corners android:radius="10dp">
 
-        </corners>
-    </shape>
-</item>
+            </corners>
+        </shape>
+    </item>
+
 <item android:maxLevel="1">
     <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
         <gradient android:angle="45"
@@ -77,18 +78,19 @@
     </shape>
 
 </item>
-<item android:maxLevel="6">
-    <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
-        <gradient android:angle="45"
-            android:startColor="#4568dc"
-            android:endColor="#b06ab3">
+    <item android:maxLevel="6">
+        <shape android:shape="rectangle" >
+            <gradient android:angle="45"
+                android:startColor="#c0392b"
+                android:endColor="#8e44ad">
 
-        </gradient>
-        <corners android:radius="10dp">
+            </gradient>
+            <corners android:radius="10dp">
 
-        </corners>
-    </shape>
-</item>
+            </corners>
+        </shape>
+    </item>
+
 
 
 </level-list>

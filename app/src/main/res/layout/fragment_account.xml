@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,69 +16,349 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:id="@+id/llAccount">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:padding="20dp"
             android:gravity="center"
-            android:background="#eeeeee"
+            android:background="@drawable/header_design"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="70dp"
+                android:id="@+id/tvAccountKyc"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_verified_user_black_24dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circular_img"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="80dp"
+                android:layout_gravity="center_horizontal"
+                android:tint="@color/kyc_color"
+                android:padding="5dp"
+                android:text="" />
+
+
+            <ImageView
+                android:layout_width="150dp"
+                android:id="@+id/acc_pic"
+                android:contentDescription="user picture"
+                android:background="@drawable/circular_img"
                 android:src="@drawable/excellent"
+                android:cropToPadding="true"
+                android:layout_gravity="center_horizontal"
+                android:padding="5dp"
+                android:elevation="20dp"
                 android:scaleType="centerCrop"
-                android:layout_height="70dp" />
+                android:layout_height="150dp" />
 
 
                 <TextView
                     android:id="@+id/tvAccountName"
+                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="170dp"
+                    android:textFontWeight="100"
                     android:textSize="30sp"
                     android:padding="5dp"
+                    android:textColor="@android:color/white"
                     android:text="Name" />
 
                 <TextView
                     android:id="@+id/tvAccountEmail"
+                    android:layout_marginTop="220dp"
+                    android:background="@drawable/circular_img"
+                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:textSize="20sp"
+                    android:textSize="10sp"
+                    android:layout_marginBottom="20dp"
                     android:padding="5dp"/>
-
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvAccountKyc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/holo_red_light"
+            android:layout_marginTop="300dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@android:color/white"
-                android:padding="2dp"
-                android:text="KYC" />
-
-            <TextView
-                android:id="@+id/tvAccountMobile"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Mobile" />
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:tint="@android:color/white"
+                    android:src="@drawable/ic_store_black_24dp"
+                    android:layout_height="35dp" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="Friends"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:tint="@android:color/white"
+                    android:src="@drawable/ic_timeline_black_24dp"
+                    android:layout_height="35dp" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="Videos"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:tint="@android:color/white"
+                    android:src="@drawable/ic_menu_send"
+                    android:layout_height="35dp" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="Chats"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:tint="@android:color/white"
+                    android:src="@drawable/ic_menu_share"
+                    android:layout_height="35dp" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="Groups"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
 
         </LinearLayout>
+
+        </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tvAccountMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Mobile" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_store_black_24dp"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Friends"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_timeline_black_24dp"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Videos"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_menu_send"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Chats"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_menu_share"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Groups"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_store_black_24dp"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Friends"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_timeline_black_24dp"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Videos"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_menu_send"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Chats"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_menu_share"
+                            android:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Groups"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -88,6 +368,25 @@
             android:layout_gravity="center"
             android:id="@+id/pbAccount"/>
 
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:layout_marginBottom="-100dp"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:elevation="10dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/wallet_list"
+            android:layout_height="400dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:text="Enter Something"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
     </FrameLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
