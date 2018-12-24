@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.buyucoin.buyucoin.DataClasses.Rates;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Fragments.RateFragment.OnListFragmentInteractionListener;
 import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -22,11 +25,11 @@ import org.json.JSONObject;
  */
 public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecyclerViewAdapter.ViewHolder> {
 
-    private final JSONArray mValues;
+    private final ArrayList<Rates> mValues;
     private final OnListFragmentInteractionListener mListener;
     Context mContext;
 
-    public MyrateRecyclerViewAdapter(JSONArray items, OnListFragmentInteractionListener listener, Context context) {
+    public MyrateRecyclerViewAdapter(ArrayList<Rates> items, OnListFragmentInteractionListener listener, Context context) {
         mValues = items;
         mListener = listener;
         mContext = context;
@@ -42,14 +45,14 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         try {
-            String s = mValues.getJSONObject(position).getString("currency").split("_")[0];
+            String s = mValues.get(position).currency.split("_")[0];
 
-            holder.mItem = mValues.getJSONObject(position);
+            holder.mItem = mValues.get(position);
             holder.mCurrency.setText(s.toUpperCase());
-            holder.mChange.setText("Change (24 Hrs): "+mValues.getJSONObject(position).getString("change"));
-            holder.mLastTrade.setText("Last Trade: "+mValues.getJSONObject(position).getString("last_trade"));
-            holder.mAsk.setText("Ask: "+mValues.getJSONObject(position).getString("ask"));
-            holder.mBid.setText("Bid: "+mValues.getJSONObject(position).getString("bid"));
+            holder.mChange.setText("Change (24 Hrs): "+mValues.get(position).change);
+            holder.mLastTrade.setText("Last Trade: "+mValues.get(position).last_trade);
+            holder.mAsk.setText("Ask: "+mValues.get(position).ask);
+            holder.mBid.setText("Bid: "+mValues.get(position).bid);
 
             holder.mImage.setImageDrawable(mContext.getResources().getDrawable(mContext.getResources().getIdentifier(s, "drawable", mContext.getPackageName())));
 
@@ -62,7 +65,18 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    try {
+                        mListener.onListFragmentInteraction(new JSONObject()
+                                .put("bid", holder.mItem.bid)
+                                .put("ask", holder.mItem.ask)
+                                .put("change", holder.mItem.change)
+                                .put("last_trade", holder.mItem.last_trade)
+                                .put("currency", holder.mItem.currency)
+                                .put("high_24", "")
+                        );
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -70,14 +84,14 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
 
     @Override
     public int getItemCount() {
-        return mValues.length();
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mBid, mChange, mLastTrade, mAsk, mCurrency;
         public final ImageView mImage;
-        public JSONObject mItem;
+        public Rates mItem;
 
         public ViewHolder(View view) {
             super(view);

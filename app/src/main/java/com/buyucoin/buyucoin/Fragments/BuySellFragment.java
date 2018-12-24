@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,7 +136,7 @@ public class BuySellFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
-                //Log.d("RESPONSE_____", s);
+                Log.d("RESPONSE_____", s);
                 try{
                     JSONObject jsonObject = new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
