@@ -20,6 +20,10 @@ import com.anychart.anychart.Crosshair;
 import com.anychart.anychart.DataEntry;
 import com.anychart.anychart.Stroke;
 import com.anychart.anychart.ValueDataEntry;
+import com.buyucoin.buyucoin.Adapters.AsksAdapter;
+import com.buyucoin.buyucoin.Adapters.BidsAdapter;
+import com.buyucoin.buyucoin.pojos.Ask;
+import com.buyucoin.buyucoin.pojos.Bids;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -37,6 +41,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -49,6 +55,7 @@ public class CurrencyActivity extends AppCompatActivity {
     Intent intent;
     Bundle bundle;
     ProgressBar pb;
+    RecyclerView bids_recview,ask_recview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,10 @@ public class CurrencyActivity extends AppCompatActivity {
         anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
         buy = findViewById(R.id.tvCurrencyBuy);
         sell = findViewById(R.id.tvCurrencySell);
+        bids_recview = findViewById(R.id.rvBid);
+        ask_recview = findViewById(R.id.rvAsk);
+
+
         anyChartView.setHorizontalScrollBarEnabled(true);
         Cartesian areaChart = AnyChart.area();
 
@@ -77,6 +88,16 @@ public class CurrencyActivity extends AppCompatActivity {
         areaChart.setTitle("chart");
         areaChart.setLabel(false);
 
+        BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),Bids.randomBids());
+        bids_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        bids_recview.setAdapter(bidsAdapter);
+
+        AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),Ask.randomAsks());
+        ask_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        ask_recview.setAdapter(asksAdapter);
+
+        Log.d("ASK LIST SIZE", String.valueOf(Ask.randomAsks().size()));
+        Log.d("BIDS LISR SIZE",String.valueOf(Bids.randomBids().size()));
     }
 
     @Override
