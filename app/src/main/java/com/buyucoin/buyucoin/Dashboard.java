@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import com.google.android.material.navigation.NavigationView;
@@ -316,8 +316,16 @@ NavigationView.OnNavigationItemSelectedListener,
                 @Override
                 public void onFailure(Call call, IOException e) {
                     showToast("Error retrieving profile.");
+                    Fragment fragment = null;
+                    fragment = new WalletFragment();
+
+                    toolbar.setTitle("Wallet");
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.flContent, fragment);
+                    fragmentTransaction.commitAllowingStateLoss();
                     e.printStackTrace();
-                    finish();
+
                 }
 
                 @Override
@@ -329,7 +337,18 @@ NavigationView.OnNavigationItemSelectedListener,
                                 JSONObject jsonObject1 = new JSONObject(s);
                                 if(jsonObject1.getString("status").equals("redirect")){
                                     Utilities.showToast(Dashboard.this, jsonObject1.getJSONArray("message").getJSONArray(0).getString(0));
-                                    Utilities.getOTP(Dashboard.this, ACCESS_TOKEN, ad);
+                                    if(jsonObject1.getString("sub_status").equals("6")){
+                                        Log.d("STATUS","mobile_number_required");
+                                        Utilities.addMobile(Dashboard.this, ACCESS_TOKEN, ad);
+                                    }else
+                                        Utilities.getOTP(Dashboard.this, ACCESS_TOKEN, ad);
+                                    return;
+                                }
+                                if(jsonObject1.getString("status").equals("error")){
+                                    Utilities.showToast(Dashboard.this, jsonObject1.getString("msg"));
+                                    Utilities.clearPrefs(Dashboard.this);
+                                    startActivity(new Intent(Dashboard.this, LoginActivity.class));
+                                    finish();
                                     return;
                                 }
                                 final JSONObject data = jsonObject1.getJSONObject(("data"));
