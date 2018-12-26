@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BuySellActivity">
+
+<androidx.core.widget.NestedScrollView
+     android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/buy_layout_btn"
+            android:text="Buy"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/sell_layout_btn"
+            android:text="Sell"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Your Balance"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="3,720.45"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/buy_layout"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/input_shape"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="2dp"
+            android:layout_height="50dp">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:hint="1000"
+                android:inputType="numberDecimal"
+                android:paddingLeft="20dp"
+                android:background="@android:color/white"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="INR"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:src="@drawable/ic_swap_vertical_circle_black_24dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/input_shape"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="2dp"
+            android:layout_height="50dp">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:hint="0.000345"
+                android:inputType="numberDecimal"
+                android:paddingLeft="20dp"
+                android:background="@android:color/white"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="BTC"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="0.000345 BTC = "
+                        android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="104050"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#000000"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Fee"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="40.0"
+                    android:textColor="#000000"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Total "
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="10405"
+                    android:textColor="#000000"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:text="Buy"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sell_layout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/input_shape"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="2dp"
+            android:layout_height="50dp">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:hint="Enter Volume"
+                android:inputType="numberDecimal"
+                android:paddingLeft="20dp"
+                android:background="@android:color/white"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="INR"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:src="@drawable/ic_swap_vertical_circle_black_24dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/input_shape"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="2dp"
+            android:layout_height="50dp">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:hint="Enter Price"
+                android:inputType="numberDecimal"
+                android:paddingLeft="20dp"
+                android:background="@android:color/white"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="BTC"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:text="Sell"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

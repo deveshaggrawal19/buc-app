@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -137,6 +138,20 @@ public class CurrencyActivity extends AppCompatActivity {
         sell.setText("Sell \u20B9 "+bundle.getString("bid"));
         hrs24.setText("24Hrs Change "+bundle.getString("high_24"));
 
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuySellButtonFunction("buy",bundle.getString("ask"));
+
+            }
+        });
+        sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuySellButtonFunction("sell",bundle.getString("bid"));
+            }
+        });
+
         OkHttpHandler.get("https://www.buyucoin.com/market-graph?currency=" + s, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -159,6 +174,13 @@ public class CurrencyActivity extends AppCompatActivity {
         });
     }
 
+    private void BuySellButtonFunction(String type, String price) {
+            Intent buysellintent = new Intent(this,BuySellActivity.class);
+            buysellintent.putExtra("price",price);
+            buysellintent.putExtra("type",type);
+            startActivity(buysellintent);
+    }
+
     public void addToGraph(JSONArray x, JSONArray y) {
         List<DataEntry> seriesdata = new ArrayList<>();
         for(int i=0; i<x.length(); i++){
@@ -177,6 +199,9 @@ public class CurrencyActivity extends AppCompatActivity {
         anyChartView.setChart(areaChart);
         Utilities.hideProgressBar(pb);
     }
+
+
+
 
     private class CustomDataEntry extends ValueDataEntry{
         CustomDataEntry(String x, Integer value, Integer value1) {

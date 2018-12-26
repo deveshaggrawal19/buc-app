@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".CoinDepositeWithdraw">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:background="@drawable/credit_card"
+
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="100dp"
+                    android:id="@+id/deposite_layout_btn"
+                    android:text="Deposite"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/deposite_withdraw_btn"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textColor="@android:color/white"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_width="100dp"
+                    android:id="@+id/withdraw_layout_btn"
+                    android:text="Withdraw"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/deposite_withdraw_btn"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/withdraw_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="BTC"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:hint="0"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="70sp"
+                    android:textColor="@android:color/white"
+                    android:background="@android:color/transparent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:hint="Wallet Address"
+                    android:gravity="center"
+                    android:background="@drawable/deposite_withdraw_edittext"
+                    android:padding="15dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:hint="Destination Tag"
+                    android:gravity="center"
+                    android:background="@drawable/deposite_withdraw_edittext"
+                    android:padding="15dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_marginTop="50dp"
+                 android:padding="10dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_marginLeft="10dp"
+                 android:orientation="vertical"
+                 android:background="@drawable/history_item_drawable"
+                 android:layout_height="wrap_content">
+                 <TextView
+                     android:layout_marginTop="10dp"
+                     android:gravity="center"
+                     android:textStyle="bold"
+                     android:layout_width="match_parent"
+                     android:text=" You will get this 3456"
+                     android:layout_height="wrap_content" />
+                 <Button
+                     android:layout_width="wrap_content"
+                     android:layout_marginTop="30dp"
+                     android:layout_marginBottom="30dp"
+                     android:text="Proceed to Withdraw"
+                     android:layout_gravity="center"
+                     android:textColor="@android:color/white"
+                     android:padding="10dp"
+                     android:background="@drawable/pills"
+                     android:layout_height="wrap_content" />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:text="Min Amount 23"
+                     android:layout_gravity="center"
+                     android:layout_height="wrap_content" />
+
+
+             </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/deposite_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:text="Scan this QR Code to get Address "
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:src="@drawable/qr"
+                    android:layout_gravity="center"
+                    android:layout_height="200dp" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:text="Your Wallet Address"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:text="AQ23WSDE45RFGT67"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white"
+                    android:layout_height="match_parent" />
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

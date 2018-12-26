@@ -12,6 +12,7 @@
     android:padding="5dp">
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
@@ -21,6 +22,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="INR"
+            android:textColor="@android:color/white"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_width="0dp"
@@ -28,6 +30,7 @@
             android:layout_weight="1"
             android:text="Portfolio"
             android:layout_marginLeft="50dp"
+            android:textColor="@android:color/white"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -85,12 +88,16 @@
          <Button
              android:layout_width="wrap_content"
              android:background="@drawable/circular_img"
-             android:text="Buy"
+             android:text="Deposite"
+             android:id="@+id/vertical_deposite_btn"
+             android:layout_marginRight="10dp"
              android:layout_height="wrap_content" />
         <Button
             android:layout_width="wrap_content"
             android:background="@drawable/circular_img"
-            android:text="Sell"
+            android:text="Withdraw"
+            android:id="@+id/vertical_withdraw_btn"
+            android:layout_marginRight="10dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

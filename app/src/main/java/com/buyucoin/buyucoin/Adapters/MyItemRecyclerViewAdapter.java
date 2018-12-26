@@ -39,27 +39,42 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     public MyItemRecyclerViewAdapter(Context context,List<JSONObject> items, OnListFragmentInteractionListener listener)  {
         mListener = listener;
         this.context = context;
-        for (JSONObject js : items) {
-            try {
-                if(!js.getString("available").equals("0")) {
-                    WalletCoinVertical wl = new WalletCoinVertical();
-                    wl.setCoinname(js.getString("currencyname"));
-                    wl.setAmount(js.getString("available"));
-                    wcv.add(wl);
+//        for (JSONObject js : items) {
+//            try {
+//                if(!js.getString("available").equals("0")) {
+//                    WalletCoinVertical wl = new WalletCoinVertical();
+//                    wl.setCoinname(js.getString("currencyname"));
+//                    wl.setAmount(js.getString("available"));
+//                    wcv.add(wl);
+//
+//                    Log.d("JSONOBJECTS:==========>","TRUE");
+//                }else{
+//                    WalletCoinHorizontal wh = new WalletCoinHorizontal();
+//                    wh.setCoinname(js.getString("currencyname"));
+//                    wh.setAmount(js.getString("available"));
+//                    wch.add(wh);
+//                    Log.d("JSONOBJECTS:==========>","FALSE");
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+        WalletCoinVertical wl = new WalletCoinVertical();
+        wl.setCoinname("BTC");
+        wl.setAmount("234.569");
 
-                    Log.d("JSONOBJECTS:==========>","TRUE");
-                }else{
-                    WalletCoinHorizontal wh = new WalletCoinHorizontal();
-                    wh.setCoinname(js.getString("currencyname"));
-                    wh.setAmount(js.getString("available"));
-                    wch.add(wh);
-                    Log.d("JSONOBJECTS:==========>","FALSE");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        WalletCoinHorizontal wh = new WalletCoinHorizontal();
+        wh.setCoinname("ETH");
+        wh.setAmount("34567,789");
 
+        for(int i=0;i<=10;i++){
+            wch.add(wh);
         }
+        for(int i=0;i<=23;i++){
+            wcv.add(wl);
+        }
+
         arrayList.add(wcv);
         arrayList.add(wch);
 

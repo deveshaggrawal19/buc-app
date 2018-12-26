@@ -15,8 +15,8 @@ public class Bids {
 
     public  static ArrayList<Bids> randomBids(){
         ArrayList<Bids> bidsArrayList = new ArrayList<>();
-        for(int i=0;i<=20;i++){
-            Bids bids = new Bids(Math.random()*100);
+        for(int i=0;i<=5;i++){
+            Bids bids = new Bids((Math.random()*2)+1);
             bidsArrayList.add(bids);
         }
         return  bidsArrayList;

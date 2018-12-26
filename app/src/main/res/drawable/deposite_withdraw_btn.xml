@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:maxLevel="0">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"></solid>
+        </shape>
+    </item>
+    <item android:maxLevel="1">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white">
+
+            </solid>
+            <corners android:radius="50dp"></corners>
+        </shape>
+    </item>
+
+
+
+</level-list>

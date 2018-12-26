@@ -96,7 +96,15 @@ public class WalletFragment extends Fragment {
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
         err = (TextView) view.findViewById(R.id.tvWalletError);
-        getWalletData();
+
+
+
+
+        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
+
+
+        Utilities.hideProgressBar(pb);
+//        getWalletData();
         return view;
     }
 

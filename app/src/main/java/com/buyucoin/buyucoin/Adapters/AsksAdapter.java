@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
         holder.price.setText(String.valueOf(askArrayList.get(position).getAsk_amount()));
         int view_width = (int) (Math.random()*150);
         holder.progress.setLayoutParams(new LinearLayout.LayoutParams(view_width,5));
+        Log.d("WIDTH============>",String.valueOf(holder.itemView));
 
     }
 

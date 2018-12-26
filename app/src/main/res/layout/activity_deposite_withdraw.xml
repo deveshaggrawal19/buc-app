@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CurrencyActivity">
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/credit_card"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:padding="10dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/btc"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="47dp"
+                        android:textSize="20sp"
+                        android:text="BITCOIN"
+                        android:textColor="@android:color/white" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/qrcodeimg"
+                        android:src="@drawable/qr"/>
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:padding="10dp"
+                        android:text="30.67" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/ic_swap_vertical_circle_black_24dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:padding="10dp"
+                        android:text="$ 300K" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="qwe33dft56545454grge4543"
+                        android:textColor="@android:color/white"
+                        android:padding="10dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/buy_layout_card"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:elevation="2dp"
+                    android:padding="5dp"
+                    android:background="@drawable/credit_card"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/coin_buy"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Buy"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/sell_layout_card"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:elevation="2dp"
+                    android:padding="5dp"
+                    android:background="@drawable/credit_card"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/coin_sell"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Sell"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/deposite_layout_card"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:elevation="2dp"
+                    android:padding="5dp"
+                    android:background="@drawable/credit_card"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/coin_deposite"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Deposite"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/withdraw_layout_card"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:elevation="2dp"
+                    android:padding="5dp"
+                    android:background="@drawable/credit_card"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/coin_withdraw"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Withdraw"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Your  History"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:id="@+id/rvCoinHistory"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/qrcodelayout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:background="#d3fdfdfd"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Scan this QR Code"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="200dp"
+            android:src="@drawable/qr"
+            android:layout_height="200dp" />
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

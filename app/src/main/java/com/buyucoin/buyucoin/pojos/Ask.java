@@ -16,8 +16,8 @@ public class Ask {
 
     public  static ArrayList<Ask> randomAsks(){
         ArrayList<Ask> askArrayList = new ArrayList<>();
-        for(int i=0;i<=20;i++){
-            Ask asks = new Ask(Math.random()*10);
+        for(int i=0;i<=5;i++){
+            Ask asks = new Ask((Math.random()*2)+1);
             askArrayList.add(asks);
         }
 
