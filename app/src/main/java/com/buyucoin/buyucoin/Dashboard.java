@@ -68,6 +68,7 @@ NavigationView.OnNavigationItemSelectedListener,
 
             SharedPreferences prefs = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
             ACCESS_TOKEN = prefs.getString("access_token", null);
+            String refresh_token = prefs.getString("refresh_token", null);
 
             ad = new AlertDialog.Builder(this);
 
@@ -96,6 +97,7 @@ NavigationView.OnNavigationItemSelectedListener,
             fragView = findViewById(R.id.flContent);
 
             if (Utilities.isOnline(getApplicationContext())) {
+                getNonFreshToken(refresh_token);
                 loadProfile();
             } else {
                 fragView.setVisibility(View.GONE);
@@ -105,6 +107,14 @@ NavigationView.OnNavigationItemSelectedListener,
             bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    OkHttpHandler.cancelAllRequests();
+                    if (!Utilities.isOnline(getApplicationContext())) {
+                        fragView.setVisibility(View.GONE);
+                        tv.setVisibility(View.VISIBLE);
+                        return true;
+                    }
+
                     Fragment fragment=null, aFrag=null, wFrag=null, rFrag=null, pFrag=null, bFrag=null;
                     Class fragmentClass = null;
                     int id = item.getItemId();
@@ -398,6 +408,36 @@ NavigationView.OnNavigationItemSelectedListener,
         }
 
 
+    public void getNonFreshToken(String refresh_token){
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject().put("refresh_token", refresh_token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpHandler.refresh_post("refresh", refresh_token, jsonObject.toString(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Utilities.showToast(Dashboard.this, "Error retreiving API");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String s = response.body().string();
+//                Log.d("/refresh RESPONSE", s);
+                    try {
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+                        editor.putString("access_token", jsonObject1.getJSONObject("data").getString("access_token"));
+                        editor.apply();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
+                    }
+            }
+        });
+    }
 
         public void showToast(final String s) {
             runOnUiThread(new Runnable() {

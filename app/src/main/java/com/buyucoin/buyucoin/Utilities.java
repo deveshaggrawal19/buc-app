@@ -102,7 +102,7 @@ public class Utilities {
 
         try {
             JSONObject jsonObject = new JSONObject(s);
-            if(jsonObject.getString("status").equals("error"))
+            if(jsonObject.getString("status").equals("error") || jsonObject.getString("status").equals("redirect"))
                 if(jsonObject.has("msg"))
                     return jsonObject.getString("msg");
                 else

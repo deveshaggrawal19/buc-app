@@ -36,14 +36,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AccountFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
@@ -65,15 +58,6 @@ public class AccountFragment extends Fragment {
 
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFragment.
-     */
-    // TODO: Rename and change types and number of parameters
 
 
     @Override
@@ -106,6 +90,11 @@ public class AccountFragment extends Fragment {
         imageView.setImageDrawable(roundedBitmapDrawable);
 
 
+        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        name.setText(prefs.getString("name", ""));
+        email.setText(prefs.getString("email", ""));
+        mob.setText(prefs.getString("mob", ""));
+
         getAccountData();
         return view;
     }
@@ -128,7 +117,7 @@ public class AccountFragment extends Fragment {
                     String kyc = jsonObject1.getJSONObject("data").getString("kyc_status");
                     String mob = jsonObject1.getJSONObject("data").getString("mob");
 
-                    Log.d("RESPONSE_____",name+"\t"+email+"\t"+kyc+"\t"+mob);
+                    Log.d("/account RESPONSE",name+"\t"+email+"\t"+kyc+"\t"+mob);
 
 
                     SharedPreferences.Editor editor = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();

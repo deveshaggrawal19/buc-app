@@ -69,25 +69,11 @@ public class CurrencyActivity extends AppCompatActivity {
         myRef = db.getReference();
 
         pb = (ProgressBar) findViewById(R.id.pbCurrencyActivity);
-        anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
         buy = findViewById(R.id.tvCurrencyBuy);
         sell = findViewById(R.id.tvCurrencySell);
         bids_recview = findViewById(R.id.rvBid);
         ask_recview = findViewById(R.id.rvAsk);
 
-
-        anyChartView.setHorizontalScrollBarEnabled(true);
-        Cartesian areaChart = AnyChart.area();
-
-        areaChart.setAnimation(true);
-        Crosshair crosshair = areaChart.getCrosshair();
-        crosshair.setEnabled(true);
-        crosshair.setYStroke((Stroke)null, null, null, null, null)
-                .setXStroke("#000", 1d, null, null, null)
-                .setZIndex(39d);
-
-        areaChart.setTitle("chart");
-        areaChart.setLabel(false);
 
         BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),Bids.randomBids());
         bids_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -161,11 +147,12 @@ public class CurrencyActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
+                Log.d("currency response", s);
                 try {
                     JSONObject object = new JSONObject(s).getJSONObject("data");
                     JSONArray prices = object.getJSONArray("price");
                     JSONArray time = object.getJSONArray("time");
-                    addToGraph(time, prices);
+                    initialiseGraph(time, prices);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -179,6 +166,24 @@ public class CurrencyActivity extends AppCompatActivity {
             buysellintent.putExtra("price",price);
             buysellintent.putExtra("type",type);
             startActivity(buysellintent);
+    }
+
+    public void initialiseGraph(JSONArray x, JSONArray y){
+        anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
+        anyChartView.setHorizontalScrollBarEnabled(true);
+        Cartesian areaChart = AnyChart.area();
+
+        areaChart.setAnimation(true);
+        Crosshair crosshair = areaChart.getCrosshair();
+        crosshair.setEnabled(true);
+        crosshair.setYStroke((Stroke)null, null, null, null, null)
+                .setXStroke("#000", 1d, null, null, null)
+                .setZIndex(39d);
+
+        areaChart.setTitle("chart");
+        areaChart.setLabel(false);
+
+        addToGraph(x, y);
     }
 
     public void addToGraph(JSONArray x, JSONArray y) {
@@ -197,6 +202,8 @@ public class CurrencyActivity extends AppCompatActivity {
 
         area.setName("d");
         anyChartView.setChart(areaChart);
+
+
         Utilities.hideProgressBar(pb);
     }
 

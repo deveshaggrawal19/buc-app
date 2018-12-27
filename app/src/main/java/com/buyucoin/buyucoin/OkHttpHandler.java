@@ -34,6 +34,20 @@ public class OkHttpHandler {
         return call;
     }
 
+    public static Call refresh_post(String url, String refresh_token, String content, Callback callback){
+        RequestBody body = RequestBody.create(mediaType, content);
+        Request request1 = new Request.Builder()
+                .url(BASE_URL+url)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "JWT "+refresh_token)
+                .post(body)
+                .build();
+        Call call = client.newCall(request1);
+        call.enqueue(callback);
+        return call;
+    }
+
+
     public static Call auth_get(String url, String access_token, Callback callback){
         Request request1 = new Request.Builder()
                 .url(BASE_URL+url)
@@ -64,6 +78,10 @@ public class OkHttpHandler {
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
+    }
+
+    public static void cancelAllRequests(){
+        client.dispatcher().cancelAll();
     }
 }
 
