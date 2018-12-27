@@ -161,6 +161,7 @@ public class CurrencyActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
+                Log.d("currency response", s);
                 try {
                     JSONObject object = new JSONObject(s).getJSONObject("data");
                     JSONArray prices = object.getJSONArray("price");

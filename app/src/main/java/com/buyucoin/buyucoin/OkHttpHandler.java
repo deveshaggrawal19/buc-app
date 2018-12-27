@@ -79,5 +79,9 @@ public class OkHttpHandler {
         call.enqueue(callback);
         return call;
     }
+
+    public static void cancelAllRequests(){
+        client.dispatcher().cancelAll();
+    }
 }
 

@@ -154,7 +154,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
-//                Log.d("RESPONSE_____", s);
+                Log.d("/get_wallet RESPONSE", s);
                 try{
                     JSONObject jsonObject = new JSONObject(s);
                     if(jsonObject.getString("status").equals("error")){

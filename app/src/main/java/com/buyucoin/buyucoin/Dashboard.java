@@ -108,6 +108,7 @@ NavigationView.OnNavigationItemSelectedListener,
                 @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                    OkHttpHandler.cancelAllRequests();
                     if (!Utilities.isOnline(getApplicationContext())) {
                         fragView.setVisibility(View.GONE);
                         tv.setVisibility(View.VISIBLE);
@@ -424,9 +425,7 @@ NavigationView.OnNavigationItemSelectedListener,
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
-                Log.d("/refresh RESPONSE", s);
-                if(Utilities.isSuccess(s)){
-//                    Utilities.showToast(Dashboard.this, Utilities.getSuccessMessage(s));
+//                Log.d("/refresh RESPONSE", s);
                     try {
                         JSONObject jsonObject1 = new JSONObject(s);
                         SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
@@ -434,9 +433,8 @@ NavigationView.OnNavigationItemSelectedListener,
                         editor.apply();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
                     }
-                }else
-                    Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
             }
         });
     }
