@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -62,7 +63,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences prefs = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        if(prefs.getString("access_token", null) != null){
+        String s = prefs.getString("access_token", null);
+        String r = prefs.getString("refresh_token", null);
+        if(s != null){
             Intent i = new Intent(this, Dashboard.class);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);

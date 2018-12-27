@@ -4,16 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.icu.util.UniversalTimeScale;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.BuySellRecyclerViewAdapter;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.Utilities;
 
 import org.json.JSONObject;
 
@@ -39,6 +42,7 @@ public class BuySellFragment extends Fragment {
     ArrayList<JSONObject> list;
     RecyclerView recyclerView;
     ProgressBar pb;
+    TextView errorText;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -82,6 +86,8 @@ public class BuySellFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         pb = view.findViewById(R.id.pbWallet);
+
+        errorText = view.findViewById(R.id.tvBuySellError);
 
         getWalletData();
         return view;
@@ -130,34 +136,40 @@ public class BuySellFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                Log.d("RESPONSE_____", s);
-                try{
-                    JSONObject jsonObject = new JSONObject(s);
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
-                    for(int i=0; i<arr.length; i++){
-                        try {
-                            list.add(data.getJSONObject(arr[i]).put("currencyname", arr[i]));
-                        }catch(Exception e){
-                            e.printStackTrace();
+                final String s = response.body().string();
+                Log.d("/get_wallet RESPONSE", s);
+                if(Utilities.isSuccess(s)) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
+                        for (int i = 0; i < arr.length; i++) {
+                            try {
+                                list.add(data.getJSONObject(arr[i]).put("currencyname", arr[i]));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list, mListener));
+                                Utilities.hideProgressBar(pb);
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }else{
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list, mListener));
-                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
-                                public void onAnimationEnd(Animator animator) {
-                                    pb.setVisibility(View.GONE);
-                                    pb.setAlpha(1f);
-                                }
-                            });
+                            Utilities.hideProgressBar(pb);
+                            errorText.setText(Utilities.getErrorMessage(s));
+                            errorText.setVisibility(View.VISIBLE);
                         }
                     });
-
-                }catch(Exception e){
-                    e.printStackTrace();
                 }
             }
         });

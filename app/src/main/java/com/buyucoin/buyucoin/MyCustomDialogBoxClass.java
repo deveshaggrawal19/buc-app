@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 
 
-public class MyCoustomDialogBoxClass {
+public class MyCustomDialogBoxClass {
 
     final static int[]  arr = new int[]{
             R.drawable.btc,

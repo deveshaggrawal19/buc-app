@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Server Error"
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/tvWalletError"/>
 
 

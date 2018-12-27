@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
-import com.buyucoin.buyucoin.MyCoustomDialogBoxClass;
+import com.buyucoin.buyucoin.MyCustomDialogBoxClass;
 import com.buyucoin.buyucoin.R;
 
 import org.json.JSONObject;
@@ -60,7 +60,7 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
                         mListener.onListFragmentInteraction(holder.mItem);
-                        MyCoustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
+                        MyCustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
                     }
                 }
             });
