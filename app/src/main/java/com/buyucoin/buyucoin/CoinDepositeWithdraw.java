@@ -8,14 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class CoinDepositeWithdraw extends AppCompatActivity {
     private static  final String DEPOSITE = "DEPOSITE";
     private static  final String WITHDRAW = "WITHDRAW";
     Intent i;
-    LinearLayout deposite_layout,withdraw_layout;
+    LinearLayout deposite_layout,withdraw_layout,tag_layout;
     Button deposite_layout_btn,withdraw_layout_btn;
+    EditText destination_tag;
 
 
 
@@ -31,12 +33,27 @@ public class CoinDepositeWithdraw extends AppCompatActivity {
         i = getIntent();
 
         String TYPE = i.getStringExtra("type");
+        String COIN = i.getStringExtra("coin_name");
+        String AVAILABEL = i.getStringExtra("available");
+        String ADDRESS = i.getStringExtra("address");
+        String DESCRIPTION = i.getStringExtra("description");
+        String TAG = i.getStringExtra("tag");
+        String COIN_FULL_NAME = i.getStringExtra("full_coin_name");
 
         deposite_layout = findViewById(R.id.deposite_layout);
         withdraw_layout = findViewById(R.id.withdraw_layout);
+        tag_layout = findViewById(R.id.tag_layout);
 
         deposite_layout_btn = findViewById(R.id.deposite_layout_btn);
         withdraw_layout_btn = findViewById(R.id.withdraw_layout_btn);
+
+        destination_tag = findViewById(R.id.destination_tag_edittext);
+
+        if(TAG.equals("true")){
+            tag_layout.setVisibility(View.VISIBLE);
+            destination_tag.setHint(DESCRIPTION);
+
+        }
 
 
         if(TYPE.equals(DEPOSITE)){

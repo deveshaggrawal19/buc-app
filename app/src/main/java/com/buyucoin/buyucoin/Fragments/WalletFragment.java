@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin.Fragments;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -53,6 +55,7 @@ public class WalletFragment extends Fragment {
     RecyclerView recyclerView;
     ProgressBar pb;
     TextView err;
+    CheckBox hidezero_checkbox;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -97,14 +100,29 @@ public class WalletFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
         err = (TextView) view.findViewById(R.id.tvWalletError);
 
+        hidezero_checkbox = view.findViewById(R.id.wallet_checkbox);
+
+        hidezero_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(hidezero_checkbox.isChecked()){
+                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,true));
+
+                }
+                else {
+                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,false));
+
+                }
+            }
+        });
 
 
 
-        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
+//        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
 
 
-        Utilities.hideProgressBar(pb);
-//        getWalletData();
+//        Utilities.hideProgressBar(pb);
+        getWalletData();
         return view;
     }
 
@@ -176,7 +194,7 @@ public class WalletFragment extends Fragment {
                     String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
                     for(int i=0; i<arr.length; i++){
                         try {
-                            list.add(data.getJSONObject(arr[i]).put("currencyname", arr[i]));
+                            list.add(data.getJSONObject(arr[i]).put("currencyname", arr[i]).put("currencies",data.getJSONObject("currencies").get(arr[i])));
 
 
                         }catch(Exception e){
@@ -188,7 +206,7 @@ public class WalletFragment extends Fragment {
                             @Override
                             public void run() {
 
-                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
+                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,false));
                                 Utilities.hideProgressBar(pb);
 //                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
 //                                public void onAnimationEnd(Animator animator) {

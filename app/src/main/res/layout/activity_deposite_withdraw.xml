@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CurrencyActivity">
 
 
-
-
-
-
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -45,6 +43,7 @@
                         android:layout_marginStart="47dp"
                         android:textSize="20sp"
                         android:text="BITCOIN"
+                        android:id="@+id/card_coin_full_name"
                         android:textColor="@android:color/white" />
 
                     <ImageView
@@ -67,6 +66,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
                         android:padding="10dp"
+                        android:id="@+id/card_coin_availabel"
                         android:text="30.67" />
 
                     <ImageView
@@ -92,6 +92,7 @@
                         android:text="qwe33dft56545454grge4543"
                         android:textColor="@android:color/white"
                         android:padding="10dp"
+                        android:id="@+id/card_coin_address"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -221,22 +222,18 @@
                         android:layout_height="wrap_content" />
 
             </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
 
-                    <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:id="@+id/rvCoinHistory"
                         android:layout_height="wrap_content">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
-                </LinearLayout>
+
 
             </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 
@@ -266,4 +263,4 @@
 
 
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

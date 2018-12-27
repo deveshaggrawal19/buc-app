@@ -76,6 +76,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center"
@@ -91,6 +92,8 @@
 
             </LinearLayout>
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/tag_layout"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -103,6 +106,7 @@
                     android:gravity="center"
                     android:background="@drawable/deposite_withdraw_edittext"
                     android:padding="15dp"
+                    android:id="@+id/destination_tag_edittext"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>

@@ -36,44 +36,93 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
      private Context context ;
 
 
-    public MyItemRecyclerViewAdapter(Context context,List<JSONObject> items, OnListFragmentInteractionListener listener)  {
+    public MyItemRecyclerViewAdapter(Context context,List<JSONObject> items, OnListFragmentInteractionListener listener,boolean hidezero)  {
         mListener = listener;
         this.context = context;
-//        for (JSONObject js : items) {
-//            try {
-//                if(!js.getString("available").equals("0")) {
-//                    WalletCoinVertical wl = new WalletCoinVertical();
-//                    wl.setCoinname(js.getString("currencyname"));
-//                    wl.setAmount(js.getString("available"));
-//                    wcv.add(wl);
+        for (JSONObject js : items) {
+            try {
+                if(hidezero) {
+                    if(!js.getString("available").equals("0")) {
+                        WalletCoinVertical wl = new WalletCoinVertical();
+                        wl.setCoinname(js.getString("currencyname"));
+                        wl.setAmount(js.getString("available"));
+                        wl.setAddress(js.getString("address"));
+                        wl.setAvailabel(js.getString("available"));
+                        wl.setBase_address(js.getString("base_address"));
+                        wl.setDescription(js.getString("desciption"));
+                        wl.setFees(js.getString("fees"));
+                        wl.setMin_width(js.getString("min_with"));
+                        wl.setPending(js.getString("pending"));
+                        wl.setPortfolio(js.getString("portfolio"));
+                        wl.setTag(js.getString("tag"));
+                        wl.setFull_coin_name(js.getString("currencies"));
+                        wcv.add(wl);
+                    }
+
+                    Log.d("JSONOBJECTS:==========>","TRUE");
+                }else{
+
+                    WalletCoinVertical wl = new WalletCoinVertical();
+                    wl.setCoinname(js.getString("currencyname"));
+                    wl.setAmount(js.getString("available"));
+                    wl.setAddress(js.getString("address"));
+                    wl.setAvailabel(js.getString("available"));
+                    wl.setBase_address(js.getString("base_address"));
+                    wl.setDescription(js.getString("desciption"));
+                    wl.setFees(js.getString("fees"));
+                    wl.setMin_width(js.getString("min_with"));
+                    wl.setPending(js.getString("pending"));
+                    wl.setPortfolio(js.getString("portfolio"));
+                    wl.setTag(js.getString("tag"));
+                    wl.setFull_coin_name(js.getString("currencies"));
+
+                    if(!js.getString("available").equals("0")) {
+                        if(js.getString("currencyname").equals("inr")){
+                            wcv.add(0,wl);
+                        }else{
+                            wcv.add(1,wl);
+                        }
+
+                    }else{
+
+                    wcv.add(wl);
+                    }
+                }
+                WalletCoinHorizontal wh = new WalletCoinHorizontal();
+                wh.setCoinname(js.getString("currencyname"));
+                wh.setAmount(js.getString("available"));
+                wh.setAddress(js.getString("address"));
+                wh.setAvailabel(js.getString("available"));
+                wh.setBase_address(js.getString("base_address"));
+                wh.setDescription(js.getString("desciption"));
+                wh.setFees(js.getString("fees"));
+                wh.setMin_width(js.getString("min_with"));
+                wh.setPending(js.getString("pending"));
+                wh.setPortfolio(js.getString("portfolio"));
+                wh.setTag(js.getString("tag"));
+                wh.setFull_coin_name(js.getString("currencies"));
+
+                wch.add(wh);
+                Log.d("JSONOBJECTS:==========>","FALSE");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+//        WalletCoinVertical wl = new WalletCoinVertical();
+//        wl.setCoinname("BTC");
+//        wl.setAmount("234.569");
 //
-//                    Log.d("JSONOBJECTS:==========>","TRUE");
-//                }else{
-//                    WalletCoinHorizontal wh = new WalletCoinHorizontal();
-//                    wh.setCoinname(js.getString("currencyname"));
-//                    wh.setAmount(js.getString("available"));
-//                    wch.add(wh);
-//                    Log.d("JSONOBJECTS:==========>","FALSE");
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+//        WalletCoinHorizontal wh = new WalletCoinHorizontal();
+//        wh.setCoinname("ETH");
+//        wh.setAmount("34567,789");
 //
+//        for(int i=0;i<=10;i++){
+//            wch.add(wh);
 //        }
-        WalletCoinVertical wl = new WalletCoinVertical();
-        wl.setCoinname("BTC");
-        wl.setAmount("234.569");
-
-        WalletCoinHorizontal wh = new WalletCoinHorizontal();
-        wh.setCoinname("ETH");
-        wh.setAmount("34567,789");
-
-        for(int i=0;i<=10;i++){
-            wch.add(wh);
-        }
-        for(int i=0;i<=23;i++){
-            wcv.add(wl);
-        }
+//        for(int i=0;i<=23;i++){
+//            wcv.add(wl);
+//        }
 
         arrayList.add(wcv);
         arrayList.add(wch);

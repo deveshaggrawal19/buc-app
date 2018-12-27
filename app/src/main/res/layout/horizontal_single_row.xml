@@ -3,57 +3,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
-    android:layout_width="220dp"
-    android:layout_height="100dp"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/grd1"
-    android:orientation="horizontal"
-    android:gravity="center"
-    android:layout_marginTop="5dp"
+    android:orientation="vertical"
     android:elevation="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:padding="5dp">
+    android:layout_margin="5dp">
 
-        <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_height="wrap_content">
-            <TextView
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:text="Portfolio"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:text="Portfolio"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/wallet_card_portfolio"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
             android:id="@+id/tvCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="text"
             android:textSize="36sp"
-                android:textColor="@android:color/white"
+            android:textColor="@android:color/white"
             android:padding="2dp"
             android:textStyle="bold"/>
+
+
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:gravity="right"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content"
-            android:text="Rs 350000" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Available"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/balance"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="Rs 350000" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:text="2.18%"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Buy"
+            android:background="@android:color/white"
+            android:id="@+id/vertical_deposite_btn"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="sell"
+            android:background="@android:color/white"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/vertical_withdraw_btn"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
 
 
 </LinearLayout>
+
+

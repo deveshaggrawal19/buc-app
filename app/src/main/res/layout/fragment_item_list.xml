@@ -1,97 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-<FrameLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
-        android:layout_height="220dp">
-        <FrameLayout
+        android:layout_height="wrap_content">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:background="@drawable/header_design"
-            android:padding="20dp"
-            android:layout_height="180dp">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="INR AMOUNT"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:layout_height="210dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:background="@drawable/header_design"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="INR AMOUNT"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="$43,789.00"
+                            android:textColor="@android:color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="80dp"
+                            android:text="TOTAL CRYPTO HOLDINGS / INR"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="100dp"
+                            android:text="$43,789.00"
+                            android:textColor="@android:color/white"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="80dp"
+                        android:background="@drawable/header_title"
+                        android:elevation="5dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Welcome"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="20sp" />
+                    <ProgressBar
+                        android:id="@+id/pbWallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:id="@+id/tvWalletError"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Server Error"
+                        android:visibility="visible" />
+                </FrameLayout>
+            </LinearLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold"
-                android:text="$43,789.00"
-                android:textSize="40sp"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:labelFor="@+id/wallet_checkbox"
+                    android:layout_marginStart="12dp"
+                    android:text="Hide Zero Balance Coin" />
+
+                <CheckBox
+                    android:id="@+id/wallet_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="80dp"
-                android:text="TOTAL CRYPTO HOLDINGS / INR"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWallet"
                 android:layout_width="match_parent"
-                android:layout_marginTop="100dp"
-                android:text="$43,789.00"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
-
-            </FrameLayout>
-            <TextView
-                android:layout_width="200dp"
-                android:layout_marginTop="70dp"
-                android:text="Welcome"
-                android:background="@drawable/header_title"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:textSize="20sp"
-                android:elevation="5dp"
-                android:textColor="@android:color/darker_gray"
-                android:layout_height="wrap_content" />
-        </FrameLayout>
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvWallet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="205dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/pbWallet"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Server Error"
-        android:visibility="visible"
-        android:id="@+id/tvWalletError"/>
-
-
-</FrameLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

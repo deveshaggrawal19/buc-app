@@ -29,7 +29,8 @@ class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.coinname.setText(arrayList.get(i).getCoinname());
+        myViewHolder.coinname.setText(arrayList.get(i).getCoinname().toUpperCase());
+        myViewHolder.portfolio.setText(arrayList.get(i).getPortfolio());
         int r = (int) (Math.random() * 6);
         myViewHolder.itemView.getBackground().setLevel(r);
     }
@@ -38,12 +39,12 @@ class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHol
     public int getItemCount() {
         return arrayList.size();
     }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView coinname;
+        TextView coinname,portfolio;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             coinname = itemView.findViewById(R.id.tvCurrency);
+            portfolio = itemView.findViewById(R.id.wallet_card_portfolio);
         }
     }
 }
