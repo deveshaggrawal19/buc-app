@@ -3,9 +3,13 @@ package com.buyucoin.buyucoin.Adapters;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
@@ -20,10 +24,14 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
     private final List<JSONObject> mValues;
     private final WalletFragment.OnListFragmentInteractionListener mListener;
+    RecyclerView recyclerView;
+    TextView textView;
 
-    public BuySellRecyclerViewAdapter(List<JSONObject> items, WalletFragment.OnListFragmentInteractionListener listener) {
+    public BuySellRecyclerViewAdapter(List<JSONObject> items, WalletFragment.OnListFragmentInteractionListener listener,RecyclerView recyclerView,TextView textView) {
         mValues = items;
         mListener = listener;
+        this.recyclerView = recyclerView;
+        this.textView = textView;
     }
 
     @NonNull
@@ -49,10 +57,11 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
         }catch(Exception e){
             s1 = s2 = s3 = s4 = "N/A";
         }
-        if(!s1.equals("")){
-            holder.mAddress.setText(s1);
-            holder.mCurrency.setText(s3.toUpperCase());
+
             final String finalS = s3;
+        holder.coinname.setText(s3);
+        holder.coinimg.setImageResource(MyCustomDialogBoxClass.arr[position]);
+
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -60,15 +69,19 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
                         mListener.onListFragmentInteraction(holder.mItem);
-                        MyCustomDialogBoxClass.BuyDialog(v.getContext(), finalS,position);
+                        FrameLayout.LayoutParams recparam = (FrameLayout.LayoutParams) recyclerView.getLayoutParams();
+
+                        recparam.gravity = Gravity.RIGHT;
+
+                        textView.setVisibility(View.GONE);
+                        recyclerView.setLayoutParams(recparam);
+
+
                     }
                 }
             });
 
-        }else{
-            holder.mView.setVisibility(View.GONE);
 
-        }
 
     }
 
@@ -79,22 +92,18 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mCurrency, mAddress;
+        public final TextView coinname ;
+        public  final ImageView coinimg;
         public JSONObject mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-//            mFees = (TextView) view.findViewById(R.id.tvFees);
-            mCurrency = (TextView) view.findViewById(R.id.tvCurrency);
-            mAddress = (TextView) view.findViewById(R.id.tvAddress);
-//            mMinWith = (TextView) view.findViewById(R.id.tvMinWith);
+            coinimg = view.findViewById(R.id.coinimg);
+            coinname = view.findViewById(R.id.coin_name);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mAddress.getText() + "'";
-        }
+
     }
     }
 

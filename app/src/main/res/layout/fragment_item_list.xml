@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
@@ -17,7 +18,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="200dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="0dp">
@@ -28,7 +29,7 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="200dp"
                         android:background="@drawable/header_design"
                         android:padding="20dp">
 
@@ -67,6 +68,7 @@
                     </FrameLayout>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -90,29 +92,27 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Server Error"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
                 </FrameLayout>
             </LinearLayout>
             <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:background="#eeeeee"
+                android:padding="5dp"
                 android:layout_width="match_parent"
-                android:gravity="center_vertical"
+                android:gravity="right"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:labelFor="@+id/wallet_checkbox"
-                    android:layout_marginStart="12dp"
-                    android:text="Hide Zero Balance Coin" />
+
 
                 <CheckBox
                     android:id="@+id/wallet_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:text="Hide Zero Balance Coin"
                     android:layout_centerHorizontal="true" />
+
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +121,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvWallet"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>

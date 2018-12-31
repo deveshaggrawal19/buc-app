@@ -43,6 +43,7 @@ public class BuySellFragment extends Fragment {
     RecyclerView recyclerView;
     ProgressBar pb;
     TextView errorText;
+    TextView trade;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -81,8 +82,9 @@ public class BuySellFragment extends Fragment {
 
         // Set the adapter
         recyclerView = view.findViewById(R.id.rvWallet);
+        trade = view.findViewById(R.id.trade_textview);
         Context context = view.getContext();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         pb = view.findViewById(R.id.pbWallet);
@@ -153,7 +155,7 @@ public class BuySellFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list, mListener));
+                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list, mListener,recyclerView,trade));
                                 Utilities.hideProgressBar(pb);
                             }
                         });

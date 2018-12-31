@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
@@ -45,9 +48,12 @@ public class P2PFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    EditText amount, transaction;
+    EditText amount, transaction,upi;
     Button b;
     String ACCESS_TOKEN = null;
+    TextView boost_value_text;
+    SeekBar boost_seekbar;
+    CheckBox upi_checkobx;
 
     private OnFragmentInteractionListener mListener;
 
@@ -93,9 +99,46 @@ public class P2PFragment extends Fragment {
 
         amount = (EditText) view.findViewById(R.id.etP2PAmount);
         transaction = (EditText) view.findViewById(R.id.etP2PTransaction);
+        upi = view.findViewById(R.id.etP2PUpiId);
+        upi.setVisibility(View.GONE);
+
+        boost_seekbar = view.findViewById(R.id.seekBar);
+
+        boost_value_text = view.findViewById(R.id.boost_value_text);
+
+        upi_checkobx = view.findViewById(R.id.checkBox2);
+
+        upi_checkobx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(upi_checkobx.isChecked()){
+                    upi.setVisibility(View.VISIBLE);
+                }else{
+                    upi.setVisibility(View.GONE);
+                }
+            }
+        });
 
         final RadioGroup rg = (RadioGroup) view.findViewById(R.id.rgp2p);
         b = (Button) view.findViewById(R.id.bP2Prequest);
+
+        boost_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                String val = "Boost Amount "+getString(R.string.rupees)+" "+progress;
+                boost_value_text.setText(val);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -121,10 +164,18 @@ public class P2PFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 JSONObject obj = new JSONObject();
+                int amonut_ = 0;
+                String tx_ = "";
+                if(!amount.getText().toString().equals("") && !transaction.getText().toString().equals("")){
+                    amonut_ = Integer.parseInt(amount.getText().toString());
+                    tx_ = transaction.getText().toString();
+                }else{
+                    Utilities.showToast(getActivity(),"Fields Cant be blank");
+                }
                 switch(rg.getCheckedRadioButtonId()){
                     case R.id.radioButton:
                         try {
-                            obj.put("amount", Integer.parseInt(amount.getText().toString())).put("tx_id", transaction.getText().toString()).put("type", "neft");
+                            obj.put("amount", amonut_).put("tx_id", tx_).put("type", "neft");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -175,6 +175,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:text="Buy"
+                android:id="@+id/buy_layout_buy_btn"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -306,6 +307,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:text="Sell"
+                android:id="@+id/sell_layout_sell_btn"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 

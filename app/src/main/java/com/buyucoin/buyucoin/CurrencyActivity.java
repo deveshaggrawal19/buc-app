@@ -17,6 +17,7 @@ import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
 import com.anychart.anychart.Cartesian;
 import com.anychart.anychart.CartesianSeriesArea;
+import com.anychart.anychart.Chart;
 import com.anychart.anychart.Crosshair;
 import com.anychart.anychart.DataEntry;
 import com.anychart.anychart.Stroke;
@@ -67,6 +68,8 @@ public class CurrencyActivity extends AppCompatActivity {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
+
+
 
         pb = (ProgressBar) findViewById(R.id.pbCurrencyActivity);
         buy = findViewById(R.id.tvCurrencyBuy);
@@ -131,12 +134,14 @@ public class CurrencyActivity extends AppCompatActivity {
 
             }
         });
+
         sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BuySellButtonFunction("sell",bundle.getString("bid"));
             }
         });
+
 
         OkHttpHandler.get("https://www.buyucoin.com/market-graph?currency=" + s, new Callback() {
             @Override
@@ -146,17 +151,22 @@ public class CurrencyActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                Log.d("currency response", s);
-                try {
-                    JSONObject object = new JSONObject(s).getJSONObject("data");
-                    JSONArray prices = object.getJSONArray("price");
-                    JSONArray time = object.getJSONArray("time");
-                    initialiseGraph(time, prices);
+                String s = null;
+                if (response.body() != null) {
+                    s = response.body().string();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("currency response", s);
+                    try {
+                        JSONObject object = new JSONObject(s).getJSONObject("data");
+                        JSONArray prices = object.getJSONArray("price");
+                        JSONArray time = object.getJSONArray("time");
+                        initialiseGraph(time, prices);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
     }
@@ -200,7 +210,6 @@ public class CurrencyActivity extends AppCompatActivity {
         Cartesian areaChart = AnyChart.area();
         CartesianSeriesArea area = areaChart.area(seriesdata);
 
-        area.setName("d");
         anyChartView.setChart(areaChart);
 
 

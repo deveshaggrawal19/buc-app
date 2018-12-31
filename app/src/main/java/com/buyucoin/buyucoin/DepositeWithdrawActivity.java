@@ -1,12 +1,14 @@
 package com.buyucoin.buyucoin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,8 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
     RecyclerView history_recyclerview;
     TextView card_coin_full_name,card_coin_availabel,card_coin_address;
     Intent i;
+    Button address_gen_btn;
+    NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
         card_coin_availabel = findViewById(R.id.card_coin_availabel);
         card_coin_address = findViewById(R.id.card_coin_address);
 
+        address_gen_btn = findViewById(R.id.card_coin_address_gen_btn);
+
+        nestedScrollView = findViewById(R.id.card_coin_nested_view);
+
 
 
         i = getIntent();
@@ -54,6 +62,20 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
         card_coin_full_name.setText(COIN_FULL_NAME);
         card_coin_availabel.setText(AVAILABEL);
         card_coin_address.setText(ADDRESS);
+
+
+        if(ADDRESS.equals("null")){
+            card_coin_address.setVisibility(View.GONE);
+            address_gen_btn.setVisibility(View.VISIBLE);
+
+        }
+
+        address_gen_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateAddress(card_coin_address);
+            }
+        });
         
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +95,13 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
         history_recyclerview.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         CoinHistoryAdapter coinHistoryAdapter = new CoinHistoryAdapter(getApplicationContext());
         history_recyclerview.setAdapter(coinHistoryAdapter);
+
+        nestedScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
 
         buy_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +165,12 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void generateAddress(TextView card_coin_address) {
+
+        card_coin_address.setText("ADDRESS GENERATED");
+
     }
 
 

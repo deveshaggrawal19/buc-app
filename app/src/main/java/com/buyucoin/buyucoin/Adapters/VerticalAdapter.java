@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.CoinDepositeWithdraw;
+import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.DepositeWithdrawActivity;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.myinterfaces.InrToP2P;
 import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
 
 import java.util.ArrayList;
@@ -57,51 +59,91 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
         myViewHolder.pending.setText(pending);
 
         int r = (int) (Math.random() * 6);
+
         myViewHolder.itemView.getBackground().setLevel(r);
-        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(context,DepositeWithdrawActivity.class);
 
-                intent.putExtra("coin_name",coin_name);
-                intent.putExtra("available",availabel);
-                intent.putExtra("address",address);
-                intent.putExtra("description",description);
-                intent.putExtra("tag",tag);
-                intent.putExtra("full_coin_name",full_coin_name);
 
-                myViewHolder.itemView.getContext().startActivity(intent);
-            }
-        });
-        myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,CoinDepositeWithdraw.class);
-                intent.putExtra("type","DEPOSITE");
-                intent.putExtra("coin_name",coin_name);
-                intent.putExtra("available",availabel);
-                intent.putExtra("address",address);
-                intent.putExtra("description",description);
-                intent.putExtra("tag",tag);
-                intent.putExtra("full_coin_name",full_coin_name);
-                context.startActivity(intent);
-            }
-        });
-        myViewHolder.withdraw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,CoinDepositeWithdraw.class);
-                intent.putExtra("type","WITHDRAW");
-                intent.putExtra("coin_name",coin_name);
-                intent.putExtra("available",availabel);
-                intent.putExtra("address",address);
-                intent.putExtra("description",description);
-                intent.putExtra("tag",tag);
-                intent.putExtra("full_coin_name",full_coin_name);
-                context.startActivity(intent);
-            }
-        });
+        if(coin_name.equals("inr")){
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Dashboard().inrToP2P();
+                }
+            });
+        }
+        else {
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context,DepositeWithdrawActivity.class);
+
+                    intent.putExtra("coin_name",coin_name);
+                    intent.putExtra("available",availabel);
+                    intent.putExtra("address",address);
+                    intent.putExtra("description",description);
+                    intent.putExtra("tag",tag);
+                    intent.putExtra("full_coin_name",full_coin_name);
+
+                    myViewHolder.itemView.getContext().startActivity(intent);
+                }
+            });
+        }
+
+        if(coin_name.equals("inr")){
+            myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Dashboard().inrToP2P();
+                }
+            });
+        }
+        else{
+            myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,CoinDepositeWithdraw.class);
+                    intent.putExtra("type","DEPOSITE");
+                    intent.putExtra("coin_name",coin_name);
+                    intent.putExtra("available",availabel);
+                    intent.putExtra("address",address);
+                    intent.putExtra("description",description);
+                    intent.putExtra("tag",tag);
+                    intent.putExtra("full_coin_name",full_coin_name);
+                    context.startActivity(intent);
+                }
+            });
+
+        }
+
+
+        if(coin_name.equals("inr")){
+            myViewHolder.withdraw.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Dashboard().inrToP2P();
+                }
+            });
+        }
+        else{
+            myViewHolder.withdraw.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,CoinDepositeWithdraw.class);
+                    intent.putExtra("type","WITHDRAW");
+                    intent.putExtra("coin_name",coin_name);
+                    intent.putExtra("available",availabel);
+                    intent.putExtra("address",address);
+                    intent.putExtra("description",description);
+                    intent.putExtra("tag",tag);
+                    intent.putExtra("full_coin_name",full_coin_name);
+                    context.startActivity(intent);
+                }
+            });
+        }
+
+
     }
 
     @Override

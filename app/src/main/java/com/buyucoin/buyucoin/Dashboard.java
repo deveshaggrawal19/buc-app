@@ -1,11 +1,14 @@
 package com.buyucoin.buyucoin;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.buyucoin.buyucoin.myinterfaces.InrToP2P;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -49,14 +52,15 @@ NavigationView.OnNavigationItemSelectedListener,
     RateFragment.OnListFragmentInteractionListener,
     HistoryFragment.OnListFragmentInteractionListener,
     ReferralFragment.OnFragmentInteractionListener,
-    P2PFragment.OnFragmentInteractionListener {
+    P2PFragment.OnFragmentInteractionListener,InrToP2P {
 
         String ACCESS_TOKEN = null;
-        Toolbar toolbar;
+        static Toolbar toolbar;
         TextView navname, navemail, tv;
         View fragView;
-        BottomNavigationView bm;
+        static BottomNavigationView bm;
         AlertDialog.Builder ad;
+        static FragmentManager fragmentManager ;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,8 @@ NavigationView.OnNavigationItemSelectedListener,
             String refresh_token = prefs.getString("refresh_token", null);
 
             ad = new AlertDialog.Builder(this);
+
+            fragmentManager = getSupportFragmentManager();
 
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -194,11 +200,13 @@ NavigationView.OnNavigationItemSelectedListener,
 
         }
 
-    public void BuySellFragmentFun(View view) {
-        Fragment fragment  = new BuySellFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent,fragment);
-        changeTab(R.id._buysell);
+    public void BuySellFragmentFun() {
+            if(!isFinishing() && !isDestroyed()) {
+                Fragment fragment = new P2PFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commitAllowingStateLoss();
+            }
+//        changeTab(R.id._buysell);
 
     }
 
@@ -477,4 +485,19 @@ NavigationView.OnNavigationItemSelectedListener,
         public void onFragmentInteraction(Uri uri) {
 
         }
+
+
+    public void inrToP2P() {
+        if(!isFinishing() && !isDestroyed()) {
+            P2PFragment fragment = new P2PFragment();
+            toolbar.setTitle("P2P");
+            changeTab(R.id._p2p);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+
+    }
+
+
     }
