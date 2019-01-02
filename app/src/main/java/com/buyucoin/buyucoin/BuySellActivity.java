@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.buyucoin.buyucoin.buyinterfaces.BuyDialogFunction;
-import com.buyucoin.buyucoin.coustomDialogs.CoustomDialogs;
-import com.buyucoin.buyucoin.sellinterface.SellDialogFuncion;
+import com.buyucoin.buyucoin.Interfaces.BuyDialogFunction;
+import com.buyucoin.buyucoin.customDialogs.CustomDialogs;
+import com.buyucoin.buyucoin.Interfaces.SellDialogFunction;
 
-public class BuySellActivity extends AppCompatActivity implements BuyDialogFunction,SellDialogFuncion {
+public class BuySellActivity extends AppCompatActivity implements BuyDialogFunction,SellDialogFunction {
     String type;
     Double price;
     Button sell_button,buy_button,sell,buy;
@@ -77,7 +77,7 @@ public class BuySellActivity extends AppCompatActivity implements BuyDialogFunct
                 bundle.putString("total","10100");
                 BuyDialogFunction buyDialogFunction = new BuySellActivity();
 
-                CoustomDialogs coustomDialogs = new CoustomDialogs(BuySellActivity.this,bundle,buyDialogFunction,"BUY ORDER");
+                CustomDialogs coustomDialogs = new CustomDialogs(BuySellActivity.this,bundle,buyDialogFunction,"BUY ORDER");
                 coustomDialogs.confirmBuyDialog();
             }
         });
@@ -90,9 +90,9 @@ public class BuySellActivity extends AppCompatActivity implements BuyDialogFunct
                 bundle.putString("price","10000");
                 bundle.putString("fees","0.5 - 1.0 GST");
                 bundle.putString("total","10100");
-                SellDialogFuncion sellDialogFunction = new BuySellActivity();
+                SellDialogFunction sellDialogFunction = new BuySellActivity();
 
-                CoustomDialogs coustomDialogs = new CoustomDialogs(BuySellActivity.this,bundle,sellDialogFunction,"SELL ORDER");
+                CustomDialogs coustomDialogs = new CustomDialogs(BuySellActivity.this,bundle,sellDialogFunction,"SELL ORDER");
                 coustomDialogs.confirmSellDialog();
             }
         });

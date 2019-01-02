@@ -1,8 +1,8 @@
-package com.buyucoin.buyucoin.sellinterface;
+package com.buyucoin.buyucoin.Interfaces;
 
 import android.content.Context;
 
-public interface SellDialogFuncion {
+public interface SellDialogFunction {
 
     boolean sellFunction(Context context,String amount, String price);
 }

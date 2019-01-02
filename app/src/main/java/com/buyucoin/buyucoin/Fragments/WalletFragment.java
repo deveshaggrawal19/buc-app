@@ -175,7 +175,7 @@ public class WalletFragment extends Fragment {
                 Log.d("/get_wallet RESPONSE", s);
                 try{
                     JSONObject jsonObject = new JSONObject(s);
-                    if(jsonObject.getString("status").equals("error")){
+                    if(jsonObject.getString("status").equals("error") || jsonObject.getString("status").equals("redirect")){
                         if(jsonObject.has("msg") && jsonObject.getString("msg").equals("The token has expired")) {
                             SharedPreferences.Editor editor = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
                             editor.remove("access_token");
@@ -185,9 +185,12 @@ public class WalletFragment extends Fragment {
                             startActivity(new Intent(getActivity(), LoginActivity.class));
                             getActivity().finish();
                         }else{
-                            if(jsonObject.has("message"))
-                                Utilities.showToast(getActivity(), jsonObject.getString("message"));
+                            if(jsonObject.has("message")){
+                                Utilities.showToast(getActivity(), jsonObject.getJSONArray("message").getJSONArray(0).getString(0));
+                            }
                         }
+
+                        Utilities.hideProgressBar(pb, getActivity());
                         return;
                     }
                     JSONObject data = jsonObject.getJSONObject("data");

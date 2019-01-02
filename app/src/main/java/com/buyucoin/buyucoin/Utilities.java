@@ -58,6 +58,20 @@ public class Utilities {
         });
     }
 
+    public static void hideProgressBar(final ProgressBar pb, Activity activity){
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pb.animate().alpha(0f).setDuration(1).setListener(new AnimatorListenerAdapter(){
+                    public void onAnimationEnd(Animator animator) {
+                        pb.setVisibility(View.GONE);
+                        pb.setAlpha(1f);
+                    }
+                });
+            }
+        });
+    }
+
     public static void showProgressBar(final ProgressBar pb){
         pb.setVisibility(View.VISIBLE);
     }

@@ -1,4 +1,4 @@
-package com.buyucoin.buyucoin.buyinterfaces;
+package com.buyucoin.buyucoin.Interfaces;
 
 import android.content.Context;
 

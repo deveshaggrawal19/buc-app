@@ -5,18 +5,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.buyucoin.buyucoin.CoinDepositeWithdraw;
+import com.buyucoin.buyucoin.CoinDepositWithdraw;
 import com.buyucoin.buyucoin.Dashboard;
-import com.buyucoin.buyucoin.DepositeWithdrawActivity;
+import com.buyucoin.buyucoin.DepositWithdrawActivity;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.myinterfaces.InrToP2P;
 import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
 
 import java.util.ArrayList;
@@ -77,7 +75,7 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context,DepositeWithdrawActivity.class);
+                    Intent intent = new Intent(context,DepositWithdrawActivity.class);
 
                     intent.putExtra("coin_name",coin_name);
                     intent.putExtra("available",availabel);
@@ -103,7 +101,7 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
             myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,CoinDepositeWithdraw.class);
+                    Intent intent = new Intent(context,CoinDepositWithdraw.class);
                     intent.putExtra("type","DEPOSITE");
                     intent.putExtra("coin_name",coin_name);
                     intent.putExtra("available",availabel);
@@ -130,7 +128,7 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
             myViewHolder.withdraw.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,CoinDepositeWithdraw.class);
+                    Intent intent = new Intent(context,CoinDepositWithdraw.class);
                     intent.putExtra("type","WITHDRAW");
                     intent.putExtra("coin_name",coin_name);
                     intent.putExtra("available",availabel);

@@ -3,6 +3,7 @@ package com.buyucoin.buyucoin;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -24,6 +25,7 @@ import com.anychart.anychart.Stroke;
 import com.anychart.anychart.ValueDataEntry;
 import com.buyucoin.buyucoin.Adapters.AsksAdapter;
 import com.buyucoin.buyucoin.Adapters.BidsAdapter;
+import com.buyucoin.buyucoin.DataClasses.Markets;
 import com.buyucoin.buyucoin.pojos.Ask;
 import com.buyucoin.buyucoin.pojos.Bids;
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,8 +34,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +63,8 @@ public class CurrencyActivity extends AppCompatActivity {
     Bundle bundle;
     ProgressBar pb;
     RecyclerView bids_recview,ask_recview;
+    DatabaseReference myref;
+    List<Markets> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,27 +95,13 @@ public class CurrencyActivity extends AppCompatActivity {
 
         Log.d("ASK LIST SIZE", String.valueOf(Ask.randomAsks().size()));
         Log.d("BIDS LISR SIZE",String.valueOf(Bids.randomBids().size()));
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                Integer s = dataSnapshot.child("market_ask").child("data").child("ask").getValue(Integer.class);
-//                Log.d("TAG", s+"");
-//                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-//                    Long a = dataSnapshot1.child("data").child("ask").getValue(Long.class);
-//                  //  Log.d("Loop", a+"");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.w("TAG", "Failed to read value", databaseError.toException());
-//            }
-//        });
+
         intent = getIntent();
         bundle = intent.getExtras();
 
@@ -116,7 +109,38 @@ public class CurrencyActivity extends AppCompatActivity {
         TextView hrs24 = findViewById(R.id.tvCurrency24Hrs);
         ImageView img = findViewById(R.id.ivCurrencyImg);
 
-        String s = bundle.getString("currency").split("_")[0];
+        final String s = bundle.getString("currency").split("_")[0];
+
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String marketstring = "market_"+s;
+                DataSnapshot data = dataSnapshot.child(marketstring).child("data");
+                Log.d("MARKET___", data.toString());
+
+                list = new ArrayList<>();
+                list.clear();
+                if(data.hasChild("buy_orders")){
+                    for(DataSnapshot d : data.child("buy_orders").getChildren()){
+                        Double price = d.child("price").getValue(Double.class);
+                        String value = d.child("value").getValue(String.class);
+                        Double vol = d.child("vol").getValue(Double.class);
+                        list.add(new Markets(price+"", value, vol+""));
+                    }
+                }
+                Log.d("LIST SIZE__", list.size()+"");
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("TAG", "Failed to read value", databaseError.toException());
+            }
+        });
+
+
         try {
             img.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(s, "drawable", getPackageName())));
         }catch(Exception e){
@@ -155,7 +179,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     s = response.body().string();
 
-                    Log.d("currency response", s);
+               //     Log.d("currency response", s);
                     try {
                         JSONObject object = new JSONObject(s).getJSONObject("data");
                         JSONArray prices = object.getJSONArray("price");
@@ -163,6 +187,8 @@ public class CurrencyActivity extends AppCompatActivity {
                         initialiseGraph(time, prices);
 
                     } catch (JSONException e) {
+                        e.printStackTrace();
+                    }catch(NullPointerException e){
                         e.printStackTrace();
                     }
                 }
@@ -179,8 +205,7 @@ public class CurrencyActivity extends AppCompatActivity {
     }
 
     public void initialiseGraph(JSONArray x, JSONArray y){
-        anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
-        anyChartView.setHorizontalScrollBarEnabled(true);
+
         Cartesian areaChart = AnyChart.area();
 
         areaChart.setAnimation(true);
@@ -210,7 +235,9 @@ public class CurrencyActivity extends AppCompatActivity {
         Cartesian areaChart = AnyChart.area();
         CartesianSeriesArea area = areaChart.area(seriesdata);
 
-        anyChartView.setChart(areaChart);
+            anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
+            anyChartView.setChart(areaChart);
+            anyChartView.setHorizontalScrollBarEnabled(true);
 
 
         Utilities.hideProgressBar(pb);

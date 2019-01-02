@@ -15,9 +15,7 @@ import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.CoinHistoryAdapter;
 
-import java.util.ArrayList;
-
-public class DepositeWithdrawActivity extends AppCompatActivity {
+public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout,buy_layout,sell_layout,deposite_layout,withdraw_layout;
     ImageView imageView;
     RecyclerView history_recyclerview;
@@ -138,7 +136,7 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
         deposite_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CoinDepositeWithdraw.class);
+                Intent intent = new Intent(getApplicationContext(),CoinDepositWithdraw.class);
                 intent.putExtra("type","DEPOSITE");
                 intent.putExtra("coin_name",COIN);
                 intent.putExtra("available",AVAILABEL);
@@ -153,7 +151,7 @@ public class DepositeWithdrawActivity extends AppCompatActivity {
         withdraw_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CoinDepositeWithdraw.class);
+                Intent intent = new Intent(getApplicationContext(),CoinDepositWithdraw.class);
                 intent.putExtra("type","WITHDRAW");
                 intent.putExtra("coin_name",COIN);
                 intent.putExtra("available",AVAILABEL);

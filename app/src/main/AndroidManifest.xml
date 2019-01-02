@@ -38,8 +38,8 @@
             android:label="@string/title_activity_currency"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BuySellActivity" />
-        <activity android:name=".DepositeWithdrawActivity" />
-        <activity android:name=".CoinDepositeWithdraw"
+        <activity android:name=".DepositWithdrawActivity" />
+        <activity android:name=".CoinDepositWithdraw"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
     </application>

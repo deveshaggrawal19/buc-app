@@ -1,6 +1,5 @@
 package com.buyucoin.buyucoin;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
-import com.buyucoin.buyucoin.myinterfaces.InrToP2P;
+import com.buyucoin.buyucoin.Interfaces.InrToP2P;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -334,14 +333,19 @@ NavigationView.OnNavigationItemSelectedListener,
                 @Override
                 public void onFailure(Call call, IOException e) {
                     showToast("Error retrieving profile.");
-                    Fragment fragment = null;
-                    fragment = new WalletFragment();
+                    final Fragment fragment = new WalletFragment();
 
-                    toolbar.setTitle("Wallet");
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.flContent, fragment);
-                    fragmentTransaction.commitAllowingStateLoss();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toolbar.setTitle("Wallet");
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            fragmentTransaction.commitAllowingStateLoss();
+                        }
+                    });
+
                     e.printStackTrace();
 
                 }

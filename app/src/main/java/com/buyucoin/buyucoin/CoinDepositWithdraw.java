@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-public class CoinDepositeWithdraw extends AppCompatActivity {
+public class CoinDepositWithdraw extends AppCompatActivity {
     private static  final String DEPOSITE = "DEPOSITE";
     private static  final String WITHDRAW = "WITHDRAW";
     Intent i;

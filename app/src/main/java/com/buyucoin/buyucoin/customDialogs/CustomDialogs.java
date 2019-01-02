@@ -1,30 +1,27 @@
-package com.buyucoin.buyucoin.coustomDialogs;
+package com.buyucoin.buyucoin.customDialogs;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.buyucoin.buyucoin.BuySellActivity;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.buyinterfaces.BuyDialogFunction;
-import com.buyucoin.buyucoin.sellinterface.SellDialogFuncion;
+import com.buyucoin.buyucoin.Interfaces.BuyDialogFunction;
+import com.buyucoin.buyucoin.Interfaces.SellDialogFunction;
 
-public class CoustomDialogs {
+public class CustomDialogs {
 
     private Context acitivity ;
     private Bundle bundle;
     private BuyDialogFunction buyDialogFunction;
-    private SellDialogFuncion sellDialogFuncion;
+    private SellDialogFunction sellDialogFuncion;
     private Dialog dialog;
     private String dialog_title;
 
-    public CoustomDialogs(Context acitivity, Bundle bundle, BuyDialogFunction buyDialogFunction,String dialog_title) {
+    public CustomDialogs(Context acitivity, Bundle bundle, BuyDialogFunction buyDialogFunction, String dialog_title) {
         this.acitivity = acitivity;
         this.bundle = bundle;
         this.buyDialogFunction = buyDialogFunction;
@@ -32,7 +29,7 @@ public class CoustomDialogs {
         this.dialog_title = dialog_title;
     }
 
-    public CoustomDialogs(Context acitivity, Bundle bundle, SellDialogFuncion sellDialogFuncion, String dialog_title) {
+    public CustomDialogs(Context acitivity, Bundle bundle, SellDialogFunction sellDialogFuncion, String dialog_title) {
         this.acitivity = acitivity;
         this.bundle = bundle;
         this.sellDialogFuncion = sellDialogFuncion;
