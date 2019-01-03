@@ -55,6 +55,7 @@ public class WalletFragment extends Fragment {
     RecyclerView recyclerView;
     ProgressBar pb;
     TextView err;
+    View nsView;
     CheckBox hidezero_checkbox;
     private SharedPreferences prefs ;
     private SharedPreferences.Editor edit_pref;
@@ -103,6 +104,7 @@ public class WalletFragment extends Fragment {
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
         err = (TextView) view.findViewById(R.id.tvWalletError);
+        nsView = view.findViewById(R.id.nsView);
 
         hidezero_checkbox = view.findViewById(R.id.wallet_checkbox);
 
@@ -190,7 +192,15 @@ public class WalletFragment extends Fragment {
                             getActivity().finish();
                         }else{
                             if(jsonObject.has("message")){
-                                Utilities.showToast(getActivity(), jsonObject.getJSONArray("message").getJSONArray(0).getString(0));
+                                final String e = jsonObject.getJSONArray("message").getJSONArray(0).getString(0);
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        err.setText(e);
+                                        err.setVisibility(View.VISIBLE);
+                                    }
+                                });
+
                             }
                         }
 
@@ -212,15 +222,9 @@ public class WalletFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
+                                nsView.setVisibility(View.VISIBLE);
                                 recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,false));
                                 Utilities.hideProgressBar(pb);
-//                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter(){
-//                                public void onAnimationEnd(Animator animator) {
-//                                    pb.setVisibility(View.GONE);
-//                                    pb.setAlpha(1f);
-//                                }
-//                            });
                             }
                         });
                     }

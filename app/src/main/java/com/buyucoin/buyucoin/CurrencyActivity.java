@@ -186,7 +186,7 @@ public class CurrencyActivity extends AppCompatActivity {
                         JSONArray time = object.getJSONArray("time");
                         initialiseGraph(time, prices);
 
-                    } catch (JSONException | NullPointerException e) {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -233,22 +233,16 @@ public class CurrencyActivity extends AppCompatActivity {
         Cartesian areaChart = AnyChart.area();
         CartesianSeriesArea area = areaChart.area(seriesdata);
 
-            anyChartView = findViewById(R.id.any_chart_view);
+        try {
+            anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
             anyChartView.setChart(areaChart);
             anyChartView.setHorizontalScrollBarEnabled(true);
-
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
 
         Utilities.hideProgressBar(pb);
     }
 
 
-
-
-    private class CustomDataEntry extends ValueDataEntry{
-        CustomDataEntry(String x, Integer value, Integer value1) {
-            super(x, value);
-            setValue(x, value);
-            setValue(x, value1);
-        }
-    }
 }
