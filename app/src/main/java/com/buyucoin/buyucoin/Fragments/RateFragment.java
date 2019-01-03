@@ -58,6 +58,9 @@ public class RateFragment extends Fragment {
     ArrayList<Rates> list = new ArrayList<>();
     DatabaseReference myRef;
     MyrateRecyclerViewAdapter adapter;
+    private SharedPreferences prefs ;
+    private SharedPreferences.Editor edit_pref ;
+    private String FRAGMENT_STATE = "RATES";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -83,9 +86,11 @@ public class RateFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
 
         list = new ArrayList<>();
         adapter = new MyrateRecyclerViewAdapter(list, mListener, getActivity().getApplicationContext());

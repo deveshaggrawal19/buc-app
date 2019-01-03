@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         String s = prefs.getString("access_token", null);
         String r = prefs.getString("refresh_token", null);
         if(s != null){
-            Intent i = new Intent(this, Dashboard.class);
+            Intent i = new Intent(this, PassCodeActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
             finish();
@@ -168,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         finish();
-        Intent intent = new Intent(this, Dashboard.class);
+        Intent intent = new Intent(this, PassCodeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }

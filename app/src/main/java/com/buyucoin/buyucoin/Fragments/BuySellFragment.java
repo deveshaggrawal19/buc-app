@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.BuySellRecyclerViewAdapter;
+import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
@@ -44,6 +45,9 @@ public class BuySellFragment extends Fragment {
     ProgressBar pb;
     TextView errorText;
     TextView trade;
+    private SharedPreferences prefs ;
+    private SharedPreferences.Editor edit_pref ;
+    private String FRAGMENT_STATE = "BUYSELL";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,8 +69,9 @@ public class BuySellFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
         ACCESS_TOKEN = prefs.getString("access_token", null);
         list = new ArrayList<>();
         if (getArguments() != null) {
@@ -167,9 +172,11 @@ public class BuySellFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Utilities.hideProgressBar(pb);
-                            errorText.setText(Utilities.getErrorMessage(s));
-                            errorText.setVisibility(View.VISIBLE);
+                            new Dashboard().ServerErrorFragment();
+
+//                            Utilities.hideProgressBar(pb);
+//                            errorText.setText(Utilities.getErrorMessage(s));
+//                            errorText.setVisibility(View.VISIBLE);
                         }
                     });
                 }

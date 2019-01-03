@@ -33,24 +33,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:textAlignment="center"
         android:visibility="gone"
-        android:id="@+id/tvInternet"
-        android:text="No internet"/>
+        android:id="@+id/ll_no_internet"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="100dp"
+            android:src="@drawable/ic_no_internet"
+            android:tint="#aaaaaa"
+            android:layout_gravity="center"
+            android:layout_height="100dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:textColor="#aaaaaa"
+            android:text="No internet"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+    </LinearLayout>
+
+
+
+
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"

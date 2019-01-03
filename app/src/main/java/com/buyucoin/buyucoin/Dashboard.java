@@ -1,29 +1,16 @@
 package com.buyucoin.buyucoin;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-
-import com.buyucoin.buyucoin.Interfaces.InrToP2P;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
-import android.view.View;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,311 +20,410 @@ import com.buyucoin.buyucoin.Fragments.HistoryFragment;
 import com.buyucoin.buyucoin.Fragments.P2PFragment;
 import com.buyucoin.buyucoin.Fragments.RateFragment;
 import com.buyucoin.buyucoin.Fragments.ReferralFragment;
+import com.buyucoin.buyucoin.Fragments.ServerError;
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 public class Dashboard extends AppCompatActivity implements
-NavigationView.OnNavigationItemSelectedListener,
-    AccountFragment.OnFragmentInteractionListener,
-    WalletFragment.OnListFragmentInteractionListener,
-    RateFragment.OnListFragmentInteractionListener,
-    HistoryFragment.OnListFragmentInteractionListener,
-    ReferralFragment.OnFragmentInteractionListener,
-    P2PFragment.OnFragmentInteractionListener,InrToP2P {
+        NavigationView.OnNavigationItemSelectedListener,
+        AccountFragment.OnFragmentInteractionListener,
+        WalletFragment.OnListFragmentInteractionListener,
+        RateFragment.OnListFragmentInteractionListener,
+        HistoryFragment.OnListFragmentInteractionListener,
+        ReferralFragment.OnFragmentInteractionListener,
+        P2PFragment.OnFragmentInteractionListener {
 
-        String ACCESS_TOKEN = null;
-        static Toolbar toolbar;
-        TextView navname, navemail, tv;
-        View fragView;
-        static BottomNavigationView bm;
-        AlertDialog.Builder ad;
-        static FragmentManager fragmentManager ;
+    String ACCESS_TOKEN = null;
+    static Toolbar toolbar;
+    TextView navname, navemail;
+    View fragView;
+    static BottomNavigationView bm;
+    AlertDialog.Builder ad;
+    static FragmentManager fragmentManager;
+    LinearLayout noInternet, serverError;
+    SharedPreferences prefs;
+    String FRAGENT_TYPE;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_dashboard);
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
-            bm = findViewById(R.id._btnbar);
-            setSupportActionBar(toolbar);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_dashboard);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        bm = findViewById(R.id._btnbar);
+        setSupportActionBar(toolbar);
+        noInternet = findViewById(R.id.ll_no_internet);
+        serverError = findViewById(R.id.ll_server_error);
 
-            SharedPreferences prefs = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-            ACCESS_TOKEN = prefs.getString("access_token", null);
-            String refresh_token = prefs.getString("refresh_token", null);
+        prefs = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
 
-            ad = new AlertDialog.Builder(this);
+        ACCESS_TOKEN = prefs.getString("access_token", null);
+        FRAGENT_TYPE = prefs.getString("FRAGMENT_STATE", "WALLET");
 
-            fragmentManager = getSupportFragmentManager();
+        Toast.makeText(getApplicationContext(), FRAGENT_TYPE, Toast.LENGTH_LONG).show();
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                }
-            });
+        String refresh_token = prefs.getString("refresh_token", null);
 
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        ad = new AlertDialog.Builder(this);
+
+        fragmentManager = getSupportFragmentManager();
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-            View header = navigationView.getHeaderView(0);
-            navname = (TextView) header.findViewById(R.id.tvName);
-            navemail = (TextView) header.findViewById(R.id.tvEmail);
-            tv = (TextView) findViewById(R.id.tvInternet);
-            fragView = findViewById(R.id.flContent);
+        View header = navigationView.getHeaderView(0);
+        navname = (TextView) header.findViewById(R.id.tvName);
+        navemail = (TextView) header.findViewById(R.id.tvEmail);
 
-            if (Utilities.isOnline(getApplicationContext())) {
-                getNonFreshToken(refresh_token);
-                loadProfile();
-            } else {
-                fragView.setVisibility(View.GONE);
-                tv.setVisibility(View.VISIBLE);
-            }
+        fragView = findViewById(R.id.flContent);
 
-            bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    OkHttpHandler.cancelAllRequests();
-                    if (!Utilities.isOnline(getApplicationContext())) {
-                        fragView.setVisibility(View.GONE);
-                        tv.setVisibility(View.VISIBLE);
-                        return true;
-                    }
-
-                    Fragment fragment=null, aFrag=null, wFrag=null, rFrag=null, pFrag=null, bFrag=null;
-                    Class fragmentClass = null;
-                    int id = item.getItemId();
-
-                    try {
-                        switch (item.getItemId()) {
-                            case R.id.acc_det:
-                                toolbar.setTitle("Account");
-                                setTitle(item.getTitle());
-                                item.setChecked(true);
-                                if (Utilities.isOnline(getApplicationContext())) {
-                                } else {
-                                    fragView.setVisibility(View.GONE);
-                                    tv.setVisibility(View.VISIBLE);
-                                }
-                                fragmentClass = AccountFragment.class;
-                                if (aFrag == null)
-                                    aFrag = (Fragment) fragmentClass.newInstance();
-                                fragment = aFrag;
-                                break;
-                            case R.id.wll_bal:
-                                toolbar.setTitle("Wallet");
-                                fragmentClass = WalletFragment.class;
-                                if (wFrag == null)
-                                    wFrag = (Fragment) fragmentClass.newInstance();
-                                fragment = wFrag;
-                                break;
-                            case R.id._rates:
-                                toolbar.setTitle("Rates");
-                                fragmentClass = RateFragment.class;
-                                if (rFrag == null)
-                                    rFrag = (Fragment) fragmentClass.newInstance();
-                                fragment = rFrag;
-                                break;
-                            case R.id._buysell:
-                                toolbar.setTitle("Buy\\Sell");
-                                fragmentClass = BuySellFragment.class;
-                                if(bFrag==null)
-                                    bFrag = (Fragment) fragmentClass.newInstance();
-                                fragment = bFrag;
-                                break;
-                            case R.id._p2p:
-                                toolbar.setTitle("Create Deposit/Withdrawl");
-                                fragmentClass = P2PFragment.class;
-                                if (pFrag == null)
-                                    pFrag = (Fragment) fragmentClass.newInstance();
-                                fragment = pFrag;
-                                break;
-                            default:
-                                fragmentClass = AccountFragment.class;
-                                if (aFrag == null)
-                                    aFrag = (Fragment) fragmentClass.newInstance();
-                                fragment = aFrag;
-
-
-                        }
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    if (Utilities.isOnline(getApplicationContext())) {
-                        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-                        tv.setVisibility(View.GONE);
-                        fragView.setVisibility(View.VISIBLE);
-                    } else {
-                        fragView.setVisibility(View.GONE);
-                        tv.setVisibility(View.VISIBLE);
-                    }
-                    // Set action bar title
-                    setTitle(item.getTitle());
-                    item.setChecked(true);
-                    // Close the navigation drawer
-                    return true;
-                }
-            });
-
+        if (Utilities.isOnline(getApplicationContext())) {
+            getNonFreshToken(refresh_token);
+            loadProfile();
+        } else {
+            fragView.setVisibility(View.GONE);
+            noInternet.setVisibility(View.VISIBLE);
         }
 
-    public void BuySellFragmentFun() {
-            if(!isFinishing() && !isDestroyed()) {
-                Fragment fragment = new P2PFragment();
+        bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                OkHttpHandler.cancelAllRequests();
+                if (!Utilities.isOnline(getApplicationContext())) {
+                    fragView.setVisibility(View.GONE);
+                    noInternet.setVisibility(View.VISIBLE);
+                    return true;
+                }
+
+                Fragment fragment = null, aFrag = null, wFrag = null, rFrag = null, pFrag = null, bFrag = null;
+                Class fragmentClass = null;
+                int id = item.getItemId();
+
+                try {
+                    switch (item.getItemId()) {
+                        case R.id.acc_det:
+                            toolbar.setTitle("Account");
+                            setTitle(item.getTitle());
+                            item.setChecked(true);
+                            if (Utilities.isOnline(getApplicationContext())) {
+                            } else {
+                                fragView.setVisibility(View.GONE);
+                                noInternet.setVisibility(View.VISIBLE);
+                            }
+                            fragmentClass = AccountFragment.class;
+                            if (aFrag == null)
+                                aFrag = (Fragment) fragmentClass.newInstance();
+                            fragment = aFrag;
+                            break;
+                        case R.id.wll_bal:
+                            toolbar.setTitle("Wallet");
+                            fragmentClass = WalletFragment.class;
+                            if (wFrag == null)
+                                wFrag = (Fragment) fragmentClass.newInstance();
+                            fragment = wFrag;
+                            break;
+                        case R.id._rates:
+                            toolbar.setTitle("Rates");
+                            fragmentClass = RateFragment.class;
+                            if (rFrag == null)
+                                rFrag = (Fragment) fragmentClass.newInstance();
+                            fragment = rFrag;
+                            break;
+                        case R.id._buysell:
+                            toolbar.setTitle("Buy\\Sell");
+                            fragmentClass = BuySellFragment.class;
+                            if (bFrag == null)
+                                bFrag = (Fragment) fragmentClass.newInstance();
+                            fragment = bFrag;
+                            break;
+                        case R.id._p2p:
+                            toolbar.setTitle("Create Deposit/Withdrawl");
+                            fragmentClass = P2PFragment.class;
+                            if (pFrag == null)
+                                pFrag = (Fragment) fragmentClass.newInstance();
+                            fragment = pFrag;
+                            break;
+                        default:
+                            fragmentClass = AccountFragment.class;
+                            if (aFrag == null)
+                                aFrag = (Fragment) fragmentClass.newInstance();
+                            fragment = aFrag;
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commitAllowingStateLoss();
+                if (Utilities.isOnline(getApplicationContext())) {
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                    noInternet.setVisibility(View.GONE);
+                    fragView.setVisibility(View.VISIBLE);
+                } else {
+                    fragView.setVisibility(View.GONE);
+                    noInternet.setVisibility(View.VISIBLE);
+                }
+                // Set action bar title
+                setTitle(item.getTitle());
+                item.setChecked(true);
+                // Close the navigation drawer
+                return true;
             }
+        });
+
+    }
+
+    public void BuySellFragmentFun() {
+        if (!isFinishing() && !isDestroyed()) {
+            Fragment fragment = new P2PFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commitAllowingStateLoss();
+        }
 //        changeTab(R.id._buysell);
 
     }
 
-        public void changeTab(int i){
-            bm.setSelectedItemId(i);
+    public void changeTab(int i) {
+        bm.setSelectedItemId(i);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.dashboard, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        @Override
-        public void onBackPressed() {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+            editor.remove("access_token");
+            editor.remove("refresh_token");
+            editor.apply();
+            Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            return true;
         }
-
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.dashboard, menu);
+        if (id == R.id.action_settings) {
             return true;
         }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_logout) {
-                SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-                editor.remove("access_token");
-                editor.remove("refresh_token");
-                editor.apply();
-                Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                return true;
-            }
-            if (id == R.id.action_settings) {
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
-        @SuppressWarnings("StatementWithEmptyBody")
-        @Override
-        public boolean onNavigationItemSelected(MenuItem item) {
-            // Handle navigation view item clicks here.
-            Fragment fragment = null;
-            Class fragmentClass;
-            int id = item.getItemId();
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        Fragment fragment = null;
+        Class fragmentClass;
+        int id = item.getItemId();
 
 
-            if (id == R.id.nav_account) {
-                // Handle the camera action
-                toolbar.setTitle("Account");
-                setTitle(item.getTitle());
-                item.setChecked(true);
-                if (Utilities.isOnline(getApplicationContext())) {
-                    loadProfile();
-                } else {
-                    fragView.setVisibility(View.GONE);
-                    tv.setVisibility(View.VISIBLE);
-                }
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            } else if (id == R.id.nav_wallet) {
-                toolbar.setTitle("Wallet");
-                fragmentClass = WalletFragment.class;
-            } else if (id == R.id.nav_rate) {
-                toolbar.setTitle("Rates");
-                fragmentClass = RateFragment.class;
-            } else if (id == R.id.nav_p2p) {
-                toolbar.setTitle("Create Deposit/Withdrawl");
-                fragmentClass = P2PFragment.class;
-            } else if (id == R.id.nav_history) {
-                toolbar.setTitle("History");
-                fragmentClass = HistoryFragment.class;
-            } else if (id == R.id.nav_referrals) {
-                toolbar.setTitle("Referrals");
-                fragmentClass = ReferralFragment.class;
-            } else
-                fragmentClass = AccountFragment.class;
-
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            if (Utilities.isOnline(getApplicationContext())) {
-                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-                tv.setVisibility(View.GONE);
-                fragView.setVisibility(View.VISIBLE);
-            } else {
-                fragView.setVisibility(View.GONE);
-                tv.setVisibility(View.VISIBLE);
-            }
-            // Set action bar title
+        if (id == R.id.nav_account) {
+            // Handle the camera action
+            toolbar.setTitle("Account");
             setTitle(item.getTitle());
             item.setChecked(true);
-            // Close the navigation drawer
-
-
-
+            if (Utilities.isOnline(getApplicationContext())) {
+                loadProfile();
+            } else {
+                fragView.setVisibility(View.GONE);
+                noInternet.setVisibility(View.VISIBLE);
+            }
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return true;
+        } else if (id == R.id.nav_wallet) {
+            toolbar.setTitle("Wallet");
+            fragmentClass = WalletFragment.class;
+        } else if (id == R.id.nav_rate) {
+            toolbar.setTitle("Rates");
+            fragmentClass = RateFragment.class;
+        } else if (id == R.id.nav_p2p) {
+            toolbar.setTitle("Create Deposit/Withdrawl");
+            fragmentClass = P2PFragment.class;
+        } else if (id == R.id.nav_history) {
+            toolbar.setTitle("History");
+            fragmentClass = HistoryFragment.class;
+        } else if (id == R.id.nav_referrals) {
+            toolbar.setTitle("Referrals");
+            fragmentClass = ReferralFragment.class;
+        } else
+            fragmentClass = AccountFragment.class;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        public void loadProfile() {
-            OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    showToast("Error retrieving profile.");
-                    final Fragment fragment = new WalletFragment();
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (Utilities.isOnline(getApplicationContext())) {
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            noInternet.setVisibility(View.GONE);
+            fragView.setVisibility(View.VISIBLE);
+        } else {
+            fragView.setVisibility(View.GONE);
+            noInternet.setVisibility(View.VISIBLE);
+        }
+        // Set action bar title
+        setTitle(item.getTitle());
+        item.setChecked(true);
+        // Close the navigation drawer
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void loadProfile() {
+        OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                showToast("Error retrieving profile.");
+                Fragment fragment = null;
+                fragment = new WalletFragment();
+
+                toolbar.setTitle("Wallet");
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+                e.printStackTrace();
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String s = response.body().string();
+                Log.d("RESPONSE_____", s);
+
+                try {
+                    JSONObject jsonObject1 = new JSONObject(s);
+                    if (jsonObject1.getString("status").equals("redirect")) {
+                        Utilities.showToast(Dashboard.this, jsonObject1.getJSONArray("message").getJSONArray(0).getString(0));
+                        if (jsonObject1.getString("sub_status").equals("6")) {
+                            Log.d("STATUS", "mobile_number_required");
+                            Utilities.addMobile(Dashboard.this, ACCESS_TOKEN, ad);
+                        } else
+                            Utilities.getOTP(Dashboard.this, ACCESS_TOKEN, ad);
+                        return;
+                    }
+                    if (jsonObject1.getString("status").equals("error")) {
+                        Utilities.showToast(Dashboard.this, jsonObject1.getString("msg"));
+                        Utilities.clearPrefs(Dashboard.this);
+                        startActivity(new Intent(Dashboard.this, LoginActivity.class));
+                        finish();
+                        return;
+                    }
+                    final JSONObject data = jsonObject1.getJSONObject(("data"));
+                    final String email = data.getString("email");
+                    final String name = data.getString("name");
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            navname.setText(name);
+                            navemail.setText(email);
+
+                            Fragment fragment = null;
+                            switch (FRAGENT_TYPE) {
+                                case "ACCOUNT":
+                                    fragment = new AccountFragment();
+                                    toolbar.setTitle("Account");
+                                    break;
+                                case "BUYSELL":
+                                    fragment = new BuySellFragment();
+                                    toolbar.setTitle("Buy Sell");
+                                    break;
+                                case "P2P":
+                                    fragment = new P2PFragment();
+                                    toolbar.setTitle("P2P");
+                                    break;
+                                case "WALLET":
+                                    fragment = new WalletFragment();
+                                    toolbar.setTitle("Wallet");
+                                    break;
+                                case "RATES":
+                                    fragment = new RateFragment();
+                                    toolbar.setTitle("Rates");
+                                    break;
+                                default:
+                                    fragment = new WalletFragment();
+                                    toolbar.setTitle("Wallet");
+
+
+                            }
+
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            fragmentTransaction.commitAllowingStateLoss();
+
+                        }
+                    });
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToast("Error loading Wallet");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Fragment fragment = null;
+                            fragment = new WalletFragment();
+
                             toolbar.setTitle("Wallet");
                             FragmentManager fragmentManager = getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -345,82 +431,15 @@ NavigationView.OnNavigationItemSelectedListener,
                             fragmentTransaction.commitAllowingStateLoss();
                         }
                     });
-
-                    e.printStackTrace();
-
+                    // finish();
                 }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String s = response.body().string();
-                          Log.d("RESPONSE_____", s);
-
-                            try {
-                                JSONObject jsonObject1 = new JSONObject(s);
-                                if(jsonObject1.getString("status").equals("redirect")){
-                                    Utilities.showToast(Dashboard.this, jsonObject1.getJSONArray("message").getJSONArray(0).getString(0));
-                                    if(jsonObject1.getString("sub_status").equals("6")){
-                                        Log.d("STATUS","mobile_number_required");
-                                        Utilities.addMobile(Dashboard.this, ACCESS_TOKEN, ad);
-                                    }else
-                                        Utilities.getOTP(Dashboard.this, ACCESS_TOKEN, ad);
-                                    return;
-                                }
-                                if(jsonObject1.getString("status").equals("error")){
-                                    Utilities.showToast(Dashboard.this, jsonObject1.getString("msg"));
-                                    Utilities.clearPrefs(Dashboard.this);
-                                    startActivity(new Intent(Dashboard.this, LoginActivity.class));
-                                    finish();
-                                    return;
-                                }
-                                final JSONObject data = jsonObject1.getJSONObject(("data"));
-                                final String email= data.getString("email");
-                                final String name = data.getString("name");
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        navname.setText(name);
-                                        navemail.setText(email);
-
-                                        Fragment fragment = null;
-                                        fragment = new WalletFragment();
-
-                                        toolbar.setTitle("Wallet");
-                                        FragmentManager fragmentManager = getSupportFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        fragmentTransaction.replace(R.id.flContent, fragment);
-                                        fragmentTransaction.commit();
-
-                                    }
-                                });
+            }
+        });
+    }
 
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                showToast("Error loading Wallet");
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Fragment fragment = null;
-                                        fragment = new WalletFragment();
-
-                                        toolbar.setTitle("Wallet");
-                                        FragmentManager fragmentManager = getSupportFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        fragmentTransaction.replace(R.id.flContent, fragment);
-                                        fragmentTransaction.commitAllowingStateLoss();
-                                    }
-                                });
-                                // finish();
-                            }
-
-                }
-            });
-        }
-
-
-    public void getNonFreshToken(String refresh_token){
+    public void getNonFreshToken(String refresh_token) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject().put("refresh_token", refresh_token);
@@ -438,61 +457,61 @@ NavigationView.OnNavigationItemSelectedListener,
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
 //                Log.d("/refresh RESPONSE", s);
-                    try {
-                        JSONObject jsonObject1 = new JSONObject(s);
-                        SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-                        editor.putString("access_token", jsonObject1.getJSONObject("data").getString("access_token"));
-                        editor.apply();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
-                    }
+                try {
+                    JSONObject jsonObject1 = new JSONObject(s);
+                    SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+                    editor.putString("access_token", jsonObject1.getJSONObject("data").getString("access_token"));
+                    editor.apply();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
+                }
             }
         });
     }
 
-        public void showToast(final String s) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        public void reload(){
-            finish();
-            startActivity(getIntent());
-        }
-
-        @Override
-        public void onListFragmentInteraction(JSONObject item) {
-            Log.d("Click", item.toString());
-
-            try {
-                if (item.getString("ask") != null) {
-                    Intent i = new Intent(this, CurrencyActivity.class);
-                    i.putExtras(Utilities.toBundle(item));
-                    startActivity(i);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public void showToast(final String s) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
+        });
+    }
+
+    public void reload() {
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
+    public void onListFragmentInteraction(JSONObject item) {
+        Log.d("Click", item.toString());
+
+        try {
+            if (item.getString("ask") != null) {
+                Intent i = new Intent(this, CurrencyActivity.class);
+                i.putExtras(Utilities.toBundle(item));
+                startActivity(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+    }
 
-        @Override
-        public void onFragmentInteraction(JSONObject item) {
+    @Override
+    public void onFragmentInteraction(JSONObject item) {
 
-        }
+    }
 
-        @Override
-        public void onFragmentInteraction(Uri uri) {
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-        }
+    }
 
 
     public void inrToP2P() {
-        if(!isFinishing() && !isDestroyed()) {
+        if (!isFinishing() && !isDestroyed()) {
             P2PFragment fragment = new P2PFragment();
             toolbar.setTitle("P2P");
             changeTab(R.id._p2p);
@@ -503,5 +522,14 @@ NavigationView.OnNavigationItemSelectedListener,
 
     }
 
-
+    public void ServerErrorFragment() {
+        if (!isFinishing() && !isDestroyed()) {
+            ServerError serverError = new ServerError();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, serverError);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
     }
+
+
+}

@@ -56,6 +56,9 @@ public class WalletFragment extends Fragment {
     ProgressBar pb;
     TextView err;
     CheckBox hidezero_checkbox;
+    private SharedPreferences prefs ;
+    private SharedPreferences.Editor edit_pref;
+    private String FRAGMENT_STATE = "WALLET";
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -76,9 +79,10 @@ public class WalletFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
         list = new ArrayList<>();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -228,8 +232,10 @@ public class WalletFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Utilities.hideProgressBar(pb);
-                            err.setVisibility(View.VISIBLE);
+//                            Utilities.hideProgressBar(pb);
+//                            err.setVisibility(View.VISIBLE);
+                            new Dashboard().ServerErrorFragment();
+
                         }
                     });
                     }

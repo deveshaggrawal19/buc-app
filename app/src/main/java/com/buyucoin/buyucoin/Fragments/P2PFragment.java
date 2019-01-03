@@ -54,6 +54,9 @@ public class P2PFragment extends Fragment {
     TextView boost_value_text;
     SeekBar boost_seekbar;
     CheckBox upi_checkobx;
+    private SharedPreferences prefs ;
+    private SharedPreferences.Editor edit_pref ;
+    private String FRAGMENT_STATE = "P2P";
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,8 +89,9 @@ public class P2PFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
         ACCESS_TOKEN = prefs.getString("access_token", null);
     }
 

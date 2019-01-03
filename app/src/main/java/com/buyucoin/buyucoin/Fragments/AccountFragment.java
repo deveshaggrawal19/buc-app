@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
@@ -40,18 +41,15 @@ import static android.content.Context.MODE_PRIVATE;
 public class AccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
-    String ACCESS_TOKEN = null;
-    TextView email,mob, name;
-    ProgressBar pb;
-    View ll;
-    AlertDialog.Builder ad;
-    ImageView imageView,kyc;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1, mParam2, mParam3, mParam4;
-    static JSONObject mRefs;
-
+    private String ACCESS_TOKEN = null;
+    private TextView email,mob, name;
+    private ProgressBar pb;
+    private View ll;
+    private AlertDialog.Builder ad;
     private OnFragmentInteractionListener mListener;
+    private SharedPreferences prefs ;
+    private SharedPreferences.Editor edit_pref ;
+    private String FRAGMENT_STATE = "ACCOUNT";
 
     public AccountFragment() {
         // Required empty public constructor
@@ -63,8 +61,10 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
         ad = new AlertDialog.Builder(getActivity());
     }
 
@@ -75,12 +75,12 @@ public class AccountFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
         email =  view.findViewById(R.id.tvAccountEmail);
-        kyc =  view.findViewById(R.id.tvAccountKyc);
+        ImageView kyc = view.findViewById(R.id.tvAccountKyc);
         mob =  view.findViewById(R.id.tvAccountMobile);
         name =  view.findViewById(R.id.tvAccountName);
         pb =  view.findViewById(R.id.pbAccount);
         ll =  view.findViewById(R.id.llAccount);
-        imageView = view.findViewById(R.id.acc_pic);
+        ImageView imageView = view.findViewById(R.id.acc_pic);
 
         Drawable drawable = imageView.getDrawable();
 
@@ -90,7 +90,6 @@ public class AccountFragment extends Fragment {
         imageView.setImageDrawable(roundedBitmapDrawable);
 
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
         name.setText(prefs.getString("name", ""));
         email.setText(prefs.getString("email", ""));
         mob.setText(prefs.getString("mob", ""));
@@ -120,8 +119,7 @@ public class AccountFragment extends Fragment {
                     Log.d("/account RESPONSE",name+"\t"+email+"\t"+kyc+"\t"+mob);
 
 
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-                    editor.putString("name",name)
+                    edit_pref.putString("name",name)
                             .putString("email",email)
                             .putString("kyc",kyc)
                             .putString("mob",mob)
@@ -188,6 +186,7 @@ public class AccountFragment extends Fragment {
                                 JSONObject jsonObject = new JSONObject(s);
                                 if(jsonObject.getString("status").equals("redirect")){
                                     Utilities.getOTP(getActivity(), ACCESS_TOKEN, ad);
+                                    new Dashboard().ServerErrorFragment();
                                     return;
                                 }
                                 final JSONObject data = jsonObject.getJSONObject(("data"));
