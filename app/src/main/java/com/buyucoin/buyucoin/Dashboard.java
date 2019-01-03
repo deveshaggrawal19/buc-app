@@ -332,14 +332,22 @@ public class Dashboard extends AppCompatActivity implements
             @Override
             public void onFailure(Call call, IOException e) {
                 showToast("Error retrieving profile.");
+
                 Fragment fragment = null;
                 fragment = new WalletFragment();
+                final Fragment finalFragment = fragment;
 
-                toolbar.setTitle("Wallet");
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toolbar.setTitle("Wallet");
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContent, finalFragment);
+                        fragmentTransaction.commitAllowingStateLoss();
+                    }
+                });
+
                 e.printStackTrace();
 
             }
