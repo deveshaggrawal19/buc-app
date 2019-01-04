@@ -14,39 +14,36 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.anychart.anychart.AnyChart;
-import com.anychart.anychart.AnyChartView;
-import com.anychart.anychart.Cartesian;
-import com.anychart.anychart.CartesianSeriesArea;
-import com.anychart.anychart.Chart;
-import com.anychart.anychart.Crosshair;
-import com.anychart.anychart.DataEntry;
-import com.anychart.anychart.Stroke;
-import com.anychart.anychart.ValueDataEntry;
 import com.buyucoin.buyucoin.Adapters.AsksAdapter;
 import com.buyucoin.buyucoin.Adapters.BidsAdapter;
 import com.buyucoin.buyucoin.DataClasses.Markets;
 import com.buyucoin.buyucoin.pojos.Ask;
 import com.buyucoin.buyucoin.pojos.Bids;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,7 +54,7 @@ import okhttp3.Response;
 public class CurrencyActivity extends AppCompatActivity {
 
     DatabaseReference myRef;
-    AnyChartView anyChartView;
+    GraphView graphView;
     Button sell,buy;
     Intent intent;
     Bundle bundle;
@@ -179,12 +176,17 @@ public class CurrencyActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     s = response.body().string();
 
-               //     Log.d("currency response", s);
+//                    Log.d("currency response", s);
                     try {
                         JSONObject object = new JSONObject(s).getJSONObject("data");
                         JSONArray prices = object.getJSONArray("price");
                         JSONArray time = object.getJSONArray("time");
-                        initialiseGraph(time, prices);
+
+                        List<XY> list = new ArrayList<>();
+                        for(int i=0; i<prices.length(); i++){
+                            list.add(new XY(time.getString(i), prices.getDouble(i)));
+                        }
+                        addToGraph(list);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -195,6 +197,15 @@ public class CurrencyActivity extends AppCompatActivity {
         });
     }
 
+    public class XY{
+        public String x;
+        public Double y;
+        public XY(String x, Double y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     private void BuySellButtonFunction(String type, String price) {
             Intent buysellintent = new Intent(this,BuySellActivity.class);
             buysellintent.putExtra("price",price);
@@ -202,44 +213,48 @@ public class CurrencyActivity extends AppCompatActivity {
             startActivity(buysellintent);
     }
 
-    public void initialiseGraph(JSONArray x, JSONArray y){
+    public void addToGraph(List<XY> list) {
+        Log.d("ARRAY LENGTH", list.size()+ "");
 
-        Cartesian areaChart = AnyChart.area();
-
-        areaChart.setAnimation(true);
-        Crosshair crosshair = areaChart.getCrosshair();
-        crosshair.setEnabled(true);
-        crosshair.setYStroke((Stroke)null, null, null, null, null)
-                .setXStroke("#000", 1d, null, null, null)
-                .setZIndex(39d);
-
-        areaChart.setTitle("chart");
-        areaChart.setLabel(false);
-
-        addToGraph(x, y);
-    }
-
-    public void addToGraph(JSONArray x, JSONArray y) {
-        List<DataEntry> seriesdata = new ArrayList<>();
-        for(int i=0; i<x.length(); i++){
-            try {
-                seriesdata.add(new ValueDataEntry(x.getString(i), y.getDouble(i)));
-            } catch (JSONException e) {
-                e.printStackTrace();
+        Collections.sort(list, new Comparator<XY>() {
+            DateFormat f = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
+            @Override
+            public int compare(XY xy, XY t1) {
+                try {
+                    return f.parse(xy.x).compareTo(f.parse(t1.x));
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
             }
-        }
+        });
 
 
-        Cartesian areaChart = AnyChart.area();
-        CartesianSeriesArea area = areaChart.area(seriesdata);
-
+        DataPoint[] dp = new DataPoint[list.size()];
         try {
-            anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
-            anyChartView.setChart(areaChart);
-            anyChartView.setHorizontalScrollBarEnabled(true);
-        }catch(NullPointerException e){
+            for (int i = 0; i < list.size(); i++) {
+                DateFormat df = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss", Locale.ENGLISH);
+                Date date = df.parse(list.get(i).x);
+                dp[i] = new DataPoint(date, list.get(i).y);
+                Log.d("Date", dp[i].getX()+"");
+            }
+        } catch(ParseException e){
             e.printStackTrace();
         }
+
+
+        Log.d("DP LENGTH", dp.length+"");
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
+
+        graphView = (GraphView) findViewById(R.id.graphView);
+
+        graphView.getViewport().setScrollable(true);
+        graphView.getViewport().setScrollableY(true);
+//        graphView.getViewport().setScalable(true);
+        graphView.getViewport().setScalableY(true);
+
+        graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
+        graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
+        graphView.addSeries(series);
 
         Utilities.hideProgressBar(pb);
     }

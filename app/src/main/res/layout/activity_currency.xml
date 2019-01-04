@@ -76,10 +76,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.anychart.anychart.AnyChartView
-                android:id="@+id/any_chart_view"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                    <com.jjoe64.graphview.GraphView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:id="@+id/graphView" />
 
             <ProgressBar
                 android:id="@+id/pbCurrencyActivity"

@@ -16,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.anychart.anychart.UiTitle;
 import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.LoginActivity;

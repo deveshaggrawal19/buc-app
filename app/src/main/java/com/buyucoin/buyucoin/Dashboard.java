@@ -52,7 +52,7 @@ public class Dashboard extends AppCompatActivity implements
         ReferralFragment.OnFragmentInteractionListener,
         P2PFragment.OnFragmentInteractionListener {
 
-    String ACCESS_TOKEN = null;
+    String ACCESS_TOKEN = null, refresh_token=null;
     static Toolbar toolbar;
     TextView navname, navemail;
     View fragView;
@@ -80,7 +80,7 @@ public class Dashboard extends AppCompatActivity implements
 
         Toast.makeText(getApplicationContext(), FRAGENT_TYPE, Toast.LENGTH_LONG).show();
 
-        String refresh_token = prefs.getString("refresh_token", null);
+        refresh_token = prefs.getString("refresh_token", null);
 
         ad = new AlertDialog.Builder(this);
 
@@ -102,13 +102,6 @@ public class Dashboard extends AppCompatActivity implements
 
         fragView = findViewById(R.id.flContent);
 
-        if (Utilities.isOnline(getApplicationContext())) {
-            getNonFreshToken(refresh_token);
-            loadProfile();
-        } else {
-            fragView.setVisibility(View.GONE);
-            noInternet.setVisibility(View.VISIBLE);
-        }
 
         bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -198,6 +191,24 @@ public class Dashboard extends AppCompatActivity implements
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Utilities.isOnline(getApplicationContext())) {
+            getNonFreshToken(refresh_token);
+            loadProfile();
+        } else {
+            fragView.setVisibility(View.GONE);
+            noInternet.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        OkHttpHandler.cancelAllRequests();
     }
 
     public void BuySellFragmentFun() {
