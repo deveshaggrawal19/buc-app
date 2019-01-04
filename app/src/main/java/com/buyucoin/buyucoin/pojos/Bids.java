@@ -1,25 +1,25 @@
 package com.buyucoin.buyucoin.pojos;
 
-import java.util.ArrayList;
-
 public class Bids {
-    private Double bid_amount ;
+    private Double bid_price;
+    private String bid_value;
+    private Double bid_volume;
 
-    private Bids(Double bid_amount) {
-        this.bid_amount = bid_amount;
+    public Bids(Double bid_price, String bid_value, Double bid_volume) {
+        this.bid_price = bid_price;
+        this.bid_value = bid_value;
+        this.bid_volume = bid_volume;
     }
 
-    public Double getBid_amount() {
-        return bid_amount;
+    public Double getBid_price() {
+        return bid_price;
     }
 
-    public  static ArrayList<Bids> randomBids(){
-        ArrayList<Bids> bidsArrayList = new ArrayList<>();
-        for(int i=0;i<=5;i++){
-            Bids bids = new Bids((Math.random()*2)+1);
-            bidsArrayList.add(bids);
-        }
-        return  bidsArrayList;
+    public String getBid_value() {
+        return bid_value;
     }
 
+    public Double getBid_volume() {
+        return bid_volume;
+    }
 }

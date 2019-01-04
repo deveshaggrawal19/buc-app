@@ -78,7 +78,6 @@ public class Dashboard extends AppCompatActivity implements
         ACCESS_TOKEN = prefs.getString("access_token", null);
         FRAGENT_TYPE = prefs.getString("FRAGMENT_STATE", "WALLET");
 
-        Toast.makeText(getApplicationContext(), FRAGENT_TYPE, Toast.LENGTH_LONG).show();
 
         refresh_token = prefs.getString("refresh_token", null);
 
@@ -401,26 +400,37 @@ public class Dashboard extends AppCompatActivity implements
                                 case "ACCOUNT":
                                     fragment = new AccountFragment();
                                     toolbar.setTitle("Account");
+                                    changeTab(R.id.acc_det);
+
                                     break;
                                 case "BUYSELL":
                                     fragment = new BuySellFragment();
                                     toolbar.setTitle("Buy Sell");
+                                    changeTab(R.id._buysell);
+
                                     break;
                                 case "P2P":
                                     fragment = new P2PFragment();
                                     toolbar.setTitle("P2P");
+                                    changeTab(R.id._p2p);
+
                                     break;
                                 case "WALLET":
                                     fragment = new WalletFragment();
                                     toolbar.setTitle("Wallet");
+                                    changeTab(R.id.wll_bal);
+
                                     break;
                                 case "RATES":
                                     fragment = new RateFragment();
                                     toolbar.setTitle("Rates");
+                                    changeTab(R.id._rates);
+
                                     break;
                                 default:
                                     fragment = new WalletFragment();
                                     toolbar.setTitle("Wallet");
+                                    changeTab(R.id.wll_bal);
 
 
                             }
@@ -432,6 +442,7 @@ public class Dashboard extends AppCompatActivity implements
 
                         }
                     });
+
 
 
                 } catch (Exception e) {

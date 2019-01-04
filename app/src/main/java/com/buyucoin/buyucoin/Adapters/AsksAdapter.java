@@ -35,25 +35,30 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull AskViewHolder holder, int position) {
-        holder.price.setText(String.valueOf(askArrayList.get(position).getAsk_amount()));
-        int view_width = (int) (Math.random()*150);
-        holder.progress.setLayoutParams(new LinearLayout.LayoutParams(view_width,5));
+
+        holder.price.setText(String.valueOf(askArrayList.get(position).getAsk_price()));
+        holder.value.setText(String.valueOf(askArrayList.get(position).getAsk_value()));
+        holder.vol.setText(String.valueOf(askArrayList.get(position).getAsk_volume()));
+
+
         Log.d("WIDTH============>",String.valueOf(holder.itemView));
 
     }
 
     @Override
     public int getItemCount() {
-        return askArrayList.size();
+        return 5;
     }
 
     class AskViewHolder extends RecyclerView.ViewHolder {
-        TextView price;
+        TextView price,value,vol;
         View progress;
         AskViewHolder(@NonNull View itemView) {
             super(itemView);
             price = itemView.findViewById(R.id.item_price);
-            progress = itemView.findViewById(R.id.item_progress);
+            value = itemView.findViewById(R.id.item_value);
+            vol = itemView.findViewById(R.id.item_vol);
+
         }
     }
 }

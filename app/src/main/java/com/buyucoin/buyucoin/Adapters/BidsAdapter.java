@@ -37,25 +37,26 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BidsViewHolder holder, int position) {
-        holder.price.setText(String.valueOf(bidsArrayList.get(position).getBid_amount()));
-        int view_width = (int) (Math.random()*150);
-        holder.progress.setLayoutParams(new LinearLayout.LayoutParams(view_width,5));
+        holder.price.setText(String.valueOf(bidsArrayList.get(position).getBid_price()));
+        holder.value.setText(String.valueOf(bidsArrayList.get(position).getBid_value()));
+        holder.vol.setText(String.valueOf(bidsArrayList.get(position).getBid_volume()));
 
     }
 
 
     @Override
     public int getItemCount() {
-        return bidsArrayList.size();
+        return 5;
     }
 
     public class BidsViewHolder extends RecyclerView.ViewHolder {
-        TextView price;
+        TextView price,value,vol;
         View progress;
         public BidsViewHolder(@NonNull View itemView) {
             super(itemView);
             price = itemView.findViewById(R.id.item_price);
-            progress = itemView.findViewById(R.id.item_progress);
+            value = itemView.findViewById(R.id.item_value);
+            vol = itemView.findViewById(R.id.item_vol);
         }
     }
 }

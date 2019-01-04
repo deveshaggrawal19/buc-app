@@ -1,26 +1,25 @@
 package com.buyucoin.buyucoin.pojos;
 
-import java.util.ArrayList;
-
 public class Ask {
-    private Double ask_amount;
+    private Double ask_price;
+    private String ask_value;
+    private Double ask_volume;
 
-    public Ask(Double ask_amount) {
-        this.ask_amount = ask_amount;
+    public Ask(Double ask_price, String ask_value, Double ask_volume) {
+        this.ask_price = ask_price;
+        this.ask_value = ask_value;
+        this.ask_volume = ask_volume;
     }
 
-    public Double getAsk_amount() {
-        return ask_amount;
+    public Double getAsk_price() {
+        return ask_price;
     }
 
+    public String getAsk_value() {
+        return ask_value;
+    }
 
-    public  static ArrayList<Ask> randomAsks(){
-        ArrayList<Ask> askArrayList = new ArrayList<>();
-        for(int i=0;i<=5;i++){
-            Ask asks = new Ask((Math.random()*2)+1);
-            askArrayList.add(asks);
-        }
-
-        return  askArrayList;
+    public Double getAsk_volume() {
+        return ask_volume;
     }
 }

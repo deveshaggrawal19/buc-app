@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/AppTheme.NoActionBar"
     tools:context=".Fragments.AccountFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,152 +14,164 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-            android:visibility="visible"
-            android:id="@+id/llAccount">
-
-        <FrameLayout
+            android:id="@+id/llAccount"
             android:layout_width="match_parent"
-            android:padding="20dp"
-            android:gravity="center"
-            android:background="@drawable/header_design"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/tvAccountKyc"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_verified_user_black_24dp"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/circular_img"
+                android:background="@drawable/header_design"
                 android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="80dp"
-                android:layout_gravity="center_horizontal"
-                android:tint="@color/kyc_color"
-                android:padding="5dp"
-                android:text="" />
+                android:orientation="vertical"
+                android:padding="20dp"
+                >
 
 
-            <ImageView
-                android:layout_width="150dp"
-                android:id="@+id/acc_pic"
-                android:contentDescription="user picture"
-                android:background="@drawable/circular_img"
-                android:src="@drawable/excellent"
-                android:cropToPadding="true"
-                android:layout_gravity="center_horizontal"
-                android:padding="5dp"
-                android:scaleType="centerCrop"
-                android:layout_height="150dp" />
+
+
+                <ImageView
+                    android:id="@+id/acc_pic"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:background="@drawable/circular_img"
+                    android:contentDescription="user picture"
+                    android:cropToPadding="true"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/excellent" />
+                <ImageView
+                    android:id="@+id/tvAccountKyc"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="0dp"
+                    android:background="@drawable/circular_img"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_verified_user_black_24dp"
+                    android:text=""
+                    android:tint="@color/kyc_color" />
 
 
                 <TextView
                     android:id="@+id/tvAccountName"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="170dp"
-                    android:textFontWeight="100"
-                    android:textSize="30sp"
                     android:padding="5dp"
+                    android:text="Name"
+                    android:layout_marginLeft="80dp"
                     android:textColor="@android:color/white"
-                    android:text="Name" />
+                    android:textFontWeight="100"
+                    android:textSize="20sp" />
+
 
                 <TextView
                     android:id="@+id/tvAccountEmail"
-                    android:layout_marginTop="220dp"
-                    android:background="@drawable/circular_img"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textSize="10sp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="80dp"
                     android:layout_marginBottom="20dp"
-                    android:padding="5dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="300dp"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="35dp"
-                    android:tint="@android:color/white"
-                    android:src="@drawable/ic_store_black_24dp"
-                    android:layout_height="35dp" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:text="Friends"
+                    android:padding="5dp"
                     android:textColor="@android:color/white"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="35dp"
-                    android:tint="@android:color/white"
-                    android:src="@drawable/ic_timeline_black_24dp"
-                    android:layout_height="35dp" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:text="Videos"
-                    android:textColor="@android:color/white"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="35dp"
-                    android:tint="@android:color/white"
-                    android:src="@drawable/ic_menu_send"
-                    android:layout_height="35dp" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:text="Chats"
-                    android:textColor="@android:color/white"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="35dp"
-                    android:tint="@android:color/white"
-                    android:src="@drawable/ic_menu_share"
-                    android:layout_height="35dp" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:text="Groups"
-                    android:textColor="@android:color/white"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:text="Email"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="150dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/profile_option"
+                            android:tint="@android:color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Profile"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_timeline_black_24dp"
+                            android:tint="@android:color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Refferals"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_menu_send"
+                            android:tint="@android:color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Chats"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/settings_option"
+                            android:tint="@android:color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Settings"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
 
-        </LinearLayout>
+                </LinearLayout>
 
-        </FrameLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,221 +184,388 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Mobile" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_store_black_24dp"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Friends"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_timeline_black_24dp"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Videos"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_menu_send"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Chats"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_menu_share"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Groups"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_store_black_24dp"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Friends"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_timeline_black_24dp"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Videos"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_menu_send"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Chats"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_menu_share"
-                            android:tint="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Groups"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-
-                </LinearLayout>
+                    android:text="Mobile"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/headings"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:src="@drawable/coin_buy"
+                            android:tint="@color/g1b67e8" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Deposite"
+                            android:textColor="@color/g1b67e8" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="2dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:src="@drawable/coin_sell"
+                            android:tint="@color/g6209c3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Withdraw"
+                            android:textColor="@color/g6209c3" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="2dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:src="@drawable/coin_deposite"
+                            android:tint="@color/kyc_color" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Trade"
+                            android:textColor="@color/kyc_color" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="#eeeeee"
+                    android:layout_height="1dp"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_marginLeft="5dp"
+                        android:tint="@color/g6209c3"
+                        android:src="@drawable/profile_option_list_drawable"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:text="About Us"
+                        android:textColor="@android:color/black"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:tint="#cccccc"
+                        android:src="@drawable/profile_menu_list_arrow_right"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="#eeeeee"
+                    android:layout_height="1dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:tint="@color/g1b67e8"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/profile_option_list_drawable"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:text="Terms And Policies"
+                        android:textColor="@android:color/black"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:tint="#cccccc"
+                        android:src="@drawable/profile_menu_list_arrow_right"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="#eeeeee"
+                    android:layout_height="1dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_marginLeft="5dp"
+                        android:tint="@color/kyc_color"
+                        android:src="@drawable/profile_option_list_drawable"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:text="More"
+                        android:textColor="@android:color/black"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:tint="#cccccc"
+                        android:src="@drawable/profile_menu_list_arrow_right"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="#eeeeee"
+                    android:layout_height="1dp"/>
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_marginLeft="5dp"
+                        android:tint="@color/colorRed"
+                        android:src="@drawable/profile_option_list_drawable"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:text="App Passcode"
+                        android:textColor="@android:color/black"
+                        />
+
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Referral Programme"
+                    android:textSize="@dimen/headings"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/profile_drawable_referral_card"
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Refer to your Friends"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:text="Your Referral Code"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="MBAR007"
+                        android:textColor="@android:color/white"
+                        android:textSize="30dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="Follow us on"-->
+                    <!--android:textSize="@dimen/headings"-->
+                    <!--android:textStyle="bold" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="15dp"-->
+                    <!--android:background="@drawable/profile_drawable_deposite_history"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:padding="10dp"-->
+                    <!--&gt;-->
+
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Facebook"-->
+                        <!--android:textColor="@android:color/white"-->
+                        <!--android:textSize="30sp"-->
+                        <!--android:textStyle="bold" />-->
+
+
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="15dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:background="@drawable/profile_drawable_order_history"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:padding="10dp">-->
+
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="Twitter"-->
+                        <!--android:textColor="@android:color/white"-->
+                        <!--android:textSize="30sp"-->
+                        <!--android:textStyle="bold" />-->
+
+
+
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
         </LinearLayout>
 
         <ProgressBar
+            android:id="@+id/pbAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/pbAccount"/>
+            android:layout_gravity="center" />
 
-        <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:layout_marginBottom="-100dp"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:elevation="10dp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/wallet_list"
-            android:layout_height="400dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:textSize="20sp"
-                android:text="Enter Something"
-                android:layout_height="wrap_content" />
 
-        </LinearLayout>
 
-    </FrameLayout>
+</FrameLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>

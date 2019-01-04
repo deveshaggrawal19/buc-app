@@ -4,13 +4,19 @@ import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
+import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,19 +44,16 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 
-
 public class AccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private String ACCESS_TOKEN = null;
-    private TextView email,mob, name;
+    private TextView email, mob, name;
     private ProgressBar pb;
     private View ll;
     private AlertDialog.Builder ad;
     private OnFragmentInteractionListener mListener;
-    private SharedPreferences prefs ;
-    private SharedPreferences.Editor edit_pref ;
-    private String FRAGMENT_STATE = "ACCOUNT";
+    private SharedPreferences prefs;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -57,35 +61,35 @@ public class AccountFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+        prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        SharedPreferences.Editor edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         ACCESS_TOKEN = prefs.getString("access_token", null);
-        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
+        String FRAGMENT_STATE = "ACCOUNT";
+        edit_pref.putString("FRAGMENT_STATE", FRAGMENT_STATE).apply();
         ad = new AlertDialog.Builder(getActivity());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        email =  view.findViewById(R.id.tvAccountEmail);
+        email = view.findViewById(R.id.tvAccountEmail);
         ImageView kyc = view.findViewById(R.id.tvAccountKyc);
-        mob =  view.findViewById(R.id.tvAccountMobile);
-        name =  view.findViewById(R.id.tvAccountName);
-        pb =  view.findViewById(R.id.pbAccount);
-        ll =  view.findViewById(R.id.llAccount);
+        mob = view.findViewById(R.id.tvAccountMobile);
+        name = view.findViewById(R.id.tvAccountName);
+        pb = view.findViewById(R.id.pbAccount);
+        ll = view.findViewById(R.id.llAccount);
         ImageView imageView = view.findViewById(R.id.acc_pic);
 
         Drawable drawable = imageView.getDrawable();
 
-        Bitmap bitmap =  ((BitmapDrawable) drawable).getBitmap() ;
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         imageView.setImageDrawable(roundedBitmapDrawable);
 
@@ -93,49 +97,18 @@ public class AccountFragment extends Fragment {
         name.setText(prefs.getString("name", ""));
         email.setText(prefs.getString("email", ""));
         mob.setText(prefs.getString("mob", ""));
-
-        getAccountData();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                getAccountData();
+            }
+        });
         return view;
     }
 
 
-    public void loadProfile(){
-        OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                try{
-                    JSONObject jsonObject1 = new JSONObject(s);
-                    String name = jsonObject1.getJSONObject("data").getString("name");
-                    String email = jsonObject1.getJSONObject("data").getString("email");
-                    String kyc = jsonObject1.getJSONObject("data").getString("kyc_status");
-                    String mob = jsonObject1.getJSONObject("data").getString("mob");
-
-                    Log.d("/account RESPONSE",name+"\t"+email+"\t"+kyc+"\t"+mob);
-
-
-                    edit_pref.putString("name",name)
-                            .putString("email",email)
-                            .putString("kyc",kyc)
-                            .putString("mob",mob)
-                            .apply();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-    }
-
-
-
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -166,25 +139,34 @@ public class AccountFragment extends Fragment {
         void onFragmentInteraction(JSONObject item);
     }
 
-    public void getAccountData(){
+    private void getAccountData() {
         OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "Error retreiving API", Toast.LENGTH_LONG).show();
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), "Error retreiving API", Toast.LENGTH_LONG).show();
+
+                    }
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
                 final String s = response.body().string();
                 Log.d("RESP___", s);
 
+                if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             try {
                                 JSONObject jsonObject = new JSONObject(s);
-                                if(jsonObject.getString("status").equals("redirect")){
+                                if (jsonObject.getString("status").equals("redirect")) {
                                     Utilities.getOTP(getActivity(), ACCESS_TOKEN, ad);
                                     new Dashboard().ServerErrorFragment();
                                     return;
@@ -202,6 +184,16 @@ public class AccountFragment extends Fragment {
 
                         }
                     });
+                }
+                else{
+                    Looper.prepare();
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            new Dashboard().ServerErrorFragment();
+                        }
+                    });
+                }
 
             }
         });

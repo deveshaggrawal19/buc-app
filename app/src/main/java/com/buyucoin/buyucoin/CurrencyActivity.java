@@ -61,7 +61,8 @@ public class CurrencyActivity extends AppCompatActivity {
     ProgressBar pb;
     RecyclerView bids_recview,ask_recview;
     DatabaseReference myref;
-    List<Markets> list;
+    ArrayList<Bids> arrayListBids ;
+    ArrayList<Ask> arrayListAsks ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,23 +76,17 @@ public class CurrencyActivity extends AppCompatActivity {
 
 
 
-        pb = (ProgressBar) findViewById(R.id.pbCurrencyActivity);
+        pb = findViewById(R.id.pbCurrencyActivity);
         buy = findViewById(R.id.tvCurrencyBuy);
         sell = findViewById(R.id.tvCurrencySell);
         bids_recview = findViewById(R.id.rvBid);
         ask_recview = findViewById(R.id.rvAsk);
 
 
-        BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),Bids.randomBids());
         bids_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        bids_recview.setAdapter(bidsAdapter);
-
-        AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),Ask.randomAsks());
         ask_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        ask_recview.setAdapter(asksAdapter);
 
-        Log.d("ASK LIST SIZE", String.valueOf(Ask.randomAsks().size()));
-        Log.d("BIDS LISR SIZE",String.valueOf(Bids.randomBids().size()));
+
 
     }
 
@@ -116,17 +111,38 @@ public class CurrencyActivity extends AppCompatActivity {
                 DataSnapshot data = dataSnapshot.child(marketstring).child("data");
                 Log.d("MARKET___", data.toString());
 
-                list = new ArrayList<>();
-                list.clear();
+                arrayListBids = new ArrayList<>();
+                arrayListAsks = new ArrayList<>();
+
+                arrayListBids.clear();
+                arrayListAsks.clear();
+
+
+
                 if(data.hasChild("buy_orders")){
                     for(DataSnapshot d : data.child("buy_orders").getChildren()){
                         Double price = d.child("price").getValue(Double.class);
                         String value = d.child("value").getValue(String.class);
                         Double vol = d.child("vol").getValue(Double.class);
-                        list.add(new Markets(price+"", value, vol+""));
+                        Bids b = new Bids(price,value,vol);
+                        arrayListBids.add(b);
                     }
+                    BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),arrayListBids);
+                    bids_recview.setAdapter(bidsAdapter);
                 }
-                Log.d("LIST SIZE__", list.size()+"");
+                if(data.hasChild("sell_orders")){
+                    for(DataSnapshot d : data.child("sell_orders").getChildren()){
+                        Double price = d.child("price").getValue(Double.class);
+                        String value = d.child("value").getValue(String.class);
+                        Double vol = d.child("vol").getValue(Double.class);
+                        Ask a = new Ask(price,value,vol);
+                        arrayListAsks.add(a);
+                    }
+                    AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);
+                    ask_recview.setAdapter(asksAdapter);
+                }
+
+                Log.d("LIST SIZE__", arrayListAsks.size()+""+arrayListBids.size());
 
 
             }
