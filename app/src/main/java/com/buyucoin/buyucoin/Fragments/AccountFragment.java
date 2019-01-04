@@ -171,7 +171,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "Error retreiving API", Toast.LENGTH_LONG).show();
+                Utilities.showToast(getActivity(), "Error retrieving API");
             }
 
             @Override

@@ -62,6 +62,7 @@ public class CurrencyActivity extends AppCompatActivity {
     RecyclerView bids_recview,ask_recview;
     DatabaseReference myref;
     List<Markets> list;
+    TextView err;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class CurrencyActivity extends AppCompatActivity {
         sell = findViewById(R.id.tvCurrencySell);
         bids_recview = findViewById(R.id.rvBid);
         ask_recview = findViewById(R.id.rvAsk);
-
+        err = findViewById(R.id.tvCurrencyError);
 
         BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),Bids.randomBids());
         bids_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -168,6 +169,13 @@ public class CurrencyActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Utilities.hideProgressBar(pb);
+                        err.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             @Override
@@ -247,16 +255,23 @@ public class CurrencyActivity extends AppCompatActivity {
 
         graphView = (GraphView) findViewById(R.id.graphView);
 
-        graphView.getViewport().setScrollable(true);
-        graphView.getViewport().setScrollableY(true);
+//        graphView.getViewport().setScrollable(true);
+//        graphView.getViewport().setScrollableY(true);
 //        graphView.getViewport().setScalable(true);
-        graphView.getViewport().setScalableY(true);
+//        graphView.getViewport().setScalableY(true);
 
         graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
         graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
         graphView.addSeries(series);
 
-        Utilities.hideProgressBar(pb);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                graphView.setVisibility(View.VISIBLE);
+                Utilities.hideProgressBar(pb);
+            }
+        });
+
     }
 
 

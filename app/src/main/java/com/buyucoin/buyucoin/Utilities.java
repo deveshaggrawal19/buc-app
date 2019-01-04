@@ -59,6 +59,7 @@ public class Utilities {
     }
 
     public static void hideProgressBar(final ProgressBar pb, Activity activity){
+        if(activity != null)
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -77,10 +78,11 @@ public class Utilities {
     }
 
     public static void showToast(final Activity activity, final String text){
+        if(activity != null)
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
             }
         });
     }

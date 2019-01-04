@@ -79,6 +79,7 @@
                     <com.jjoe64.graphview.GraphView
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:visibility="invisible"
                         android:id="@+id/graphView" />
 
             <ProgressBar
@@ -86,6 +87,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="API Error"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:id="@+id/tvCurrencyError"/>
 
         </FrameLayout>
 
