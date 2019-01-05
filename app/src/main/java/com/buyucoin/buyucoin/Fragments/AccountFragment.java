@@ -21,8 +21,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +57,10 @@ public class AccountFragment extends Fragment {
     private AlertDialog.Builder ad;
     private OnFragmentInteractionListener mListener;
     private SharedPreferences prefs;
+    private SharedPreferences.Editor edit_pref;
+    private LinearLayout profile_sheet_handler,referral_sheet_handler,chats_sheet_handler,settings_sheet_handler;
+    private Switch app_pass_switch;
+    private boolean applock_enabled;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -65,8 +72,9 @@ public class AccountFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        SharedPreferences.Editor edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+        edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        applock_enabled = prefs.getBoolean("DISABLE_PASS_CODE",false);
         String FRAGMENT_STATE = "ACCOUNT";
         edit_pref.putString("FRAGMENT_STATE", FRAGMENT_STATE).apply();
         ad = new AlertDialog.Builder(getActivity());
@@ -76,7 +84,7 @@ public class AccountFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        final View view = inflater.inflate(R.layout.fragment_account, container, false);
 
         email = view.findViewById(R.id.tvAccountEmail);
         ImageView kyc = view.findViewById(R.id.tvAccountKyc);
@@ -85,6 +93,27 @@ public class AccountFragment extends Fragment {
         pb = view.findViewById(R.id.pbAccount);
         ll = view.findViewById(R.id.llAccount);
         ImageView imageView = view.findViewById(R.id.acc_pic);
+        profile_sheet_handler = view.findViewById(R.id.bottom_sheet_profile_handler);
+        referral_sheet_handler = view.findViewById(R.id.bottom_sheet_referral_handler);
+        chats_sheet_handler = view.findViewById(R.id.bottom_sheet_chats_handler);
+        settings_sheet_handler = view.findViewById(R.id.bottom_sheet_settings_handler);
+        app_pass_switch = view.findViewById(R.id.disable_app_lock_switch);
+
+        app_pass_switch.setChecked(applock_enabled);
+        app_pass_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    edit_pref.putBoolean("DISABLE_PASS_CODE",true).apply();
+                    Toast.makeText(view.getContext(),"App Lock Disabled",Toast.LENGTH_SHORT).show();
+
+                }else{
+                    edit_pref.putBoolean("DISABLE_PASS_CODE",false).apply();
+                    Toast.makeText(view.getContext(),"App Lock Enabled",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        sheetClickHandler();
 
         Drawable drawable = imageView.getDrawable();
 
@@ -104,6 +133,37 @@ public class AccountFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void sheetClickHandler() {
+        profile_sheet_handler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileBottomsheet profileBottomsheet = new ProfileBottomsheet();
+                profileBottomsheet.show(getChildFragmentManager(),"PROFILE BOTTOM SHEET");
+            }
+        });
+        referral_sheet_handler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReferralBottomsheet referralBottomsheet = new ReferralBottomsheet();
+                referralBottomsheet.show(getChildFragmentManager(),"REFERRAL BOTTOM SHEET");
+            }
+        });
+        chats_sheet_handler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatsBottomsheet chatsBottomsheet = new ChatsBottomsheet();
+                chatsBottomsheet.show(getChildFragmentManager(),"REFERRAL BOTTOM SHEET");
+            }
+        });
+        settings_sheet_handler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingsBottomsheet settingsBottomsheet = new SettingsBottomsheet();
+                settingsBottomsheet.show(getChildFragmentManager(),"REFERRAL BOTTOM SHEET");
+            }
+        });
     }
 
 
@@ -187,12 +247,7 @@ public class AccountFragment extends Fragment {
                 }
                 else{
                     Looper.prepare();
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            new Dashboard().ServerErrorFragment();
-                        }
-                    });
+                    new Dashboard().ServerErrorFragment();
                 }
 
             }

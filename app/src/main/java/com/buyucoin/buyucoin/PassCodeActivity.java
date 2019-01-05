@@ -25,12 +25,14 @@ public class PassCodeActivity extends AppCompatActivity {
     SharedPreferences.Editor pinpref;
     SharedPreferences viewPref;
     String PASSWORD;
-    boolean DISABLE_PIN = true;
+    boolean DISABLE_PIN  = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_code);
+        viewPref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
+        DISABLE_PIN = viewPref.getBoolean("DISABLE_PASS_CODE",false);
         if(DISABLE_PIN){
             startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
             finish();
@@ -41,7 +43,7 @@ public class PassCodeActivity extends AppCompatActivity {
         confirm_password = findViewById(R.id.confirm_passcode_heading);
         isConfirmIntent = ci.getBooleanExtra("isConfirm",false);
 
-        viewPref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
+
         PASSWORD = viewPref.getString("passcode","no");
 
         Log.d("PASSCODE ITEMS",isConfirmIntent+"  "+PASSWORD);
@@ -63,7 +65,7 @@ public class PassCodeActivity extends AppCompatActivity {
         }
         if(pin.length()<=4){
             updatePinDote(pin.length(),1);
-            Toast.makeText(getApplicationContext(),pin,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),pin,Toast.LENGTH_SHORT).show();
             if(pin.length()==4){
                 if(pin.equals(PASSWORD)){
                     startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
@@ -86,7 +88,6 @@ public class PassCodeActivity extends AppCompatActivity {
                         }
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
                         clearPinsData();
 
                     }
@@ -115,8 +116,9 @@ public class PassCodeActivity extends AppCompatActivity {
                     updatePinDote(i,0);
                 }
             }
-        },500);
+        },100);
         pin = "";
+        Toast.makeText(getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
     }
 
     public void updatePinDote(int i,int level){

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/bottom_sheet_bg_drawable"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:text="@string/bottomsheet_chats"
+        android:background="@drawable/pills"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="@dimen/headings"
+        android:padding="5dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

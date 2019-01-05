@@ -21,8 +21,10 @@ import com.buyucoin.buyucoin.Fragments.P2PFragment;
 import com.buyucoin.buyucoin.Fragments.RateFragment;
 import com.buyucoin.buyucoin.Fragments.ReferralFragment;
 import com.buyucoin.buyucoin.Fragments.ServerError;
+import com.buyucoin.buyucoin.Fragments.SuperSettingsBottomsheet;
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
@@ -52,14 +54,14 @@ public class Dashboard extends AppCompatActivity implements
         ReferralFragment.OnFragmentInteractionListener,
         P2PFragment.OnFragmentInteractionListener {
 
-    String ACCESS_TOKEN = null, refresh_token=null;
+    String ACCESS_TOKEN = null, refresh_token = null;
     static Toolbar toolbar;
     TextView navname, navemail;
     View fragView;
     static BottomNavigationView bm;
     AlertDialog.Builder ad;
     static FragmentManager fragmentManager;
-    LinearLayout noInternet, serverError;
+    LinearLayout noInternet, serverError, bottom_sheet_layout;
     SharedPreferences prefs;
     String FRAGENT_TYPE;
 
@@ -72,6 +74,11 @@ public class Dashboard extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         noInternet = findViewById(R.id.ll_no_internet);
         serverError = findViewById(R.id.ll_server_error);
+
+
+
+
+
 
         prefs = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
 
@@ -220,6 +227,8 @@ public class Dashboard extends AppCompatActivity implements
 
     }
 
+
+
     public void changeTab(int i) {
         bm.setSelectedItemId(i);
     }
@@ -262,6 +271,8 @@ public class Dashboard extends AppCompatActivity implements
             return true;
         }
         if (id == R.id.action_settings) {
+            SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
+            superSettingsBottomsheet.show(getSupportFragmentManager(),"SUPER SETTINGS BOTTOM SHEET");
             return true;
         }
 
@@ -442,7 +453,6 @@ public class Dashboard extends AppCompatActivity implements
 
                         }
                     });
-
 
 
                 } catch (Exception e) {
