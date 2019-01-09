@@ -119,4 +119,6 @@
     <string name="bottomsheet_referrals">Referrals</string>
     <string name="bottomsheet_settings">Settings</string>
     <string name="bottomsheet_chats">Chats</string>
+    <string name="history_details">Details</string>
+    <bool name="isProduction">false</bool>
 </resources>

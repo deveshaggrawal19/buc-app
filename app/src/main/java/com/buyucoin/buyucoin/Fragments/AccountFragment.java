@@ -11,6 +11,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -40,6 +41,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
+import androidx.fragment.app.FragmentActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -58,9 +60,17 @@ public class AccountFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private SharedPreferences prefs;
     private SharedPreferences.Editor edit_pref;
-    private LinearLayout profile_sheet_handler,referral_sheet_handler,chats_sheet_handler,settings_sheet_handler;
+    private LinearLayout profile_sheet_handler,
+            referral_sheet_handler,
+            chats_sheet_handler,
+            settings_sheet_handler,
+            account_dep_history,
+            account_with_history,
+            account_trade_history;
     private Switch app_pass_switch;
     private boolean applock_enabled;
+    private ImageView kyc;
+    private ImageView imageView;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -86,46 +96,24 @@ public class AccountFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        email = view.findViewById(R.id.tvAccountEmail);
-        ImageView kyc = view.findViewById(R.id.tvAccountKyc);
-        mob = view.findViewById(R.id.tvAccountMobile);
-        name = view.findViewById(R.id.tvAccountName);
-        pb = view.findViewById(R.id.pbAccount);
-        ll = view.findViewById(R.id.llAccount);
-        ImageView imageView = view.findViewById(R.id.acc_pic);
-        profile_sheet_handler = view.findViewById(R.id.bottom_sheet_profile_handler);
-        referral_sheet_handler = view.findViewById(R.id.bottom_sheet_referral_handler);
-        chats_sheet_handler = view.findViewById(R.id.bottom_sheet_chats_handler);
-        settings_sheet_handler = view.findViewById(R.id.bottom_sheet_settings_handler);
-        app_pass_switch = view.findViewById(R.id.disable_app_lock_switch);
-
-        app_pass_switch.setChecked(applock_enabled);
-        app_pass_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    edit_pref.putBoolean("DISABLE_PASS_CODE",true).apply();
-                    Toast.makeText(view.getContext(),"App Lock Disabled",Toast.LENGTH_SHORT).show();
-
-                }else{
-                    edit_pref.putBoolean("DISABLE_PASS_CODE",false).apply();
-                    Toast.makeText(view.getContext(),"App Lock Enabled",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        InitializeAllViews(view);
         sheetClickHandler();
+        HistoryClickHandler();
+        MakeCircularImage();
+        AppPassWordHandler(view);
 
-        Drawable drawable = imageView.getDrawable();
 
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        imageView.setImageDrawable(roundedBitmapDrawable);
+
+
+
+
+
 
 
         name.setText(prefs.getString("name", ""));
         email.setText(prefs.getString("email", ""));
         mob.setText(prefs.getString("mob", ""));
+
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -166,6 +154,55 @@ public class AccountFragment extends Fragment {
         });
     }
 
+    private void HistoryClickHandler(){
+        account_dep_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Dashboard().HistoryFragment(0);
+
+            }
+        });
+        account_with_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Dashboard().HistoryFragment(1);
+
+            }
+        });
+        account_trade_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Dashboard().HistoryFragment(2);
+
+            }
+        });
+    }
+
+    private void MakeCircularImage(){
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        imageView.setImageDrawable(roundedBitmapDrawable);
+    }
+
+    private void AppPassWordHandler(final View view){
+        app_pass_switch.setChecked(applock_enabled);
+        app_pass_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    edit_pref.putBoolean("DISABLE_PASS_CODE",true).apply();
+                    Toast.makeText(view.getContext(),"App Lock Disabled",Toast.LENGTH_SHORT).show();
+
+                }else{
+                    edit_pref.putBoolean("DISABLE_PASS_CODE",false).apply();
+                    Toast.makeText(view.getContext(),"App Lock Enabled",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -184,16 +221,7 @@ public class AccountFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(JSONObject item);
@@ -253,4 +281,24 @@ public class AccountFragment extends Fragment {
             }
         });
     }
+
+    private void InitializeAllViews(View view){
+        email = view.findViewById(R.id.tvAccountEmail);
+        kyc = view.findViewById(R.id.tvAccountKyc);
+        mob = view.findViewById(R.id.tvAccountMobile);
+        name = view.findViewById(R.id.tvAccountName);
+        pb = view.findViewById(R.id.pbAccount);
+        ll = view.findViewById(R.id.llAccount);
+        imageView = view.findViewById(R.id.acc_pic);
+        profile_sheet_handler = view.findViewById(R.id.bottom_sheet_profile_handler);
+        referral_sheet_handler = view.findViewById(R.id.bottom_sheet_referral_handler);
+        chats_sheet_handler = view.findViewById(R.id.bottom_sheet_chats_handler);
+        settings_sheet_handler = view.findViewById(R.id.bottom_sheet_settings_handler);
+        app_pass_switch = view.findViewById(R.id.disable_app_lock_switch);
+        account_dep_history = view.findViewById(R.id.account_dep_history);
+        account_with_history = view.findViewById(R.id.account_with_history);
+        account_trade_history = view.findViewById(R.id.account_trade_history);
+    }
+
+
 }

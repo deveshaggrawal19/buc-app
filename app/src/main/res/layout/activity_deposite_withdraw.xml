@@ -82,16 +82,19 @@
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
                         android:padding="10dp"
+                        android:id="@+id/card_coin_pending"
                         android:text="$ 300K" />
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <Button
                         android:visibility="gone"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="20dp"
                         android:background="@android:color/white"
                         android:padding="5dp"
                         android:id="@+id/card_coin_address_gen_btn"
@@ -103,6 +106,13 @@
                         android:textColor="@android:color/white"
                         android:padding="10dp"
                         android:id="@+id/card_coin_address"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="qwe33dft56545454grge4543"
+                        android:textColor="@android:color/white"
+                        android:padding="10dp"
+                        android:id="@+id/card_coin_base_address"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 

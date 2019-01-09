@@ -1,11 +1,14 @@
 package com.buyucoin.buyucoin;
 
+import com.buyucoin.buyucoin.config.Config;
+
 import java.io.IOException;
 
 import okhttp3.*;
 
 public class OkHttpHandler {
-    private static String BASE_URL = "http://test.buyucoin.com/andrios/";
+
+    private static String BASE_URL = new Config().getAPI_BASE_URL();
     private static OkHttpClient client = new OkHttpClient();
     private static MediaType mediaType = MediaType.parse("application/json");
 

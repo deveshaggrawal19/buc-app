@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/bottom_sheet_bg_drawable"
+    android:background="@android:color/transparent"
     android:layout_height="match_parent">
 
-
-
-
-
     <LinearLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_width="match_parent"
+        android:background="@drawable/bottom_sheet_bg_drawable"
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -24,12 +23,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_account_balance_wallet_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -49,12 +48,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="#aaaaaa"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_account_circle_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -74,12 +73,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_security_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -99,12 +98,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_people_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -124,12 +123,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_info_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -149,12 +148,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_verified_user_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -174,12 +173,12 @@
             <ImageView
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_portrait_black_24dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"

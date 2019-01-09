@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.buyucoin.buyucoin.Adapters.AsksAdapter;
 import com.buyucoin.buyucoin.Adapters.BidsAdapter;
 import com.buyucoin.buyucoin.DataClasses.Markets;
+import com.buyucoin.buyucoin.config.Config;
 import com.buyucoin.buyucoin.pojos.Ask;
 import com.buyucoin.buyucoin.pojos.Bids;
 
@@ -70,7 +71,7 @@ public class CurrencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_currency);
 
 
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        FirebaseDatabase db = new Config().getProductionFirebaseDatabase(getApplicationContext());
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
 

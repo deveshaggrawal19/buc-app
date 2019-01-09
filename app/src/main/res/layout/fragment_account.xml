@@ -221,6 +221,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/white"
                         android:gravity="center"
+                        android:id="@+id/account_dep_history"
                         android:orientation="vertical"
                         >
 
@@ -246,6 +247,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/white"
                         android:gravity="center"
+                        android:id="@+id/account_with_history"
                         android:orientation="vertical"
                         >
 
@@ -269,6 +271,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
                         android:layout_weight="1"
+                        android:id="@+id/account_trade_history"
                         android:background="@android:color/white"
                         android:gravity="center"
                         android:orientation="vertical"

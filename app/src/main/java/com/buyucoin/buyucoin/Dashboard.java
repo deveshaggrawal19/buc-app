@@ -571,5 +571,17 @@ public class Dashboard extends AppCompatActivity implements
         }
     }
 
+    public void HistoryFragment(int tab){
+        if (!isFinishing() && !isDestroyed()) {
+            HistoryFragment historyFragment = new HistoryFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("SELECTED_TAB",tab);
+            historyFragment.setArguments(bundle);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, historyFragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    }
+
 
 }

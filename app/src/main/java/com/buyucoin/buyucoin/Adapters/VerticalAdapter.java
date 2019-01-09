@@ -39,16 +39,18 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
 
         final Context context = myViewHolder.itemView.getContext();
 
-        final String coin_name,availabel,address,description,tag,full_coin_name,porfolio,pending;
+        final String coin_name,availabel,pendings,address,description,tag,full_coin_name,porfolio,pending,base_address;
 
         coin_name = arrayList.get(i).getCoinname();
         availabel =  arrayList.get(i).getAvailabel();
+        pendings = arrayList.get(i).getPending();
         address =  arrayList.get(i).getAddress();
         description =  arrayList.get(i).getDescription();
         tag =   arrayList.get(i).getTag();
         full_coin_name =  arrayList.get(i).getFull_coin_name();
         porfolio = arrayList.get(i).getPortfolio();
         pending = arrayList.get(i).getPending();
+        base_address = arrayList.get(i).getBase_address();
 
 
         myViewHolder.coinname.setText(coin_name.toUpperCase());
@@ -79,7 +81,9 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
 
                     intent.putExtra("coin_name",coin_name);
                     intent.putExtra("available",availabel);
+                    intent.putExtra("pendings",pendings);
                     intent.putExtra("address",address);
+                    intent.putExtra("base_address",base_address);
                     intent.putExtra("description",description);
                     intent.putExtra("tag",tag);
                     intent.putExtra("full_coin_name",full_coin_name);
@@ -105,7 +109,9 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
                     intent.putExtra("type","DEPOSITE");
                     intent.putExtra("coin_name",coin_name);
                     intent.putExtra("available",availabel);
+                    intent.putExtra("pendings",pendings);
                     intent.putExtra("address",address);
+                    intent.putExtra("base_address",base_address);
                     intent.putExtra("description",description);
                     intent.putExtra("tag",tag);
                     intent.putExtra("full_coin_name",full_coin_name);
@@ -132,6 +138,8 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
                     intent.putExtra("type","WITHDRAW");
                     intent.putExtra("coin_name",coin_name);
                     intent.putExtra("available",availabel);
+                    intent.putExtra("pendings",pendings);
+                    intent.putExtra("base_address",base_address);
                     intent.putExtra("address",address);
                     intent.putExtra("description",description);
                     intent.putExtra("tag",tag);

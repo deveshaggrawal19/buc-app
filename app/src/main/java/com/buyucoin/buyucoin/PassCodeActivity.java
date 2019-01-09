@@ -164,4 +164,12 @@ public class PassCodeActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void clearPinByOne(View view) {
+        if(pin.length()>0){
+            updatePinDote(pin.length(),0);
+            pin = pin.substring(0,pin.length()-1);
+        }
+
+    }
 }

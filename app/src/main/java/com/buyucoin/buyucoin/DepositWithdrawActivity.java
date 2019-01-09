@@ -19,7 +19,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout,buy_layout,sell_layout,deposite_layout,withdraw_layout;
     ImageView imageView;
     RecyclerView history_recyclerview;
-    TextView card_coin_full_name,card_coin_availabel,card_coin_address;
+    TextView card_coin_full_name,card_coin_availabel,card_coin_pending,card_coin_address,card_coin_base_address;
     Intent i;
     Button address_gen_btn;
     NestedScrollView nestedScrollView;
@@ -29,22 +29,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposite_withdraw);
 
-        imageView = findViewById(R.id.qrcodeimg);
-        qr_layout = findViewById(R.id.qrcodelayout);
-        history_recyclerview = findViewById(R.id.rvCoinHistory);
-
-        buy_layout = findViewById(R.id.buy_layout_card);
-        sell_layout = findViewById(R.id.sell_layout_card);
-        deposite_layout = findViewById(R.id.deposite_layout_card);
-        withdraw_layout = findViewById(R.id.withdraw_layout_card);
-
-        card_coin_full_name = findViewById(R.id.card_coin_full_name);
-        card_coin_availabel = findViewById(R.id.card_coin_availabel);
-        card_coin_address = findViewById(R.id.card_coin_address);
-
-        address_gen_btn = findViewById(R.id.card_coin_address_gen_btn);
-
-        nestedScrollView = findViewById(R.id.card_coin_nested_view);
+        InitializeAllViews();
 
 
 
@@ -52,7 +37,9 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         final String COIN = i.getStringExtra("coin_name");
         final String AVAILABEL = i.getStringExtra("available");
+        final String PENDING = i.getStringExtra("pendings");
         final String ADDRESS = i.getStringExtra("address");
+        final String BASE_ADDRESS = i.getStringExtra("base_address");
         final String DESCRIPTION = i.getStringExtra("description");
         final String TAG = i.getStringExtra("tag");
         final String COIN_FULL_NAME = i.getStringExtra("full_coin_name");
@@ -60,6 +47,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         card_coin_full_name.setText(COIN_FULL_NAME);
         card_coin_availabel.setText(AVAILABEL);
         card_coin_address.setText(ADDRESS);
+        card_coin_base_address.setText(BASE_ADDRESS);
+        card_coin_pending.setText(PENDING);
 
 
         if(ADDRESS.equals("null")){
@@ -163,6 +152,34 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
             }
         });
+
+        address_gen_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateAddress(card_coin_address);
+            }
+        });
+    }
+
+    private void InitializeAllViews() {
+        imageView = findViewById(R.id.qrcodeimg);
+        qr_layout = findViewById(R.id.qrcodelayout);
+        history_recyclerview = findViewById(R.id.rvCoinHistory);
+
+        buy_layout = findViewById(R.id.buy_layout_card);
+        sell_layout = findViewById(R.id.sell_layout_card);
+        deposite_layout = findViewById(R.id.deposite_layout_card);
+        withdraw_layout = findViewById(R.id.withdraw_layout_card);
+
+        card_coin_full_name = findViewById(R.id.card_coin_full_name);
+        card_coin_availabel = findViewById(R.id.card_coin_availabel);
+        card_coin_address = findViewById(R.id.card_coin_address);
+        card_coin_base_address = findViewById(R.id.card_coin_base_address);
+        card_coin_pending = findViewById(R.id.card_coin_pending);
+
+        address_gen_btn = findViewById(R.id.card_coin_address_gen_btn);
+
+        nestedScrollView = findViewById(R.id.card_coin_nested_view);
     }
 
     private void generateAddress(TextView card_coin_address) {

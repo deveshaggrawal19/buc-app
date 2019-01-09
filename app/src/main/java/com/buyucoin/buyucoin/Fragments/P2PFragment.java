@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
+import com.buyucoin.buyucoin.P2POrders;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
 
@@ -167,33 +169,35 @@ public class P2PFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject obj = new JSONObject();
-                int amonut_ = 0;
-                String tx_ = "";
-                if(!amount.getText().toString().equals("") && !transaction.getText().toString().equals("")){
-                    amonut_ = Integer.parseInt(amount.getText().toString());
-                    tx_ = transaction.getText().toString();
-                }else{
-                    Utilities.showToast(getActivity(),"Fields Cant be blank");
-                }
-                switch(rg.getCheckedRadioButtonId()){
-                    case R.id.radioButton:
-                        try {
-                            obj.put("amount", amonut_).put("tx_id", tx_).put("type", "neft");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        request("create_deposit", obj.toString());
-                        break;
-                    case R.id.radioButton2:
-                        try {
-                            obj.put("amount", 100).put("currency", "inr");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        request("create_withdraw", obj.toString());
-                        break;
-                }
+                Intent P2P_Order_Intent = new Intent(view.getContext(),P2POrders.class);
+                startActivity(P2P_Order_Intent);
+//                JSONObject obj = new JSONObject();
+//                int amonut_ = 0;
+//                String tx_ = "";
+//                if(!amount.getText().toString().equals("") && !transaction.getText().toString().equals("")){
+//                    amonut_ = Integer.parseInt(amount.getText().toString());
+//                    tx_ = transaction.getText().toString();
+//                }else{
+//                    Utilities.showToast(getActivity(),"Fields Cant be blank");
+//                }
+//                switch(rg.getCheckedRadioButtonId()){
+//                    case R.id.radioButton:
+//                        try {
+//                            obj.put("amount", amonut_).put("tx_id", tx_).put("type", "neft");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        request("create_deposit", obj.toString());
+//                        break;
+//                    case R.id.radioButton2:
+//                        try {
+//                            obj.put("amount", 100).put("currency", "inr");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        request("create_withdraw", obj.toString());
+//                        break;
+//                }
             }
         });
 

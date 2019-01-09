@@ -14,6 +14,7 @@ import com.buyucoin.buyucoin.DataClasses.Rates;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.config.Config;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -96,7 +97,7 @@ public class RateFragment extends Fragment {
         adapter = new MyrateRecyclerViewAdapter(list, mListener, getActivity().getApplicationContext());
 
 
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        FirebaseDatabase db = new Config().getProductionFirebaseDatabase(getContext());
        // Toast.makeText(getActivity(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
     }
@@ -193,36 +194,5 @@ public class RateFragment extends Fragment {
         void onListFragmentInteraction(JSONObject item);
     }
 
-    public void getRates(){
-        OkHttpHandler.get_rates(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                try {
-                    JSONObject object = new JSONObject(s).getJSONObject("data");
-                    JSONArray array = object.toJSONArray(object.names());
-                    for(int i=0; i<array.length(); i++){
-                        array.getJSONObject(i).put("currency", object.names().get(i));
-                    }
-                    final JSONArray farray = array;
-                    //Log.d("RESPONSE____",array.toString());
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter = new MyrateRecyclerViewAdapter(list, mListener, getActivity().getApplicationContext());
-                            recyclerView.setAdapter(adapter);
-                            Utilities.hideProgressBar(pb);
-                        }
-                    });
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }
