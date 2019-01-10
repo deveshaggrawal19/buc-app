@@ -2,6 +2,8 @@ package com.buyucoin.buyucoin.Adapters;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.buyucoin.buyucoin.BuySellActivity;
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
 import com.buyucoin.buyucoin.MyCustomDialogBoxClass;
 import com.buyucoin.buyucoin.R;
@@ -66,16 +69,9 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
                 @Override
                 public void onClick(View v) {
                     if (null != mListener) {
-                        // Notify the active callbacks interface (the activity, if the
-                        // fragment is attached to one) that an item has been selected.
-                        mListener.onListFragmentInteraction(holder.mItem);
-                        FrameLayout.LayoutParams recparam = (FrameLayout.LayoutParams) recyclerView.getLayoutParams();
 
-                        recparam.gravity = Gravity.RIGHT;
-
-                        textView.setVisibility(View.GONE);
-                        recyclerView.setLayoutParams(recparam);
-
+                        Intent buysellIntent = new Intent(holder.mView.getContext(),BuySellActivity.class);
+                        holder.mView.getContext().startActivity(buysellIntent);
 
                     }
                 }

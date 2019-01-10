@@ -50,12 +50,11 @@ public class P2PFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    EditText amount, transaction,upi;
+    EditText amount, transaction;
     Button b;
     String ACCESS_TOKEN = null;
-    TextView boost_value_text;
-    SeekBar boost_seekbar;
-    CheckBox upi_checkobx;
+
+
     private SharedPreferences prefs ;
     private SharedPreferences.Editor edit_pref ;
     private String FRAGMENT_STATE = "P2P";
@@ -105,46 +104,18 @@ public class P2PFragment extends Fragment {
 
         amount = (EditText) view.findViewById(R.id.etP2PAmount);
         transaction = (EditText) view.findViewById(R.id.etP2PTransaction);
-        upi = view.findViewById(R.id.etP2PUpiId);
-        upi.setVisibility(View.GONE);
 
-        boost_seekbar = view.findViewById(R.id.seekBar);
 
-        boost_value_text = view.findViewById(R.id.boost_value_text);
 
-        upi_checkobx = view.findViewById(R.id.checkBox2);
 
-        upi_checkobx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(upi_checkobx.isChecked()){
-                    upi.setVisibility(View.VISIBLE);
-                }else{
-                    upi.setVisibility(View.GONE);
-                }
-            }
-        });
+
+
+
 
         final RadioGroup rg = (RadioGroup) view.findViewById(R.id.rgp2p);
         b = (Button) view.findViewById(R.id.bP2Prequest);
 
-        boost_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                String val = "Boost Amount "+getString(R.string.rupees)+" "+progress;
-                boost_value_text.setText(val);
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -169,8 +140,10 @@ public class P2PFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent P2P_Order_Intent = new Intent(view.getContext(),P2POrders.class);
-                startActivity(P2P_Order_Intent);
+                P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();
+                p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
+//                Intent P2P_Order_Intent = new Intent(view.getContext(),P2POrders.class);
+//                startActivity(P2P_Order_Intent);
 //                JSONObject obj = new JSONObject();
 //                int amonut_ = 0;
 //                String tx_ = "";

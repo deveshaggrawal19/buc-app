@@ -4,11 +4,15 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.InputType;
 import android.util.Log;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     Button _loginButton;
     TextView _signupLink;
     ProgressDialog progressDialog;
+    CheckBox show_password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
         _emailText = (EditText)findViewById(R.id.input_email);
         _passwordText = (EditText)findViewById(R.id.input_password);
+        final int type = _passwordText.getInputType();
+        show_password = findViewById(R.id.checkBox_show_password);
         _loginButton = (Button)findViewById(R.id.btn_login);
         _signupLink = (TextView)findViewById(R.id.link_signup);
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +62,20 @@ public class LoginActivity extends AppCompatActivity {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
+
+        show_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked){
+                    _passwordText.setInputType(InputType.TYPE_CLASS_TEXT);
+                }
+                else {
+                    _passwordText.setInputType(type);
+
+                }
             }
         });
     }

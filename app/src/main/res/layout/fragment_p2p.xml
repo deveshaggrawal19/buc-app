@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.P2PFragment"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:background="@color/g1b67e8"
     android:clipToPadding="false">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,133 +13,347 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/history_item_drawable"
-        android:elevation="2dp"
-        android:padding="10dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <RadioGroup
             android:id="@+id/rgp2p"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@drawable/my_coustom_radio_text"
+                android:background="@drawable/my_coustom_radio"
+                android:button="@android:color/transparent"
                 android:checked="true"
                 android:text="Deposit INR" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/my_coustom_radio"
+                android:textColor="@drawable/my_coustom_radio_text"
+                android:button="@android:color/transparent"
                 android:text="Withdrawl INR" />
         </RadioGroup>
-
-        <EditText
-            android:id="@+id/etP2PAmount"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/input_shape"
-            android:hint="Amount"
-            android:inputType="number"
-            android:padding="10dp" />
-
-        <EditText
-            android:id="@+id/etP2PTransaction"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/input_shape"
-            android:hint="Transaction ID"
-            android:padding="10dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/etP2PAmount"
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="IMPS" />
+                android:layout_height="40dp"
 
-            <CheckBox
-                android:id="@+id/checkBox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="UPI" />
-
-        </LinearLayout>
-
-
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/input_shape"
+                android:hint="Amount"
+                android:inputType="number"
+                android:padding="10dp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="0.05"
+                android:layout_height="match_parent"/>
 
             <EditText
-                android:id="@+id/etP2PUpiId"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
+                android:id="@+id/etP2PTransaction"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/input_shape"
-                android:hint="UPI ID (If Selected)"
+                android:hint="Min Amount"
                 android:padding="10dp" />
-
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Minimum Boost (10-1000)" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:id="@+id/boost_value_text"
-                android:layout_marginRight="10dp"
-                android:text="Boost Amount 1000"/>
-
-        </RelativeLayout>
-
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:max="1000"
-            android:min="10" />
-
+        </LinearLayout>
         <Button
             android:id="@+id/bP2Prequest"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:padding="15dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/pills"
             android:text="Deposit Request"
             android:textColor="@android:color/white" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:background="@drawable/bottom_sheet_bg_drawable"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Your Matches"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content" />
+                <HorizontalScrollView
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </HorizontalScrollView>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:text="Your History"
+                    android:layout_height="wrap_content" />
+                <HorizontalScrollView
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:gravity="center"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/history_item_drawable"
+                            android:layout_height="60dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="1500"
+                                android:textSize="30sp"
+                                android:layout_height="wrap_content" />
+                            <Button
+                                android:layout_width="60dp"
+                                android:text="Accept"
+                                android:layout_marginLeft="20dp"
+                                android:padding="5dp"
+                                android:textSize="12sp"
+                                android:background="@drawable/pills"
+                                android:textColor="@android:color/white"
+                                android:layout_height="30sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </LinearLayout>
 
 
 
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

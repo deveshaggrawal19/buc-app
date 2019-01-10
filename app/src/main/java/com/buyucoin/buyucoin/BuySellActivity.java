@@ -27,8 +27,8 @@ public class BuySellActivity extends AppCompatActivity implements BuyDialogFunct
 
         Intent i = getIntent();
 
-        price = Double.valueOf(i.getStringExtra("price"));
-        type = i.getStringExtra("type");
+        price = i.getStringExtra("price")!=null?Double.valueOf(i.getStringExtra("price")):0;
+        type = i.getStringExtra("type")!=null?i.getStringExtra("type"):"buy";
 
         sell_button = findViewById(R.id.sell_layout_btn);
         buy_button = findViewById(R.id.buy_layout_btn);
