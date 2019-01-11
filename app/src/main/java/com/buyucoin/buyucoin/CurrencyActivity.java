@@ -214,6 +214,13 @@ public class CurrencyActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Utilities.hideProgressBar(pb);
+                        err.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             @Override
@@ -293,16 +300,23 @@ public class CurrencyActivity extends AppCompatActivity {
 
         graphView = (GraphView) findViewById(R.id.graphView);
 
-        graphView.getViewport().setScrollable(true);
-        graphView.getViewport().setScrollableY(true);
+//        graphView.getViewport().setScrollable(true);
+//        graphView.getViewport().setScrollableY(true);
 //        graphView.getViewport().setScalable(true);
-        graphView.getViewport().setScalableY(true);
+//        graphView.getViewport().setScalableY(true);
 
         graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
         graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
         graphView.addSeries(series);
 
-        Utilities.hideProgressBar(pb);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                graphView.setVisibility(View.VISIBLE);
+                Utilities.hideProgressBar(pb);
+            }
+        });
+
     }
 
 
