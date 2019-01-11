@@ -16,11 +16,13 @@ import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.AsksAdapter;
 import com.buyucoin.buyucoin.Adapters.BidsAdapter;
+import com.buyucoin.buyucoin.Adapters.MarketHistoryAdapter;
 import com.buyucoin.buyucoin.DataClasses.Markets;
 import com.buyucoin.buyucoin.config.Config;
 import com.buyucoin.buyucoin.pojos.Ask;
 import com.buyucoin.buyucoin.pojos.Bids;
 
+import com.buyucoin.buyucoin.pojos.MarketHistory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,10 +62,11 @@ public class CurrencyActivity extends AppCompatActivity {
     Intent intent;
     Bundle bundle;
     ProgressBar pb;
-    RecyclerView bids_recview,ask_recview;
+    RecyclerView bids_recview,ask_recview,market_recview;
     DatabaseReference myref;
     ArrayList<Bids> arrayListBids ;
     ArrayList<Ask> arrayListAsks ;
+    ArrayList<MarketHistory> arrayListMarketHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +85,13 @@ public class CurrencyActivity extends AppCompatActivity {
         sell = findViewById(R.id.tvCurrencySell);
         bids_recview = findViewById(R.id.rvBid);
         ask_recview = findViewById(R.id.rvAsk);
+        market_recview = findViewById(R.id.rvMarketHIstory);
 
 
         bids_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ask_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        market_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
 
 
 
@@ -114,6 +120,7 @@ public class CurrencyActivity extends AppCompatActivity {
 
                 arrayListBids = new ArrayList<>();
                 arrayListAsks = new ArrayList<>();
+                arrayListMarketHistory = new ArrayList<>();
 
                 arrayListBids.clear();
                 arrayListAsks.clear();
@@ -141,6 +148,28 @@ public class CurrencyActivity extends AppCompatActivity {
                     }
                     AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);
                     ask_recview.setAdapter(asksAdapter);
+                }
+                if (data.hasChild("market_history")){
+                    for(DataSnapshot d : data.child("market_history").getChildren()){
+                        Double amount = d.child("amount").getValue(Double.class);
+                        Double price = d.child("price").getValue(Double.class);
+                        Long time = d.child("time").getValue(Long.class);
+                        String type = d.child("type").getValue(String.class);
+                        String value = d.child("value").getValue(String.class);
+
+                        MarketHistory m = new MarketHistory();
+                        m.setAmount(amount);
+                        m.setPrice(price);
+                        m.setTime(time);
+                        m.setType(type);
+                        m.setValue(value);
+
+                        arrayListMarketHistory.add(m);
+
+
+                    }
+                    MarketHistoryAdapter marketHistoryAdapter = new MarketHistoryAdapter(getApplicationContext(),arrayListMarketHistory);
+                    market_recview.setAdapter(marketHistoryAdapter);
                 }
 
                 Log.d("LIST SIZE__", arrayListAsks.size()+""+arrayListBids.size());

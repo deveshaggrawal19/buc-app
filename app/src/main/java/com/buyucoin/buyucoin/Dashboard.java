@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.Adapters.Dashboard_PagerAdapter;
 import com.buyucoin.buyucoin.Fragments.AccountFragment;
 import com.buyucoin.buyucoin.Fragments.BuySellFragment;
 import com.buyucoin.buyucoin.Fragments.HistoryFragment;
@@ -41,6 +42,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -55,6 +57,7 @@ public class Dashboard extends AppCompatActivity implements
         P2PFragment.OnFragmentInteractionListener {
 
     String ACCESS_TOKEN = null, refresh_token = null;
+    static final String FRAGMENT_STATE = "FRAGMENT_STATE";
     static Toolbar toolbar;
     TextView navname, navemail;
     View fragView;
@@ -63,7 +66,9 @@ public class Dashboard extends AppCompatActivity implements
     static FragmentManager fragmentManager;
     LinearLayout noInternet, serverError, bottom_sheet_layout;
     SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     String FRAGENT_TYPE;
+    ViewPager DashboardViewpager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,8 @@ public class Dashboard extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         noInternet = findViewById(R.id.ll_no_internet);
         serverError = findViewById(R.id.ll_server_error);
+        DashboardViewpager = findViewById(R.id.dashboard_viewpager);
+        DashboardViewpager.setAdapter(new Dashboard_PagerAdapter(getSupportFragmentManager()));
 
 
 
@@ -82,8 +89,10 @@ public class Dashboard extends AppCompatActivity implements
 
         prefs = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
 
+        editor = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
+
         ACCESS_TOKEN = prefs.getString("access_token", null);
-        FRAGENT_TYPE = prefs.getString("FRAGMENT_STATE", "WALLET");
+        FRAGENT_TYPE = prefs.getString(FRAGMENT_STATE, "WALLET");
 
 
         refresh_token = prefs.getString("refresh_token", null);
@@ -128,6 +137,7 @@ public class Dashboard extends AppCompatActivity implements
                     switch (item.getItemId()) {
                         case R.id.acc_det:
                             toolbar.setTitle("Account");
+                            updateFrammentState("ACCOUNT");
                             setTitle(item.getTitle());
                             item.setChecked(true);
                             if (Utilities.isOnline(getApplicationContext())) {
@@ -142,6 +152,7 @@ public class Dashboard extends AppCompatActivity implements
                             break;
                         case R.id.wll_bal:
                             toolbar.setTitle("Wallet");
+                            updateFrammentState("WALLET");
                             fragmentClass = WalletFragment.class;
                             if (wFrag == null)
                                 wFrag = (Fragment) fragmentClass.newInstance();
@@ -149,6 +160,7 @@ public class Dashboard extends AppCompatActivity implements
                             break;
                         case R.id._rates:
                             toolbar.setTitle("Rates");
+                            updateFrammentState("RATES");
                             fragmentClass = RateFragment.class;
                             if (rFrag == null)
                                 rFrag = (Fragment) fragmentClass.newInstance();
@@ -156,6 +168,7 @@ public class Dashboard extends AppCompatActivity implements
                             break;
                         case R.id._buysell:
                             toolbar.setTitle("Buy\\Sell");
+                            updateFrammentState("BUYSELL");
                             fragmentClass = BuySellFragment.class;
                             if (bFrag == null)
                                 bFrag = (Fragment) fragmentClass.newInstance();
@@ -163,13 +176,15 @@ public class Dashboard extends AppCompatActivity implements
                             break;
                         case R.id._p2p:
                             toolbar.setTitle("Create Deposit/Withdrawl");
+                            updateFrammentState("P2P");
                             fragmentClass = P2PFragment.class;
                             if (pFrag == null)
                                 pFrag = (Fragment) fragmentClass.newInstance();
                             fragment = pFrag;
                             break;
                         default:
-                            fragmentClass = AccountFragment.class;
+                            fragmentClass = WalletFragment.class;
+                            updateFrammentState("WALLET");
                             if (aFrag == null)
                                 aFrag = (Fragment) fragmentClass.newInstance();
                             fragment = aFrag;
@@ -199,12 +214,17 @@ public class Dashboard extends AppCompatActivity implements
 
     }
 
+    public void updateFrammentState(String STATE){
+        editor.putString(FRAGMENT_STATE,STATE).apply();
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         if (Utilities.isOnline(getApplicationContext())) {
             getNonFreshToken(refresh_token);
-            loadProfile();
+//            loadProfile();
         } else {
             fragView.setVisibility(View.GONE);
             noInternet.setVisibility(View.VISIBLE);

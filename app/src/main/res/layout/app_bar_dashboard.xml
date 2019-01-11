@@ -27,8 +27,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <androidx.viewpager.widget.ViewPager
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:id="@+id/dashboard_viewpager"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
     <FrameLayout
         android:id="@+id/flContent"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_marginBottom="60dp"

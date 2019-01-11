@@ -53,12 +53,13 @@ public class WalletFragment extends Fragment {
     ArrayList<JSONObject> j = new ArrayList<>();
     RecyclerView recyclerView;
     ProgressBar pb;
-    TextView err;
+    TextView err,wallet_inr;
     View nsView;
     CheckBox hidezero_checkbox;
     private SharedPreferences prefs ;
     private SharedPreferences.Editor edit_pref;
     private String FRAGMENT_STATE = "WALLET";
+    private String WALLET_INR_BALANCE = "0";
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -82,6 +83,7 @@ public class WalletFragment extends Fragment {
         prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
         edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        WALLET_INR_BALANCE = prefs.getString("inr_amount","0");
         edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
         list = new ArrayList<>();
         if (getArguments() != null) {
@@ -97,6 +99,7 @@ public class WalletFragment extends Fragment {
 
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
+        wallet_inr = view.findViewById(R.id.wallet_inr);
         Context context = view.getContext();
         GridLayoutManager  linearLayoutManager = new GridLayoutManager(context,1);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -106,6 +109,8 @@ public class WalletFragment extends Fragment {
         nsView = view.findViewById(R.id.nsView);
 
         hidezero_checkbox = view.findViewById(R.id.wallet_checkbox);
+
+        wallet_inr.setText(getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE);
 
         hidezero_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override

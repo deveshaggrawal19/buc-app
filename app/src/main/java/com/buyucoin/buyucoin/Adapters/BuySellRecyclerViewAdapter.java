@@ -63,7 +63,9 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
             final String finalS = s3;
         holder.coinname.setText(s3);
+        if(position<34){
         holder.coinimg.setImageResource(MyCustomDialogBoxClass.arr[position]);
+        }
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override

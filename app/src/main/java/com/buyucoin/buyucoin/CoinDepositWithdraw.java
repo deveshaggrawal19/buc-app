@@ -3,21 +3,34 @@ package com.buyucoin.buyucoin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.buyucoin.buyucoin.Fragments.WithdrawBottomsheet;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class CoinDepositWithdraw extends AppCompatActivity {
     private static  final String DEPOSITE = "DEPOSITE";
     private static  final String WITHDRAW = "WITHDRAW";
     Intent i;
     LinearLayout deposite_layout,withdraw_layout,tag_layout;
-    Button deposite_layout_btn,withdraw_layout_btn;
-    EditText destination_tag;
+    Button deposite_layout_btn,withdraw_layout_btn,withdraw_layout_btnview;
+    EditText destination_tag,coin_amonut,coin_address;
+    ImageView deposite_layout_qr_img;
+    TextView deposite_layout_address_txt;
 
 
 
@@ -46,13 +59,35 @@ public class CoinDepositWithdraw extends AppCompatActivity {
 
         deposite_layout_btn = findViewById(R.id.deposite_layout_btn);
         withdraw_layout_btn = findViewById(R.id.withdraw_layout_btn);
+        withdraw_layout_btnview = findViewById(R.id.withdraw_layout_btnview);
 
         destination_tag = findViewById(R.id.destination_tag_edittext);
+        coin_amonut = findViewById(R.id.withdraw_layout_amount_et);
+        coin_address = findViewById(R.id.withdraw_layout_address_et);
+
+        deposite_layout_qr_img = findViewById(R.id.coin_address_qrcode);
+        deposite_layout_address_txt = findViewById(R.id.coin_address);
 
         if(TAG.equals("true")){
             tag_layout.setVisibility(View.VISIBLE);
             destination_tag.setHint(DESCRIPTION);
 
+        }
+
+
+
+        if(ADDRESS!=null){
+            deposite_layout_address_txt.setText(ADDRESS);
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+            try {
+                BitMatrix bitMatrix = multiFormatWriter.encode(ADDRESS,BarcodeFormat.QR_CODE,500,500);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                deposite_layout_qr_img.setImageBitmap(bitmap);
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -81,6 +116,35 @@ public class CoinDepositWithdraw extends AppCompatActivity {
             public void onClick(View v) {
                 changeLayoutParameter(withdraw_layout,deposite_layout);
                 changeButtonParameter(withdraw_layout_btn,deposite_layout_btn);
+            }
+        });
+
+
+
+        withdraw_layout_btnview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!coin_amonut.getText().toString().equals("")){
+
+                double amount = Double.valueOf(coin_amonut.getText().toString());
+                String tag = destination_tag.getText().toString();
+                String address = coin_address.getText().toString();
+
+                Bundle bundle = new Bundle();
+                if(amount > 0 && !address.equals("")){
+
+                    bundle.putString("coin_tag",tag);
+                    bundle.putDouble("coin_amount",amount);
+                    bundle.putString("coin_address",address);
+
+
+                    WithdrawBottomsheet withdrawBottomsheet = new WithdrawBottomsheet();
+                    withdrawBottomsheet.setArguments(bundle);
+                    withdrawBottomsheet.show(getSupportFragmentManager(),"WITHDRAW");
+                }
+
+                }
+
             }
         });
 

@@ -45,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
+            android:id="@+id/wallet_inr"
             android:textStyle="bold"
             android:text="3,720.45"
             android:layout_height="wrap_content" />
@@ -68,6 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:hint="1000"
+                android:id="@+id/buy_amount_edittext"
                 android:inputType="numberDecimal"
                 android:paddingLeft="20dp"
                 android:background="@android:color/white"
@@ -100,6 +102,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:hint="0.000345"
+                android:id="@+id/buy_price_edittext"
+
                 android:inputType="numberDecimal"
                 android:paddingLeft="20dp"
                 android:background="@android:color/white"
@@ -198,8 +202,9 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_weight="4"
-                android:hint="Enter Volume"
+                android:hint="Enter Price"
                 android:inputType="numberDecimal"
+                android:id="@+id/sell_amount_edittext"
                 android:paddingLeft="20dp"
                 android:background="@android:color/white"
                 android:layout_height="match_parent" />
@@ -230,7 +235,8 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_weight="4"
-                android:hint="Enter Price"
+                android:hint="Enter Volume"
+                android:id="@+id/sell_price_edittext"
                 android:inputType="numberDecimal"
                 android:paddingLeft="20dp"
                 android:background="@android:color/white"

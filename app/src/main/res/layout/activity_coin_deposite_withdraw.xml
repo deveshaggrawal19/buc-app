@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/credit_card"
     tools:context=".CoinDepositWithdraw">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:background="@drawable/credit_card"
-
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +55,7 @@
             <LinearLayout
                 android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center"
                 android:layout_height="wrap_content">
                 <TextView
@@ -69,8 +68,11 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:hint="0"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="70sp"
+                    android:maxLength="10"
+                    android:textSize="60sp"
+                    android:autoSizeMaxTextSize="60sp"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/withdraw_layout_amount_et"
                     android:textColor="@android:color/white"
                     android:background="@android:color/transparent"
                     android:layout_height="wrap_content" />
@@ -78,7 +80,7 @@
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center"
                 android:layout_height="wrap_content">
 
@@ -86,11 +88,15 @@
                     android:layout_width="wrap_content"
                     android:hint="Wallet Address"
                     android:gravity="center"
+                    android:id="@+id/withdraw_layout_address_et"
                     android:background="@drawable/deposite_withdraw_edittext"
                     android:padding="15dp"
                     android:layout_height="wrap_content"/>
 
+
+
             </LinearLayout>
+
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/tag_layout"
@@ -109,41 +115,19 @@
                     android:id="@+id/destination_tag_edittext"
                     android:layout_height="wrap_content"/>
 
+
+
             </LinearLayout>
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_marginTop="50dp"
-                 android:padding="10dp"
-                 android:layout_marginRight="10dp"
-                 android:layout_marginLeft="10dp"
-                 android:orientation="vertical"
-                 android:background="@drawable/history_item_drawable"
-                 android:layout_height="wrap_content">
-                 <TextView
-                     android:layout_marginTop="10dp"
-                     android:gravity="center"
-                     android:textStyle="bold"
-                     android:layout_width="match_parent"
-                     android:text=" You will get this 3456"
-                     android:layout_height="wrap_content" />
-                 <Button
-                     android:layout_width="wrap_content"
-                     android:layout_marginTop="30dp"
-                     android:layout_marginBottom="30dp"
-                     android:text="Proceed to Withdraw"
-                     android:layout_gravity="center"
-                     android:textColor="@android:color/white"
-                     android:padding="10dp"
-                     android:background="@drawable/pills"
-                     android:layout_height="wrap_content" />
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:text="Min Amount 23"
-                     android:layout_gravity="center"
-                     android:layout_height="wrap_content" />
-
-
-             </LinearLayout>
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@android:color/white"
+                    android:text="Withdraw"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/withdraw_layout_btnview"
+                    android:background="@drawable/pills"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -166,6 +150,7 @@
                 <ImageView
                     android:layout_width="200dp"
                     android:src="@drawable/qr"
+                    android:id="@+id/coin_address_qrcode"
                     android:layout_gravity="center"
                     android:layout_height="200dp" />
                 <TextView
@@ -180,6 +165,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:text="AQ23WSDE45RFGT67"
+                    android:id="@+id/coin_address"
                     android:textSize="30sp"
                     android:gravity="center"
                     android:padding="10dp"

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/history_item_drawable"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textSize="@dimen/headings"
+            android:layout_width="match_parent"
+            android:text=" You will get this 3456"
+            android:id="@+id/amount"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Min Amount 23"
+            android:textSize="@dimen/headings"
+            android:layout_gravity="center"
+            android:id="@+id/tag"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Min Amount 23"
+            android:textSize="@dimen/headings"
+            android:layout_gravity="center"
+            android:id="@+id/address"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:text="Proceed to Withdraw"
+            android:id="@+id/proceed_to_withdraw"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:padding="10dp"
+            android:background="@drawable/pills"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+</LinearLayout>

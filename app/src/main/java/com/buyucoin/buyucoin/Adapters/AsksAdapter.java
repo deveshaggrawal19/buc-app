@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +38,11 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
     public void onBindViewHolder(@NonNull AskViewHolder holder, int position) {
 
         holder.price.setText(String.valueOf(askArrayList.get(position).getAsk_price()));
-        holder.value.setText(String.valueOf(askArrayList.get(position).getAsk_value()));
+        holder.value.setText(askArrayList.get(position).getAsk_value());
         holder.vol.setText(String.valueOf(askArrayList.get(position).getAsk_volume()));
-
+        if(position%2==0){
+            holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
+        }
 
         Log.d("WIDTH============>",String.valueOf(holder.itemView));
 

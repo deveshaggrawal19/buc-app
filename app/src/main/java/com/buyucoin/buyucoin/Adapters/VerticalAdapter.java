@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,8 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
         }
 
         if(coin_name.equals("inr")){
+            SharedPreferences.Editor editor = context.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
+            editor.putString("inr_amount",String.valueOf(availabel)).apply();
             myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
