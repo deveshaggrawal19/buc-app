@@ -168,6 +168,7 @@
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:text="Confirm"
+        android:id="@+id/make_p2p_request"
         android:background="@drawable/pills"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content" />

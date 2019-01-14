@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -102,14 +103,6 @@ public class AccountFragment extends Fragment {
         MakeCircularImage();
         AppPassWordHandler(view);
 
-
-
-
-
-
-
-
-
         name.setText(prefs.getString("name", ""));
         email.setText(prefs.getString("email", ""));
         mob.setText(prefs.getString("mob", ""));
@@ -155,24 +148,32 @@ public class AccountFragment extends Fragment {
     }
 
     private void HistoryClickHandler(){
+        final DialogFragment historyFragment = new HistoryFragment();
+        final Bundle bundle = new Bundle();
+
         account_dep_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Dashboard().HistoryFragment(0);
-
+                bundle.putInt("SELECTED_TAB",0);
+                historyFragment.setArguments(bundle);
+                historyFragment.show(getChildFragmentManager(),"TAB:0");
             }
         });
         account_with_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Dashboard().HistoryFragment(1);
+                bundle.putInt("SELECTED_TAB",1);
+                historyFragment.setArguments(bundle);
+                historyFragment.show(getChildFragmentManager(),"TAB:1");
 
             }
         });
         account_trade_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Dashboard().HistoryFragment(2);
+                bundle.putInt("SELECTED_TAB",2);
+                historyFragment.setArguments(bundle);
+                historyFragment.show(getChildFragmentManager(),"TAB:2");
 
             }
         });
@@ -260,6 +261,10 @@ public class AccountFragment extends Fragment {
                                     return;
                                 }
                                 final JSONObject data = jsonObject.getJSONObject(("data"));
+                                edit_pref.putString("email",data.get("email").toString()).apply();
+                                edit_pref.putString("name",data.get("name").toString()).apply();
+                                edit_pref.putString("mob",data.get("mob").toString()).apply();
+
                                 email.setText(data.getString("email"));
                                 name.setText(data.getString("name"));
                                 mob.setText(data.getString("mob"));

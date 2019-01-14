@@ -218,7 +218,6 @@ public class CurrencyActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Utilities.hideProgressBar(pb);
-                        err.setVisibility(View.VISIBLE);
                     }
                 });
             }

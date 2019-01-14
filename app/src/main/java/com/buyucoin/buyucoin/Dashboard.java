@@ -39,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -83,10 +84,6 @@ public class Dashboard extends AppCompatActivity implements
         DashboardViewpager.setAdapter(new Dashboard_PagerAdapter(getSupportFragmentManager()));
 
 
-
-
-
-
         prefs = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
 
         editor = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
@@ -122,100 +119,48 @@ public class Dashboard extends AppCompatActivity implements
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                OkHttpHandler.cancelAllRequests();
-                if (!Utilities.isOnline(getApplicationContext())) {
-                    fragView.setVisibility(View.GONE);
-                    noInternet.setVisibility(View.VISIBLE);
-                    return true;
+
+                switch (item.getItemId()) {
+                    case R.id.acc_det:
+                        toolbar.setTitle("Account");
+                        DashboardViewpager.setCurrentItem(4);
+
+                        break;
+                    case R.id.wll_bal:
+                        toolbar.setTitle("Wallet");
+                        DashboardViewpager.setCurrentItem(0);
+
+                        break;
+                    case R.id._rates:
+                        toolbar.setTitle("Rates");
+                        DashboardViewpager.setCurrentItem(1);
+
+                        break;
+                    case R.id._buysell:
+                        toolbar.setTitle("Buy\\Sell");
+                        DashboardViewpager.setCurrentItem(2);
+
+                        break;
+                    case R.id._p2p:
+                        toolbar.setTitle("Create Deposit/Withdrawl");
+                        DashboardViewpager.setCurrentItem(3);
+
+                        break;
+                    default:
+                        DashboardViewpager.setCurrentItem(0);
+
+
                 }
-
-                Fragment fragment = null, aFrag = null, wFrag = null, rFrag = null, pFrag = null, bFrag = null;
-                Class fragmentClass = null;
-                int id = item.getItemId();
-
-                try {
-                    switch (item.getItemId()) {
-                        case R.id.acc_det:
-                            toolbar.setTitle("Account");
-                            updateFrammentState("ACCOUNT");
-                            setTitle(item.getTitle());
-                            item.setChecked(true);
-                            if (Utilities.isOnline(getApplicationContext())) {
-                            } else {
-                                fragView.setVisibility(View.GONE);
-                                noInternet.setVisibility(View.VISIBLE);
-                            }
-                            fragmentClass = AccountFragment.class;
-                            if (aFrag == null)
-                                aFrag = (Fragment) fragmentClass.newInstance();
-                            fragment = aFrag;
-                            break;
-                        case R.id.wll_bal:
-                            toolbar.setTitle("Wallet");
-                            updateFrammentState("WALLET");
-                            fragmentClass = WalletFragment.class;
-                            if (wFrag == null)
-                                wFrag = (Fragment) fragmentClass.newInstance();
-                            fragment = wFrag;
-                            break;
-                        case R.id._rates:
-                            toolbar.setTitle("Rates");
-                            updateFrammentState("RATES");
-                            fragmentClass = RateFragment.class;
-                            if (rFrag == null)
-                                rFrag = (Fragment) fragmentClass.newInstance();
-                            fragment = rFrag;
-                            break;
-                        case R.id._buysell:
-                            toolbar.setTitle("Buy\\Sell");
-                            updateFrammentState("BUYSELL");
-                            fragmentClass = BuySellFragment.class;
-                            if (bFrag == null)
-                                bFrag = (Fragment) fragmentClass.newInstance();
-                            fragment = bFrag;
-                            break;
-                        case R.id._p2p:
-                            toolbar.setTitle("Create Deposit/Withdrawl");
-                            updateFrammentState("P2P");
-                            fragmentClass = P2PFragment.class;
-                            if (pFrag == null)
-                                pFrag = (Fragment) fragmentClass.newInstance();
-                            fragment = pFrag;
-                            break;
-                        default:
-                            fragmentClass = WalletFragment.class;
-                            updateFrammentState("WALLET");
-                            if (aFrag == null)
-                                aFrag = (Fragment) fragmentClass.newInstance();
-                            fragment = aFrag;
-
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                if (Utilities.isOnline(getApplicationContext())) {
-                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-                    noInternet.setVisibility(View.GONE);
-                    fragView.setVisibility(View.VISIBLE);
-                } else {
-                    fragView.setVisibility(View.GONE);
-                    noInternet.setVisibility(View.VISIBLE);
-                }
-                // Set action bar title
-                setTitle(item.getTitle());
-                item.setChecked(true);
-                // Close the navigation drawer
                 return true;
             }
+
+
         });
 
     }
 
-    public void updateFrammentState(String STATE){
-        editor.putString(FRAGMENT_STATE,STATE).apply();
+    public void updateFrammentState(String STATE) {
+        editor.putString(FRAGMENT_STATE, STATE).apply();
 
     }
 
@@ -246,7 +191,6 @@ public class Dashboard extends AppCompatActivity implements
 //        changeTab(R.id._buysell);
 
     }
-
 
 
     public void changeTab(int i) {
@@ -292,7 +236,7 @@ public class Dashboard extends AppCompatActivity implements
         }
         if (id == R.id.action_settings) {
             SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
-            superSettingsBottomsheet.show(getSupportFragmentManager(),"SUPER SETTINGS BOTTOM SHEET");
+            superSettingsBottomsheet.show(getSupportFragmentManager(), "SUPER SETTINGS BOTTOM SHEET");
             return true;
         }
 
@@ -591,15 +535,9 @@ public class Dashboard extends AppCompatActivity implements
         }
     }
 
-    public void HistoryFragment(int tab){
+    public void HistoryFragment(int tab) {
         if (!isFinishing() && !isDestroyed()) {
-            HistoryFragment historyFragment = new HistoryFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt("SELECTED_TAB",tab);
-            historyFragment.setArguments(bundle);
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.flContent, historyFragment);
-            fragmentTransaction.commitAllowingStateLoss();
+
         }
     }
 

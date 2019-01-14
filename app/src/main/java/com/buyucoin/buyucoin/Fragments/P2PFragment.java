@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.P2POrders;
@@ -50,7 +51,7 @@ public class P2PFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    EditText amount, transaction;
+    EditText amount,min_amount;
     Button b;
     String ACCESS_TOKEN = null;
 
@@ -103,7 +104,7 @@ public class P2PFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_p2p, container, false);
 
         amount = (EditText) view.findViewById(R.id.etP2PAmount);
-        transaction = (EditText) view.findViewById(R.id.etP2PTransaction);
+        min_amount = (EditText) view.findViewById(R.id.etP2PMinAmount);
 
 
 
@@ -123,14 +124,16 @@ public class P2PFragment extends Fragment {
                 switch(i){
                     case R.id.radioButton:
                         b.setText("Deposit Request");
-                        transaction.setEnabled(true);
-                        transaction.setText("");
-                        transaction.setHint("Transaction ID");
+                        min_amount.setEnabled(true);
+                        min_amount.setText("");
+                        min_amount.setVisibility(View.VISIBLE);
+                        min_amount.setHint("Min Amount");
                         break;
                     case R.id.radioButton2:
-                        transaction.setHint("Currency");
-                        transaction.setEnabled(false);
-                        transaction.setText("inr");
+                        min_amount.setHint("Currency");
+                        min_amount.setEnabled(false);
+                        min_amount.setText("");
+                        min_amount.setVisibility(View.GONE);
                         b.setText("Withdraw Request");
                         break;
                 }
@@ -140,37 +143,36 @@ public class P2PFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int amt = (!amount.getText().toString().equals(""))?Integer.parseInt(amount.getText().toString()):0;
+                int min_amt = (!min_amount.getText().toString().equals(""))?Integer.parseInt(min_amount.getText().toString()):0;
                 P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();
-                p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
-//                Intent P2P_Order_Intent = new Intent(view.getContext(),P2POrders.class);
-//                startActivity(P2P_Order_Intent);
-//                JSONObject obj = new JSONObject();
-//                int amonut_ = 0;
-//                String tx_ = "";
-//                if(!amount.getText().toString().equals("") && !transaction.getText().toString().equals("")){
-//                    amonut_ = Integer.parseInt(amount.getText().toString());
-//                    tx_ = transaction.getText().toString();
-//                }else{
-//                    Utilities.showToast(getActivity(),"Fields Cant be blank");
-//                }
-//                switch(rg.getCheckedRadioButtonId()){
-//                    case R.id.radioButton:
-//                        try {
-//                            obj.put("amount", amonut_).put("tx_id", tx_).put("type", "neft");
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                        request("create_deposit", obj.toString());
-//                        break;
-//                    case R.id.radioButton2:
-//                        try {
-//                            obj.put("amount", 100).put("currency", "inr");
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                        request("create_withdraw", obj.toString());
-//                        break;
-//                }
+                Bundle bundle = new Bundle();
+                if(amt>0){
+                    bundle.putInt("amount",amt);
+                    if(min_amount.isEnabled()) {
+                        if (min_amt > 0) {
+                            bundle.putInt("min_amount", min_amt);
+                            p2P_payBottomsheet.setArguments(bundle);
+                            p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
+
+                        } else {
+                            Toast.makeText(getContext(), "Minimum amount must be greater then 0", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getContext(), amt+" "+min_amt, Toast.LENGTH_SHORT).show();
+                        p2P_payBottomsheet.setArguments(bundle);
+                        p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
+                    }
+
+                }
+                else{
+                    Toast.makeText(getContext(),"Amount must be greater then 0",Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
             }
         });
 
@@ -216,29 +218,4 @@ public class P2PFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void request(String url, String content){
-        OkHttpHandler.auth_post(url, ACCESS_TOKEN, content, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                Log.d("RESP", s);
-                try {
-                    JSONObject object = new JSONObject(s);
-                    if(object.getString("status").equals("error")){
-                        Utilities.showToast(getActivity(), "Error: "+object.getJSONArray("message").getJSONArray(0).getString(0));
-                    }else {
-                        Utilities.showToast(getActivity(), object.getJSONArray("message").getJSONArray(0).getString(0));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }

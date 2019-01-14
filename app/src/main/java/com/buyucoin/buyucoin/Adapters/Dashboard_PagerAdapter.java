@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin.Adapters;
 
+import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Fragments.AccountFragment;
 import com.buyucoin.buyucoin.Fragments.BuySellFragment;
 import com.buyucoin.buyucoin.Fragments.P2PFragment;
@@ -23,6 +24,7 @@ public class Dashboard_PagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
+        new Dashboard().changeTab(position);
         switch (position) {
             case 0:
                 return new WalletFragment();

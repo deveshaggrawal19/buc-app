@@ -22,5 +22,11 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="MyFullScreenDialog" parent="Base.Theme.AppCompat.DialogWhenLarge">
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+    </style>
 
 </resources>
