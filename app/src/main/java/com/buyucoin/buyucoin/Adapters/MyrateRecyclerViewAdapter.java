@@ -49,10 +49,10 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
 
             holder.mItem = mValues.get(position);
             holder.mCurrency.setText(s.toUpperCase());
-            holder.mChange.setText("Change (24 Hrs): "+mValues.get(position).change);
-            holder.mLastTrade.setText("Last Trade: "+mValues.get(position).last_trade);
-            holder.mAsk.setText("Ask: "+mValues.get(position).ask);
-            holder.mBid.setText("Bid: "+mValues.get(position).bid);
+
+            holder.mLastTrade.setText(removeZeros(mValues.get(position).last_trade));
+            holder.mAsk.setText(removeZeros(mValues.get(position).ask));
+            holder.mBid.setText(removeZeros(mValues.get(position).bid));
 
             holder.mImage.setImageDrawable(mContext.getResources().getDrawable(mContext.getResources().getIdentifier(s, "drawable", mContext.getPackageName())));
 
@@ -82,6 +82,12 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
         });
     }
 
+    public String removeZeros(String s){
+        int dot = s.indexOf('.');
+        int zero = s.indexOf('0',dot);
+        return s.substring(0,zero+1);
+    }
+
     @Override
     public int getItemCount() {
         return mValues.size();
@@ -89,7 +95,7 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mBid, mChange, mLastTrade, mAsk, mCurrency;
+        public final TextView mBid, mLastTrade, mAsk, mCurrency;
         public final ImageView mImage;
         public Rates mItem;
 
@@ -97,7 +103,7 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
             super(view);
             mView = view;
             mBid = (TextView) view.findViewById(R.id.tvRateBid);
-            mChange = (TextView) view.findViewById(R.id.tvRateChange);
+
             mLastTrade = (TextView) view.findViewById(R.id.tvRateLastTrade);
             mAsk = (TextView) view.findViewById(R.id.tvRateAsk);
             mCurrency = (TextView) view.findViewById(R.id.tvRateCurrency);

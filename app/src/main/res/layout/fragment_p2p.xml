@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.P2PFragment"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/white"
     android:clipToPadding="false">
 
     <!-- TODO: Update blank fragment layout -->
@@ -57,32 +57,59 @@
             android:layout_marginTop="50dp"
             android:padding="10dp"
             android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/etP2PAmount"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="40dp"
-
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input_shape"
-                android:hint="Amount"
-                android:inputType="number"
-                android:padding="10dp" />
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Amount"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/etP2PAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/input_shape"
+                    android:hint="Amount"
+                    android:inputType="number"
+                    android:padding="10dp" />
+            </LinearLayout>
             <View
                 android:layout_width="0dp"
                 android:layout_weight="0.05"
                 android:layout_height="match_parent"/>
-
-            <EditText
-                android:id="@+id/etP2PMinAmount"
+            <LinearLayout
                 android:layout_width="0dp"
+                android:id="@+id/min_amt_layout"
                 android:layout_weight="1"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/input_shape"
-                android:hint="Min Amount"
-                android:inputType="number"
-                android:padding="10dp" />
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Minimum Amount"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/etP2PMinAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/input_shape"
+                    android:hint="Min Amount"
+                    android:inputType="number"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+
+
+
         </LinearLayout>
         <Button
             android:id="@+id/bP2Prequest"
@@ -90,7 +117,7 @@
             android:layout_gravity="center"
             android:padding="15dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/pills"
             android:text="Deposit Request"
             android:textColor="@android:color/white" />

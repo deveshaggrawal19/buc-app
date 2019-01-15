@@ -502,6 +502,16 @@
 
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="100dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:src="@drawable/scenery_illustration"
+                    android:scaleType="centerCrop"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
 
             <!--<LinearLayout-->
                 <!--android:layout_width="match_parent"-->

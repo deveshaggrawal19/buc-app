@@ -14,7 +14,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:id="@+id/nsView">
 
             <LinearLayout
@@ -35,7 +35,7 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
+                            android:layout_height="180dp"
                             android:background="@drawable/header_design"
                             android:padding="20dp">
 
@@ -43,13 +43,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="INR AMOUNT"
+                                android:gravity="center"
+                                android:layout_marginTop="30dp"
                                 android:textColor="@android:color/white" />
 
                             <TextView
+                                android:id="@+id/wallet_inr"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:id="@+id/wallet_inr"
+                                android:layout_marginTop="50dp"
+                                android:gravity="center"
                                 android:text="$43,789.00"
                                 android:textColor="@android:color/white"
                                 android:textSize="40sp"
@@ -60,7 +63,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="80dp"
                                 android:text="TOTAL CRYPTO HOLDINGS / INR"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/white"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -69,7 +73,8 @@
                                 android:text="$43,789.00"
                                 android:textColor="@android:color/white"
                                 android:textSize="25sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
 
                         </FrameLayout>
@@ -92,21 +97,29 @@
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_marginTop="10dp"
-                    android:background="#eeeeee"
                     android:padding="5dp"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:gravity="right"
-                    android:layout_height="wrap_content">
+                    android:layout_height="50dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_alignTop="@+id/wallet_checkbox"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="0dp"
+                        android:text="Your Coins" />
 
 
                     <CheckBox
                         android:id="@+id/wallet_checkbox"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:text="Hide Zero Balance Coin"
-                        android:layout_centerHorizontal="true" />
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="72dp"
+                        />
 
                 </RelativeLayout>
                 <LinearLayout
@@ -119,6 +132,15 @@
                         android:layout_height="wrap_content">
 
                     </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:src="@drawable/lana_marandina"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

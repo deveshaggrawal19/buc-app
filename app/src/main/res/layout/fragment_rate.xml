@@ -1,102 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:layout_weight="1"
+    android:layout_height="50dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:padding="5dp"
     android:visibility="visible">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center|left"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ivRate"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@mipmap/ic_launcher"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvRateCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text"
+            android:textSize="12sp"
+            android:textStyle="bold"
+             />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvRateLastTrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Trade"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="12sp"
+             />
+    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<TextView-->
+            <!--android:id="@+id/tvRateChange"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Change"-->
+            <!--android:textAppearance="?attr/textAppearanceListItem"-->
+            <!--android:textSize="12sp"-->
+             <!--/>-->
+
+    <!--</LinearLayout>-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvRateBid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text"
+            android:padding="5dp"
+            android:textColor="@color/colorRed"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="10sp"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvRateAsk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text"
+            android:padding="5dp"
+            android:textColor="@color/kyc_color"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="10sp"
+            />
+
+    </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/ivRate"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
 
 
-    <TextView
-        android:id="@+id/tvRateCurrency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="text"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/ivRate"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/tvRateLastTrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Last Trade"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivRate" />
-
-    <TextView
-        android:id="@+id/tvRateChange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="Change"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvRateLastTrade" />
 
 
-    <TextView
-        android:id="@+id/tvRateBid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="text"
-        android:padding="5dp"
-        android:background="@drawable/pills"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="10sp"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toStartOf="@+id/tvRateAsk"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvRateAsk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="text"
-        android:padding="5dp"
-        android:background="@drawable/pills"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="10sp"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

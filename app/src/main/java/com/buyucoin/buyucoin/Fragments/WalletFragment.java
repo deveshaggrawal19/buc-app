@@ -115,12 +115,13 @@ public class WalletFragment extends Fragment {
         hidezero_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<JSONObject> clist = list;
                 if(hidezero_checkbox.isChecked()){
-                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,true));
+                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist, mListener,true));
 
                 }
                 else {
-                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,false));
+                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist, mListener,false));
 
                 }
             }
@@ -173,6 +174,7 @@ public class WalletFragment extends Fragment {
     }
 
     public void getWalletData(){
+        list.clear();
         OkHttpHandler.auth_get("get_wallet", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

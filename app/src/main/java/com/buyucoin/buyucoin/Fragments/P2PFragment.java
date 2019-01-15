@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.P2POrders;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.textWatcher.P2P_TextWatcher;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,6 +56,9 @@ public class P2PFragment extends Fragment {
     EditText amount,min_amount;
     Button b;
     String ACCESS_TOKEN = null;
+    int amt,min_amt;
+    String type = "deposit";
+    LinearLayout min_amt_layout;
 
 
     private SharedPreferences prefs ;
@@ -105,10 +110,11 @@ public class P2PFragment extends Fragment {
 
         amount = (EditText) view.findViewById(R.id.etP2PAmount);
         min_amount = (EditText) view.findViewById(R.id.etP2PMinAmount);
+        min_amt_layout  =view.findViewById(R.id.min_amt_layout);
 
 
 
-
+        amount.addTextChangedListener(new P2P_TextWatcher(min_amount,min_amt_layout));
 
 
 
@@ -124,17 +130,12 @@ public class P2PFragment extends Fragment {
                 switch(i){
                     case R.id.radioButton:
                         b.setText("Deposit Request");
-                        min_amount.setEnabled(true);
-                        min_amount.setText("");
-                        min_amount.setVisibility(View.VISIBLE);
-                        min_amount.setHint("Min Amount");
+                        type = "deposit";
                         break;
                     case R.id.radioButton2:
-                        min_amount.setHint("Currency");
-                        min_amount.setEnabled(false);
-                        min_amount.setText("");
-                        min_amount.setVisibility(View.GONE);
+
                         b.setText("Withdraw Request");
+                        type = "withdraw";
                         break;
                 }
             }
@@ -143,35 +144,22 @@ public class P2PFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int amt = (!amount.getText().toString().equals(""))?Integer.parseInt(amount.getText().toString()):0;
-                int min_amt = (!min_amount.getText().toString().equals(""))?Integer.parseInt(min_amount.getText().toString()):0;
+                amt = (!amount.getText().toString().equals(""))?Integer.parseInt(amount.getText().toString()):0;
+                min_amt = (!min_amount.getText().toString().equals(""))?Integer.parseInt(min_amount.getText().toString()):0;
                 P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();
                 Bundle bundle = new Bundle();
-                if(amt>0){
+                if(amt>100 && min_amt < amt){
                     bundle.putInt("amount",amt);
-                    if(min_amount.isEnabled()) {
-                        if (min_amt > 0) {
-                            bundle.putInt("min_amount", min_amt);
-                            p2P_payBottomsheet.setArguments(bundle);
-                            p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
+                    bundle.putInt("min_amount", min_amt);
+                    bundle.putString("type",type);
+                    p2P_payBottomsheet.setArguments(bundle);
+                    p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
 
-                        } else {
-                            Toast.makeText(getContext(), "Minimum amount must be greater then 0", Toast.LENGTH_SHORT).show();
-                        }
-                    }else{
-                        Toast.makeText(getContext(), amt+" "+min_amt, Toast.LENGTH_SHORT).show();
-                        p2P_payBottomsheet.setArguments(bundle);
-                        p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
-                    }
 
                 }
                 else{
-                    Toast.makeText(getContext(),"Amount must be greater then 0",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"All Fields Are Mandatory",Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
 
             }
         });

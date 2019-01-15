@@ -264,6 +264,7 @@ public class AccountFragment extends Fragment {
                                 edit_pref.putString("email",data.get("email").toString()).apply();
                                 edit_pref.putString("name",data.get("name").toString()).apply();
                                 edit_pref.putString("mob",data.get("mob").toString()).apply();
+                                edit_pref.putBoolean("kyc_status",data.getBoolean("kyc_status")).apply();
 
                                 email.setText(data.getString("email"));
                                 name.setText(data.getString("name"));
