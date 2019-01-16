@@ -5,13 +5,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class P2P_TextWatcher implements TextWatcher {
-    private EditText editText;
+    private EditText editText1;
     private LinearLayout linearLayout;
-    public P2P_TextWatcher(EditText editText, LinearLayout min_amt_layout){
-        this.editText = editText;
+    public P2P_TextWatcher(EditText amount, LinearLayout min_amt_layout){
+        this.editText1 = amount;
         this.linearLayout = min_amt_layout;
 
     }
@@ -31,9 +30,11 @@ public class P2P_TextWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
         try{
             int amount = Integer.parseInt(s.toString());
+
             String min_amount = "100";
+
             if (amount>100){
-                editText.setText(min_amount);
+                editText1.setText(min_amount);
                 linearLayout.setVisibility(View.VISIBLE);
             }else{
                 linearLayout.setVisibility(View.GONE);

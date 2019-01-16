@@ -23,13 +23,17 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.P2POrders;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.buyucoin.buyucoin.textWatcher.P2P_TextWatcher;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -58,7 +62,8 @@ public class P2PFragment extends Fragment {
     String ACCESS_TOKEN = null;
     int amt,min_amt;
     String type = "deposit";
-    LinearLayout min_amt_layout;
+    LinearLayout min_amt_layout,p2p_history_layout;
+    RecyclerView recyclerView;
 
 
     private SharedPreferences prefs ;
@@ -112,9 +117,46 @@ public class P2PFragment extends Fragment {
         min_amount = (EditText) view.findViewById(R.id.etP2PMinAmount);
         min_amt_layout  =view.findViewById(R.id.min_amt_layout);
 
+        p2p_history_layout = view.findViewById(R.id.p2p_history_ll);
+
+        p2p_history_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                P2P_History p2P_history = new P2P_History();
+                p2P_history.show(getFragmentManager(),"P2P HISTORY");
+            }
+        });
+
+        recyclerView = view.findViewById(R.id.p2p_active_orders_rv);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+
+
+
 
 
         amount.addTextChangedListener(new P2P_TextWatcher(min_amount,min_amt_layout));
+
+
+        amount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+
+
+                    try {
+                        int main_amt = Integer.parseInt(amount.getText().toString());
+                        String min_amount = "100";
+                        if (main_amt < 100) {
+                            amount.setText(min_amount);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
 
 
@@ -146,23 +188,48 @@ public class P2PFragment extends Fragment {
             public void onClick(View view) {
                 amt = (!amount.getText().toString().equals(""))?Integer.parseInt(amount.getText().toString()):0;
                 min_amt = (!min_amount.getText().toString().equals(""))?Integer.parseInt(min_amount.getText().toString()):0;
-                P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();
-                Bundle bundle = new Bundle();
-                if(amt>100 && min_amt < amt){
+
+                if((amt>=100 && min_amt <= amt && min_amt!=0)){
+                    P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();
+                    Bundle bundle = new Bundle();
+                        bundle.putInt("amount",amt);
+                        bundle.putInt("min_amount", min_amt);
+                        bundle.putString("type",type);
+                        p2P_payBottomsheet.setArguments(bundle);
+                        p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
+
+                }
+
+                if((amt==100 && min_amt==100)){
+                    P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();
+                    Bundle bundle = new Bundle();
                     bundle.putInt("amount",amt);
                     bundle.putInt("min_amount", min_amt);
                     bundle.putString("type",type);
                     p2P_payBottomsheet.setArguments(bundle);
                     p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
-
+                }
+                if(amt < 100){
+                    Toast.makeText(getContext(),"Amount must be 100 or more",Toast.LENGTH_SHORT).show();
+                }
+                if(min_amt<100){
+                    Toast.makeText(getContext(),"Min Amount must be 100",Toast.LENGTH_SHORT).show();
+                }
+                if(min_amt>amt){
+                    Toast.makeText(getContext(),"Min Amount must be low",Toast.LENGTH_SHORT).show();
+                    min_amount.setText("100");
+                }
+                 else {
+                    Toast.makeText(getContext(),"Enter Amount",Toast.LENGTH_SHORT).show();
+                }
 
                 }
-                else{
-                    Toast.makeText(getContext(),"All Fields Are Mandatory",Toast.LENGTH_SHORT).show();
-                }
 
-            }
+
+
         });
+
+        getActiveOrders();
 
         return view;
     }
@@ -204,6 +271,24 @@ public class P2PFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void getActiveOrders(){
+        Log.d("PEER =====>","PEER REQUEST DONE ");
+        OkHttpHandler.auth_get("peer", new BuyucoinPref(Objects.requireNonNull(getContext())).getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("ERROR ON PEER =====>",e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("SUCCESS ON PEER =====>",response.toString());
+
+
+            }
+        });
+
     }
 
 }

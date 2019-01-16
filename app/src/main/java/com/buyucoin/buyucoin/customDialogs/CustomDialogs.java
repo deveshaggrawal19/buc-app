@@ -1,142 +1,148 @@
 package com.buyucoin.buyucoin.customDialogs;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.Interfaces.BuyDialogFunction;
-import com.buyucoin.buyucoin.Interfaces.SellDialogFunction;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
-public class CustomDialogs {
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    private Context acitivity ;
-    private Bundle bundle;
-    private BuyDialogFunction buyDialogFunction;
-    private SellDialogFunction sellDialogFuncion;
-    private Dialog dialog;
+import java.io.IOException;
+import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+public class CustomDialogs extends DialogFragment {
+
     private String dialog_title;
+    private String quantity;
+    private String price;
+    private String fees;
+    private String total;
+    private String type;
 
-    public CustomDialogs(Context acitivity, Bundle bundle, BuyDialogFunction buyDialogFunction, String dialog_title) {
-        this.acitivity = acitivity;
-        this.bundle = bundle;
-        this.buyDialogFunction = buyDialogFunction;
-        dialog = new Dialog(acitivity);
-        this.dialog_title = dialog_title;
+    public static CustomDialogs newInstance(){
+        return new CustomDialogs();
     }
 
-    public CustomDialogs(Context acitivity, Bundle bundle, SellDialogFunction sellDialogFuncion, String dialog_title) {
-        this.acitivity = acitivity;
-        this.bundle = bundle;
-        this.sellDialogFuncion = sellDialogFuncion;
-        dialog = new Dialog(acitivity);
-        this.dialog_title = dialog_title;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
     }
 
-    public  void confirmBuyDialog(){
-        TextView title,quantity,price,fees,total;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.buy_dialog_layout,container,false);
+
+        TextView title,tv_quantity,tv_price,tv_fees,tv_total;
         Button agree,cancel;
+        title = view.findViewById(R.id.dialog_title);
+        tv_quantity = view.findViewById(R.id.dialog_quantity);
+        tv_price = view.findViewById(R.id.dialog_price);
+        tv_fees = view.findViewById(R.id.dialog_fees);
+        tv_total = view.findViewById(R.id.dialog_total);
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.buy_dialog_layout);
+        agree = view.findViewById(R.id.agree_action_btn);
+        cancel = view.findViewById(R.id.cancel_action_btn);
 
-        title = dialog.findViewById(R.id.dialog_title);
-        quantity = dialog.findViewById(R.id.dialog_quantity);
-        price = dialog.findViewById(R.id.dialog_price);
-        fees = dialog.findViewById(R.id.dialog_fees);
-        total = dialog.findViewById(R.id.dialog_total);
 
-        agree = dialog.findViewById(R.id.agree_action_btn);
-        cancel = dialog.findViewById(R.id.cancel_action_btn);
+
+        if(getArguments()!=null){
+            Bundle bundle = getArguments();
+            quantity = bundle.getString("quantity");
+            price = bundle.getString("price");
+            fees = bundle.getString("fees");
+            total = bundle.getString("total");
+            type = bundle.getString("type");
+            dialog_title = type.toUpperCase()+" ORDER";
+        }
 
         title.setText(dialog_title);
-        quantity.setText(bundle.getString("quantity"));
-        price.setText(bundle.getString("price"));
-        fees.setText(bundle.getString("fees"));
-        total.setText(bundle.getString("total"));
-
+        tv_quantity.setText(quantity);
+        tv_price.setText(price);
+        tv_fees.setText(fees);
+        tv_total.setText(total);
 
         agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final JSONObject order = new JSONObject();
+                try {
+                    order.put("amount",Double.parseDouble(price))
+                            .put("rate",Double.parseDouble(quantity))
+                            .put("type",type);
 
-                        buyDialogFunction.buyFunction(acitivity,bundle.getString("quantity"),bundle.getString("price"));
-                        dialog.dismiss();
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            PlaceOrder(order.toString(),view.getContext());
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dismiss();
             }
         });
 
-        dialog.show();
-
-
-
-
-
-
+        return view;
 
 
     }
 
-    public  void confirmSellDialog(){
-        TextView title,quantity,price,fees,total;
-        Button agree,cancel;
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.buy_dialog_layout);
-
-        title = dialog.findViewById(R.id.dialog_title);
-        quantity = dialog.findViewById(R.id.dialog_quantity);
-        price = dialog.findViewById(R.id.dialog_price);
-        fees = dialog.findViewById(R.id.dialog_fees);
-        total = dialog.findViewById(R.id.dialog_total);
-
-        agree = dialog.findViewById(R.id.agree_action_btn);
-        cancel = dialog.findViewById(R.id.cancel_action_btn);
-
-        title.setText(dialog_title);
-        quantity.setText(bundle.getString("quantity"));
-        price.setText(bundle.getString("price"));
-        fees.setText(bundle.getString("fees"));
-        total.setText(bundle.getString("total"));
 
 
-        agree.setOnClickListener(new View.OnClickListener() {
+
+
+    private void PlaceOrder(String s,final Context context){
+        OkHttpHandler.auth_post("create_order", new BuyucoinPref(context).getPrefString(BuyucoinPref.ACCESS_TOKEN), s, new Callback() {
             @Override
-            public void onClick(View v) {
+            public void onFailure(Call call, IOException e) {
+                Log.d("ORDER FAILED =====>",e.getMessage());
+            }
 
-                        sellDialogFuncion.sellFunction(acitivity,bundle.getString("quantity"),bundle.getString("price"));
-                        dialog.dismiss();
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("ORDER DONE =====> ","ORDER PLACE SUCCESS FULL "+response.toString());
+                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(context, "ORDER PLACED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                dismiss();
+
+
             }
         });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
-
-
-
-
-
-
-
     }
 
 

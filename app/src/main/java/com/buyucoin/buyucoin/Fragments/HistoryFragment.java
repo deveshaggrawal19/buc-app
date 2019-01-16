@@ -130,12 +130,15 @@ public class HistoryFragment extends DialogFragment {
                 pb.setVisibility(View.VISIBLE);
                 switch (tab.getPosition()) {
                     case 0:
+                        histories.clear();
                         getList("deposit");
                         break;
                     case 1:
+                        histories.clear();
                         getList("withdraw");
                         break;
                     case 2:
+                        histories.clear();
                         getList("order");
                         break;
                 }

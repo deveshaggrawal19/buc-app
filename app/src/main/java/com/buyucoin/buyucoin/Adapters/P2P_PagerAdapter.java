@@ -1,7 +1,7 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import com.buyucoin.buyucoin.Fragments.P2P_Deposite_Fragment;
-import com.buyucoin.buyucoin.Fragments.P2P_Withdraw_Fragment;
+import com.buyucoin.buyucoin.Fragments.P2P_Deposite_History_Fragment;
+import com.buyucoin.buyucoin.Fragments.P2P_Withdraw_History_Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,11 +20,11 @@ public class P2P_PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new P2P_Deposite_Fragment();
+                return new P2P_Deposite_History_Fragment();
             case 1:
-                return new P2P_Withdraw_Fragment();
+                return new P2P_Withdraw_History_Fragment();
             default:
-                return new P2P_Deposite_Fragment();
+                return new P2P_Deposite_History_Fragment();
         }
     }
 

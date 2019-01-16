@@ -4,8 +4,6 @@ import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Fragments.AccountFragment;
 import com.buyucoin.buyucoin.Fragments.BuySellFragment;
 import com.buyucoin.buyucoin.Fragments.P2PFragment;
-import com.buyucoin.buyucoin.Fragments.P2P_Deposite_Fragment;
-import com.buyucoin.buyucoin.Fragments.P2P_Withdraw_Fragment;
 import com.buyucoin.buyucoin.Fragments.RateFragment;
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
 

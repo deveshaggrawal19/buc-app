@@ -175,6 +175,7 @@ public class WalletFragment extends Fragment {
 
     public void getWalletData(){
         list.clear();
+        hidezero_checkbox.setChecked(false);
         OkHttpHandler.auth_get("get_wallet", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

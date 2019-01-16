@@ -1,12 +1,17 @@
 package com.buyucoin.buyucoin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +22,14 @@ import android.widget.Toast;
 import com.buyucoin.buyucoin.Interfaces.BuyDialogFunction;
 import com.buyucoin.buyucoin.customDialogs.CustomDialogs;
 import com.buyucoin.buyucoin.Interfaces.SellDialogFunction;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
-public class BuySellActivity extends AppCompatActivity implements BuyDialogFunction,SellDialogFunction {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+public class BuySellActivity extends AppCompatActivity {
     String type;
     Double price;
     Button sell_button,buy_button,sell,buy;
@@ -102,10 +113,13 @@ public class BuySellActivity extends AppCompatActivity implements BuyDialogFunct
                 bundle.putString("price",price);
                 bundle.putString("fees","0.5% - 1.0% + GST");
                 bundle.putString("total","10100");
-                BuyDialogFunction buyDialogFunction = new BuySellActivity();
+                bundle.putString("type","buy");
 
-                CustomDialogs coustomDialogs = new CustomDialogs(BuySellActivity.this,bundle,buyDialogFunction,"BUY ORDER");
-                coustomDialogs.confirmBuyDialog();
+                    DialogFragment dialogFragment = CustomDialogs.newInstance();
+                    dialogFragment.setArguments(bundle);
+                    dialogFragment.show(getSupportFragmentManager(),"");
+
+
                 }
 
             }
@@ -125,10 +139,14 @@ public class BuySellActivity extends AppCompatActivity implements BuyDialogFunct
                     bundle.putString("price", price);
                     bundle.putString("fees", "0.5 - 1.0 + GST");
                     bundle.putString("total", "10100");
-                    SellDialogFunction sellDialogFunction = new BuySellActivity();
+                    bundle.putString("type","sell");
 
-                    CustomDialogs coustomDialogs = new CustomDialogs(BuySellActivity.this, bundle, sellDialogFunction, "SELL ORDER");
-                    coustomDialogs.confirmSellDialog();
+                    DialogFragment dialogFragment = CustomDialogs.newInstance();
+                    dialogFragment.setArguments(bundle);
+                    dialogFragment.show(getSupportFragmentManager(),"");
+
+
+
                 }
             }
         });
@@ -161,15 +179,7 @@ public class BuySellActivity extends AppCompatActivity implements BuyDialogFunct
 
     }
 
-    @Override
-    public boolean buyFunction(Context context,String amount, String price) {
-        Toast.makeText(context,"Amount : "+amount+", Price : "+price,Toast.LENGTH_LONG).show();
-        return false;
-    }
 
-    @Override
-    public boolean sellFunction(Context context,String amount,String price) {
-        Toast.makeText(context,"Amount : "+amount+", Price : "+price,Toast.LENGTH_LONG).show();
-        return false;
-    }
+
+
 }

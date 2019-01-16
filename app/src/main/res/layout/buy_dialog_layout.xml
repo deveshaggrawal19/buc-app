@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="20dp"
     android:background="@drawable/history_item_drawable">
     <TextView
         android:layout_width="match_parent"
@@ -17,15 +17,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="match_parent"
+        android:padding="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -37,17 +36,17 @@
                 android:text="Quantity" />
 
             <TextView
+                android:id="@+id/dialog_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="100"
-                android:id="@+id/dialog_quantity"
-                />
+                android:text="100" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -59,17 +58,17 @@
                 android:text="Price" />
 
             <TextView
+                android:id="@+id/dialog_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="1000"
-                android:id="@+id/dialog_price"
-                />
+                android:text="1000" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -81,17 +80,17 @@
                 android:text="Fess" />
 
             <TextView
+                android:id="@+id/dialog_fees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="40 + GST 10%"
-                android:id="@+id/dialog_fees"
-                />
+                android:text="40 + GST 10%" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -102,48 +101,47 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Total"
-                android:textStyle="bold"
                 android:textColor="@android:color/black"
-                />
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/dialog_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:text="100"
-                android:textStyle="bold"
-                android:id="@+id/dialog_total"
                 android:textColor="@android:color/black"
-                />
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginBottom="10dp"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:gravity="right"
             android:padding="10dp">
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/agree_action_btn"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/cancel_action_btn"
-                android:textColor="@android:color/white"
                 android:background="@drawable/pills"
-                android:id="@+id/agree_action_btn"
-                android:text="Agree" />
+                android:text="Agree"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/cancel_action_btn"
-                android:background="@android:color/white"
-                android:textColor="@android:color/holo_red_light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:layout_centerInParent="true"
-                android:text="Cancel" />
+                android:background="@android:color/white"
+                android:text="Cancel"
+                android:textColor="@android:color/holo_red_light" />
         </RelativeLayout>
 
 
