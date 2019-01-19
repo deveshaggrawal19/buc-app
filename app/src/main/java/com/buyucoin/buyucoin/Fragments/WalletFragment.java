@@ -35,19 +35,13 @@ import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class WalletFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+
     String ACCESS_TOKEN = null;
     ArrayList<JSONObject> list;
     ArrayList<JSONObject> j = new ArrayList<>();
@@ -117,11 +111,11 @@ public class WalletFragment extends Fragment {
             public void onClick(View v) {
                 ArrayList<JSONObject> clist = list;
                 if(hidezero_checkbox.isChecked()){
-                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist, mListener,true));
+                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist,true));
 
                 }
                 else {
-                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist, mListener,false));
+                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist,false));
 
                 }
             }
@@ -138,23 +132,8 @@ public class WalletFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
 
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
 
 
@@ -168,10 +147,7 @@ public class WalletFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(JSONObject item);
-    }
+
 
     public void getWalletData(){
         list.clear();
@@ -230,7 +206,7 @@ public class WalletFragment extends Fragment {
                             @Override
                             public void run() {
                                 nsView.setVisibility(View.VISIBLE);
-                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener,false));
+                                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,false));
                                 Utilities.hideProgressBar(pb);
                             }
                         });

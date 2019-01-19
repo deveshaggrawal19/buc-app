@@ -40,14 +40,7 @@ import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link P2PFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link P2PFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class P2PFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,7 +63,7 @@ public class P2PFragment extends Fragment {
     private SharedPreferences.Editor edit_pref ;
     private String FRAGMENT_STATE = "P2P";
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
 
     public P2PFragment() {
         // Required empty public constructor
@@ -198,6 +191,8 @@ public class P2PFragment extends Fragment {
                         p2P_payBottomsheet.setArguments(bundle);
                         p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
 
+                        AccountFragment.makeViewDisable(b);
+
                 }
 
                 if((amt==100 && min_amt==100)){
@@ -208,6 +203,8 @@ public class P2PFragment extends Fragment {
                     bundle.putString("type",type);
                     p2P_payBottomsheet.setArguments(bundle);
                     p2P_payBottomsheet.show(getChildFragmentManager(),"PAY");
+
+                    AccountFragment.makeViewDisable(b);
                 }
                 if(amt < 100){
                     Toast.makeText(getContext(),"Amount must be 100 or more",Toast.LENGTH_SHORT).show();
@@ -235,28 +232,28 @@ public class P2PFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        mListener = null;
+//    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -268,10 +265,10 @@ public class P2PFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 
     private void getActiveOrders(){
         Log.d("PEER =====>","PEER REQUEST DONE ");

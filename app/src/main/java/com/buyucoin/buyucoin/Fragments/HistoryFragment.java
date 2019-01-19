@@ -64,7 +64,6 @@ public class HistoryFragment extends DialogFragment {
     ArrayList<History> histories;
     private int TAB_INDEX;
 
-    private OnListFragmentInteractionListener mListener;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -158,29 +157,13 @@ public class HistoryFragment extends DialogFragment {
         return view;
     }
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(JSONObject item);
-    }
+
     // TODO: Rename method, update argument and hook method into UI event
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -262,7 +245,7 @@ public class HistoryFragment extends DialogFragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            rv.setAdapter(new MyHistoryRecyclerViewAdapter(histories, mListener, url));
+                            rv.setAdapter(new MyHistoryRecyclerViewAdapter(histories,url));
                             pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
                                 public void onAnimationEnd(Animator animator) {
                                     pb.setVisibility(View.GONE);
@@ -283,12 +266,10 @@ public class HistoryFragment extends DialogFragment {
     public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
 
         private final ArrayList<History> mValues;
-        private final OnListFragmentInteractionListener mListener;
         private final String mType;
 
-        public MyHistoryRecyclerViewAdapter(ArrayList<History> items, OnListFragmentInteractionListener listener, String type) {
+        public MyHistoryRecyclerViewAdapter(ArrayList<History> items, String type) {
             mValues = items;
-            mListener = listener;
             mType = type;
         }
 
@@ -369,7 +350,6 @@ public class HistoryFragment extends DialogFragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null != mListener) {
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
 //                        mListener.onListFragmentInteraction(holder.mItem);
@@ -396,7 +376,6 @@ public class HistoryFragment extends DialogFragment {
                         historyBottomsheet.setArguments(b);
 
                         historyBottomsheet.show(getChildFragmentManager(), "HISTORY");
-                    }
                 }
             });
         }

@@ -38,7 +38,6 @@ public class BuySellFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private WalletFragment.OnListFragmentInteractionListener mListener;
     String ACCESS_TOKEN = null;
     ArrayList<JSONObject> list;
     RecyclerView recyclerView;
@@ -101,23 +100,9 @@ public class BuySellFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof WalletFragment.OnListFragmentInteractionListener) {
-            mListener = (WalletFragment.OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
 
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -160,7 +145,7 @@ public class BuySellFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list, mListener,recyclerView,trade));
+                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list,recyclerView,trade));
                                 Utilities.hideProgressBar(pb);
                             }
                         });

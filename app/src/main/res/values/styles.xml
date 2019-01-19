@@ -26,7 +26,10 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+no    </style>
+
+    <style name="fontTheme" parent="AppTheme.NoActionBar">
+        <item name="android:fontFamily">@font/fonts</item>
     </style>
 
 </resources>

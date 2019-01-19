@@ -10,7 +10,7 @@ public class OkHttpHandler {
 
     private static String BASE_URL = new Config().getAPI_BASE_URL();
     private static OkHttpClient client = new OkHttpClient();
-    private static MediaType mediaType = MediaType.parse("application/json");
+    private static MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 
     public static Call post(String url, String content, Callback callback){
         RequestBody body = RequestBody.create(mediaType, content);

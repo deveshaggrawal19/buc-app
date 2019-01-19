@@ -26,14 +26,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ReferralFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ReferralFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ReferralFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +39,7 @@ public class ReferralFragment extends Fragment {
     RecyclerView rv;
     String ACCESS_TOKEN;
 
-    private OnFragmentInteractionListener mListener;
+
 
     public ReferralFragment() {
         // Required empty public constructor
@@ -105,22 +98,6 @@ public class ReferralFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -132,10 +109,7 @@ public class ReferralFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(JSONObject item);
-    }
+
 
     public void getReferrals(){
         OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
@@ -159,7 +133,7 @@ public class ReferralFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            rv.setAdapter(new MyRecyclerViewAdapter(farray, mListener));
+                            rv.setAdapter(new MyRecyclerViewAdapter(farray,getContext()));
                         }
                     });
                 }catch(Exception e){
@@ -172,11 +146,11 @@ public class ReferralFragment extends Fragment {
     public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
         private final JSONArray mValues;
-        private final OnFragmentInteractionListener mListener;
+        private Context context;
 
-        public MyRecyclerViewAdapter(JSONArray items, OnFragmentInteractionListener listener) {
+        public MyRecyclerViewAdapter(JSONArray items, Context context) {
             mValues = items;
-            mListener = listener;
+            this.context =context;
         }
 
         @Override
@@ -203,11 +177,7 @@ public class ReferralFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null != mListener) {
-                        // Notify the active callbacks interface (the activity, if the
-                        // fragment is attached to one) that an item has been selected.
-                        mListener.onFragmentInteraction(holder.mItem);
-                    }
+
                 }
             });
         }

@@ -1,185 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/credit_card"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context=".CoinDepositWithdraw">
 
-    <androidx.core.widget.NestedScrollView
+
+    <RadioGroup
+        android:id="@+id/deposit_withdraw_rg"
         android:layout_width="match_parent"
-        android:background="@drawable/credit_card"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/deposite_layout_rb"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/my_coustom_radio_dwp"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Deposite"
+            android:textColor="@drawable/my_coustom_radio_text_dwp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/withdraw_layout_rb"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/my_coustom_radio_dwp"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Withdraw"
+            android:textColor="@drawable/my_coustom_radio_text_dwp" />
 
-                <Button
-                    android:layout_width="100dp"
-                    android:id="@+id/deposite_layout_btn"
-                    android:text="Deposite"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/deposite_withdraw_btn"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:textColor="@android:color/white"
-                    android:layout_height="wrap_content" />
+    </RadioGroup>
 
-                <Button
-                    android:layout_width="100dp"
-                    android:id="@+id/withdraw_layout_btn"
-                    android:text="Withdraw"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/deposite_withdraw_btn"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/withdraw_layout"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/deposite_withdrwa_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-            <LinearLayout
-                android:layout_marginTop="50dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="BTC"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:hint="0"
-                    android:maxLength="10"
-                    android:textSize="60sp"
-                    android:autoSizeMaxTextSize="60sp"
-                    android:inputType="numberDecimal"
-                    android:id="@+id/withdraw_layout_amount_et"
-                    android:textColor="@android:color/white"
-                    android:background="@android:color/transparent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:hint="Wallet Address"
-                    android:gravity="center"
-                    android:id="@+id/withdraw_layout_address_et"
-                    android:background="@drawable/deposite_withdraw_edittext"
-                    android:padding="15dp"
-                    android:layout_height="wrap_content"/>
+    </androidx.viewpager.widget.ViewPager>
 
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/tag_layout"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:hint="Destination Tag"
-                    android:gravity="center"
-                    android:background="@drawable/deposite_withdraw_edittext"
-                    android:padding="15dp"
-                    android:id="@+id/destination_tag_edittext"
-                    android:layout_height="wrap_content"/>
-
-
-
-            </LinearLayout>
-                <Button
-                    android:layout_width="200dp"
-                    android:layout_marginTop="50dp"
-                    android:textColor="@android:color/white"
-                    android:text="Withdraw"
-                    android:layout_marginBottom="20dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/withdraw_layout_btnview"
-                    android:background="@drawable/pills"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/deposite_layout"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_marginTop="50dp"
-                    android:layout_width="match_parent"
-                    android:text="Scan this QR Code to get Address "
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:textColor="@android:color/white"
-                    android:layout_height="match_parent" />
-
-                <ImageView
-                    android:layout_width="200dp"
-                    android:src="@drawable/qr"
-                    android:id="@+id/coin_address_qrcode"
-                    android:layout_gravity="center"
-                    android:layout_height="200dp" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:text="Your Wallet Address"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:textColor="@android:color/white"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:text="AQ23WSDE45RFGT67"
-                    android:id="@+id/coin_address"
-                    android:textSize="30sp"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:textColor="@android:color/white"
-                    android:layout_height="match_parent" />
-
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

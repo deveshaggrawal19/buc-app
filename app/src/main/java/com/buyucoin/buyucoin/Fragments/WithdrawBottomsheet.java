@@ -10,12 +10,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CustomDialogs;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class WithdrawBottomsheet extends BottomSheetDialogFragment {
     Bundle bundle;
@@ -23,10 +33,13 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
     private String coin_tag,coin_address;
     private TextView amount,tag,address;
     private Button proceedToWithdraw;
+    private BuyucoinPref buyucoinPref;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         bundle = getArguments();
+        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
+
         if(bundle!=null){
         coin_amount = bundle.getDouble("coin_amount",0);
         coin_tag = bundle.getString("coin_tag","N/A");
@@ -64,5 +77,28 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
         }
 
         return view;
+    }
+
+    private void makeRequest(JSONObject order) {
+        OkHttpHandler.auth_post("create_peer", buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN), order.toString(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("ORDER ERROR====>",e.getMessage());
+                if(getDialog()!=null){
+                    getDialog().dismiss();
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("ORDER SUCCESS====>",response.toString());
+                if(getDialog()!=null){
+                    getDialog().dismiss();
+                }
+
+
+
+            }
+        });
     }
 }

@@ -26,13 +26,11 @@ import java.util.List;
 public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecyclerViewAdapter.ViewHolder> {
 
     private final List<JSONObject> mValues;
-    private final WalletFragment.OnListFragmentInteractionListener mListener;
     RecyclerView recyclerView;
     TextView textView;
 
-    public BuySellRecyclerViewAdapter(List<JSONObject> items, WalletFragment.OnListFragmentInteractionListener listener,RecyclerView recyclerView,TextView textView) {
+    public BuySellRecyclerViewAdapter(List<JSONObject> items, RecyclerView recyclerView, TextView textView) {
         mValues = items;
-        mListener = listener;
         this.recyclerView = recyclerView;
         this.textView = textView;
     }
@@ -67,15 +65,16 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
         holder.coinimg.setImageResource(MyCustomDialogBoxClass.arr[position]);
         }
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
+        final String finalS1 = s3;
+        holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null != mListener) {
+
 
                         Intent buysellIntent = new Intent(holder.mView.getContext(),BuySellActivity.class);
+                        buysellIntent.putExtra("coin_name", finalS1);
                         holder.mView.getContext().startActivity(buysellIntent);
 
-                    }
                 }
             });
 

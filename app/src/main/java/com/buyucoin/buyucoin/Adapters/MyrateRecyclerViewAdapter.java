@@ -2,15 +2,18 @@ package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.buyucoin.buyucoin.CurrencyActivity;
 import com.buyucoin.buyucoin.DataClasses.Rates;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.Fragments.RateFragment.OnListFragmentInteractionListener;
 import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
 import org.json.JSONArray;
@@ -18,20 +21,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<Rates> mValues;
-    private final OnListFragmentInteractionListener mListener;
+
     Context mContext;
 
-    public MyrateRecyclerViewAdapter(ArrayList<Rates> items, OnListFragmentInteractionListener listener, Context context) {
+    public MyrateRecyclerViewAdapter(ArrayList<Rates> items, Context context) {
         mValues = items;
-        mListener = listener;
         mContext = context;
     }
 
@@ -62,22 +60,18 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    try {
-                        mListener.onListFragmentInteraction(new JSONObject()
-                                .put("bid", holder.mItem.bid)
-                                .put("ask", holder.mItem.ask)
-                                .put("change", holder.mItem.change)
-                                .put("last_trade", holder.mItem.last_trade)
-                                .put("currency", holder.mItem.currency)
-                                .put("high_24", "")
-                        );
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }
+                        Bundle bundle = new Bundle();
+                                bundle.putString("bid", holder.mItem.bid);
+                                bundle.putString("ask", holder.mItem.ask);
+                                bundle.putString("change", holder.mItem.change);
+                                bundle.putString("last_trade", holder.mItem.last_trade);
+                                bundle.putString("currency", holder.mItem.currency);
+                                bundle.putString("high_24", "");
+                Intent intent = new Intent(holder.mView.getContext(),CurrencyActivity.class);
+                intent.putExtras(bundle);
+                holder.mView.getContext().startActivity(intent);
             }
         });
     }

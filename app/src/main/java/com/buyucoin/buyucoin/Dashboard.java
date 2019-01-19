@@ -171,6 +171,9 @@ public class Dashboard extends AppCompatActivity {
 
         });
 
+        getNonFreshToken(refresh_token);
+
+
     }
 
     public void updateFrammentState(String STATE) {
@@ -182,7 +185,6 @@ public class Dashboard extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (Utilities.isOnline(getApplicationContext())) {
-            getNonFreshToken(refresh_token);
         } else {
             fragView.setVisibility(View.GONE);
             noInternet.setVisibility(View.VISIBLE);
@@ -262,6 +264,7 @@ public class Dashboard extends AppCompatActivity {
 
 
     public void getNonFreshToken(String refresh_token) {
+        Log.d("REFRESH TOKEN",refresh_token);
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject().put("refresh_token", refresh_token);
@@ -282,7 +285,7 @@ public class Dashboard extends AppCompatActivity {
                 try {
                     JSONObject jsonObject1 = new JSONObject(s);
                     buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getJSONObject("data").getString("access_token"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
                 }

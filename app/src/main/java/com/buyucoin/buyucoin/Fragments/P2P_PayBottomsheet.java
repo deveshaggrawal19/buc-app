@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.Fragments;
 
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +39,32 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
     Button make_p2p_request;
     int amount;
     int min_amount;
-    String type = "deposit",modes = "imps";
+    String type = "deposit";
+    static JSONObject IMPS_UPI;
+
+    static {
+        try {
+            IMPS_UPI = new JSONObject().put("modes[0]","imps").put("modes[1]","upi");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static JSONObject IMPS_ONLY;
+
+    static {
+        try {
+            IMPS_ONLY = new JSONObject().put("imps","imps");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    JSONObject modes = IMPS_ONLY;
     String upi_address;
     int boost = 0;
     BuyucoinPref buyucoinPref;
+
 
 
     @Override
@@ -52,7 +75,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_p2p_pay,container,false);
+        final View view = inflater.inflate(R.layout.bottom_sheet_p2p_pay,container,false);
         buyucoinPref = new BuyucoinPref(view.getContext());
 
         upi = view.findViewById(R.id.etP2PUpiId);
@@ -82,7 +105,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(imps_checkbox.isChecked()){
-                    modes = "imps";
+                    modes = IMPS_ONLY;
                 }
             }
         });
@@ -92,7 +115,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if(upi_checkobx.isChecked()){
-                    modes = "imps/upi";
+                    modes = IMPS_UPI;
                     upi.setVisibility(View.VISIBLE);
                 }else{
                     upi.setVisibility(View.GONE);
@@ -137,6 +160,9 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
                 String msg = "Amount : "+amount+" Min_Amount : "+min_amount+" Type : "+type+" Modes : "+modes+" UPI Address : "+upi_address+" Boost : "+boost;
                 Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
 
+
+
+
                 JSONObject order = new JSONObject();
                 try {
                     order.put("amount",amount)
@@ -145,6 +171,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
                             .put("modes",modes)
                             .put("note",upi_address)
                             .put("boost",boost);
+                    Log.d("JSON OBJECT====>",order.toString());
                     makeRequest(order);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -161,11 +188,26 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d("ORDER ERROR====>",e.getMessage());
+                if(getDialog()!=null){
+                getDialog().dismiss();
+                }
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("ORDER SUCCESS====>",response.toString());
+                String s = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                Log.d("ORDER SUCCESS====>",jsonObject.toString());
+
+                if(getDialog()!=null){
+                    getDialog().dismiss();
+                }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
 
             }
         });

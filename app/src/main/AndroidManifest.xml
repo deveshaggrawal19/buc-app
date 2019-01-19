@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/fontTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,31 +23,32 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/fontTheme"
             android:label="@string/app_name" />
         <activity android:name=".SignupActivity" />
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/fontTheme" />
         <activity
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/fontTheme" />
         <activity
             android:name=".CurrencyActivity"
             android:label="@string/title_activity_currency"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BuySellActivity" />
-        <activity android:name=".DepositWithdrawActivity" />
+            android:theme="@style/fontTheme" />
+        <activity android:name=".BuySellActivity" android:theme="@style/fontTheme" />
+        <activity android:name=".DepositWithdrawActivity" android:theme="@style/fontTheme" />
         <activity
             android:name=".CoinDepositWithdraw"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/fontTheme"
+            />
         <activity
             android:name=".PassCodeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/fontTheme" />
         <activity android:name=".config.Config" />
-        <activity android:name=".P2POrders" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".P2POrders" android:theme="@style/fontTheme"></activity>
     </application>
 
 </manifest>

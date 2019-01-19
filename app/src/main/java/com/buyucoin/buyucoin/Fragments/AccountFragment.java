@@ -58,7 +58,6 @@ public class AccountFragment extends Fragment {
     private ProgressBar pb;
     private View ll;
     private AlertDialog.Builder ad;
-    private OnFragmentInteractionListener mListener;
     private SharedPreferences prefs;
     private SharedPreferences.Editor edit_pref;
     private LinearLayout profile_sheet_handler,
@@ -122,6 +121,10 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 ProfileBottomsheet profileBottomsheet = new ProfileBottomsheet();
                 profileBottomsheet.show(getChildFragmentManager(),"PROFILE BOTTOM SHEET");
+
+                makeViewDisable(profile_sheet_handler);
+
+
             }
         });
         referral_sheet_handler.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +132,8 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 ReferralBottomsheet referralBottomsheet = new ReferralBottomsheet();
                 referralBottomsheet.show(getChildFragmentManager(),"REFERRAL BOTTOM SHEET");
+
+                makeViewDisable(referral_sheet_handler);
             }
         });
         chats_sheet_handler.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +141,8 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 ChatsBottomsheet chatsBottomsheet = new ChatsBottomsheet();
                 chatsBottomsheet.show(getChildFragmentManager(),"REFERRAL BOTTOM SHEET");
+
+                makeViewDisable(chats_sheet_handler);
             }
         });
         settings_sheet_handler.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +150,8 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 SettingsBottomsheet settingsBottomsheet = new SettingsBottomsheet();
                 settingsBottomsheet.show(getChildFragmentManager(),"REFERRAL BOTTOM SHEET");
+
+                makeViewDisable(settings_sheet_handler);
             }
         });
     }
@@ -157,14 +166,20 @@ public class AccountFragment extends Fragment {
                 bundle.putInt("SELECTED_TAB",0);
                 historyFragment.setArguments(bundle);
                 historyFragment.show(getChildFragmentManager(),"TAB:0");
+
+                makeViewDisable(account_dep_history);
+
             }
         });
+
         account_with_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bundle.putInt("SELECTED_TAB",1);
                 historyFragment.setArguments(bundle);
                 historyFragment.show(getChildFragmentManager(),"TAB:1");
+
+                makeViewDisable(account_with_history);
 
             }
         });
@@ -175,8 +190,20 @@ public class AccountFragment extends Fragment {
                 historyFragment.setArguments(bundle);
                 historyFragment.show(getChildFragmentManager(),"TAB:2");
 
+                makeViewDisable(account_trade_history);
+
             }
         });
+    }
+
+    public static void makeViewDisable(final View view){
+        view.setEnabled(false);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setEnabled(true);
+            }
+        },1000);
     }
 
     private void MakeCircularImage(){
@@ -205,28 +232,12 @@ public class AccountFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(JSONObject item);
-    }
+
+
+
+
 
     private void getAccountData() {
         OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
