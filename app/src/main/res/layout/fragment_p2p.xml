@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,173 +10,235 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="50dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:id="@+id/p2p_history_ll"
-            android:background="@drawable/profile_drawable_referral_card"
-            android:gravity="center"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_history"
-                android:tint="@android:color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"
-                android:textColor="@android:color/white"
-                android:textSize="30sp" />
-
-        </LinearLayout>
-
-
-        <RadioGroup
-            android:id="@+id/rgp2p"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/my_coustom_radio"
-                android:button="@android:color/transparent"
-                android:checked="true"
-                android:drawableStart="@drawable/coin_deposite"
-                android:drawableTint="@drawable/my_coustom_radio_text"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Deposit INR"
-                android:textColor="@drawable/my_coustom_radio_text" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/my_coustom_radio"
-                android:button="@android:color/transparent"
-                android:drawableStart="@drawable/coin_withdraw"
-                android:drawableTint="@drawable/my_coustom_radio_text"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Withdrawl INR"
-                android:textColor="@drawable/my_coustom_radio_text" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Amount" />
-
-                <EditText
-                    android:id="@+id/etP2PAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/input_shape"
-                    android:hint="Amount"
-                    android:text="100"
-                    android:inputType="number"
-                    android:padding="10dp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.05" />
-
-            <LinearLayout
-                android:id="@+id/min_amt_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Minimum Amount" />
-
-                <EditText
-                    android:id="@+id/etP2PMinAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/input_shape"
-                    android:hint="Min Amount"
-                    android:text="100"
-                    android:inputType="number"
-                    android:padding="10dp" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/bP2Prequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/pills"
-            android:padding="15dp"
-            android:text="Deposit Request"
-            android:textColor="@android:color/white" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/bottom_sheet_bg_drawable"
-            android:elevation="2dp">
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/p2p_active_orders_rv"
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:id="@+id/p2p_history_ll"
+                android:background="@drawable/profile_drawable_referral_card"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_history"
+                    android:tint="@android:color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_height="match_parent">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@color/g1b67e8"
+                    android:layout_height="100dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="5200"
+                            android:textColor="@android:color/white"
+                            android:textSize="45sp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="ORDER ID"
+                            android:textColor="@android:color/white"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="Processing"
+                            android:padding="5dp"
+                            android:background="@drawable/p2p_corder_drawable"
+                            android:textColor="@android:color/white"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/profile_menu_list_arrow_right"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <RadioGroup
+                    android:id="@+id/rgp2p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <RadioButton
+                        android:id="@+id/radioButton"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/my_coustom_radio"
+                        android:button="@android:color/transparent"
+                        android:checked="true"
+                        android:drawableStart="@drawable/coin_deposite"
+                        android:drawableTint="@drawable/my_coustom_radio_text"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Deposit INR"
+                        android:textColor="@drawable/my_coustom_radio_text" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/my_coustom_radio"
+                        android:button="@android:color/transparent"
+                        android:drawableStart="@drawable/coin_withdraw"
+                        android:drawableTint="@drawable/my_coustom_radio_text"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Withdrawl INR"
+                        android:textColor="@drawable/my_coustom_radio_text" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Amount" />
+
+                        <EditText
+                            android:id="@+id/etP2PAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/input_shape"
+                            android:hint="Amount"
+                            android:text="100"
+                            android:inputType="number"
+                            android:padding="10dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.05" />
+
+                    <LinearLayout
+                        android:id="@+id/min_amt_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Minimum Amount" />
+
+                        <EditText
+                            android:id="@+id/etP2PMinAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/input_shape"
+                            android:hint="Min Amount"
+                            android:text="100"
+                            android:inputType="number"
+                            android:padding="10dp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bP2Prequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/pills"
+                    android:padding="15dp"
+                    android:text="Deposit Request"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
         </LinearLayout>
 
+    </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
 
-
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -258,7 +258,6 @@ public class AccountFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 assert response.body() != null;
                 final String s = response.body().string();
-                Log.d("RESP___", s);
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {

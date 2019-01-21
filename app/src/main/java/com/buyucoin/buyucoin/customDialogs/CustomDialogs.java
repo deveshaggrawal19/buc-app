@@ -19,6 +19,7 @@ import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -136,17 +137,28 @@ public class CustomDialogs extends BottomSheetDialogFragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
                 try {
-                    JSONObject jsonObject1 = new JSONObject(s);
+                    final JSONObject jsonObject1 = new JSONObject(s);
+                    final JSONArray msg = jsonObject1.getJSONArray("message");
+                    final String status = jsonObject1.getString("status");
 
-                Log.d("ORDER DONE =====> ","ORDER PLACE SUCCESS FULL"+jsonObject1.toString());
+                    final String tmsg = "STATUS "+status+" MESSAGE "+msg.getJSONArray(0).getString(0);
+
                 Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                         Toast.makeText(context, "ORDER PLACED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
+
+
+                        if(status.equals("success")){
+                            Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        }
+                        else{
+                            Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });
-                dismiss();
+//                dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

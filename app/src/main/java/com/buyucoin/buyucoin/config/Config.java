@@ -12,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Config extends Activity {
 
      String PRODUCTION_URL = "https://buyucoin.com/andrios/";
-     String DEVELOPMENT_URL = "http://192.168.1.11:5000/andrios/";
+     String DEVELOPMENT_URL = "http://test.buyucoin.com/andrios/";
      private boolean isProduction = false;
     FirebaseApp PRODUCTION_APP;
      String PRODUCTION_DATABASE_NAME = "PRODUCTION_DATABASE";

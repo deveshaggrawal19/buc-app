@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
@@ -19,10 +20,12 @@ import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,27 +43,9 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
     int amount;
     int min_amount;
     String type = "deposit";
-    static JSONObject IMPS_UPI;
-
-    static {
-        try {
-            IMPS_UPI = new JSONObject().put("modes[0]","imps").put("modes[1]","upi");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static JSONObject IMPS_ONLY;
-
-    static {
-        try {
-            IMPS_ONLY = new JSONObject().put("imps","imps");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    JSONObject modes = IMPS_ONLY;
+    private String[] IMPS_UPI = new String[]{"imps","upi"};
+    private String[] IMPS_ONLY = new String[]{"imps"};
+    String[] modes = IMPS_ONLY;
     String upi_address;
     int boost = 0;
     BuyucoinPref buyucoinPref;
@@ -157,22 +142,16 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
                     }
                 }
 
-                String msg = "Amount : "+amount+" Min_Amount : "+min_amount+" Type : "+type+" Modes : "+modes+" UPI Address : "+upi_address+" Boost : "+boost;
-                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-
-
-
-
                 JSONObject order = new JSONObject();
                 try {
                     order.put("amount",amount)
                             .put("min_amount",min_amount)
                             .put("type",type)
-                            .put("modes",modes)
+                            .put("modes",new JSONArray(modes))
                             .put("note",upi_address)
                             .put("boost",boost);
                     Log.d("JSON OBJECT====>",order.toString());
-                    makeRequest(order);
+                    makeRequest(order,modes,view.getContext());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -183,7 +162,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
 
     }
 
-    private void makeRequest(JSONObject order) {
+    private void makeRequest(JSONObject order,String[] modes , final Context context) {
         OkHttpHandler.auth_post("create_peer", buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN), order.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -197,12 +176,28 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
-                Log.d("ORDER SUCCESS====>",jsonObject.toString());
+                    final JSONObject jsonObject1 = new JSONObject(s);
+                    final JSONArray msg = jsonObject1.getJSONArray("message");
+                    final String status = jsonObject1.getString("status");
 
-                if(getDialog()!=null){
-                    getDialog().dismiss();
-                }
+                    final String tmsg = "STATUS "+status+" MESSAGE "+msg.getJSONArray(0).getString(0);
+
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                            if(status.equals("success")){
+                                Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            }
+                            else{
+                                Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+//                dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

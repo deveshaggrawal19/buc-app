@@ -47,6 +47,8 @@
         android:layout_width="match_parent"
         android:visibility="gone"
         android:id="@+id/ll_no_internet"
+        android:layout_marginTop="56dp"
+        android:background="@android:color/white"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_height="match_parent">

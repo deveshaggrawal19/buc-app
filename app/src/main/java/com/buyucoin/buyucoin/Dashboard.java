@@ -3,6 +3,7 @@ package com.buyucoin.buyucoin;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.buyucoin.buyucoin.Fragments.ReferralFragment;
 import com.buyucoin.buyucoin.Fragments.ServerError;
 import com.buyucoin.buyucoin.Fragments.SuperSettingsBottomsheet;
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
+import com.buyucoin.buyucoin.broadcast.NotNetworkBroadCastReceiver;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -66,6 +68,7 @@ public class Dashboard extends AppCompatActivity {
     ViewPager DashboardViewpager;
     MenuItem prev = null;
     BuyucoinPref buyucoinPref;
+    NotNetworkBroadCastReceiver notNetworkBroadCastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class Dashboard extends AppCompatActivity {
         DashboardViewpager = findViewById(R.id.dashboard_viewpager);
         DashboardViewpager.setAdapter(new Dashboard_PagerAdapter(getSupportFragmentManager()));
         buyucoinPref = new BuyucoinPref(getApplicationContext());
+        notNetworkBroadCastReceiver = new NotNetworkBroadCastReceiver(Dashboard.this);
 
 
 
@@ -184,17 +188,22 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (Utilities.isOnline(getApplicationContext())) {
-        } else {
-            fragView.setVisibility(View.GONE);
-            noInternet.setVisibility(View.VISIBLE);
-        }
+//        if (Utilities.isOnline(getApplicationContext())) {
+//        } else {
+//            fragView.setVisibility(View.GONE);
+//            noInternet.setVisibility(View.VISIBLE);
+//
+//        }
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(notNetworkBroadCastReceiver,filter);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         OkHttpHandler.cancelAllRequests();
+        unregisterReceiver(notNetworkBroadCastReceiver);
     }
 
     public void BuySellFragmentFun() {
@@ -264,7 +273,6 @@ public class Dashboard extends AppCompatActivity {
 
 
     public void getNonFreshToken(String refresh_token) {
-        Log.d("REFRESH TOKEN",refresh_token);
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject().put("refresh_token", refresh_token);
@@ -281,7 +289,6 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
-//                Log.d("/refresh RESPONSE", s);
                 try {
                     JSONObject jsonObject1 = new JSONObject(s);
                     buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getJSONObject("data").getString("access_token"));
@@ -338,6 +345,17 @@ public class Dashboard extends AppCompatActivity {
 
         }
     }
+
+    public  void reloadPageer(){
+        if(DashboardViewpager.getAdapter()!=null)
+        DashboardViewpager.getAdapter().notifyDataSetChanged();
+    }
+
+    public void noInternet(boolean iscon){
+       if(!iscon) noInternet.setVisibility(View.VISIBLE);
+       else noInternet.setVisibility(View.GONE);
+    }
+
 
 
 }

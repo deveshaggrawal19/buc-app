@@ -23,13 +23,17 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.P2POrders;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.buyucoin.buyucoin.textWatcher.P2P_TextWatcher;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,6 +61,7 @@ public class P2PFragment extends Fragment {
     String type = "deposit";
     LinearLayout min_amt_layout,p2p_history_layout;
     RecyclerView recyclerView;
+    ArrayList<ActiveP2pOrders> activeP2pOrderslist;
 
 
     private SharedPreferences prefs ;
@@ -98,6 +103,7 @@ public class P2PFragment extends Fragment {
         edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
         ACCESS_TOKEN = prefs.getString("access_token", null);
+        activeP2pOrderslist = new ArrayList<>();
     }
 
     @Override
@@ -120,9 +126,9 @@ public class P2PFragment extends Fragment {
             }
         });
 
-        recyclerView = view.findViewById(R.id.p2p_active_orders_rv);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+
+
 
 
 
@@ -271,7 +277,6 @@ public class P2PFragment extends Fragment {
 //    }
 
     private void getActiveOrders(){
-        Log.d("PEER =====>","PEER REQUEST DONE ");
         OkHttpHandler.auth_get("peer", new BuyucoinPref(Objects.requireNonNull(getContext())).getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -280,8 +285,91 @@ public class P2PFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("SUCCESS ON PEER =====>",response.toString());
+                try {
+                    assert response.body() != null;
+                    String s = response.body().string();
+                    JSONObject j = new JSONObject(s);
+                    JSONObject active_deposite = j.getJSONObject("active_deposits");
+                    JSONObject active_withdrawals =  j.getJSONObject("active_withdrawals");
+                    JSONArray matches = new JSONArray();
 
+//                    if(!active_deposite.toString().equals("{}")){
+//
+//                        for (Iterator<String> it = active_deposite.keys(); it.hasNext(); ) {
+//                            String key = it.next();
+//                            Log.d("OUTER KEY => "+key, active_deposite.get(key).toString());
+//                            JSONObject jsonObject = active_deposite.getJSONObject(key);
+//                            if(jsonObject.has("matches")){
+//                                matches = jsonObject.getJSONObject("matches");
+//                                Log.d("OBJECTS ===>",jsonObject.toString());
+//                            }
+//
+//                        }
+//
+//
+//                    }
+                    if(!active_withdrawals.toString().equals("{}")){
+
+                        for (Iterator<String> it = active_withdrawals.keys(); it.hasNext(); ) {
+                            String key = it.next();
+                            JSONObject o = active_withdrawals.getJSONObject(key).getJSONObject("peer");
+                            Log.d("fdgdhfjghdfhfgmf",o.toString());
+                            ActiveP2pOrders activeP2pOrders = new ActiveP2pOrders();
+                            JSONArray array = new JSONArray();
+
+                            activeP2pOrders.setAmount(o.getDouble("amount"));
+                            activeP2pOrders.setBoost(o.getDouble("boost"));
+                            activeP2pOrders.setCurrency(o.getInt("currency"));
+                            activeP2pOrders.setDuration(o.getInt("duration"));
+                            activeP2pOrders.setEnd_timestamp(o.getString("end_timestamp"));
+                            activeP2pOrders.setFee(o.getDouble("fee"));
+                            activeP2pOrders.setFilled(o.getDouble("filled"));
+                            activeP2pOrders.setFilled_by(o.getString("filled_by"));
+                            activeP2pOrders.setId(o.getInt("id"));
+                            activeP2pOrders.setMatched(o.getDouble("matched"));
+
+                            if(o.has("matched_by")){
+                                for (Iterator<String> it1 = o.getJSONObject("matched_by").keys(); it1.hasNext(); ) {
+                                    String s1 = it1.next();
+                                    array.put(o.getJSONObject("matched_by").getJSONObject(s1));
+                                }
+                            }
+
+
+                            activeP2pOrders.setMatched_by(array);
+
+                            activeP2pOrders.setMatches(o.get("matches"));
+
+                            activeP2pOrders.setMin_amount(o.getDouble("min_amount"));
+                            activeP2pOrders.setModes(o.getJSONArray("modes"));
+                            activeP2pOrders.setNote(o.getString("note"));
+
+                            activeP2pOrders.setRejected_matches(o.get("rejected_match"));
+
+                            activeP2pOrders.setStatus(o.getInt("status"));
+                            activeP2pOrders.setTimestamp(o.getString("timestamp"));
+                            activeP2pOrders.setTx_hash(o.getString("tx_hash"));
+                            activeP2pOrders.setType(o.getInt("type"));
+                            activeP2pOrders.setUpi_address(o.getString("note"));
+                            activeP2pOrders.setUser_id(o.getInt("user_id"));
+                            activeP2pOrders.setWallet_id(o.getInt("wallet_id"));
+                            activeP2pOrders.setWfee_amount(o.getInt("wfee_amount"));
+
+                            activeP2pOrderslist.add(activeP2pOrders);
+
+
+                        }
+
+                        Log.d("P2P ACTIVE ORDER SIZE :",""+activeP2pOrderslist.size());
+
+
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });

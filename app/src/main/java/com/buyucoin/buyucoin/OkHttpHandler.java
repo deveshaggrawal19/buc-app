@@ -1,6 +1,11 @@
 package com.buyucoin.buyucoin;
 
+import android.util.Log;
+
 import com.buyucoin.buyucoin.config.Config;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 

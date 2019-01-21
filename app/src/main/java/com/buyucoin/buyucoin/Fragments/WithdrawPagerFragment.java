@@ -29,7 +29,7 @@ public class WithdrawPagerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.withdraw_pager_layout, container, false);
-        String ty, co, av, ad, de, tag, cfn;
+        final String ty, co, av, ad, de, tag, cfn;
         LinearLayout tag_layout;
         Button withdraw_layout_btnview;
         final EditText destination_tag, coin_amonut, coin_address;
@@ -70,6 +70,7 @@ public class WithdrawPagerFragment extends Fragment {
                         bundle.putString("coin_tag", tag);
                         bundle.putDouble("coin_amount", amount);
                         bundle.putString("coin_address", address);
+                        bundle.putString("coin_name",co);
 
 
                         WithdrawBottomsheet withdrawBottomsheet = new WithdrawBottomsheet();

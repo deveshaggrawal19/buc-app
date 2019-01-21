@@ -122,6 +122,7 @@ public class BuySellActivity extends AppCompatActivity {
 
         }
 
+        order_btn.setText(type);
         order_price.setEnabled(false);
         order_quantity.setEnabled(false);
 
