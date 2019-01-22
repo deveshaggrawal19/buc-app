@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Wallet"
+        android:title="@string/wallet"
         android:enabled="true"
         android:id="@+id/wll_bal"
         android:icon="@drawable/ic_account_balance_wallet_black_24dp"/>
     <item
-        android:title="Rates"
-        android:enabled="true"
         android:id="@+id/_rates"
-        android:icon="@drawable/ic_timeline_black_24dp"/>
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/ic_timeline_black_24dp"
+        android:title="@string/rates"
+        android:visible="true" />
     <item
-        android:title="Buy Sell"
+        android:title="@string/buy_sell"
         android:enabled="true"
         android:id="@+id/_buysell"
         android:icon="@drawable/ic_store_black_24dp"/>
     <item
-        android:title="P2P"
+        android:title="@string/p2p"
         android:enabled="true"
         android:id="@+id/_p2p"
         android:icon="@drawable/ic_swap_vertical_circle_black_24dp"/>
     <item
-        android:title="Account"
+        android:title="@string/account"
         android:enabled="true"
         android:id="@+id/acc_det"
         android:icon="@drawable/ic_account_circle_black_24dp"/>

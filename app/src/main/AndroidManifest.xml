@@ -50,11 +50,11 @@
         <activity android:name=".config.Config" />
         <activity android:name=".P2POrders" android:theme="@style/fontTheme"></activity>
         <receiver android:name=".broadcast.NotNetworkBroadCastReceiver" android:exported="false">
-            <intent-filter>
-                <action android:name="android.net.wifi.supplicant.CONNECTING_CHANGE"/>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.net.wifi.supplicant.CONNECTING_CHANGE"/>-->
+                <!--<action android:name="android.net.wifi.STATE_CHANGE"/>-->
+                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>-->
+            <!--</intent-filter>-->
         </receiver>
     </application>
 

@@ -13,6 +13,10 @@ import androidx.work.impl.utils.ForceStopRunnable;
 
 public class NotNetworkBroadCastReceiver extends BroadcastReceiver {
     Dashboard dcontext;
+
+    public NotNetworkBroadCastReceiver() {
+    }
+
     public  NotNetworkBroadCastReceiver(Dashboard dcontext){
         this.dcontext = dcontext;
     }
@@ -20,12 +24,12 @@ public class NotNetworkBroadCastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         boolean iscon = Utilities.isOnline(context);
         if (iscon){
-            Toast.makeText(context, "CONNECTED", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "CONNECTED", Toast.LENGTH_SHORT).show();
             dcontext.reloadPageer();
             dcontext.noInternet(iscon);
         }
         else {
-            Toast.makeText(context, "LOST CONNECTION", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "LOST CONNECTION", Toast.LENGTH_SHORT).show();
             dcontext.noInternet(iscon);
         }
     }

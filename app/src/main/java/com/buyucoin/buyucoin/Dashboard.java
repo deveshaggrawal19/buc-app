@@ -74,6 +74,7 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         bm = findViewById(R.id._btnbar);
         setSupportActionBar(toolbar);
@@ -82,7 +83,9 @@ public class Dashboard extends AppCompatActivity {
         DashboardViewpager = findViewById(R.id.dashboard_viewpager);
         DashboardViewpager.setAdapter(new Dashboard_PagerAdapter(getSupportFragmentManager()));
         buyucoinPref = new BuyucoinPref(getApplicationContext());
-        notNetworkBroadCastReceiver = new NotNetworkBroadCastReceiver(Dashboard.this);
+        notNetworkBroadCastReceiver = new NotNetworkBroadCastReceiver(this);
+
+
 
 
 
@@ -123,6 +126,14 @@ public class Dashboard extends AppCompatActivity {
             public void onPageSelected(int position) {
 
                     bm.getMenu().getItem(position).setChecked(true);
+                    switch (position){
+                        case 0: toolbar.setTitle(R.string.wallet);break;
+                        case 1: toolbar.setTitle(R.string.rates);break;
+                        case 2: toolbar.setTitle(R.string.buy_sell);break;
+                        case 3: toolbar.setTitle(R.string.p2p);break;
+                        case 4: toolbar.setTitle(R.string.account);break;
+                        default: toolbar.setTitle(R.string.wallet);break;
+                    }
 
             }
 
@@ -139,33 +150,12 @@ public class Dashboard extends AppCompatActivity {
 
 
                 switch (item.getItemId()) {
-                    case R.id.acc_det:
-                        toolbar.setTitle("Account");
-                        DashboardViewpager.setCurrentItem(4);
-
-                        break;
-                    case R.id.wll_bal:
-                        toolbar.setTitle("Wallet");
-                        DashboardViewpager.setCurrentItem(0);
-
-                        break;
-                    case R.id._rates:
-                        toolbar.setTitle("Rates");
-                        DashboardViewpager.setCurrentItem(1);
-
-                        break;
-                    case R.id._buysell:
-                        toolbar.setTitle("Buy\\Sell");
-                        DashboardViewpager.setCurrentItem(2);
-
-                        break;
-                    case R.id._p2p:
-                        toolbar.setTitle("Create Deposit/Withdrawl");
-                        DashboardViewpager.setCurrentItem(3);
-
-                        break;
-                    default:
-                        DashboardViewpager.setCurrentItem(0);
+                    case R.id.acc_det: toolbar.setTitle(R.string.account);DashboardViewpager.setCurrentItem(4);break;
+                    case R.id.wll_bal: toolbar.setTitle(R.string.wallet);DashboardViewpager.setCurrentItem(0);break;
+                    case R.id._rates: toolbar.setTitle(R.string.rates);DashboardViewpager.setCurrentItem(1);break;
+                    case R.id._buysell: toolbar.setTitle(R.string.buy_sell);DashboardViewpager.setCurrentItem(2);break;
+                    case R.id._p2p: toolbar.setTitle(R.string.p2p);DashboardViewpager.setCurrentItem(3);break;
+                    default:toolbar.setTitle(R.string.wallet); DashboardViewpager.setCurrentItem(0);
 
 
                 }
@@ -177,7 +167,6 @@ public class Dashboard extends AppCompatActivity {
 
         getNonFreshToken(refresh_token);
 
-
     }
 
     public void updateFrammentState(String STATE) {
@@ -188,12 +177,6 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        if (Utilities.isOnline(getApplicationContext())) {
-//        } else {
-//            fragView.setVisibility(View.GONE);
-//            noInternet.setVisibility(View.VISIBLE);
-//
-//        }
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(notNetworkBroadCastReceiver,filter);

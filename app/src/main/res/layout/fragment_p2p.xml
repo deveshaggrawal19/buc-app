@@ -4,100 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:clipToPadding="false"
     android:orientation="vertical"
     tools:context=".Fragments.P2PFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="50dp">
-
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:id="@+id/p2p_history_ll"
                 android:background="@drawable/profile_drawable_referral_card"
                 android:gravity="center"
                 android:padding="10dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_history"
-                    android:tint="@android:color/white" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="History"
                     android:textColor="@android:color/white"
-                    android:textSize="30sp" />
-
+                    android:textSize="20sp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:background="@color/g1b67e8"
-                    android:layout_height="100dp">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:text="5200"
-                            android:textColor="@android:color/white"
-                            android:textSize="45sp"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:text="ORDER ID"
-                            android:textColor="@android:color/white"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content" />
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/p2p_active_orders_ll"
+                    android:background="@drawable/credit_card"
+                    android:gravity="center"
+                    android:padding="10dp">
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:orientation="horizontal"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Processing"
-                            android:padding="5dp"
-                            android:background="@drawable/p2p_corder_drawable"
-                            android:textColor="@android:color/white"
-                            android:layout_gravity="center_vertical"
-                            android:layout_height="wrap_content" />
-                        <ImageView
-                            android:layout_marginLeft="20dp"
-                            android:layout_width="wrap_content"
-                            android:src="@drawable/profile_menu_list_arrow_right"
-                            android:layout_gravity="center_vertical"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Active Orders"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -106,6 +59,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:id="@+id/p2p_order_place_order_layout"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
 
@@ -238,7 +192,7 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+
 
 
 </LinearLayout>
