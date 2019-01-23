@@ -127,4 +127,6 @@
     <string name="buy_sell">Buy Sell</string>
     <string name="p2p">P2P</string>
     <string name="account">Account</string>
+    <string name="no_deposits">No Deposits Orders</string>
+    <string name="no_withdraw_orders">No Withdraw Orders</string>
 </resources>

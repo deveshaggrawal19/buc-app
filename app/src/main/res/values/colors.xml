@@ -8,5 +8,8 @@
     <color name="g1b67e8">#1b67e8</color>
     <color name="g6209c3">#6209c3</color>
     <color name="supersettings_icon_tint">#aaaaaa</color>
+    <color name="colorPending">@android:color/holo_orange_light</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
 
 </resources>

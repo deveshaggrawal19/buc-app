@@ -38,8 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class HistoryPagerAdapterFragmentDeposite extends DialogFragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
 
     String ACCESS_TOKEN = null;
     RecyclerView rv;

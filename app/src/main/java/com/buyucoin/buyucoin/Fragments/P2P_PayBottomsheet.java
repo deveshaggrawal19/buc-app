@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -138,7 +139,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
                     if(!upi.getText().toString().equals("")){
                         upi_address = upi.getText().toString();
                     }else {
-                        Toast.makeText(getContext(), "Enter UPI Address", Toast.LENGTH_SHORT).show();
+                        new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Enter UPI Address",CoustomToast.TYPE_DANGER).showToast();
                     }
                 }
 
@@ -150,7 +151,6 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
                             .put("modes",new JSONArray(modes))
                             .put("note",upi_address)
                             .put("boost",boost);
-                    Log.d("JSON OBJECT====>",order.toString());
                     makeRequest(order,modes,view.getContext());
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -166,7 +166,6 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
         OkHttpHandler.auth_post("create_peer", buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN), order.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d("ORDER ERROR====>",e.getMessage());
                 if(getDialog()!=null){
                 getDialog().dismiss();
                 }
@@ -180,7 +179,7 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
                     final JSONArray msg = jsonObject1.getJSONArray("message");
                     final String status = jsonObject1.getString("status");
 
-                    final String tmsg = "STATUS "+status+" MESSAGE "+msg.getJSONArray(0).getString(0);
+                    final String tmsg = msg.getJSONArray(0).getString(0);
 
                     Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                         @Override
@@ -188,11 +187,11 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
 
 
                             if(status.equals("success")){
-                                Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
                                 dismiss();
                             }
                             else{
-                                Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),tmsg,CoustomToast.TYPE_DANGER).showToast();
                             }
 
                         }

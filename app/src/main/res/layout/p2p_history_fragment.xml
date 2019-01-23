@@ -5,6 +5,7 @@
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:id="@+id/p2p_history_tab"
+        android:background="@color/colorPrimary"
         android:layout_height="wrap_content">
 
     </com.google.android.material.tabs.TabLayout>

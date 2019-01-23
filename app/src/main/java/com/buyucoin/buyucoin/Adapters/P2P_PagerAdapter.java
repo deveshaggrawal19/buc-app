@@ -8,8 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class P2P_PagerAdapter extends FragmentPagerAdapter {
+public class P2P_PagerAdapter extends FragmentStatePagerAdapter{
 
     public P2P_PagerAdapter(@NonNull FragmentManager fm) {
         super(fm);

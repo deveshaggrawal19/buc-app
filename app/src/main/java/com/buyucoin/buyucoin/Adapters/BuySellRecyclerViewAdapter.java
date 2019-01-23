@@ -5,17 +5,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.BuySellActivity;
-import com.buyucoin.buyucoin.Fragments.WalletFragment;
+import com.buyucoin.buyucoin.CurrencyActivity;
 import com.buyucoin.buyucoin.MyCustomDialogBoxClass;
 import com.buyucoin.buyucoin.R;
 
@@ -28,6 +25,8 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
     private final List<JSONObject> mValues;
     RecyclerView recyclerView;
     TextView textView;
+    String s1, s2, s3, s4;
+    private String availabel,min_with,currencyname,fees;
 
     public BuySellRecyclerViewAdapter(List<JSONObject> items, RecyclerView recyclerView, TextView textView) {
         mValues = items;
@@ -39,7 +38,7 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.buy_sell_item, parent, false);
         return new ViewHolder(view);
 
     }
@@ -48,33 +47,30 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
 
-        String s1, s2, s3, s4;
+
         try{
-            s1 = mValues.get(position).getString("available").toUpperCase();
-            s2 = "Minimum Withdrawl: " + mValues.get(position).getString("min_with");
-            s3 = mValues.get(position).getString("currencyname");
-            s4 = "Fees: "+ mValues.get(position).getString("fees");
+            availabel = mValues.get(position).getString("available").toUpperCase();
+            min_with = mValues.get(position).getString("min_with");
+            currencyname = mValues.get(position).getString("currencyname");
+            fees = mValues.get(position).getString("fees");
             Log.d("DATA OF COIN",mValues.get(position).toString());
         }catch(Exception e){
-            s1 = s2 = s3 = s4 = "N/A";
+            availabel = min_with = currencyname = fees = "";
         }
 
-            final String finalS = s3;
-        holder.coinname.setText(s3);
+        holder.coinname.setText(currencyname.toUpperCase());
         if(position<34){
         holder.coinimg.setImageResource(MyCustomDialogBoxClass.arr[position]);
         }
 
-        final String finalS1 = s3;
         holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
-                        Intent buysellIntent = new Intent(holder.mView.getContext(),BuySellActivity.class);
-                        buysellIntent.putExtra("coin_name", finalS1);
-                        holder.mView.getContext().startActivity(buysellIntent);
-
+                        Intent currencyIntent = new Intent(holder.mView.getContext(), CurrencyActivity.class);
+                        currencyIntent.putExtra("currency", currencyname);
+                        holder.mView.getContext().startActivity(currencyIntent);
                 }
             });
 

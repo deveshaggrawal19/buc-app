@@ -26,6 +26,7 @@ import com.buyucoin.buyucoin.Fragments.ServerError;
 import com.buyucoin.buyucoin.Fragments.SuperSettingsBottomsheet;
 import com.buyucoin.buyucoin.Fragments.WalletFragment;
 import com.buyucoin.buyucoin.broadcast.NotNetworkBroadCastReceiver;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -167,6 +168,7 @@ public class Dashboard extends AppCompatActivity {
 
         getNonFreshToken(refresh_token);
 
+
     }
 
     public void updateFrammentState(String STATE) {
@@ -235,7 +237,7 @@ public class Dashboard extends AppCompatActivity {
             editor.remove("access_token");
             editor.remove("refresh_token");
             editor.apply();
-            Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
+            new CoustomToast(getApplicationContext(),this,"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
             Intent i = new Intent(this, LoginActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
@@ -277,7 +279,9 @@ public class Dashboard extends AppCompatActivity {
                     buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getJSONObject("data").getString("access_token"));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Utilities.showToast(Dashboard.this, Utilities.getErrorMessage(s));
+                    showToast(e.getMessage());
+
+
                 }
             }
         });
@@ -287,7 +291,7 @@ public class Dashboard extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                new CoustomToast(getApplicationContext(),Dashboard.this,s,CoustomToast.TYPE_DANGER).showToast();
             }
         });
     }

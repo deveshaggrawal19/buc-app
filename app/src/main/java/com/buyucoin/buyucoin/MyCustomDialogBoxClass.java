@@ -17,7 +17,7 @@ public class MyCustomDialogBoxClass {
     public final static int[]  arr = new int[]{
             R.drawable.btc,
             R.drawable.eth,
-            R.drawable.btc,
+            R.mipmap.ic_inr,
             R.drawable.ltc,
             R.drawable.bcc,
             R.drawable.xmr,

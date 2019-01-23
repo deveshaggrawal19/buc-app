@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.textWatcher.P2P_TextWatcher;
+
+import java.util.Objects;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -167,13 +170,13 @@ public class P2PFragment extends Fragment {
                 }
 
                 if (amt < 100) {
-                    Toast.makeText(getContext(), "Amount must be 100 or more", Toast.LENGTH_SHORT).show();
+                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Amount must be 100 or more",CoustomToast.TYPE_DANGER).showToast();
                 }
                 if (min_amt < 100) {
-                    Toast.makeText(getContext(), "Min Amount must be 100", Toast.LENGTH_SHORT).show();
+                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Min Amount must be 100",CoustomToast.TYPE_DANGER).showToast();
                 }
                 if (min_amt > amt) {
-                    Toast.makeText(getContext(), "Min Amount must be low", Toast.LENGTH_SHORT).show();
+                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Min Amount must be low",CoustomToast.TYPE_DANGER).showToast();
                     min_amount.setText("100");
                 }
 
