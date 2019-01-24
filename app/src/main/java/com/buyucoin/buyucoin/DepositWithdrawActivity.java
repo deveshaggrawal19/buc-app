@@ -1,41 +1,79 @@
 package com.buyucoin.buyucoin;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.CoinHistoryAdapter;
+import com.buyucoin.buyucoin.Fragments.HistoryPagerAdapterFragmentOrder;
+import com.buyucoin.buyucoin.Fragments.P2P_History;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.pojos.History;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
+import com.google.android.material.navigation.NavigationView;
 
-public class DepositWithdrawActivity extends AppCompatActivity {
-    LinearLayout qr_layout,buy_layout,sell_layout,deposite_layout,withdraw_layout;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class DepositWithdrawActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout, empty_layout;
     ImageView imageView;
     RecyclerView history_recyclerview;
-    TextView card_coin_full_name,card_coin_availabel,card_coin_pending,card_coin_address,card_coin_base_address;
+    TextView card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address;
     Intent i;
     Button address_gen_btn;
     NestedScrollView nestedScrollView;
+    BuyucoinPref pref;
+    ProgressBar pb;
+    String coin;
+    private ArrayList<History> histories;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    DrawerLayout drawer ;
+    ActionBarDrawerToggle toggle;
+    TextView navname, navemail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposite_withdraw);
-
+        pref = new BuyucoinPref(getApplicationContext());
         InitializeAllViews();
-
-
-
         i = getIntent();
+        histories = new ArrayList<>();
+        String name = pref.getPrefString("name");
+        String email = pref.getPrefString("email");
+        navname.setText(name);
+        navemail.setText(email);
 
-        final String COIN = i.getStringExtra("coin_name");
+        final String COIN = coin = i.getStringExtra("coin_name");
         final String AVAILABEL = i.getStringExtra("available");
         final String PENDING = i.getStringExtra("pendings");
         final String ADDRESS = i.getStringExtra("address");
@@ -51,7 +89,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         card_coin_pending.setText(PENDING);
 
 
-        if(ADDRESS.equals("null")){
+        if (ADDRESS.equals("null")) {
             card_coin_address.setVisibility(View.GONE);
             address_gen_btn.setVisibility(View.VISIBLE);
 
@@ -63,7 +101,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 generateAddress(card_coin_address);
             }
         });
-        
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,22 +124,22 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         nestedScrollView.post(new Runnable() {
             @Override
             public void run() {
-                nestedScrollView.scrollTo(0,0);
+                nestedScrollView.scrollTo(0, 0);
             }
         });
 
         buy_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),BuySellActivity.class);
-                intent.putExtra("type","buy");
-                intent.putExtra("price","234567");
-                intent.putExtra("coin_name",COIN);
-                intent.putExtra("available",AVAILABEL);
-                intent.putExtra("address",ADDRESS);
-                intent.putExtra("description",DESCRIPTION);
-                intent.putExtra("tag",TAG);
-                intent.putExtra("full_coin_name",COIN_FULL_NAME);
+                Intent intent = new Intent(getApplicationContext(), BuySellActivity.class);
+                intent.putExtra("type", "buy");
+                intent.putExtra("price", "234567");
+                intent.putExtra("coin_name", COIN);
+                intent.putExtra("available", AVAILABEL);
+                intent.putExtra("address", ADDRESS);
+                intent.putExtra("description", DESCRIPTION);
+                intent.putExtra("tag", TAG);
+                intent.putExtra("full_coin_name", COIN_FULL_NAME);
                 startActivity(intent);
 
             }
@@ -109,15 +147,15 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         sell_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),BuySellActivity.class);
-                intent.putExtra("type","sell");
-                intent.putExtra("price","234567");
-                intent.putExtra("coin_name",COIN);
-                intent.putExtra("available",AVAILABEL);
-                intent.putExtra("address",ADDRESS);
-                intent.putExtra("description",DESCRIPTION);
-                intent.putExtra("tag",TAG);
-                intent.putExtra("full_coin_name",COIN_FULL_NAME);
+                Intent intent = new Intent(getApplicationContext(), BuySellActivity.class);
+                intent.putExtra("type", "sell");
+                intent.putExtra("price", "234567");
+                intent.putExtra("coin_name", COIN);
+                intent.putExtra("available", AVAILABEL);
+                intent.putExtra("address", ADDRESS);
+                intent.putExtra("description", DESCRIPTION);
+                intent.putExtra("tag", TAG);
+                intent.putExtra("full_coin_name", COIN_FULL_NAME);
                 startActivity(intent);
 
             }
@@ -125,14 +163,14 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         deposite_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CoinDepositWithdraw.class);
-                intent.putExtra("type","DEPOSITE");
-                intent.putExtra("coin_name",COIN);
-                intent.putExtra("available",AVAILABEL);
-                intent.putExtra("address",ADDRESS);
-                intent.putExtra("description",DESCRIPTION);
-                intent.putExtra("tag",TAG);
-                intent.putExtra("full_coin_name",COIN_FULL_NAME);
+                Intent intent = new Intent(getApplicationContext(), CoinDepositWithdraw.class);
+                intent.putExtra("type", "DEPOSITE");
+                intent.putExtra("coin_name", COIN);
+                intent.putExtra("available", AVAILABEL);
+                intent.putExtra("address", ADDRESS);
+                intent.putExtra("description", DESCRIPTION);
+                intent.putExtra("tag", TAG);
+                intent.putExtra("full_coin_name", COIN_FULL_NAME);
                 startActivity(intent);
 
             }
@@ -140,14 +178,14 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         withdraw_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CoinDepositWithdraw.class);
-                intent.putExtra("type","WITHDRAW");
-                intent.putExtra("coin_name",COIN);
-                intent.putExtra("available",AVAILABEL);
-                intent.putExtra("address",ADDRESS);
-                intent.putExtra("description",DESCRIPTION);
-                intent.putExtra("tag",TAG);
-                intent.putExtra("full_coin_name",COIN_FULL_NAME);
+                Intent intent = new Intent(getApplicationContext(), CoinDepositWithdraw.class);
+                intent.putExtra("type", "WITHDRAW");
+                intent.putExtra("coin_name", COIN);
+                intent.putExtra("available", AVAILABEL);
+                intent.putExtra("address", ADDRESS);
+                intent.putExtra("description", DESCRIPTION);
+                intent.putExtra("tag", TAG);
+                intent.putExtra("full_coin_name", COIN_FULL_NAME);
                 startActivity(intent);
 
             }
@@ -159,12 +197,31 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 generateAddress(card_coin_address);
             }
         });
+
+        getList("order");
     }
 
     private void InitializeAllViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        navname = (TextView) header.findViewById(R.id.tvName);
+        navemail = (TextView) header.findViewById(R.id.tvEmail);
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+
         imageView = findViewById(R.id.qrcodeimg);
         qr_layout = findViewById(R.id.qrcodelayout);
-        history_recyclerview = findViewById(R.id.rvCoinHistory);
+        history_recyclerview = findViewById(R.id.rvActiveCoinOrdrs);
 
         buy_layout = findViewById(R.id.buy_layout_card);
         sell_layout = findViewById(R.id.sell_layout_card);
@@ -180,12 +237,226 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         address_gen_btn = findViewById(R.id.card_coin_address_gen_btn);
 
         nestedScrollView = findViewById(R.id.card_coin_nested_view);
+        pb = findViewById(R.id.order_pb);
+        empty_layout = findViewById(R.id.empty_orders);
     }
 
     private void generateAddress(TextView card_coin_address) {
 
         card_coin_address.setText("ADDRESS GENERATED");
 
+    }
+
+    public void getList(final String url) {
+        new CoustomToast(this, this, "loading", CoustomToast.TYPE_NORMAL);
+        OkHttpHandler.auth_get(url + "_history", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    try{
+                        String s = response.body().string();
+
+                        try {
+                            final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+                            Log.d("sdfghjsdfghjk", array.toString());
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject j = array.getJSONObject(i);
+//                        if(j.getString("curr").equals(coin)){
+                                histories.add(new History(
+                                        j.getDouble("amount"),
+                                        j.getString("curr"),
+                                        j.getString("open"),
+                                        j.getString("open"),
+                                        j.getString("status"),
+                                        "",
+                                        "",
+                                        j.getDouble("fee"),
+                                        j.getDouble("filled"),
+                                        j.getDouble("price"),
+                                        j.getString("type"),
+                                        j.getDouble("value")
+                                ));
+//                        }
+
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    if (histories.size() > 0) {
+                                        history_recyclerview.setAdapter(new MyHistoryRecyclerViewAdapter(histories));
+                                        history_recyclerview.setVisibility(View.VISIBLE);
+                                        pb.setVisibility(View.GONE);
+                                    } else {
+                                        pb.setVisibility(View.GONE);
+                                        empty_layout.setVisibility(View.VISIBLE);
+
+                                    }
+                                }
+                            });
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            e.getMessage();
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                    pb.setVisibility(View.GONE);
+                                    empty_layout.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent i = new Intent(DepositWithdrawActivity.this,Dashboard.class);
+        Bundle b = new Bundle();
+        switch (item.getItemId()){
+            case R.id.nav_account:
+                b.putInt("POSITION",4);
+
+                break;
+            case R.id.nav_wallet:
+                b.putInt("POSITION",0);
+                break;
+            case R.id.nav_rate:
+                b.putInt("POSITION",1);
+                break;
+            case R.id.nav_p2p:
+                b.putInt("POSITION",3);
+                break;
+            case R.id.nav_buysell:
+                b.putInt("POSITION",2);
+                break;
+
+        }
+        startActivity(i);
+        return super.onOptionsItemSelected(item);
+    }
+
+    public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
+
+        private final ArrayList<History> mValues;
+
+        public MyHistoryRecyclerViewAdapter(ArrayList<History> items) {
+            mValues = items;
+        }
+
+        @NonNull
+        @Override
+        public MyHistoryRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_history_list_item, parent, false);
+            return new ViewHolder(view);
+        }
+
+
+        @Override
+        public void onBindViewHolder(final MyHistoryRecyclerViewAdapter.ViewHolder holder, int position) {
+            try {
+                holder.mItem = mValues.get(position);
+
+
+                holder.mCurrency.setText(holder.mItem.getCurr().toUpperCase());
+                holder.mAmount.setText(String.valueOf(holder.mItem.getAmount()));
+                if (holder.mItem.getOpen() != "") {
+
+                    holder.mOpenTime.setText(holder.mItem.getOpen());
+                } else {
+
+                    holder.mOpenTime.setText(holder.mItem.getOpen_time());
+                }
+                holder.mTxHash.setText(holder.mItem.getTx_hash());
+
+                if (holder.mItem.getType().equals("Buy")) {
+                    holder.mType.setImageResource(R.drawable.history_deposite_icon);
+                } else {
+                    holder.mType.setImageResource(R.drawable.history_withdraw_icon);
+                }
+
+
+                switch (holder.mItem.getStatus()) {
+                    case "Pending":
+                        holder.mStatus.setImageResource(R.drawable.history_pending_icon);
+                        break;
+                    case "Success":
+                        holder.mStatus.setImageResource(R.drawable.history_success_icon);
+                        break;
+                    case "Cancelled":
+                        holder.mStatus.setImageResource(R.drawable.history_cancel_icon);
+                        break;
+                    default:
+                        holder.mStatus.setImageResource(R.drawable.history_pending_icon);
+
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                holder.mCurrency.setText("N/A");
+                holder.mAmount.setText("N/A");
+                holder.mOpenTime.setText("N/A");
+                holder.mTxHash.setText("N/A");
+            }
+
+            try {
+                holder.mImage.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(holder.mItem.getCurr(), "drawable", getPackageName())));
+            } catch (Exception e) {
+                holder.mImage.setVisibility(View.GONE);
+            }
+
+
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return mValues.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final View mView;
+            public final TextView mAmount, mCurrency, mOpenTime, mTxHash, mAddress, mFilled, mValue;
+            public final ImageView mImage, mStatus, mType;
+            public History mItem;
+
+            public ViewHolder(View view) {
+                super(view);
+                mView = view;
+                mAmount = view.findViewById(R.id.tvHistoryAmount);
+                mCurrency = view.findViewById(R.id.tvHistoryCurrency);
+                mOpenTime = view.findViewById(R.id.tvHistoryOpenTime);
+                mTxHash = view.findViewById(R.id.tvHistoryTxHash);
+                mStatus = view.findViewById(R.id.tvHistoryStatus);
+                mAddress = view.findViewById(R.id.tvHistoryAddress);
+                mFilled = view.findViewById(R.id.tvHistoryFilled);
+                mValue = view.findViewById(R.id.tvHistoryValue);
+                mImage = view.findViewById(R.id.ivHistory);
+                mType = view.findViewById(R.id.history_type_image);
+            }
+
+            @Override
+            public String toString() {
+                return super.toString() + " '" + mItem.toString() + "'";
+            }
+        }
     }
 
 

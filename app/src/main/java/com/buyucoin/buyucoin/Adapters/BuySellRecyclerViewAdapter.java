@@ -4,34 +4,38 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.buyucoin.buyucoin.BuySellActivity;
 import com.buyucoin.buyucoin.CurrencyActivity;
-import com.buyucoin.buyucoin.MyCustomDialogBoxClass;
+import com.buyucoin.buyucoin.MyResourcesClass;
 import com.buyucoin.buyucoin.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecyclerViewAdapter.ViewHolder> {
 
     private final List<JSONObject> mValues;
-    RecyclerView recyclerView;
-    TextView textView;
-    String s1, s2, s3, s4;
-    private String availabel,min_with,currencyname,fees;
 
-    public BuySellRecyclerViewAdapter(List<JSONObject> items, RecyclerView recyclerView, TextView textView) {
+    private ArrayList<String> buysell_list = new ArrayList<>();
+
+    public BuySellRecyclerViewAdapter(List<JSONObject> items) {
         mValues = items;
-        this.recyclerView = recyclerView;
-        this.textView = textView;
+        try {
+            for (JSONObject j : mValues) {
+                buysell_list.add(j.getString("currencyname"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @NonNull
@@ -45,35 +49,24 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        holder.mItem = mValues.get(position);
 
 
-        try{
-            availabel = mValues.get(position).getString("available").toUpperCase();
-            min_with = mValues.get(position).getString("min_with");
-            currencyname = mValues.get(position).getString("currencyname");
-            fees = mValues.get(position).getString("fees");
-            Log.d("DATA OF COIN",mValues.get(position).toString());
-        }catch(Exception e){
-            availabel = min_with = currencyname = fees = "";
+        holder.coinname.setText(buysell_list.get(position).toUpperCase());
+        try {
+            holder.coinimg.setImageResource(MyResourcesClass.COIN_ICON.getInt(buysell_list.get(position)));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        holder.coinname.setText(currencyname.toUpperCase());
-        if(position<34){
-        holder.coinimg.setImageResource(MyCustomDialogBoxClass.arr[position]);
-        }
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
 
-                        Intent currencyIntent = new Intent(holder.mView.getContext(), CurrencyActivity.class);
-                        currencyIntent.putExtra("currency", currencyname);
-                        holder.mView.getContext().startActivity(currencyIntent);
-                }
-            });
-
+                Intent currencyIntent = new Intent(holder.mView.getContext(), CurrencyActivity.class);
+                currencyIntent.putExtra("currency", buysell_list.get(position));
+                holder.mView.getContext().startActivity(currencyIntent);
+            }
+        });
 
 
     }
@@ -85,9 +78,8 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView coinname ;
-        public  final ImageView coinimg;
-        public JSONObject mItem;
+        public final TextView coinname;
+        public final ImageView coinimg;
 
         public ViewHolder(View view) {
             super(view);
@@ -98,5 +90,5 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
 
     }
-    }
+}
 

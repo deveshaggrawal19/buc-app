@@ -129,4 +129,5 @@
     <string name="account">Account</string>
     <string name="no_deposits">No Deposits Orders</string>
     <string name="no_withdraw_orders">No Withdraw Orders</string>
+    <string name="your_active_orders">Your Active Orders</string>
 </resources>

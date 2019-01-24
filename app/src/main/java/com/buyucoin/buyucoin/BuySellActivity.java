@@ -1,8 +1,11 @@
 package com.buyucoin.buyucoin;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -17,6 +20,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -29,9 +33,11 @@ import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Interfaces.BuyDialogFunction;
 import com.buyucoin.buyucoin.config.Config;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.customDialogs.CustomDialogs;
 import com.buyucoin.buyucoin.Interfaces.SellDialogFunction;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +49,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class BuySellActivity extends AppCompatActivity {
+public class BuySellActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    Toolbar toolbar;
+    NavigationView navigationView;
+    DrawerLayout drawer ;
+    ActionBarDrawerToggle toggle;
+    TextView navname, navemail;
+
     String type,coin;
     Double price;
     Button order_btn;
@@ -60,10 +72,35 @@ public class BuySellActivity extends AppCompatActivity {
     public static Double coin_sell_price;
 
     TextWatcher watcher;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_sell);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        navname = (TextView) header.findViewById(R.id.tvName);
+        navemail = (TextView) header.findViewById(R.id.tvEmail);
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        String name = buyucoinPref.getPrefString("name");
+        String email = buyucoinPref.getPrefString("email");
+        navname.setText(name);
+        navemail.setText(email);
+
+
 
         buyucoinPref = new BuyucoinPref(this);
 
@@ -74,7 +111,7 @@ public class BuySellActivity extends AppCompatActivity {
 
         price = i.getStringExtra("price")!=null?Double.valueOf(i.getStringExtra("price")):0;
         type = i.getStringExtra("type")!=null?i.getStringExtra("type"):"buy";
-        coin = i.getStringExtra("type")!=null?i.getStringExtra("coin_name"):null;
+        coin = i.getStringExtra("type")!=null?i.getStringExtra("coin_name"):"";
 
         FirebaseDatabase db = new Config().getProductionFirebaseDatabase(getApplicationContext());
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
@@ -170,7 +207,8 @@ public class BuySellActivity extends AppCompatActivity {
                         order_quantity.setEnabled(true);
 
 
-                    Toast.makeText(BuySellActivity.this, coin+" price :"+coin_price, Toast.LENGTH_SHORT).show();
+                    new CoustomToast(getApplicationContext(),BuySellActivity.this,coin+" price :"+coin_price,CoustomToast.TYPE_NORMAL).showToast();
+
                     Log.d("MARKET___", data.toString());
                 }
 
@@ -278,8 +316,29 @@ public class BuySellActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent i = new Intent(BuySellActivity.this,Dashboard.class);
+        Bundle b = new Bundle();
+        switch (item.getItemId()){
+            case R.id.nav_account:
+                b.putInt("POSITION",4);
+                break;
+            case R.id.nav_wallet:
+                b.putInt("POSITION",0);
+                break;
+            case R.id.nav_rate:
+                b.putInt("POSITION",1);
+                break;
+            case R.id.nav_p2p:
+                b.putInt("POSITION",3);
+                break;
+            case R.id.nav_buysell:
+                b.putInt("POSITION",2);
+                break;
 
-
-
-
+        }
+        startActivity(i);
+        return super.onOptionsItemSelected(item);
+    }
 }

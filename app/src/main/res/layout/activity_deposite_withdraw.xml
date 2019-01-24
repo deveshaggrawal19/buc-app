@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CurrencyActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:background="@android:color/transparent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:background="@drawable/custom_toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:elevation="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/activity_dashboard_drawer"
+        app:headerLayout="@layout/nav_header_dashboard">
+
+
+    </com.google.android.material.navigation.NavigationView>
 
     <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="55dp"
         android:layout_width="match_parent"
         android:id="@+id/card_coin_nested_view"
         android:focusableInTouchMode="true"
@@ -236,19 +267,41 @@
                 android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="Your  History"
+                        android:text="@string/your_active_orders"
                         android:textColor="@android:color/black"
                         android:textSize="20sp"
                         android:layout_height="wrap_content" />
 
             </LinearLayout>
-
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:id="@+id/order_pb"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="20dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:src="@drawable/ic_empty"
+                    android:tint="#cccccc"
+                    android:layout_height="100dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    android:text="You have no active orders"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:id="@+id/rvCoinHistory"
+                        android:id="@+id/rvActiveCoinOrdrs"
                         android:layout_height="wrap_content">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -283,4 +336,6 @@
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

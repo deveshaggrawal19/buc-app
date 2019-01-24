@@ -92,7 +92,7 @@ public class BuySellFragment extends Fragment {
                     try {
                         JSONObject jsonObject = new JSONObject(s);
                         JSONObject data = jsonObject.getJSONObject("data");
-                        String[] arr = {"btc", "eth","inr","ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
+                        String[] arr = {"btc", "eth","ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
                         for (String anArr : arr) {
                             try {
                                 list.add(data.getJSONObject(anArr).put("currencyname", anArr));
@@ -103,7 +103,7 @@ public class BuySellFragment extends Fragment {
                         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list,recyclerView,trade));
+                                recyclerView.setAdapter(new BuySellRecyclerViewAdapter(list));
                                 Utilities.hideProgressBar(pb);
                             }
                         });

@@ -141,7 +141,7 @@ public class CustomDialogs extends BottomSheetDialogFragment {
                     final JSONArray msg = jsonObject1.getJSONArray("message");
                     final String status = jsonObject1.getString("status");
 
-                    final String tmsg = "STATUS "+status+" MESSAGE "+msg.getJSONArray(0).getString(0);
+                    final String tmsg = msg.getJSONArray(0).getString(0);
 
                 Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                     @Override
@@ -149,11 +149,12 @@ public class CustomDialogs extends BottomSheetDialogFragment {
 
 
                         if(status.equals("success")){
-                            Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                            new CoustomToast(getContext(),getActivity(),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
                             dismiss();
                         }
                         else{
-                            Toast.makeText(context, tmsg, Toast.LENGTH_SHORT).show();
+                            new CoustomToast(getContext(),getActivity(),tmsg,CoustomToast.TYPE_PENDING).showToast();
+
                         }
 
                     }

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,11 +54,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String ACCESS_TOKEN = null, refresh_token = null;
     static final String FRAGMENT_STATE = "FRAGMENT_STATE";
-    static Toolbar toolbar;
     TextView navname, navemail;
     View fragView;
     static BottomNavigationView bm;
@@ -70,13 +70,18 @@ public class Dashboard extends AppCompatActivity {
     MenuItem prev = null;
     BuyucoinPref buyucoinPref;
     NotNetworkBroadCastReceiver notNetworkBroadCastReceiver;
+    int POSITION = 0;
+    Bundle b;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    DrawerLayout drawer ;
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         bm = findViewById(R.id._btnbar);
         setSupportActionBar(toolbar);
         noInternet = findViewById(R.id.ll_no_internet);
@@ -85,6 +90,14 @@ public class Dashboard extends AppCompatActivity {
         DashboardViewpager.setAdapter(new Dashboard_PagerAdapter(getSupportFragmentManager()));
         buyucoinPref = new BuyucoinPref(getApplicationContext());
         notNetworkBroadCastReceiver = new NotNetworkBroadCastReceiver(this);
+
+        if(getIntent().getBundleExtra("d_bundle")!=null){
+            b = getIntent().getBundleExtra("d_bundle");
+            POSITION = b.getInt("POSITION");
+            DashboardViewpager.setCurrentItem(POSITION);
+        }
+
+
 
 
 
@@ -101,13 +114,14 @@ public class Dashboard extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
         View header = navigationView.getHeaderView(0);
@@ -115,6 +129,15 @@ public class Dashboard extends AppCompatActivity {
         navemail = (TextView) header.findViewById(R.id.tvEmail);
 
         fragView = findViewById(R.id.flContent);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        String name = buyucoinPref.getPrefString("name");
+        String email = buyucoinPref.getPrefString("email");
+        navname.setText(name);
+        navemail.setText(email);
+
+
 
 
         DashboardViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -344,5 +367,27 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_account:
+                DashboardViewpager.setCurrentItem(4);
+                break;
+            case R.id.nav_wallet:
+                DashboardViewpager.setCurrentItem(0);
+                break;
+            case R.id.nav_rate:
+                DashboardViewpager.setCurrentItem(1);
+                break;
+            case R.id.nav_p2p:
+                DashboardViewpager.setCurrentItem(3);
+                break;
+            case R.id.nav_buysell:
+                DashboardViewpager.setCurrentItem(2);
+                break;
 
+        }
+        drawer.closeDrawers();
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.buyucoin.buyucoin.CurrencyActivity;
 import com.buyucoin.buyucoin.DataClasses.Rates;
+import com.buyucoin.buyucoin.MyResourcesClass;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
@@ -52,7 +53,7 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
             holder.mAsk.setText(removeZeros(mValues.get(position).ask));
             holder.mBid.setText(removeZeros(mValues.get(position).bid));
 
-            holder.mImage.setImageDrawable(mContext.getResources().getDrawable(mContext.getResources().getIdentifier(s, "drawable", mContext.getPackageName())));
+            holder.mImage.setImageResource(MyResourcesClass.COIN_ICON.getInt(s));
 
         }catch(Exception e){
             e.printStackTrace();

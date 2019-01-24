@@ -67,6 +67,7 @@ public class CurrencyActivity extends AppCompatActivity {
     ArrayList<Bids> arrayListBids ;
     ArrayList<Ask> arrayListAsks ;
     ArrayList<MarketHistory> arrayListMarketHistory;
+    String s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,10 @@ public class CurrencyActivity extends AppCompatActivity {
         ask_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         market_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-
+        intent = getIntent();
+        bundle = intent.getExtras();
+        assert bundle != null;
+        s = bundle.getString("currency");
 
 
     }
@@ -101,14 +105,13 @@ public class CurrencyActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        intent = getIntent();
-        bundle = intent.getExtras();
+
 
         TextView tv = findViewById(R.id.tvCurrencyCurr);
         TextView hrs24 = findViewById(R.id.tvCurrency24Hrs);
         ImageView img = findViewById(R.id.ivCurrencyImg);
 
-        final String s = bundle.getString("currency").split("_")[0];
+
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -190,8 +193,8 @@ public class CurrencyActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         tv.setText(s.toUpperCase());
-        buy.setText("Buy \u20B9 "+bundle.getString("ask"));
-        sell.setText("Sell \u20B9 "+bundle.getString("bid"));
+        buy.setText("Buy");
+        sell.setText("Sell");
         hrs24.setText("24Hrs Change "+bundle.getString("high_24"));
 
         buy.setOnClickListener(new View.OnClickListener() {
@@ -262,14 +265,16 @@ public class CurrencyActivity extends AppCompatActivity {
             Intent buysellintent = new Intent(this,BuySellActivity.class);
             buysellintent.putExtra("price",price);
             buysellintent.putExtra("type",type);
+            buysellintent.putExtra("coin_name",s);
             startActivity(buysellintent);
+            finish();
     }
 
     public void addToGraph(List<XY> list) {
         Log.d("ARRAY LENGTH", list.size()+ "");
 
         Collections.sort(list, new Comparator<XY>() {
-            DateFormat f = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
+            DateFormat f = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
             @Override
             public int compare(XY xy, XY t1) {
                 try {
@@ -284,7 +289,7 @@ public class CurrencyActivity extends AppCompatActivity {
         DataPoint[] dp = new DataPoint[list.size()];
         try {
             for (int i = 0; i < list.size(); i++) {
-                DateFormat df = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yy-MM-dd hh:mm:ss", Locale.ENGLISH);
                 Date date = df.parse(list.get(i).x);
                 dp[i] = new DataPoint(date, list.get(i).y);
                 Log.d("Date", dp[i].getX()+"");
@@ -318,5 +323,9 @@ public class CurrencyActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        s = null;
+    }
 }

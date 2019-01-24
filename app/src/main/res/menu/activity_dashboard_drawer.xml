@@ -6,20 +6,29 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_account"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Account Details" />
+            android:checkable="true"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="@string/account" />
         <item
             android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Wallet Balances" />
+            android:checkable="true"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:title="@string/wallet" />
         <item
             android:id="@+id/nav_rate"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Rates" />
+            android:checkable="true"
+            android:icon="@drawable/ic_timeline_black_24dp"
+            android:title="@string/rates" />
         <item
             android:id="@+id/nav_p2p"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="P2P-INR Deposit/Withdrawl" />
+            android:checkable="true"
+            android:icon="@drawable/ic_swap_vertical_circle_black_24dp"
+            android:title="@string/p2p" />
+        <item
+            android:id="@+id/nav_buysell"
+            android:checkable="true"
+            android:icon="@drawable/ic_store_black_24dp"
+            android:title="@string/buy_sell"/>
     </group>
 
 
