@@ -41,7 +41,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DepositWithdrawActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout, empty_layout;
     ImageView imageView;
     RecyclerView history_recyclerview;
@@ -54,11 +54,6 @@ public class DepositWithdrawActivity extends AppCompatActivity implements Naviga
     String coin;
     private ArrayList<History> histories;
     Toolbar toolbar;
-    NavigationView navigationView;
-    DrawerLayout drawer ;
-    ActionBarDrawerToggle toggle;
-    TextView navname, navemail;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +63,6 @@ public class DepositWithdrawActivity extends AppCompatActivity implements Naviga
         InitializeAllViews();
         i = getIntent();
         histories = new ArrayList<>();
-        String name = pref.getPrefString("name");
-        String email = pref.getPrefString("email");
-        navname.setText(name);
-        navemail.setText(email);
 
         final String COIN = coin = i.getStringExtra("coin_name");
         final String AVAILABEL = i.getStringExtra("available");
@@ -204,21 +195,6 @@ public class DepositWithdrawActivity extends AppCompatActivity implements Naviga
     private void InitializeAllViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
-        navname = (TextView) header.findViewById(R.id.tvName);
-        navemail = (TextView) header.findViewById(R.id.tvEmail);
-
-
-        navigationView.setNavigationItemSelectedListener(this);
-
-
         imageView = findViewById(R.id.qrcodeimg);
         qr_layout = findViewById(R.id.qrcodelayout);
         history_recyclerview = findViewById(R.id.rvActiveCoinOrdrs);
@@ -268,7 +244,7 @@ public class DepositWithdrawActivity extends AppCompatActivity implements Naviga
                             Log.d("sdfghjsdfghjk", array.toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject j = array.getJSONObject(i);
-//                        if(j.getString("curr").equals(coin)){
+                        if(j.getString("curr").equals(coin)){
                                 histories.add(new History(
                                         j.getDouble("amount"),
                                         j.getString("curr"),
@@ -283,7 +259,7 @@ public class DepositWithdrawActivity extends AppCompatActivity implements Naviga
                                         j.getString("type"),
                                         j.getDouble("value")
                                 ));
-//                        }
+                        }
 
                             }
                             runOnUiThread(new Runnable() {
@@ -324,34 +300,8 @@ public class DepositWithdrawActivity extends AppCompatActivity implements Naviga
         });
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent i = new Intent(DepositWithdrawActivity.this,Dashboard.class);
-        Bundle b = new Bundle();
-        switch (item.getItemId()){
-            case R.id.nav_account:
-                b.putInt("POSITION",4);
 
-                break;
-            case R.id.nav_wallet:
-                b.putInt("POSITION",0);
-                break;
-            case R.id.nav_rate:
-                b.putInt("POSITION",1);
-                break;
-            case R.id.nav_p2p:
-                b.putInt("POSITION",3);
-                break;
-            case R.id.nav_buysell:
-                b.putInt("POSITION",2);
-                break;
-
-        }
-        startActivity(i);
-        return super.onOptionsItemSelected(item);
-    }
-
-    public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
+        public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
 
         private final ArrayList<History> mValues;
 

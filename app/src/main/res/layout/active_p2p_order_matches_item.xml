@@ -1,100 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:layout_width="match_parent"
-    android:layout_height="100dp">
-
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:gravity="center">
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="46dp"
-            android:layout_gravity="center_horizontal"
-            android:background="#cccccc"
-            android:visibility="invisible" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="46dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:background="#cccccc" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/profile_option_list_drawable"
-            android:tint="@android:color/holo_orange_light" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="6">
-
         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/history_item_drawable"
-            android:elevation="2dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="5dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            android:elevation="1dp"
+            android:padding="10dp"
+            android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="1"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/p2p_corder_drawable"
                     android:padding="2dp"
+                    android:gravity="center"
                     android:text="Processing"
                     android:textColor="@android:color/white"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
+
+
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="@string/rupees"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="3450"
+                    android:gravity="center"
                     android:id="@+id/p2p_order_match_amount"
-                    android:textSize="25sp" />
+                    />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/pills"
                     android:padding="5dp"
-                    android:text="Details"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:text="@string/cancel"
+                    android:id="@+id/p2p_order_cancel_action"
+                    android:textColor="@android:color/holo_red_light"
+                    />
+
 
 
         </LinearLayout>
-
-
-    </LinearLayout>
-
-</LinearLayout>
 
 
 

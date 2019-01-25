@@ -16,6 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:id="@+id/supter_setting_history"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp">
@@ -24,7 +25,7 @@
                 android:layout_width="30dp"
                 android:tint="@color/supersettings_icon_tint"
                 android:layout_marginStart="5dp"
-                android:src="@drawable/ic_account_balance_wallet_black_24dp"
+                android:src="@drawable/ic_history"
                 android:layout_height="match_parent" />
 
             <TextView
@@ -33,7 +34,7 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
-                android:text="Wallet"
+                android:text="@string/history"
                 />
 
 
@@ -41,81 +42,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:tint="#aaaaaa"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/ic_account_circle_black_24dp"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
-                android:text="Personal Info"
-                />
-
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:tint="@color/supersettings_icon_tint"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/ic_security_black_24dp"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
-                android:text="Security"
-                />
-
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:tint="@color/supersettings_icon_tint"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/ic_people_black_24dp"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
-                android:text="People and Sharing"
-                />
-
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:id="@+id/supter_setting_about"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp">
@@ -133,7 +60,7 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
-                android:text="About BuyUCoin"
+                android:text="@string/about"
                 />
 
 
@@ -141,6 +68,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:id="@+id/supter_setting_policy"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp">
@@ -158,7 +86,7 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
-                android:text="Privacy Policy"
+                android:text="@string/privacy_policy"
                 />
 
 
@@ -166,6 +94,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:id="@+id/super_setting_logout"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp">

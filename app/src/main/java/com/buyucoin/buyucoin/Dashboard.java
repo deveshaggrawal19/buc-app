@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -70,12 +71,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     MenuItem prev = null;
     BuyucoinPref buyucoinPref;
     NotNetworkBroadCastReceiver notNetworkBroadCastReceiver;
-    int POSITION = 0;
     Bundle b;
     Toolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawer ;
     ActionBarDrawerToggle toggle;
+    ImageView imageview_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,21 +91,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         DashboardViewpager.setAdapter(new Dashboard_PagerAdapter(getSupportFragmentManager()));
         buyucoinPref = new BuyucoinPref(getApplicationContext());
         notNetworkBroadCastReceiver = new NotNetworkBroadCastReceiver(this);
-
-        if(getIntent().getBundleExtra("d_bundle")!=null){
-            b = getIntent().getBundleExtra("d_bundle");
-            POSITION = b.getInt("POSITION");
-            DashboardViewpager.setCurrentItem(POSITION);
-        }
-
-
-
-
-
-
-
         ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         FRAGENT_TYPE = buyucoinPref.getPrefString(FRAGMENT_STATE);
+        navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        navname = header.findViewById(R.id.tvName);
+        navemail = header.findViewById(R.id.tvEmail);
+        imageview_menu = findViewById(R.id.imageview_menu);
 
 
         refresh_token = buyucoinPref.getPrefString("refresh_token");
@@ -114,19 +107,25 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         fragmentManager = getSupportFragmentManager();
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toolbar = findViewById(R.id.toolbar);
+
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        imageview_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
+                superSettingsBottomsheet.show(getSupportFragmentManager(), "SUPER SETTINGS BOTTOM SHEET");
+            }
+        });
 
 
-        View header = navigationView.getHeaderView(0);
-        navname = (TextView) header.findViewById(R.id.tvName);
-        navemail = (TextView) header.findViewById(R.id.tvEmail);
+
+
+
 
         fragView = findViewById(R.id.flContent);
 
@@ -240,46 +239,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dashboard, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-            editor.remove("access_token");
-            editor.remove("refresh_token");
-            editor.apply();
-            new CoustomToast(getApplicationContext(),this,"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
-            Intent i = new Intent(this, LoginActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            return true;
-        }
-        if (id == R.id.action_settings) {
-            SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
-            superSettingsBottomsheet.show(getSupportFragmentManager(), "SUPER SETTINGS BOTTOM SHEET");
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
-
-
-
     public void getNonFreshToken(String refresh_token) {
         JSONObject jsonObject = null;
         try {
@@ -325,10 +284,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
 
-
-
-
-
     public void inrToP2P() {
         if (!isFinishing() && !isDestroyed()) {
             P2PFragment fragment = new P2PFragment();
@@ -347,12 +302,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.flContent, serverError);
             fragmentTransaction.commitAllowingStateLoss();
-        }
-    }
-
-    public void HistoryFragment(int tab) {
-        if (!isFinishing() && !isDestroyed()) {
-
         }
     }
 
@@ -387,7 +336,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
 
         }
-        drawer.closeDrawers();
-        return super.onOptionsItemSelected(item);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

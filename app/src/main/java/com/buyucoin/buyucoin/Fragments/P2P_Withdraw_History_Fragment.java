@@ -56,6 +56,7 @@ public class P2P_Withdraw_History_Fragment extends Fragment {
                 try {
                     assert response.body() != null;
                     String s = response.body().string();
+                    Log.d("kcjndgjfngjhbfuhse===>",s);
                     JSONObject j = new JSONObject(s);
                     final JSONArray deposite = j.getJSONArray("deposits");
                     Log.d("kcjndgjfnhufngjhbfuhse",deposite.toString());

@@ -56,7 +56,7 @@ public class HistoryFragment extends DialogFragment {
     Bundle b;
     TabLayout tabLayout;
     ViewPager viewPager;
-    int position;
+    int position = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,8 @@ public class HistoryFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
         if(getArguments()!=null){
             b = getArguments();
-        }
         position = b.getInt("POSITION");
+        }
 
     }
 

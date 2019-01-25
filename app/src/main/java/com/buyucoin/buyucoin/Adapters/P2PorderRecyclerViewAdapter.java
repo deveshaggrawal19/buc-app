@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
@@ -55,11 +56,21 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull P2pOrderViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
         P2pOrderMatchesAdpater p2pOrderMatchesAdpater = new P2pOrderMatchesAdpater(arrayList.get(position).getMatched_by());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(p2pOrderMatchesAdpater);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.p2p_active_orders_layout.getVisibility()==View.GONE){
+                    holder.p2p_active_orders_layout.setVisibility(View.VISIBLE);
+                }else{
+                    holder.p2p_active_orders_layout.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
     }
@@ -76,10 +87,12 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
     class P2pOrderViewHolder  extends RecyclerView.ViewHolder{
         TextView amount;
         RecyclerView recyclerView;
+        LinearLayout p2p_active_orders_layout;
         public P2pOrderViewHolder(@NonNull View itemView) {
             super(itemView);
             amount = itemView.findViewById(R.id.p2p_order_amount);
             recyclerView = itemView.findViewById(R.id.p2p_active_orders_rv);
+            p2p_active_orders_layout = itemView.findViewById(R.id.p2p_active_orders_layout);
         }
     }
 

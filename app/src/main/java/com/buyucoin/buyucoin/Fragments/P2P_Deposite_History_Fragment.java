@@ -65,7 +65,7 @@ public class P2P_Deposite_History_Fragment extends Fragment {
                         public void run() {
                             if(deposite.length()>0){
                                 progressBar.setVisibility(View.GONE);
-        //                        layout.setVisibility(View.VISIBLE);
+                                layout.setVisibility(View.VISIBLE);
                             }else{
                                 progressBar.setVisibility(View.GONE);
                                 layout.setVisibility(View.VISIBLE);

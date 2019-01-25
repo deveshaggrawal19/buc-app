@@ -30,25 +30,25 @@ public class BuyucoinPref {
         return preferences.getBoolean(key,false);
     }
 
-    public boolean setEditpref(String key, String value){
+
+    public void setEditpref(String key, String value){
         editor.putString(key,value).apply();
-        return true;
 
     }
-    public boolean setEditpref(String key, int value){
+    public void setEditpref(String key, int value){
         editor.putInt(key,value).apply();
-        return true;
 
     }
-    public boolean setEditpref(String key, float value){
+    public void setEditpref(String key, float value){
         editor.putFloat(key,value).apply();
-        return true;
 
     }
-    public boolean setEditpref(String key, boolean value){
+    public void setEditpref(String key, boolean value){
         editor.putBoolean(key,value).apply();
-        return true;
+    }
 
+    public SharedPreferences.Editor removePref(String key){
+        return editor.remove(key);
     }
 
 }

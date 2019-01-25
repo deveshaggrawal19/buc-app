@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapter;
 import com.buyucoin.buyucoin.OkHttpHandler;
@@ -41,6 +42,8 @@ public class P2pActiveOrdersDialog extends DialogFragment {
     private String ACCESS_TOKEN;
     RecyclerView recyclerView;
     ArrayList<ActiveP2pOrders> activeP2pOrderslist;
+    TextView activeOrderType;
+    String type = "";
 
     public static P2pActiveOrdersDialog newInstance(){
         return new P2pActiveOrdersDialog();
@@ -64,6 +67,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
         final View view = inflater.inflate(R.layout.p2p_active_order_dialog_layout,container,false);
         recyclerView = view.findViewById(R.id.p2p_active_orders);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        activeOrderType = view.findViewById(R.id.p2p_active_orders_type);
 
         getActiveOrders();
         return view;
@@ -85,16 +89,20 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                     JSONObject j = new JSONObject(s);
                     JSONObject active_deposite = j.getJSONObject("active_deposits");
                     JSONObject active_withdrawals = j.getJSONObject("active_withdrawals");
+
                     if(!active_deposite.toString().equals("{}")){
+                        type = "Active Deposits";
                         crateOrderView(active_deposite);
                     }
                     if(!active_withdrawals.toString().equals("{}")){
+                        type = "Active Withdrawals";
                         crateOrderView(active_withdrawals);
 
                     }
                     Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            activeOrderType.setText(type);
                             P2PorderRecyclerViewAdapter adapter = new P2PorderRecyclerViewAdapter(getContext(),activeP2pOrderslist);
                             recyclerView.setAdapter(adapter);
                         }

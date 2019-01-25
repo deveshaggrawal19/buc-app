@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -45,6 +48,11 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
     String url;
     Bundle b;
 
+    RadioGroup filter_group;
+    LinearLayout empty_layout;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,18 +66,32 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_page, container, false);
         rv = view.findViewById(R.id.rvHistory);
         rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         pb = view.findViewById(R.id.pbHistory);
-        getList(url);
+        empty_layout = view.findViewById(R.id.empty_orders);
+        filter_group = view.findViewById(R.id.filter_radio_group);
+        filter_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.filter_all:pb.setVisibility(View.VISIBLE);getList(url,"all");break;
+                    case R.id.filter_success:pb.setVisibility(View.VISIBLE);getList(url,"Success");break;
+                    case R.id.filter_pending:pb.setVisibility(View.VISIBLE);getList(url,"Pending");break;
+                    case R.id.filter_canceled:pb.setVisibility(View.VISIBLE);getList(url,"Cancelled");break;
+                }
+            }
+        });
+        getList(url,"all");
         return view;
     }
 
 
-    public void getList(final String url) {
+
+    public void getList(final String url,final String filter) {
+        histories.clear();
         OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -86,6 +108,7 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
                     Log.d("_____", array.toString());
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject j = array.getJSONObject(i);
+                        if(j.getString("status").equals(filter) || filter.equals("all"))
                                 histories.add(new History(
                                         j.getDouble("amount"),
                                         j.getString("curr"),
@@ -101,9 +124,11 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
                                         0.0
                                 ));
                     }
-                    getActivity().runOnUiThread(new Runnable() {
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(histories.size()>0){
+
                             rv.setAdapter(new MyHistoryRecyclerViewAdapter(histories));
                             pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
                                 public void onAnimationEnd(Animator animator) {
@@ -111,6 +136,18 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
                                     pb.setAlpha(1f);
                                 }
                             });
+                            empty_layout.setVisibility(View.GONE);
+                            }else{
+
+                                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                                    public void onAnimationEnd(Animator animator) {
+                                        pb.setVisibility(View.GONE);
+                                        pb.setAlpha(1f);
+                                    }
+                                });
+                                empty_layout.setVisibility(View.VISIBLE);
+
+                            }
 
                         }
                     });

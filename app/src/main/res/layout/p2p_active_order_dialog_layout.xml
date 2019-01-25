@@ -11,9 +11,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:padding="10dp"
+            android:padding="15dp"
             android:gravity="center_vertical"
-            android:background="#eeeeee"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
 
@@ -24,42 +24,61 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="ID"
+                android:textColor="@color/colorWhite"
                 android:textStyle="bold"
 
                 />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/colorWhite"
                 android:text="AMOUNT"
                 android:id="@+id/p2p_order_amount"
                 android:textStyle="bold"
                 />
             <TextView
                 android:layout_width="0dp"
-
                 android:textStyle="bold"
-                android:layout_weight="0.7"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/colorWhite"
                 android:padding="3dp"
                 android:text="STATUS"
                 />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
                 android:text="ACTION"
                 android:textStyle="bold"
-
                 />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="ACTIVE DEPOSITE"
+                android:id="@+id/p2p_active_orders_type"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
+            android:background="#eeeeee"
             android:id="@+id/p2p_active_orders"
             android:layout_height="match_parent">
 
