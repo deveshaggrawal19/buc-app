@@ -3,8 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    >
+    android:background="@android:color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:visibility="gone"
@@ -33,5 +32,11 @@
        android:layout_width="match_parent"
        android:id="@+id/progress_circular_d"
        android:layout_height="match_parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/peerDepositRv"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>

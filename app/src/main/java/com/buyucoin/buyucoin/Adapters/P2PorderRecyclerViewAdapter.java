@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,14 +32,15 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
     private ArrayList<ActiveP2pOrders> arrayList ;
 
 
-    private final int P2P_ORDERS = 1;
-    private final int P2P_ORDER_MATCHES = 2;
+
     private Context context;
+    private FragmentManager fragmentManager;
 
 
-    public P2PorderRecyclerViewAdapter(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist) {
+    public P2PorderRecyclerViewAdapter(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
+        fragmentManager = childFragmentManager;
 
 
 
@@ -58,7 +60,7 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
     @Override
     public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
-        P2pOrderMatchesAdpater p2pOrderMatchesAdpater = new P2pOrderMatchesAdpater(arrayList.get(position).getMatched_by());
+        P2pOrderMatchesAdpater p2pOrderMatchesAdpater = new P2pOrderMatchesAdpater(arrayList.get(position).getMatched_by(),fragmentManager);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(p2pOrderMatchesAdpater);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

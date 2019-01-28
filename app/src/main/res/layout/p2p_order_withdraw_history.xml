@@ -33,5 +33,11 @@
         android:layout_width="match_parent"
         android:id="@+id/progress_circular_w"
         android:layout_height="match_parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/peerWithdrawRv"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

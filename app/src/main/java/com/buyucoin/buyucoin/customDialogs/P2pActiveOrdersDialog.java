@@ -103,7 +103,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                         @Override
                         public void run() {
                             activeOrderType.setText(type);
-                            P2PorderRecyclerViewAdapter adapter = new P2PorderRecyclerViewAdapter(getContext(),activeP2pOrderslist);
+                            P2PorderRecyclerViewAdapter adapter = new P2PorderRecyclerViewAdapter(getContext(),activeP2pOrderslist,getChildFragmentManager());
                             recyclerView.setAdapter(adapter);
                         }
                     });
@@ -141,7 +141,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                 if (o.has("matched_by")) {
                     for (Iterator<String> it1 = o.getJSONObject("matched_by").keys(); it1.hasNext(); ) {
                         String s1 = it1.next();
-                        array.put(o.getJSONObject("matched_by").getJSONObject(s1));
+                        array.put(o.getJSONObject("matched_by").getJSONObject(s1).put("key",s1));
                     }
                 }
 

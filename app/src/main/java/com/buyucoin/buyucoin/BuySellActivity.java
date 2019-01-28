@@ -49,12 +49,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class BuySellActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BuySellActivity extends AppCompatActivity{
     Toolbar toolbar;
-    NavigationView navigationView;
-    DrawerLayout drawer ;
-    ActionBarDrawerToggle toggle;
-    TextView navname, navemail;
 
     String type,coin;
     Double price;
@@ -79,26 +75,10 @@ public class BuySellActivity extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_sell);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
-        navname = (TextView) header.findViewById(R.id.tvName);
-        navemail = (TextView) header.findViewById(R.id.tvEmail);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 
-        navigationView.setNavigationItemSelectedListener(this);
-
-        String name = buyucoinPref.getPrefString("name");
-        String email = buyucoinPref.getPrefString("email");
-        navname.setText(name);
-        navemail.setText(email);
 
 
 
@@ -316,29 +296,5 @@ public class BuySellActivity extends AppCompatActivity implements NavigationView
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent i = new Intent(BuySellActivity.this,Dashboard.class);
-        Bundle b = new Bundle();
-        switch (item.getItemId()){
-            case R.id.nav_account:
-                b.putInt("POSITION",4);
-                break;
-            case R.id.nav_wallet:
-                b.putInt("POSITION",0);
-                break;
-            case R.id.nav_rate:
-                b.putInt("POSITION",1);
-                break;
-            case R.id.nav_p2p:
-                b.putInt("POSITION",3);
-                break;
-            case R.id.nav_buysell:
-                b.putInt("POSITION",2);
-                break;
 
-        }
-        startActivity(i);
-        return super.onOptionsItemSelected(item);
-    }
 }

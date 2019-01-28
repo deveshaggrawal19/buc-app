@@ -12,6 +12,7 @@
         android:roundIcon="@drawable/buyucoin_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name=".HowToSlider"></activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/fontTheme">
@@ -23,8 +24,8 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/fontTheme"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/fontTheme" />
         <activity android:name=".SignupActivity" />
         <activity
             android:name=".ScrollingActivity"
@@ -38,23 +39,32 @@
             android:name=".CurrencyActivity"
             android:label="@string/title_activity_currency"
             android:theme="@style/fontTheme" />
-        <activity android:name=".BuySellActivity" android:theme="@style/fontTheme" />
-        <activity android:name=".DepositWithdrawActivity" android:theme="@style/fontTheme" />
+        <activity
+            android:name=".BuySellActivity"
+            android:theme="@style/fontTheme" />
+        <activity
+            android:name=".DepositWithdrawActivity"
+            android:theme="@style/fontTheme" />
         <activity
             android:name=".CoinDepositWithdraw"
-            android:theme="@style/fontTheme"
-            />
+            android:theme="@style/fontTheme" />
         <activity
             android:name=".PassCodeActivity"
             android:theme="@style/fontTheme" />
         <activity android:name=".config.Config" />
-        <activity android:name=".P2POrders" android:theme="@style/fontTheme"></activity>
-        <receiver android:name=".broadcast.NotNetworkBroadCastReceiver" android:exported="false">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.net.wifi.supplicant.CONNECTING_CHANGE"/>-->
-                <!--<action android:name="android.net.wifi.STATE_CHANGE"/>-->
-                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>-->
-            <!--</intent-filter>-->
+        <activity
+            android:name=".P2POrders"
+            android:theme="@style/fontTheme" />
+
+        <receiver
+            android:name=".broadcast.NotNetworkBroadCastReceiver"
+            android:exported="false">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.net.wifi.supplicant.CONNECTING_CHANGE"/> -->
+            <!-- <action android:name="android.net.wifi.STATE_CHANGE"/> -->
+            <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
+            <!-- </intent-filter> -->
         </receiver>
     </application>
 

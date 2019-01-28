@@ -16,19 +16,10 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:id="@+id/p2p_order_match_id"
                     android:text="1"
                     />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/p2p_corder_drawable"
-                    android:padding="2dp"
-                    android:gravity="center"
-                    android:text="Processing"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"/>
 
 
 
@@ -40,8 +31,20 @@
                     android:gravity="center"
                     android:id="@+id/p2p_order_match_amount"
                     />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:background="@drawable/pills"
+                            android:textColor="@android:color/white"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/p2p_order_match_details"
+                            android:gravity="center"
+                            android:text="View Details"
+                            />
 
-                <TextView
+
+        <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -49,7 +52,7 @@
                     android:padding="5dp"
                     android:gravity="center"
                     android:text="@string/cancel"
-                    android:id="@+id/p2p_order_cancel_action"
+                    android:id="@+id/p2p_order_match_action"
                     android:textColor="@android:color/holo_red_light"
                     />
 
