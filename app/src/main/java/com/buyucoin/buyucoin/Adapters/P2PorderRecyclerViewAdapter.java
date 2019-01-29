@@ -1,50 +1,71 @@
 package com.buyucoin.buyucoin.Adapters;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.buyucoin.buyucoin.Dashboard;
+import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
+import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
 import com.buyucoin.buyucoin.pojos.WalletCoinHorizontal;
 import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
-public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRecyclerViewAdapter.P2pOrderViewHolder> {
+public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRecyclerViewAdapter.P2pOrderViewHolder> implements MatchedPeer {
 
     private ArrayList<ActiveP2pOrders> arrayList ;
-
-
-
     private Context context;
     private FragmentManager fragmentManager;
+    BuyucoinPref pref;
+    static boolean issuccess = true;
+    AlertDialog.Builder progressDialog;
 
 
     public P2PorderRecyclerViewAdapter(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
         fragmentManager = childFragmentManager;
+        pref = new BuyucoinPref(context);
+        progressDialog = new ProgressDialog.Builder(context);
+        progressDialog.setMessage("Processing");
+        progressDialog.create();
 
+    }
 
-
-
+    public P2PorderRecyclerViewAdapter() {
     }
 
     @NonNull
@@ -59,8 +80,10 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
 
     @Override
     public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
+        final String id = String.valueOf(arrayList.get(position).getId());
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
-        P2pOrderMatchesAdpater p2pOrderMatchesAdpater = new P2pOrderMatchesAdpater(arrayList.get(position).getMatched_by(),fragmentManager);
+        holder.peer_order_id.setText(id);
+        P2pOrderMatchesAdpater p2pOrderMatchesAdpater = new P2pOrderMatchesAdpater(arrayList.get(position).getMatched_by(),fragmentManager,context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(p2pOrderMatchesAdpater);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +96,75 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
                 }
             }
         });
+        holder.cancel_peer_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,id, Toast.LENGTH_SHORT).show();
+                final JSONObject object = new JSONObject();
+                try {
+                    object.put("method","peer_deposit_cancel")
+                            .put("deposit_id",id);
+                    new AlertDialog.Builder(context).setMessage("Do you want to delete this peer")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    boolean b = peerAction(object.toString());
+                                    if(b){
+                                        new CoustomToast(context,(Dashboard)context,"Deleted Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                        dialog.dismiss();
+                                        arrayList.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyDataSetChanged();
+                                    }else{
+                                        new CoustomToast(context,(Dashboard)context,"Error While Deleting...",CoustomToast.TYPE_DANGER).showToast();
+                                        dialog.dismiss();
+                                    }
+                                }
+                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+    }
+
+    public boolean peerAction(String s){
+
+        OkHttpHandler.auth_post("peer_action", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), s, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("PEER ACTION RESPONSE","FAILED");
+                issuccess = false;
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    assert response.body() != null;
+                    String res = response.body().string();
+                    JSONObject j = new JSONObject(res);
+                    Log.d("PEER ACTION RESPONSE",j.toString());
+                    if(j.getBoolean("success")){
+                        issuccess = true;
+                    }else{
+                        issuccess = false;
+                    }
+                    issuccess = true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        return issuccess;
 
     }
 
@@ -86,17 +177,34 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
         return arrayList.size();
     }
 
+    @Override
+    public void refreshMatch(int position) {
+        if(arrayList!=null){
+            arrayList.get(position).getMatched_by().remove(position);
+            notifyItemRemoved(position);
+        }
+        Log.d("POSITION",String.valueOf(position));
+
+    }
+
     class P2pOrderViewHolder  extends RecyclerView.ViewHolder{
-        TextView amount;
+        TextView amount,peer_order_id,progress_text;
         RecyclerView recyclerView;
-        LinearLayout p2p_active_orders_layout;
+        LinearLayout p2p_active_orders_layout,progress_layout;
+        Button cancel_peer_btn;
         public P2pOrderViewHolder(@NonNull View itemView) {
             super(itemView);
             amount = itemView.findViewById(R.id.p2p_order_amount);
             recyclerView = itemView.findViewById(R.id.p2p_active_orders_rv);
             p2p_active_orders_layout = itemView.findViewById(R.id.p2p_active_orders_layout);
+            cancel_peer_btn = itemView.findViewById(R.id.cancel_peer_order_btn);
+            peer_order_id = itemView.findViewById(R.id.peer_order_id);
+            progress_layout = itemView.findViewById(R.id.progress_layout);
+            progress_text = itemView.findViewById(R.id.progress_text);
+
         }
     }
+
 
 
 }

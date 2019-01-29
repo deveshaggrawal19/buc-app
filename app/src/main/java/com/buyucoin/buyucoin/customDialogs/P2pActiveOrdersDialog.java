@@ -45,6 +45,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
     TextView activeOrderType;
     String type = "";
 
+
     public static P2pActiveOrdersDialog newInstance(){
         return new P2pActiveOrdersDialog();
     }
@@ -141,7 +142,10 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                 if (o.has("matched_by")) {
                     for (Iterator<String> it1 = o.getJSONObject("matched_by").keys(); it1.hasNext(); ) {
                         String s1 = it1.next();
-                        array.put(o.getJSONObject("matched_by").getJSONObject(s1).put("key",s1));
+                        array.put(o.getJSONObject("matched_by").
+                                getJSONObject(s1).put("key",s1)
+                                .put("id",o.getInt("id"))
+                        );
                     }
                 }
 
@@ -172,6 +176,8 @@ public class P2pActiveOrdersDialog extends DialogFragment {
         }
 
     }
+
+
 
 
 
