@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
 
@@ -32,6 +33,7 @@ public class WithdrawPagerFragment extends Fragment {
         final String ty, co, av, ad, de, tag, cfn;
         LinearLayout tag_layout;
         Button withdraw_layout_btnview;
+        TextView withdraw_coin_name;
         final EditText destination_tag, coin_amonut, coin_address;
 
         ty = b.getString("type");
@@ -47,6 +49,8 @@ public class WithdrawPagerFragment extends Fragment {
         destination_tag = view.findViewById(R.id.destination_tag_edittext);
         coin_amonut = view.findViewById(R.id.withdraw_layout_amount_et);
         coin_address = view.findViewById(R.id.withdraw_layout_address_et);
+        withdraw_coin_name = view.findViewById(R.id.withdraw_coin_name);
+        withdraw_coin_name.setText(co);
 
         if (tag.equals("true")) {
             tag_layout.setVisibility(View.VISIBLE);

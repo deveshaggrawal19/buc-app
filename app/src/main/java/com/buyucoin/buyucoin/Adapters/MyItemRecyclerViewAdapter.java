@@ -55,7 +55,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                             wcv.add(wl);
                         }
 
-                        Log.d("JSONOBJECTS:==========>", "TRUE");
                     } else {
 
                         WalletCoinVertical wl = new WalletCoinVertical();
@@ -100,7 +99,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                     wh.setFull_coin_name(js.getString("currencies"));
 
                     wch.add(wh);
-                    Log.d("JSONOBJECTS:==========>", "FALSE");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

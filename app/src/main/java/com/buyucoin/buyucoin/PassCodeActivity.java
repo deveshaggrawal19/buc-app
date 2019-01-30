@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+
 public class PassCodeActivity extends AppCompatActivity {
     static String pin ;
     static  String confirm_pin;
@@ -81,7 +83,7 @@ public class PassCodeActivity extends AppCompatActivity {
 
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                            new CoustomToast(getApplicationContext(),PassCodeActivity.this,"Success",CoustomToast.TYPE_SUCCESS).showToast();
                             Intent confirmIntent = new Intent(PassCodeActivity.this, PassCodeActivity.class);
                             confirmIntent.putExtra("isConfirm", true);
                             startActivityForResult(confirmIntent, CONFIRM_INTENT_CODE);
@@ -98,7 +100,7 @@ public class PassCodeActivity extends AppCompatActivity {
 
             }
         }else{
-            Toast.makeText(getApplicationContext(),"pin exceed",Toast.LENGTH_LONG).show();
+            new CoustomToast(getApplicationContext(),PassCodeActivity.this,"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
 
         }
         Log.d("PIN=======>","pin = "+pin+" pin length="+String.valueOf(pin.length()));
@@ -118,7 +120,7 @@ public class PassCodeActivity extends AppCompatActivity {
             }
         },100);
         pin = "";
-        Toast.makeText(getApplicationContext(), "Wrong pin", Toast.LENGTH_SHORT).show();
+        new CoustomToast(getApplicationContext(),PassCodeActivity.this, "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
     }
 
     public void updatePinDote(int i,int level){
@@ -159,7 +161,7 @@ public class PassCodeActivity extends AppCompatActivity {
                 startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
                 finish();
             }else {
-                Toast.makeText(getApplicationContext(),"PASSCODE NOT MATCH",Toast.LENGTH_SHORT).show();
+                new CoustomToast(getApplicationContext(),PassCodeActivity.this, "PASSCODE NOT MATCH", CoustomToast.TYPE_DANGER).showToast();
                 clearPinsData();
             }
         }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
@@ -26,17 +27,25 @@ public class HistoryBottomsheet extends BottomSheetDialogFragment {
     }
 
     private void setTextToViews(Bundle b) {
-        amount.setText(b.getString("history_amount"));
-        curr.setText(b.getString("history_currency"));
-        time.setText(b.getString("history_time"));
-        status.setText(b.getString("history_status"));
-        tx_hash.setText(b.getString("history_tx_hash"));
-        address.setText(b.getString("history_address"));
-        fee.setText(b.getString("history_fees"));
-        filled.setText(b.getString("history_filled"));
-        price.setText(b.getString("history_price"));
-        type.setText(b.getString("history_type"));
-        value.setText(b.getString("history_value"));
+        nullSafeView(amount,b.getString("history_amount"));
+        nullSafeView(curr,b.getString("history_currency"));
+        nullSafeView(time,b.getString("history_time"));
+        nullSafeView(status,b.getString("history_status"));
+        nullSafeView(tx_hash,b.getString("history_tx_hash"));
+        nullSafeView(address,b.getString("history_address"));
+        nullSafeView(fee,b.getString("history_fees"));
+        nullSafeView(filled,b.getString("history_filled"));
+        nullSafeView(price,b.getString("history_price"));
+        nullSafeView(type,b.getString("history_type"));
+        nullSafeView(value,b.getString("history_value"));
+    }
+
+    public void nullSafeView(TextView view,String s){
+        if(!s.equals(""))view.setText(s);
+        else{
+            LinearLayout linearLayout = (LinearLayout) view.getParent();
+            linearLayout.setVisibility(View.GONE);
+        }
     }
 
     private void intializeViews(View view) {

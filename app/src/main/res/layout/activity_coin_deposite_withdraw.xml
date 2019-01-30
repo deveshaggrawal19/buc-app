@@ -27,7 +27,7 @@
             android:checked="true"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Deposite"
+            android:text="@string/deposit"
             android:textColor="@drawable/my_coustom_radio_text_dwp" />
 
         <RadioButton

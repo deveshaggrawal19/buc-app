@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 public class BuyucoinPref {
     public static String ACCESS_TOKEN = "access_token";
+    public static String REFRESH_TOKEN = "refresh_token";
     private String PREF_NAME = "BUYUCOIN_USER_PREFS";
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -12,9 +13,13 @@ public class BuyucoinPref {
 
     public BuyucoinPref(Context context) {
         this.context = context;
-        preferences = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
-        editor = preferences.edit();
+        this.preferences = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        this.editor = preferences.edit();
 
+    }
+
+    public void removeAllPref(){
+         this.editor.clear().apply();
     }
 
     public String getPrefString(String key){

@@ -1,5 +1,7 @@
 package com.buyucoin.buyucoin.Adapters;
 
+import android.os.Bundle;
+
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Fragments.AccountFragment;
 import com.buyucoin.buyucoin.Fragments.BuySellFragment;
@@ -12,8 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class Dashboard_PagerAdapter extends FragmentPagerAdapter {
+public class Dashboard_PagerAdapter extends FragmentStatePagerAdapter {
 
     public Dashboard_PagerAdapter(@NonNull FragmentManager fm) {
         super(fm);

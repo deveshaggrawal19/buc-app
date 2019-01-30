@@ -35,6 +35,7 @@ import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -221,11 +222,11 @@ public class AccountFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     edit_pref.putBoolean("DISABLE_PASS_CODE",true).apply();
-                    Toast.makeText(view.getContext(),"App Lock Disabled",Toast.LENGTH_SHORT).show();
+                    new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Disabled",CoustomToast.TYPE_SUCCESS).showToast();
 
                 }else{
                     edit_pref.putBoolean("DISABLE_PASS_CODE",false).apply();
-                    Toast.makeText(view.getContext(),"App Lock Enabled",Toast.LENGTH_SHORT).show();
+                    new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Enabled",CoustomToast.TYPE_SUCCESS).showToast();
                 }
             }
         });
@@ -248,7 +249,7 @@ public class AccountFragment extends Fragment {
                     @Override
                     public void run() {
                     Looper.prepare();
-                    Toast.makeText(getActivity(), "Error retreiving API", Toast.LENGTH_LONG).show();
+                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
 
                     }
                 });

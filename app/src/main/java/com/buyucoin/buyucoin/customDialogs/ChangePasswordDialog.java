@@ -2,6 +2,7 @@ package com.buyucoin.buyucoin.customDialogs;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,14 +15,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.LoginActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,7 +88,10 @@ public class ChangePasswordDialog extends DialogFragment {
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject = new JSONObject().put("old_password", old_password).put("new_password", new_password);
+            jsonObject = new JSONObject()
+                    .put("old_password", old_password)
+                    .put("new_password", new_password)
+                    .put("re_new_password",new_password);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -100,11 +107,32 @@ public class ChangePasswordDialog extends DialogFragment {
                 try {
                     String s = response.body().string();
                     JSONObject jsonObject1 = new JSONObject(s);
+                    String message = "";
+                    final String status = jsonObject1.getString("status");
+                    message = jsonObject1.getJSONArray("message").getJSONArray(0).getString(0);
+
                      Log.d("RESPONSE_______", s);
                     //Log.d("STRING___", jsonObject1.getString("status"));
                     if(jsonObject1.getString("status").equals("success")) {
-                        progressBar.setVisibility(View.INVISIBLE);
+
                         Log.d("PASSWORD STATUS","PASSWORD CHANGED");
+                        final String finalMessage = message;
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                if(status.equals("success")){
+                                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()), finalMessage,CoustomToast.TYPE_SUCCESS).showToast();
+                                    new BuyucoinPref(context).removePref(BuyucoinPref.ACCESS_TOKEN).remove(BuyucoinPref.REFRESH_TOKEN).apply();
+                                    Objects.requireNonNull(getContext()).startActivity(new Intent(getActivity(),LoginActivity.class));
+                                }
+                                if(status.equals("error")){
+                                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()), finalMessage,CoustomToast.TYPE_DANGER).showToast();
+
+                                }
+//                                dismiss();
+                            }
+                        });
                     }
                     else{
 //                        progressBar.setVisibility(View.INVISIBLE);

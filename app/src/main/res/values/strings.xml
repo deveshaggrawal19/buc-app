@@ -134,4 +134,7 @@
     <string name="about">About</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="cancel">Cancel</string>
+    <string name="amount">Amount</string>
+    <string name="price">Price</string>
+    <string name="deposit">Deposit</string>
 </resources>

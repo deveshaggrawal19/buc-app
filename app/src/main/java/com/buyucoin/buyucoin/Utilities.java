@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -211,7 +213,7 @@ public class Utilities {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                Toast.makeText(activity.getApplicationContext(), "Error retreiving API", Toast.LENGTH_SHORT).show();
+                new CoustomToast(activity.getApplicationContext(),activity, "Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
             }
 
             @Override

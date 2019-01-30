@@ -1,11 +1,9 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
@@ -21,19 +18,13 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
-import com.buyucoin.buyucoin.pojos.WalletCoinHorizontal;
-import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -44,7 +35,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRecyclerViewAdapter.P2pOrderViewHolder> implements MatchedPeer {
+public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2PorderRecyclerViewAdapterWithdraw.P2pOrderViewHolder> implements MatchedPeer {
 
     private ArrayList<ActiveP2pOrders> arrayList ;
     private Context context;
@@ -54,7 +45,7 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
     AlertDialog.Builder progressDialog;
 
 
-    public P2PorderRecyclerViewAdapter(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
+    public P2PorderRecyclerViewAdapterWithdraw(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
         fragmentManager = childFragmentManager;
@@ -65,7 +56,7 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
 
     }
 
-    public P2PorderRecyclerViewAdapter() {
+    public P2PorderRecyclerViewAdapterWithdraw() {
     }
 
     @NonNull
@@ -83,9 +74,9 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
         final String id = String.valueOf(arrayList.get(position).getId());
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
         holder.peer_order_id.setText(id);
-        P2pOrderMatchesAdpater p2pOrderMatchesAdpater = new P2pOrderMatchesAdpater(arrayList.get(position).getMatched_by(),fragmentManager,context);
+        P2pOrderMatchesAdpaterWithdraw p2pOrderMatchesAdpaterWithdraw = new P2pOrderMatchesAdpaterWithdraw(arrayList.get(position).getMatched_by(),fragmentManager,context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerView.setAdapter(p2pOrderMatchesAdpater);
+        holder.recyclerView.setAdapter(p2pOrderMatchesAdpaterWithdraw);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,11 +90,10 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
         holder.cancel_peer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,id, Toast.LENGTH_SHORT).show();
                 final JSONObject object = new JSONObject();
                 try {
                     object.put("method","peer_deposit_cancel")
-                            .put("deposit_id",id);
+                            .put("withdraw_id",id);
                     new AlertDialog.Builder(context).setMessage("Do you want to delete this peer")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
@@ -179,10 +169,10 @@ public class P2PorderRecyclerViewAdapter extends RecyclerView.Adapter<P2PorderRe
 
     @Override
     public void refreshMatch(int position) {
-        if(arrayList!=null){
-            arrayList.get(position).getMatched_by().remove(position);
-            notifyItemRemoved(position);
-        }
+//        if(arrayList!=null){
+//            arrayList.get(position).getMatched_by().remove(position);
+//            notifyItemRemoved(position);
+//        }
         Log.d("POSITION",String.valueOf(position));
 
     }

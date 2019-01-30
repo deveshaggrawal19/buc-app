@@ -32,21 +32,21 @@
     </group>
 
 
-    <item android:title="Communicate">
-        <menu>
-            <group
-                android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_history"
-                android:icon="@drawable/ic_menu_share"
-                android:title="History" />
-            <item
-                android:id="@+id/nav_referrals"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Referrals" />
-            </group>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<group-->
+                <!--android:checkableBehavior="single">-->
+            <!--<item-->
+                <!--android:id="@+id/nav_history"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="History" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_referrals"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="Referrals" />-->
+            <!--</group>-->
 
-        </menu>
-    </item>
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

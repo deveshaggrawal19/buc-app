@@ -57,6 +57,7 @@ import okhttp3.Response;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "DASHBOARD" ;
     String ACCESS_TOKEN = null, refresh_token = null;
     static final String FRAGMENT_STATE = "FRAGMENT_STATE";
     TextView navname, navemail;
@@ -72,7 +73,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     BuyucoinPref buyucoinPref;
     NotNetworkBroadCastReceiver notNetworkBroadCastReceiver;
     Bundle b;
-    Toolbar toolbar;
+    static Toolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawer ;
     ActionBarDrawerToggle toggle;
@@ -84,7 +85,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         setContentView(R.layout.activity_dashboard);
 
         bm = findViewById(R.id._btnbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
         noInternet = findViewById(R.id.ll_no_internet);
         serverError = findViewById(R.id.ll_server_error);
         DashboardViewpager = findViewById(R.id.dashboard_viewpager);
@@ -107,12 +113,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         fragmentManager = getSupportFragmentManager();
 
 
-        toolbar = findViewById(R.id.toolbar);
-
-        drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
         imageview_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,18 +250,19 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                Utilities.showToast(Dashboard.this, "Error retreiving API");
+                new CoustomToast(Dashboard.this,Dashboard.this,"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
                 try {
-                    JSONObject jsonObject1 = new JSONObject(s);
-                    buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getJSONObject("data").getString("access_token"));
+                    final JSONObject jsonObject1 = new JSONObject(s);
+                    Log.d(TAG, "onResponse: "+jsonObject1.toString());
+                    buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getString("access_token"));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    showToast(e.getMessage());
+                    new CoustomToast(getApplicationContext(),getParent(),e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
 
 
                 }

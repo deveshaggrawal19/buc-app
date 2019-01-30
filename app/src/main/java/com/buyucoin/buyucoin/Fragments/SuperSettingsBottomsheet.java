@@ -66,8 +66,7 @@ public class SuperSettingsBottomsheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if(buyucoinPref!=null){
-                    buyucoinPref.removePref(BuyucoinPref.ACCESS_TOKEN).apply();
-                    buyucoinPref.removePref("refresh_token").apply();
+                    buyucoinPref.removeAllPref();
                 }
                 new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
                 Intent i = new Intent(getActivity(), LoginActivity.class);

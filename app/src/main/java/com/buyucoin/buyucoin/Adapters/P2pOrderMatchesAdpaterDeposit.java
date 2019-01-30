@@ -3,7 +3,6 @@ package com.buyucoin.buyucoin.Adapters;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.bottomsheets.BankDetails;
-import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONArray;
@@ -25,8 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -36,9 +31,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapter.issuccess;
+import static com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit.issuccess;
 
-public class P2pOrderMatchesAdpater extends RecyclerView.Adapter<P2pOrderMatchesAdpater.MyViewHolder> implements MatchedPeer {
+public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrderMatchesAdpaterDeposit.MyViewHolder> implements MatchedPeer {
     private BuyucoinPref pref;
     private AlertDialog.Builder progressDialog;
     private JSONArray activeP2pOrders;
@@ -46,7 +41,7 @@ public class P2pOrderMatchesAdpater extends RecyclerView.Adapter<P2pOrderMatches
     private android.content.Context context;
 
 
-    public P2pOrderMatchesAdpater(JSONArray activeP2pOrders, FragmentManager fragmentManager, Context context) {
+    public P2pOrderMatchesAdpaterDeposit(JSONArray activeP2pOrders, FragmentManager fragmentManager, Context context) {
         this.activeP2pOrders = activeP2pOrders;
         this.fragmentManager = fragmentManager;
         this.context = context;
@@ -55,7 +50,7 @@ public class P2pOrderMatchesAdpater extends RecyclerView.Adapter<P2pOrderMatches
         progressDialog.setMessage("Processing");
         progressDialog.create();
     }
-    public P2pOrderMatchesAdpater() {
+    public P2pOrderMatchesAdpaterDeposit() {
 
     }
 

@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:text="Deposite"
+            android:text="@string/deposit"
             android:textColor="@color/colorPrimary" />
 
         <Button

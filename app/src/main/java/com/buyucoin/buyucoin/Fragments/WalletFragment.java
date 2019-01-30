@@ -61,15 +61,7 @@ public class WalletFragment extends Fragment {
     public WalletFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static WalletFragment newInstance(int columnCount) {
-        WalletFragment fragment = new WalletFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,16 +98,17 @@ public class WalletFragment extends Fragment {
 
         wallet_inr.setText(getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE);
 
+
+
         hidezero_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<JSONObject> clist = list;
                 if(hidezero_checkbox.isChecked()){
-                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist,true));
+                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,true));
 
                 }
                 else {
-                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),clist,false));
+                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,false));
 
                 }
             }
@@ -190,10 +183,15 @@ public class WalletFragment extends Fragment {
                         return;
                     }
                     JSONObject data = jsonObject.getJSONObject("data");
+//                    Log.d("WALLET_FRAGMENT", "onResponse: "+data.toString());
                     String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
                     for(int i=0; i<arr.length; i++){
                         try {
-                            list.add(data.getJSONObject(arr[i]).put("currencyname", arr[i]).put("currencies",data.getJSONObject("currencies").get(arr[i])));
+                            JSONObject cj = data.getJSONObject(arr[i])
+                                    .put("currencyname", arr[i])
+                                    .put("currencies",data.getJSONObject("currencies").get(arr[i]));
+                            list.add(cj);
+
 
 
                         }catch(Exception e){
@@ -228,6 +226,16 @@ public class WalletFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(hidezero_checkbox.isChecked()){
+        hidezero_checkbox.setChecked(false);
+        Log.d("WALLET_FRAGMENT_", "onDestroy() called successfully");
+        }
+        Log.d("WALLET_FRAGMENT_", "onDestroy() called");
     }
 }
 

@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapter;
-import com.buyucoin.buyucoin.Adapters.P2pOrderMatchesAdpater;
+import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit;
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoin.buyucoin.OkHttpHandler;
@@ -94,7 +92,6 @@ public class BankDetails extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 try {
-                    Toast.makeText(context,did+" "+wid, Toast.LENGTH_SHORT).show();
                     final JSONObject object = new JSONObject();
                     object.put("method", "peer_deposit_cancel")
                             .put("deposit_id", did).put("withdraw_id", wid);
@@ -106,7 +103,7 @@ public class BankDetails extends BottomSheetDialogFragment {
                                     if (b) {
                                         new CoustomToast(context, (Dashboard) context, "Deleted Successfully", CoustomToast.TYPE_SUCCESS).showToast();
                                         dialog.dismiss();
-                                        MatchedPeer peer = new P2PorderRecyclerViewAdapter();
+                                        MatchedPeer peer = new P2PorderRecyclerViewAdapterDeposit();
                                         peer.refreshMatch(position);
                                         new Handler().postDelayed(new Runnable() {
                                             @Override

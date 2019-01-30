@@ -36,14 +36,16 @@ import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout, empty_layout;
-    ImageView imageView;
+    ImageView imageView,card_coin_img;
     RecyclerView history_recyclerview;
     TextView card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address;
     Intent i;
@@ -76,7 +78,16 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         card_coin_full_name.setText(COIN_FULL_NAME);
         card_coin_availabel.setText(AVAILABEL);
         card_coin_address.setText(ADDRESS);
+        try {
+            card_coin_img.setImageResource(MyResourcesClass.COIN_ICON.getInt(coin));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(BASE_ADDRESS!=null){
         card_coin_base_address.setText(BASE_ADDRESS);
+        }else{
+            card_coin_base_address.setVisibility(View.GONE);
+        }
         card_coin_pending.setText(PENDING);
 
 
@@ -192,9 +203,22 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         getList("order");
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home:
+                finish();
+                return true;
+             default:finish();
+             return true;
+        }
+    }
+
     private void InitializeAllViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         imageView = findViewById(R.id.qrcodeimg);
         qr_layout = findViewById(R.id.qrcodelayout);
         history_recyclerview = findViewById(R.id.rvActiveCoinOrdrs);
@@ -209,6 +233,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         card_coin_address = findViewById(R.id.card_coin_address);
         card_coin_base_address = findViewById(R.id.card_coin_base_address);
         card_coin_pending = findViewById(R.id.card_coin_pending);
+        card_coin_img = findViewById(R.id.card_coin_image);
 
         address_gen_btn = findViewById(R.id.card_coin_address_gen_btn);
 
@@ -301,7 +326,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     }
 
 
-        public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
+    public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
 
         private final ArrayList<History> mValues;
 

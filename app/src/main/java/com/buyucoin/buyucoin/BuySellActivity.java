@@ -66,9 +66,8 @@ public class BuySellActivity extends AppCompatActivity{
     final String PERCENT = "% + GST";
     public static Double coin_buy_price;
     public static Double coin_sell_price;
-
     TextWatcher watcher;
-
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,10 @@ public class BuySellActivity extends AppCompatActivity{
 
 //        toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Fetching latest Price...");
+        progressDialog.show();
 
 
 
@@ -190,6 +193,7 @@ public class BuySellActivity extends AppCompatActivity{
                     new CoustomToast(getApplicationContext(),BuySellActivity.this,coin+" price :"+coin_price,CoustomToast.TYPE_NORMAL).showToast();
 
                     Log.d("MARKET___", data.toString());
+                    progressDialog.dismiss();
                 }
 
                 @Override
@@ -225,7 +229,7 @@ public class BuySellActivity extends AppCompatActivity{
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    Toast.makeText(BuySellActivity.this, "WRONG INPUT TYPE", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(BuySellActivity.this, "WRONG INPUT TYPE", Toast.LENGTH_SHORT).show();
                     order_total.setText("");
                 }
 

@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CurrencyActivity">
+    tools:context=".DepositWithdrawActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,17 +25,6 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/activity_dashboard_drawer"
-        app:headerLayout="@layout/nav_header_dashboard">
-
-
-    </com.google.android.material.navigation.NavigationView>
 
     <androidx.core.widget.NestedScrollView
         android:layout_marginTop="55dp"
@@ -65,6 +54,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:padding="10dp"
+                        android:id="@+id/card_coin_image"
                         android:layout_height="50dp"
                         android:src="@drawable/btc"/>
 
@@ -224,7 +214,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="Deposite"
+                        android:text="@string/deposit"
                         android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
