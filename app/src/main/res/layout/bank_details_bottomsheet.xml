@@ -5,6 +5,82 @@
     android:padding="10dp"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/kyc_color"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/tx_hash"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="@string/tx_hash"
+            android:id="@+id/tx_hash_tv"
+            android:textSize="25sp"
+            android:textColor="@color/colorBlack"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="@string/time_left_in_minutes"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="60:00"
+            android:id="@+id/tx_hash_time_tv"
+            android:textColor="@color/colorWhite"
+            android:textSize="50sp"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tx_action_layout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        style="?attr/buttonBarButtonStyle"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/see_bank_details"
+            android:background="#eeeeeeee"
+            android:textColor="@color/colorRed"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="?attr/buttonBarButtonStyle"
+            android:text="@string/see_bank_details" />
+        <Button
+            android:id="@+id/raise_dispute"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="?attr/buttonBarButtonStyle"
+            android:text="@string/raise_dispute" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bank_details_layout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/textView13"
         android:layout_width="match_parent"
@@ -13,13 +89,13 @@
         android:textSize="@dimen/headings"
         android:padding="5dp"
         android:layout_marginBottom="20dp"
-        android:text="BANK DETAILS"/>
+        android:text="@string/bank_details"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Account No" />
+        android:text="@string/account_no" />
 
     <TextView
         android:id="@+id/textView2"
@@ -28,13 +104,13 @@
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/black"
-        android:text="12345678901234" />
+        android:text="@string/_12345678901234" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bank Name" />
+        android:text="@string/bank_name" />
 
     <TextView
         android:id="@+id/textView4"
@@ -43,13 +119,13 @@
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/black"
-        android:text="State Bank of India" />
+        android:text="@string/state_bank_of_india" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Beneficiary Name" />
+        android:text="@string/beneficiary_name" />
 
     <TextView
         android:id="@+id/textView6"
@@ -58,13 +134,13 @@
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/black"
-        android:text="Tomboya" />
+        android:text="@string/tomboya" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="IFSC Code" />
+        android:text="@string/ifsc_code" />
 
     <TextView
         android:id="@+id/textView8"
@@ -73,13 +149,13 @@
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/black"
-        android:text="BARB0SULDEL" />
+        android:text="@string/barb0suldel" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mode" />
+        android:text="@string/mode" />
 
     <TextView
         android:id="@+id/textView10"
@@ -88,13 +164,13 @@
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/black"
-        android:text="IMPS" />
+        android:text="@string/imps" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Note" />
+        android:text="@string/note" />
 
     <TextView
         android:id="@+id/textView12"
@@ -103,17 +179,128 @@
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/black"
-        android:text="1234567890@xyz" />
+        android:text="@string/_1234567890_xyz" />
 
-    <Button
-        android:id="@+id/button2"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/progress_action_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/colorRed"
-        android:textColor="@android:color/white"
-        android:padding="5dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/processing"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/action_layout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        style="?attr/buttonBarButtonStyle"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/remove_request"
+            android:background="#eeeeeeee"
+            android:textColor="@color/colorRed"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="?attr/buttonBarButtonStyle"
+            android:text="@string/remove_request" />
+        <Button
+            android:id="@+id/mark_complete"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="?attr/buttonBarButtonStyle"
+            android:text="@string/mark_as_complete" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tx_hash_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Remove Request" />
+        android:layout_margin="10dp"
+        android:background="@drawable/history_item_drawable"
+        android:elevation="2dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/transition_hash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_shape"
+            android:hint="@string/enter_transection_hash"
+            android:padding="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            style="?attr/buttonBarButtonStyle">
+
+            <Button
+
+                android:id="@+id/cancel_request"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#eeeeeeee"
+                android:padding="5dp"
+                android:text="@string/cancel"
+                style="?attr/buttonBarButtonStyle"
+                android:textColor="@color/colorRed" />
+
+            <Button
+                android:id="@+id/submit_tx_hash"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="?attr/buttonBarButtonStyle"
+                android:background="@color/colorPrimary"
+                android:text="@string/submit_tx_hash"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+
 </LinearLayout>

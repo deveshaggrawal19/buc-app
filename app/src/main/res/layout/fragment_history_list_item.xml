@@ -160,13 +160,24 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="18dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:tint="@color/g1b67e8"
-                android:src="@drawable/history_success_icon"
                 android:id="@+id/tvHistoryStatus"
-                android:layout_height="18dp" />
+                android:text="Success"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+            <Button
+                android:layout_width="wrap_content"
+                android:text="@string/cancel"
+                android:textSize="8sp"
+                android:visibility="gone"
+                android:id="@+id/cancel_pending_order"
+                android:background="@color/colorRed"
+                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </LinearLayout>

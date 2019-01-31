@@ -14,6 +14,9 @@ import okhttp3.Response;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Adapters.CoinHistoryAdapter;
 import com.buyucoin.buyucoin.Fragments.HistoryPagerAdapterFragmentOrder;
@@ -45,7 +49,7 @@ import java.util.Objects;
 
 public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout, empty_layout;
-    ImageView imageView,card_coin_img;
+    ImageView imageView, card_coin_img;
     RecyclerView history_recyclerview;
     TextView card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address;
     Intent i;
@@ -83,9 +87,9 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if(BASE_ADDRESS!=null){
-        card_coin_base_address.setText(BASE_ADDRESS);
-        }else{
+        if (BASE_ADDRESS != null) {
+            card_coin_base_address.setText(BASE_ADDRESS);
+        } else {
             card_coin_base_address.setVisibility(View.GONE);
         }
         card_coin_pending.setText(PENDING);
@@ -205,12 +209,13 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.home:
                 finish();
                 return true;
-             default:finish();
-             return true;
+            default:
+                finish();
+                return true;
         }
     }
 
@@ -260,8 +265,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
-                    try{
+                if (response.isSuccessful()) {
+                    try {
                         String s = response.body().string();
 
                         try {
@@ -269,22 +274,23 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                             Log.d("sdfghjsdfghjk", array.toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject j = array.getJSONObject(i);
-                        if(j.getString("curr").equals(coin)){
-                                histories.add(new History(
-                                        j.getDouble("amount"),
-                                        j.getString("curr"),
-                                        j.getString("open"),
-                                        j.getString("open"),
-                                        j.getString("status"),
-                                        "",
-                                        "",
-                                        j.getDouble("fee"),
-                                        j.getDouble("filled"),
-                                        j.getDouble("price"),
-                                        j.getString("type"),
-                                        j.getDouble("value")
-                                ));
-                        }
+                                if (j.getString("curr").equals(coin) && j.getString("status").equals("Pending")) {
+                                    histories.add(new History(
+                                            j.getDouble("amount"),
+                                            j.getString("curr"),
+                                            j.getString("open"),
+                                            j.getString("open"),
+                                            j.getString("status"),
+                                            "",
+                                            "",
+                                            j.getDouble("fee"),
+                                            j.getDouble("filled"),
+                                            j.getDouble("price"),
+                                            j.getString("type"),
+                                            j.getDouble("value"),
+                                            j.getInt("id")
+                                    ));
+                                }
 
                             }
                             runOnUiThread(new Runnable() {
@@ -309,13 +315,13 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                             e.getMessage();
                         }
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                    pb.setVisibility(View.GONE);
-                                    empty_layout.setVisibility(View.VISIBLE);
+                                pb.setVisibility(View.GONE);
+                                empty_layout.setVisibility(View.VISIBLE);
                             }
                         });
                     }
@@ -329,6 +335,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
 
         private final ArrayList<History> mValues;
+        private boolean isCanceld = true;
+        private String mainmsg = "hi";
 
         public MyHistoryRecyclerViewAdapter(ArrayList<History> items) {
             mValues = items;
@@ -344,7 +352,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
 
         @Override
-        public void onBindViewHolder(final MyHistoryRecyclerViewAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final MyHistoryRecyclerViewAdapter.ViewHolder holder, final int position) {
             try {
                 holder.mItem = mValues.get(position);
 
@@ -369,18 +377,64 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
                 switch (holder.mItem.getStatus()) {
                     case "Pending":
-                        holder.mStatus.setImageResource(R.drawable.history_pending_icon);
+                        holder.mStatus.setVisibility(View.GONE);
+                        holder.cancel_btn.setVisibility(View.VISIBLE);
                         break;
                     case "Success":
-                        holder.mStatus.setImageResource(R.drawable.history_success_icon);
+                        holder.mStatus.setText(holder.mItem.getStatus());
+                        holder.mStatus.setTextColor(getResources().getColor(R.color.kyc_color));
+
                         break;
                     case "Cancelled":
-                        holder.mStatus.setImageResource(R.drawable.history_cancel_icon);
+                        holder.mStatus.setText(holder.mItem.getStatus());
+                        holder.mStatus.setTextColor(getResources().getColor(R.color.colorRed));
                         break;
                     default:
-                        holder.mStatus.setImageResource(R.drawable.history_pending_icon);
+                        holder.mStatus.setVisibility(View.GONE);
+                        holder.cancel_btn.setVisibility(View.VISIBLE);
 
                 }
+
+                holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String currency = holder.mItem.getCurr();
+                        int id = holder.mItem.getId();
+                        final JSONObject cancel_order = new JSONObject();
+                        try {
+                            cancel_order.put("id", id);
+                            new AlertDialog.Builder(DepositWithdrawActivity.this).setMessage("Do you want to delete this peer")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ProgressDialog p = new ProgressDialog(DepositWithdrawActivity.this);
+                                            p.setMessage("processing");
+                                            p.show();
+                                            boolean b = cancelOrder(currency, cancel_order.toString());
+                                            if(b){
+                                                new CoustomToast(getApplicationContext(),DepositWithdrawActivity.this,"Order Cancelled Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                                mValues.remove(position);
+                                                notifyItemRemoved(position);
+                                                notifyDataSetChanged();
+                                                p.dismiss();
+                                                dialog.dismiss();
+                                            }else{
+                                                new CoustomToast(getApplicationContext(),DepositWithdrawActivity.this,"Error",CoustomToast.TYPE_DANGER).showToast();
+                                                dialog.dismiss();
+                                            }
+                                        }
+                                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
 
             } catch (Exception e) {
@@ -400,6 +454,38 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         }
 
+        public boolean cancelOrder(String s1, String s2) {
+            Log.d("ccccccccccccccccc", "cancelOrder: "+s1+"   "+s2);
+
+            OkHttpHandler.auth_post("cancel_order?currency="+s1, new BuyucoinPref(getApplicationContext()).getPrefString(BuyucoinPref.ACCESS_TOKEN), s2, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    isCanceld = false;
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    String s = response.body().string();
+                    try {
+                        JSONObject j = new JSONObject(s);
+                        Log.d(getPackageName()+"===>", "onResponse:"+j.toString());
+                        final String status = j.getString("status");
+                        mainmsg = j.getJSONArray("message").getJSONArray(0).getString(0);
+                        switch (status){
+                            case "success":isCanceld=true;break;
+                            case "error":isCanceld=false;break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            return isCanceld;
+        }
+
 
         @Override
         public int getItemCount() {
@@ -408,9 +494,10 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mAmount, mCurrency, mOpenTime, mTxHash, mAddress, mFilled, mValue;
-            public final ImageView mImage, mStatus, mType;
+            public final TextView mAmount, mCurrency, mOpenTime, mTxHash, mAddress, mFilled, mValue, mStatus;
+            public final ImageView mImage, mType;
             public History mItem;
+            public Button cancel_btn;
 
             public ViewHolder(View view) {
                 super(view);
@@ -425,6 +512,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 mValue = view.findViewById(R.id.tvHistoryValue);
                 mImage = view.findViewById(R.id.ivHistory);
                 mType = view.findViewById(R.id.history_type_image);
+                cancel_btn = view.findViewById(R.id.cancel_pending_order);
             }
 
             @Override

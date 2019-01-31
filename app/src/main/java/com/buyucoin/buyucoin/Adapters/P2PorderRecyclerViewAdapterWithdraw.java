@@ -92,7 +92,7 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
             public void onClick(View v) {
                 final JSONObject object = new JSONObject();
                 try {
-                    object.put("method","peer_deposit_cancel")
+                    object.put("method","peer_withdraw_cancel")
                             .put("withdraw_id",id);
                     new AlertDialog.Builder(context).setMessage("Do you want to delete this peer")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

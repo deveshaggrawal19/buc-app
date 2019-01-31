@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.bottomsheets.BankDetails;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +52,7 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
         progressDialog.setMessage("Processing");
         progressDialog.create();
     }
+
     public P2pOrderMatchesAdpaterDeposit() {
 
     }
@@ -58,16 +61,16 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_p2p_order_matches_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_p2p_order_matches_deposit_item, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         try {
-        final JSONObject data = activeP2pOrders.getJSONObject(position);
+            final JSONObject data = activeP2pOrders.getJSONObject(position);
             JSONObject bank = data.getJSONObject("bank");
-            Log.d("MATCH PEER DATA",data.toString());
+            Log.d("MATCH PEER DATA", data.toString());
 
             final String did = String.valueOf(data.getInt("id"));
             final String wid = String.valueOf(data.getInt("key"));
@@ -77,7 +80,9 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
             final String ifsc_code = bank.getString("ifsc_code");
             final String mode = data.getString("mode");
             final String note = data.getString("note");
-
+            final String status = data.getString("status");
+            final String tx_hash = data.getString("tx_hash");
+            final String time = data.getString("time");
 
 
             holder.amount.setText(String.valueOf(data.getInt("vol")));
@@ -85,34 +90,25 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
             holder.details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   DialogFragment bankDetails = new BankDetails();
-                   Bundle bundle = new Bundle();
-                    bundle.putString("account_no",account_no);
-                    bundle.putString("bank_name",bank_name);
-                    bundle.putString("b_name",b_name);
-                    bundle.putString("ifsc_code",ifsc_code);
-                    bundle.putString("mode",mode);
-                    bundle.putString("note",note);
-                   bundle.putString("did",did);
-                   bundle.putString("wid",wid);
-                   bundle.putInt("position",position);
+                    DialogFragment bankDetails = new BankDetails();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("account_no", account_no);
+                    bundle.putString("bank_name", bank_name);
+                    bundle.putString("b_name", b_name);
+                    bundle.putString("ifsc_code", ifsc_code);
+                    bundle.putString("mode", mode);
+                    bundle.putString("note", note);
+                    bundle.putString("did", did);
+                    bundle.putString("wid", wid);
+                    bundle.putInt("position", position);
+                    bundle.putString("status",status);
+                    bundle.putString("tx_hash",tx_hash);
+                    bundle.putString("time",time);
 
-                   bankDetails.setArguments(bundle);
-                   bankDetails.show(fragmentManager,"fdsgfh");
-                }
-            });
-            holder.action.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Toast.makeText(holder.itemView.getContext(),did+" "+wid, Toast.LENGTH_SHORT).show();
-                        final JSONObject object = new JSONObject();
-                            object.put("method", "peer_deposit_cancel")
-                                    .put("deposit_id", did).put("withdraw_id", wid);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
+                    bankDetails.setArguments(bundle);
+                    bankDetails.show(fragmentManager, "fdsgfh");
                 }
             });
         } catch (JSONException e) {
@@ -121,47 +117,21 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
 
     }
 
-    public static String status(String s){
-        switch (s){
-            case "DEPOSIT_ACCEPTED":return "Accepted";
-            case "WITHDRAW_ACCEPTED":return "Accepted";
-            case "PENDING":return "Pending";
-            case "DISPUTE":return "Dispute";
-            default: return s;
+    public static String status(String s) {
+        switch (s) {
+            case "DEPOSIT_ACCEPTED":
+                return "Accepted";
+            case "WITHDRAW_ACCEPTED":
+                return "Accepted";
+            case "PENDING":
+                return "Pending";
+            case "DISPUTE":
+                return "Dispute";
+            default:
+                return s;
         }
     }
 
-    public boolean peerAction(String s){
-
-        OkHttpHandler.auth_post("peer_action", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), s, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("PEER ACTION RESPONSE","FAILED");
-                issuccess = false;
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    assert response.body() != null;
-                    String res = response.body().string();
-                    JSONObject j = new JSONObject(res);
-                    Log.d("PEER ACTION RESPONSE",j.toString());
-                    if(j.getBoolean("success")){
-                        issuccess = true;
-                    }else{
-                        issuccess = false;
-                    }
-                    issuccess = true;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        return issuccess;
-
-    }
 
     @Override
     public int getItemCount() {
@@ -170,25 +140,25 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
 
     @Override
     public void refreshMatch(int Position) {
-        if(activeP2pOrders!=null){
-        activeP2pOrders.remove(Position);
-        notifyItemRemoved(Position);
-        notifyDataSetChanged();
+        if (activeP2pOrders != null) {
+            activeP2pOrders.remove(Position);
+            notifyItemRemoved(Position);
+            notifyDataSetChanged();
         }
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView amount,id,details,action;
-         MyViewHolder(@NonNull View itemView) {
+        TextView amount, id;
+        LinearLayout details;
+
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             amount = itemView.findViewById(R.id.p2p_order_match_amount);
             id = itemView.findViewById(R.id.p2p_order_match_id);
-            details = itemView.findViewById(R.id.p2p_order_match_details);
-            action = itemView.findViewById(R.id.p2p_order_match_action);
+            details = itemView.findViewById(R.id.p2p_order_match_details_layout);
 
         }
     }
-
 
 
 }

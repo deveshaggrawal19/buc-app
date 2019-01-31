@@ -13,8 +13,9 @@ public class History {
     private double price;
     private String type;
     private double value;
+    private int id;
 
-    public History(double amount, String curr, String open_time, String open, String status, String tx_hash, String address, double fee, double filled, double price, String type, double value) {
+    public History(double amount, String curr, String open_time, String open, String status, String tx_hash, String address, double fee, double filled, double price, String type, double value,int id) {
         this.amount = amount;
         this.curr = curr;
         this.open_time = open_time;
@@ -27,6 +28,7 @@ public class History {
         this.price = price;
         this.type = type;
         this.value = value;
+        this.id = id;
     }
 
     public double getAmount() {
@@ -75,5 +77,9 @@ public class History {
 
     public double getValue() {
         return value;
+    }
+
+    public int getId() {
+        return id;
     }
 }

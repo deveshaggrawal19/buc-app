@@ -137,4 +137,27 @@
     <string name="amount">Amount</string>
     <string name="price">Price</string>
     <string name="deposit">Deposit</string>
+    <string name="enter_transection_hash">Enter Transection hash</string>
+    <string name="submit_tx_hash">submit tx hash</string>
+    <string name="mark_as_complete">Mark as Complete</string>
+    <string name="remove_request">Remove Request</string>
+    <string name="_1234567890_xyz">1234567890@xyz</string>
+    <string name="bank_details">BANK DETAILS</string>
+    <string name="account_no">Account No</string>
+    <string name="_12345678901234">12345678901234</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="state_bank_of_india">State Bank of India</string>
+    <string name="beneficiary_name">Beneficiary Name</string>
+    <string name="tomboya">Tomboya</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="barb0suldel">BARB0SULDEL</string>
+    <string name="mode">Mode</string>
+    <string name="imps">IMPS</string>
+    <string name="note">Note</string>
+    <string name="processing">Processing...</string>
+    <string name="tx_hash">TX HASH</string>
+    <string name="raise_dispute">Raise Dispute</string>
+    <string name="see_bank_details">See bank details</string>
+    <string name="time_left_in_minutes">Time left in minutes</string>
+    <string name="hide_details">Hide Details</string>
 </resources>

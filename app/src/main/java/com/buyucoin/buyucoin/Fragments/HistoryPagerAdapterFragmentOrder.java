@@ -3,17 +3,20 @@ package com.buyucoin.buyucoin.Fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
@@ -107,7 +110,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                     final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject j = array.getJSONObject(i);
-                        if(j.getString("status").equals(filter) || filter.equals("all"))
+                        if(j.getString("status").equals(filter))
                                 histories.add(new History(
                                         j.getDouble("amount"),
                                         j.getString("curr"),
@@ -120,10 +123,30 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                                         j.getDouble("filled"),
                                         j.getDouble("price"),
                                         j.getString("type"),
-                                        j.getDouble("value")
+                                        j.getDouble("value"),
+                                        j.getInt("id")
                                 ));
+                        if( filter.equals("all")){
+                            histories.add(new History(
+                                    j.getDouble("amount"),
+                                    j.getString("curr"),
+                                    j.getString("open"),
+                                    j.getString("open"),
+                                    j.getString("status"),
+                                    "",
+                                    "",
+                                    j.getDouble("fee"),
+                                    j.getDouble("filled"),
+                                    j.getDouble("price"),
+                                    j.getString("type"),
+                                    j.getDouble("value"),
+                                    j.getInt("id")
+                            ));}
 
                         }
+
+
+
                     Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -203,18 +226,34 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
 
                 switch (holder.mItem.getStatus()){
                     case "Pending":
-                        holder.mStatus.setImageResource(R.drawable.history_pending_icon);
+                        holder.mStatus.setVisibility(View.GONE);
+                        holder.cancel_btn.setVisibility(View.VISIBLE);
                         break;
                     case "Success":
-                        holder.mStatus.setImageResource(R.drawable.history_success_icon);
+                        holder.cancel_btn.setVisibility(View.GONE);
+                        holder.mStatus.setVisibility(View.VISIBLE);
+                        holder.mStatus.setText(holder.mItem.getStatus());
+                        holder.mStatus.setTextColor(getResources().getColor(R.color.kyc_color));
+
                         break;
                     case "Cancelled":
-                        holder.mStatus.setImageResource(R.drawable.history_cancel_icon);
+                        holder.cancel_btn.setVisibility(View.GONE);
+                        holder.mStatus.setVisibility(View.VISIBLE);
+                        holder.mStatus.setText(holder.mItem.getStatus());
+                        holder.mStatus.setTextColor(getResources().getColor(R.color.colorRed));
                         break;
                         default:
-                        holder.mStatus.setImageResource(R.drawable.history_pending_icon);
+                            holder.mStatus.setVisibility(View.GONE);
+                            holder.cancel_btn.setVisibility(View.VISIBLE);
 
                 }
+
+                holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(),""+holder.mItem.getId(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
             } catch (Exception e) {
@@ -274,9 +313,10 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mAmount, mCurrency, mOpenTime, mTxHash, mAddress, mFilled, mValue;
-            public final ImageView mImage,mStatus,mType;
+            public final TextView mAmount, mCurrency, mOpenTime, mTxHash, mAddress, mFilled, mValue,mStatus;
+            public final ImageView mImage,mType;
             public History mItem;
+            private Button cancel_btn;
 
             public ViewHolder(View view) {
                 super(view);
@@ -291,6 +331,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                 mValue = view.findViewById(R.id.tvHistoryValue);
                 mImage = view.findViewById(R.id.ivHistory);
                 mType = view.findViewById(R.id.history_type_image);
+                cancel_btn = view.findViewById(R.id.cancel_pending_order);
             }
 
             @Override

@@ -58,7 +58,7 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_p2p_order_matches_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_p2p_order_matches_withdraw_item,parent,false);
         return new MyViewHolder(view);
     }
 

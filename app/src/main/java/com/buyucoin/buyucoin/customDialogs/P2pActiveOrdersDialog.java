@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit;
 import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterWithdraw;
+import com.buyucoin.buyucoin.Fragments.TriggerActiveOrder;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
@@ -185,9 +186,6 @@ public class P2pActiveOrdersDialog extends DialogFragment {
         }
 
     }
-
-
-
 
 
 

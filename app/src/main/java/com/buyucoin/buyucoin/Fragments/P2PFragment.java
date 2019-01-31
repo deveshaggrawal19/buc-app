@@ -26,7 +26,7 @@ import androidx.fragment.app.Fragment;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class P2PFragment extends Fragment {
+public class P2PFragment extends Fragment implements TriggerActiveOrder {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -188,6 +188,15 @@ public class P2PFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void triggerOrder() {
+        DialogFragment active_order = P2pActiveOrdersDialog.newInstance();
+        assert getFragmentManager() != null;
+        active_order.show(getFragmentManager(),"");
+    }
+
+
 
 
 

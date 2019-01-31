@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -250,6 +251,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                Looper.prepare();
                 new CoustomToast(Dashboard.this,Dashboard.this,"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
             }
 

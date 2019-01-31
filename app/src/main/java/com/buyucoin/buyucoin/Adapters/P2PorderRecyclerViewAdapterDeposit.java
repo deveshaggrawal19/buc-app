@@ -13,10 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Dashboard;
+import com.buyucoin.buyucoin.Fragments.P2PFragment;
+import com.buyucoin.buyucoin.Fragments.TriggerActiveOrder;
 import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
@@ -87,6 +90,7 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
                 }
             }
         });
+        holder.progress_text.setText(arrayList.get(position).getStatus());
         holder.cancel_peer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,11 +146,7 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
                     String res = response.body().string();
                     JSONObject j = new JSONObject(res);
                     Log.d("PEER ACTION RESPONSE",j.toString());
-                    if(j.getBoolean("success")){
-                        issuccess = true;
-                    }else{
-                        issuccess = false;
-                    }
+                    issuccess = j.getBoolean("success");
                     issuccess = true;
                 } catch (JSONException e) {
                     e.printStackTrace();
