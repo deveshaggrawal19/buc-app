@@ -138,6 +138,7 @@
                 android:text="566666.78"
                 android:id="@+id/tvHistoryAmount"
                 android:gravity="center"
+                android:textSize="8sp"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
@@ -150,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:text="01/01/2019"
                 android:gravity="center"
-                android:textSize="12sp"
+                android:textSize="8sp"
                 android:id="@+id/tvHistoryOpenTime"
                 android:layout_height="match_parent" />
 
@@ -166,16 +167,16 @@
                 android:tint="@color/g1b67e8"
                 android:id="@+id/tvHistoryStatus"
                 android:text="Success"
-                android:textSize="12sp"
+                android:textSize="8sp"
                 android:gravity="center"
                 android:layout_height="match_parent" />
             <Button
                 android:layout_width="wrap_content"
                 android:text="@string/cancel"
-                android:textSize="8sp"
                 android:visibility="gone"
+                android:textSize="8sp"
                 android:id="@+id/cancel_pending_order"
-                android:background="@color/colorRed"
+                android:background="@drawable/pills_red"
                 android:textColor="@color/colorWhite"
                 android:layout_height="wrap_content" />
 

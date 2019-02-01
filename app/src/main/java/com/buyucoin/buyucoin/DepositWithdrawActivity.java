@@ -412,14 +412,14 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                                             p.show();
                                             boolean b = cancelOrder(currency, cancel_order.toString());
                                             if(b){
-                                                new CoustomToast(getApplicationContext(),DepositWithdrawActivity.this,"Order Cancelled Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                                new CoustomToast(getApplicationContext(),DepositWithdrawActivity.this,mainmsg,CoustomToast.TYPE_SUCCESS).showToast();
                                                 mValues.remove(position);
                                                 notifyItemRemoved(position);
                                                 notifyDataSetChanged();
                                                 p.dismiss();
                                                 dialog.dismiss();
                                             }else{
-                                                new CoustomToast(getApplicationContext(),DepositWithdrawActivity.this,"Error",CoustomToast.TYPE_DANGER).showToast();
+                                                new CoustomToast(getApplicationContext(),DepositWithdrawActivity.this,mainmsg,CoustomToast.TYPE_DANGER).showToast();
                                                 dialog.dismiss();
                                             }
                                         }

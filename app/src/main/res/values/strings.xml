@@ -160,4 +160,6 @@
     <string name="see_bank_details">See bank details</string>
     <string name="time_left_in_minutes">Time left in minutes</string>
     <string name="hide_details">Hide Details</string>
+    <string name="dispute">Dispute</string>
+    <string name="complete">Complete</string>
 </resources>

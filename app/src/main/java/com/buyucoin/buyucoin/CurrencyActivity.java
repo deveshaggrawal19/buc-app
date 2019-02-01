@@ -133,8 +133,11 @@ public class CurrencyActivity extends AppCompatActivity {
                 if(data.hasChild("buy_orders")){
                     for(DataSnapshot d : data.child("buy_orders").getChildren()){
                         Double price = d.child("price").getValue(Double.class);
+                        price *= 1.0;
                         String value = d.child("value").getValue(String.class);
+                        value = String.valueOf(Double.parseDouble(value)*1.0);
                         Double vol = d.child("vol").getValue(Double.class);
+                        vol *=1.0;
                         Bids b = new Bids(price,value,vol);
                         arrayListBids.add(b);
                     }
@@ -144,8 +147,11 @@ public class CurrencyActivity extends AppCompatActivity {
                 if(data.hasChild("sell_orders")){
                     for(DataSnapshot d : data.child("sell_orders").getChildren()){
                         Double price = d.child("price").getValue(Double.class);
+                        price *= 1.0;
                         String value = d.child("value").getValue(String.class);
+                        value = String.valueOf(Double.parseDouble(value)*1.0);
                         Double vol = d.child("vol").getValue(Double.class);
+                        vol *=1.0;
                         Ask a = new Ask(price,value,vol);
                         arrayListAsks.add(a);
                     }
@@ -155,10 +161,13 @@ public class CurrencyActivity extends AppCompatActivity {
                 if (data.hasChild("market_history")){
                     for(DataSnapshot d : data.child("market_history").getChildren()){
                         Double amount = d.child("amount").getValue(Double.class);
+                        amount *=1.0;
                         Double price = d.child("price").getValue(Double.class);
+                        price *=1.0;
+                        String value = d.child("value").getValue(String.class);
+                        value = String.valueOf(Double.parseDouble(value)*1.0);
                         Long time = d.child("time").getValue(Long.class);
                         String type = d.child("type").getValue(String.class);
-                        String value = d.child("value").getValue(String.class);
 
                         MarketHistory m = new MarketHistory();
                         m.setAmount(amount);

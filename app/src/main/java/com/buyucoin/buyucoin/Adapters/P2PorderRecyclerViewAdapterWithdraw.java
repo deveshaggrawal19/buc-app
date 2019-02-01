@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin.Adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -43,11 +44,13 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
     BuyucoinPref pref;
     static boolean issuccess = true;
     AlertDialog.Builder progressDialog;
+    Activity activity;
 
 
-    public P2PorderRecyclerViewAdapterWithdraw(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
+    public P2PorderRecyclerViewAdapterWithdraw(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager,Activity activity) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
+        this.activity = activity;
         fragmentManager = childFragmentManager;
         pref = new BuyucoinPref(context);
         progressDialog = new ProgressDialog.Builder(context);
@@ -74,7 +77,7 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
         final String id = String.valueOf(arrayList.get(position).getId());
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
         holder.peer_order_id.setText(id);
-        P2pOrderMatchesAdpaterWithdraw p2pOrderMatchesAdpaterWithdraw = new P2pOrderMatchesAdpaterWithdraw(arrayList.get(position).getMatched_by(),fragmentManager,context);
+        P2pOrderMatchesAdpaterWithdraw p2pOrderMatchesAdpaterWithdraw = new P2pOrderMatchesAdpaterWithdraw(arrayList.get(position).getMatched_by(),fragmentManager,context,activity);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(p2pOrderMatchesAdpaterWithdraw);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

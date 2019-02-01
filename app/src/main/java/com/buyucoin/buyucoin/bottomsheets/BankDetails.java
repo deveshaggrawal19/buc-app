@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.bottomsheets;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit;
 import com.buyucoin.buyucoin.Dashboard;
@@ -84,10 +86,10 @@ public class BankDetails extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.bank_details_bottomsheet,container,false);
 
-        TextView t1,t2,t3,t4,t5,t6,time;
+        TextView t1,t2,t3,t4,t5,t6,time,tx_hash_tv;
         final Button remove_request,cancel,mark_complete,submit_hash,see_bank_details,raise_dispute;
         final EditText tx_hash;
-        final LinearLayout action_layout,tx_hash_layout,progress_action_layout,tx_hash_layout_success,bank_layout;
+        final LinearLayout action_layout,tx_hash_layout,progress_action_layout,tx_hash_layout_success,bank_layout,tx_hash_layouy_display;
         t1 = view.findViewById(R.id.textView2);
         t2 = view.findViewById(R.id.textView4);
         t3 = view.findViewById(R.id.textView6);
@@ -95,6 +97,7 @@ public class BankDetails extends BottomSheetDialogFragment {
         t5 = view.findViewById(R.id.textView10);
         t6 = view.findViewById(R.id.textView12);
         time = view.findViewById(R.id.tx_hash_time_tv);
+        tx_hash_tv = view.findViewById(R.id.tx_hash_tv);
         remove_request = view.findViewById(R.id.remove_request);
         mark_complete = view.findViewById(R.id.mark_complete);
         cancel = view.findViewById(R.id.cancel_request);
@@ -107,15 +110,16 @@ public class BankDetails extends BottomSheetDialogFragment {
         raise_dispute = view.findViewById(R.id.raise_dispute);
         tx_hash_layout_success = view.findViewById(R.id.tx_action_layout);
         bank_layout = view.findViewById(R.id.bank_details_layout);
+        tx_hash_layouy_display = view.findViewById(R.id.tx_hash_layout_display);
 
-        long minutes = new Date(tx_hash_time).getTime()*60;
-        time.setText(String.valueOf(minutes));
 
 
         if(!tx_hash_string.equals("N/A")){
+            tx_hash_layouy_display.setVisibility(View.VISIBLE);
             bank_layout.setVisibility(View.GONE);
             tx_hash_layout.setVisibility(View.GONE);
             action_layout.setVisibility(View.GONE);
+            tx_hash_tv.setText(tx_hash_string);
 
         }
         else {
@@ -146,34 +150,7 @@ public class BankDetails extends BottomSheetDialogFragment {
                     final JSONObject object = new JSONObject();
                     object.put("method", "peer_deposit_cancel")
                             .put("deposit_id", did).put("withdraw_id", wid);
-                    new AlertDialog.Builder(context).setMessage("Do you want to delete this peer")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    boolean b = peerAction(object.toString());
-                                    if (b) {
-                                        new CoustomToast(context, (Dashboard) context, "Deleted Successfully", CoustomToast.TYPE_SUCCESS).showToast();
-                                        dialog.dismiss();
-                                        MatchedPeer peer = new P2PorderRecyclerViewAdapterDeposit();
-                                        peer.refreshMatch(position);
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                               dismiss();
-                                            }
-                                        },1000);
-                                    } else {
-                                        new CoustomToast(context, (Dashboard) context, "Error While Deleting...", CoustomToast.TYPE_DANGER).showToast();
-                                        dialog.dismiss();
-                                        dismiss();
-                                    }
-                                }
-                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).create().show();
+                    completeAction(object.toString(),position,"delete this peer");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -198,6 +175,19 @@ public class BankDetails extends BottomSheetDialogFragment {
             }
         });
 
+        raise_dispute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final JSONObject object = new JSONObject();
+                try {
+                    object.put("method","peer_deposit_dispute").put("deposit_id", did).put("withdraw_id", wid);
+                    completeAction(object.toString(),position,"raise dispute");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         submit_hash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,20 +199,7 @@ public class BankDetails extends BottomSheetDialogFragment {
                                 .put("withdraw_id",wid)
                                 .put("tx_hash",tx_hash_string)
                                 .put("method", "peer_deposit_complete");
-                        progress_action_layout.setVisibility(View.VISIBLE);
-                        tx_hash_layout.setVisibility(View.GONE);
-                        boolean b = peerAction(j.toString());
-
-                        if(b){
-                            new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Successful",CoustomToast.TYPE_SUCCESS).showToast();
-                            TriggerActiveOrder t = new P2PFragment();
-                            t.triggerOrder();
-                            dismiss();
-                        }else{
-                            new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Error happen",CoustomToast.TYPE_DANGER).showToast();
-                            progress_action_layout.setVisibility(View.GONE);
-                            tx_hash_layout.setVisibility(View.VISIBLE);
-                        }
+                        completeAction(j.toString(),position,"submit transaction hash");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -237,6 +214,37 @@ public class BankDetails extends BottomSheetDialogFragment {
 
 
         return view;
+    }
+
+    public void completeAction(final String data, final int position, String msg){
+
+            Toast.makeText(context,did+" "+wid, Toast.LENGTH_SHORT).show();
+            Log.d("ooooooooooooooooooooo", "onClick: "+data);
+            new AlertDialog.Builder(context).setMessage("Are you sure to "+msg)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ProgressDialog p = new ProgressDialog(context);
+                            p.setMessage("processing");
+                            p.setCancelable(false);
+                            p.show();
+                            boolean b = peerAction(data);
+                            if(b){
+                                p.dismiss();
+                                dialog.dismiss();
+                                Objects.requireNonNull(BankDetails.this.getDialog()).dismiss();
+                            }else{
+                                p.dismiss();
+                                dialog.dismiss();
+                            }
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).create().show();
+
     }
 
     public boolean peerAction(String s){
@@ -254,13 +262,25 @@ public class BankDetails extends BottomSheetDialogFragment {
                     assert response.body() != null;
                     String res = response.body().string();
                     JSONObject j = new JSONObject(res);
+                    final String msg = j.getJSONArray("message").getJSONArray(0).getString(0);
                     Log.d("PEER ACTION RESPONSE",j.toString());
                     if(j.getBoolean("success")){
                         issuccess = true;
                     }else{
                         issuccess = false;
                     }
-                    issuccess = true;
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(issuccess){
+                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),msg,CoustomToast.TYPE_SUCCESS).showToast();
+
+                            }else{
+                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),msg,CoustomToast.TYPE_DANGER).showToast();
+
+                            }
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

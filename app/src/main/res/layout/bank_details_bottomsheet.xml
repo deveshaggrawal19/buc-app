@@ -8,8 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         android:background="@color/kyc_color"
         android:padding="10dp"
+        android:id="@+id/tx_hash_layout_display"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"

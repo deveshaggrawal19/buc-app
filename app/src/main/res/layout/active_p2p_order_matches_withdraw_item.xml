@@ -1,64 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/history_item_drawable"
-            android:gravity="center"
-            android:elevation="1dp"
-            android:padding="10dp"
-            android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/history_item_drawable"
+    android:elevation="1dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:id="@+id/p2p_order_match_id"
-                    android:text="1"
-                    />
+    <TextView
+        android:id="@+id/p2p_order_match_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="1" />
 
 
+    <TextView
+        android:id="@+id/p2p_order_match_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="3450" />
+
+    <TextView
+        android:id="@+id/p2p_order_match_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/pills"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="View"
+        android:textSize="10sp"
+        android:textColor="@android:color/white" />
 
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="3450"
-                    android:gravity="center"
-                    android:id="@+id/p2p_order_match_amount"
-                    />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:background="@drawable/pills"
-                            android:textColor="@android:color/white"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/p2p_order_match_details"
-                            android:gravity="center"
-                            android:text="View Details"
-                            />
+    <TextView
+        android:id="@+id/mark_complete"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/pills"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/complete"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
+    <TextView
+        android:id="@+id/mark_dispute"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/pills_red"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/dispute"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
 
 
-        <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:text="@string/cancel"
-                    android:id="@+id/p2p_order_match_action"
-                    android:textColor="@android:color/holo_red_light"
-                    />
-
-
-
-        </LinearLayout>
+</LinearLayout>
 
 
 

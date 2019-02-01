@@ -166,14 +166,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="VALUE" />
+                        android:text="VOLUME" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="VOLUME" />
+                        android:text="TOTAL" />
+
+
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -219,14 +221,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="VALUE" />
+                        android:text="VOLUME" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="VOLUME" />
+                        android:text="TOTAL" />
+
+
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -264,6 +268,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start"
+                        android:text="TYPE" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="AMOUNT" />
 
                     <TextView
@@ -272,13 +283,13 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="PRICE" />
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="VALUE" />
+                        android:text="TOTAL" />
+
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

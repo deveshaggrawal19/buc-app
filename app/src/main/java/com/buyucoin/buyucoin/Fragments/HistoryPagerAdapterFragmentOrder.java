@@ -2,6 +2,9 @@ package com.buyucoin.buyucoin.Fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
@@ -18,19 +21,23 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.DepositWithdrawActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pojos.History;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -185,20 +192,22 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
     public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
 
         private final ArrayList<History> mValues;
+        private boolean isCanceld = true;
+        private String mainmsg = "";
 
         public MyHistoryRecyclerViewAdapter(ArrayList<History> items) {
             mValues = items;
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_history_list_item, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
             try {
                 holder.mItem = mValues.get(position);
 
@@ -251,7 +260,41 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                 holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(),""+holder.mItem.getId(), Toast.LENGTH_SHORT).show();
+                        final String currency = holder.mItem.getCurr();
+                        int id = holder.mItem.getId();
+                        final JSONObject cancel_order = new JSONObject();
+                        try {
+                            cancel_order.put("id", id);
+                            new AlertDialog.Builder(getContext()).setMessage("Do you want to delete this peer")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ProgressDialog p = new ProgressDialog(getContext());
+                                            p.setMessage("processing");
+                                            p.show();
+                                            boolean b = cancelOrder(currency, cancel_order.toString());
+                                            if(b){
+                                                new CoustomToast(getContext(),getActivity(),"Order Cancelled Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                                mValues.remove(position);
+                                                notifyItemRemoved(position);
+                                                notifyDataSetChanged();
+                                                p.dismiss();
+                                                dialog.dismiss();
+                                            }else{
+                                                new CoustomToast(getContext(),getActivity(),"Error",CoustomToast.TYPE_DANGER).showToast();
+                                                dialog.dismiss();
+                                            }
+                                        }
+                                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -303,6 +346,39 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                     AccountFragment.makeViewDisable(holder.mView);
                 }
             });
+        }
+
+
+        public boolean cancelOrder(String s1, String s2) {
+            Log.d("ccccccccccccccccc", "cancelOrder: "+s1+"   "+s2);
+
+            OkHttpHandler.auth_post("cancel_order?currency="+s1, new BuyucoinPref(getContext()).getPrefString(BuyucoinPref.ACCESS_TOKEN), s2, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    isCanceld = false;
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    String s = response.body().string();
+                    try {
+                        JSONObject j = new JSONObject(s);
+                        Log.d(getContext().getPackageName()+"===>", "onResponse:"+j.toString());
+                        final String status = j.getString("status");
+                        mainmsg = j.getJSONArray("message").getJSONArray(0).getString(0);
+                        switch (status){
+                            case "success":isCanceld=true;break;
+                            case "error":isCanceld=false;break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            return isCanceld;
         }
 
 

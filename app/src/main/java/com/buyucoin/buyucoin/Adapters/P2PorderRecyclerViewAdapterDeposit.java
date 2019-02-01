@@ -90,7 +90,7 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
                 }
             }
         });
-        holder.progress_text.setText(arrayList.get(position).getStatus());
+        holder.progress_text.setText(""+arrayList.get(position).getStatus());
         holder.cancel_peer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -110,7 +110,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                             @Override
                             public void run() {
                                 activeOrderType.setText(type);
-                                P2PorderRecyclerViewAdapterWithdraw adapter = new P2PorderRecyclerViewAdapterWithdraw(getContext(),activeP2pOrderslist,getChildFragmentManager());
+                                P2PorderRecyclerViewAdapterWithdraw adapter = new P2PorderRecyclerViewAdapterWithdraw(getContext(),activeP2pOrderslist,getChildFragmentManager(),getActivity());
                                 recyclerView_w.setAdapter(adapter);
                                 recyclerView_w.setVisibility(View.VISIBLE);
                             }
