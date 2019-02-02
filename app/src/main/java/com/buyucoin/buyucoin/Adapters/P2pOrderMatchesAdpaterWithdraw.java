@@ -18,6 +18,7 @@ import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.bottomsheets.BankDetails;
+import com.buyucoin.buyucoin.bottomsheets.WithdrawDetails;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
@@ -76,17 +77,17 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
             Log.d("MATCH PEER DATA",data.toString());
             final Bundle bundle = new Bundle();
 
-            if(data.has("bank")){
-                JSONObject bank = data.getJSONObject("bank");
-                final String account_no = bank.getString("account");
-                final String bank_name = bank.getString("bank_name");
-                final String b_name = bank.getString("beneficiary");
-                final String ifsc_code = bank.getString("ifsc_code");
-                bundle.putString("account_no",account_no);
-                bundle.putString("bank_name",bank_name);
-                bundle.putString("b_name",b_name);
-                bundle.putString("ifsc_code",ifsc_code);
-            }
+//            if(data.has("bank")){
+//                JSONObject bank = data.getJSONObject("bank");
+//                final String account_no = bank.getString("account");
+//                final String bank_name = bank.getString("bank_name");
+//                final String b_name = bank.getString("beneficiary");
+//                final String ifsc_code = bank.getString("ifsc_code");
+//                bundle.putString("account_no",account_no);
+//                bundle.putString("bank_name",bank_name);
+//                bundle.putString("b_name",b_name);
+//                bundle.putString("ifsc_code",ifsc_code);
+//            }
             if(data.has("tx_hash")){
                 final String tx_hash = data.getString("tx_hash");
                 bundle.putString("tx_hash",tx_hash);
@@ -95,113 +96,123 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
                 bundle.putString("tx_hash","");
 
             }
-            if(data.has("mode")){
-                final String mode = data.getString("mode");
-                bundle.putString("mode",mode);
-
-
-            }
-            if(data.has("note")){
-                final String note = data.getString("note");
-                bundle.putString("note",note);
-
-
-            }
+//            if(data.has("mode")){
+//                final String mode = data.getString("mode");
+//                bundle.putString("mode",mode);
+//
+//
+//            }
+//            if(data.has("note")){
+//                final String note = data.getString("note");
+//                bundle.putString("note",note);
+//
+//
+//            }
 
 
             final String did = String.valueOf(data.getInt("id"));
             final String wid = String.valueOf(data.getInt("key"));
+            final String status = data.getString("status");
 
 
 
-            holder.amount.setText(String.valueOf(data.getInt("vol")));
+            holder.amount.setText(String.valueOf(data.getInt("vol")/10000));
             holder.id.setText(String.valueOf(data.getString("key")));
-            holder.details.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   DialogFragment bankDetails = new BankDetails();
+                   DialogFragment withdrawDetails = new WithdrawDetails();
 
 
                    bundle.putString("did",did);
                    bundle.putString("wid",wid);
                    bundle.putInt("position",position);
+                   bundle.putString("status",status);
 
-                   bankDetails.setArguments(bundle);
-                   bankDetails.show(fragmentManager,"fdsgfh");
+                   withdrawDetails.setArguments(bundle);
+                   withdrawDetails.show(fragmentManager,"fdsgfh");
                 }
             });
 
-            if(data.getString("status").equals("DEPOSIT_ACCEPTED")){
-                holder.action.setVisibility(View.VISIBLE);
-                holder.dispute.setVisibility(View.VISIBLE);
-                Log.d("DEPOSIT_ACCEPTED",data.getString("status"));
-
-            }
-            if(data.getString("status").equals("DISPUTE")){
-                holder.action.setVisibility(View.VISIBLE);
+//            if(data.getString("status").equals("DEPOSIT_ACCEPTED")){
+//                holder.action.setVisibility(View.VISIBLE);
+//                holder.dispute.setVisibility(View.VISIBLE);
+//                Log.d("DEPOSIT_ACCEPTED",data.getString("status"));
+//
+//            }
+//            if(data.getString("status").equals("DISPUTE")){
+//                holder.action.setVisibility(View.VISIBLE);
+//                holder.dispute.setVisibility(View.GONE);
+//                Log.d("DEPOSIT_ACCEPTED",data.getString("status"));
+//
+//            }
+            if(data.getString("status").equals("WITHDRAW_COMPLETE")){
+                holder.action.setVisibility(View.GONE);
                 holder.dispute.setVisibility(View.GONE);
+                holder.successful.setVisibility(View.VISIBLE);
+                holder.details.setVisibility(View.GONE);
                 Log.d("DEPOSIT_ACCEPTED",data.getString("status"));
 
             }
-            holder.action.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   completeAction("peer_withdraw_complete",wid,did,position,"mark as complete");
-                }
-            });
-            holder.dispute.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    completeAction("peer_withdraw_dispute",wid,did,position,"raise dispute");
-                }
-            });
+//            holder.action.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                   completeAction("peer_withdraw_complete",wid,did,position,"mark as complete");
+//                }
+//            });
+//            holder.dispute.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    completeAction("peer_withdraw_dispute",wid,did,position,"raise dispute");
+//                }
+//            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void completeAction(String action, String wid, String did, final int position,String msg){
-
-        try {
-            Toast.makeText(context,did+" "+wid, Toast.LENGTH_SHORT).show();
-            final JSONObject object = new JSONObject();
-            object.put("method", action)
-                    .put("deposit_id", wid).put("withdraw_id", did);
-
-            Log.d("ooooooooooooooooooooo", "onClick: "+object.toString());
-            new AlertDialog.Builder(context).setMessage("Are you sure to "+msg)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ProgressDialog p = new ProgressDialog(context);
-                            p.setMessage("processing");
-                            p.show();
-                            boolean b = peerAction(object.toString());
-                            if(b){
-
-                                activeP2pOrders.remove(position);
-                                notifyItemRemoved(position);
-                                notifyDataSetChanged();
-                                p.dismiss();
-                                dialog.dismiss();
-                            }else{
-                                new CoustomToast(context,activity,mainmsg,CoustomToast.TYPE_DANGER).showToast();
-                                dialog.dismiss();
-                            }
-                        }
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            }).create().show();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void completeAction(String action, String wid, String did, final int position,String msg){
+//
+//        try {
+//            Toast.makeText(context,did+" "+wid, Toast.LENGTH_SHORT).show();
+//            final JSONObject object = new JSONObject();
+//            object.put("method", action)
+//                    .put("deposit_id", wid).put("withdraw_id", did);
+//
+//            Log.d("ooooooooooooooooooooo", "onClick: "+object.toString());
+//            new AlertDialog.Builder(context).setMessage("Are you sure to "+msg)
+//                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            ProgressDialog p = new ProgressDialog(context);
+//                            p.setMessage("processing");
+//                            p.show();
+//                            boolean b = peerAction(object.toString());
+//                            if(b){
+//
+//                                activeP2pOrders.remove(position);
+//                                notifyItemRemoved(position);
+//                                notifyDataSetChanged();
+//                                p.dismiss();
+//                                dialog.dismiss();
+//                            }else{
+//                                new CoustomToast(context,activity,mainmsg,CoustomToast.TYPE_DANGER).showToast();
+//                                dialog.dismiss();
+//                            }
+//                        }
+//                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                }
+//            }).create().show();
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
     public static String status(String s){
@@ -292,7 +303,7 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView amount,id,details,action,dispute;
+        TextView amount,id,details,action,dispute,successful;
          MyViewHolder(@NonNull View itemView) {
             super(itemView);
             amount = itemView.findViewById(R.id.p2p_order_match_amount);
@@ -300,6 +311,7 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
             details = itemView.findViewById(R.id.p2p_order_match_details);
             action = itemView.findViewById(R.id.mark_complete);
             dispute = itemView.findViewById(R.id.mark_dispute);
+            successful = itemView.findViewById(R.id.peer_success);
         }
     }
 

@@ -310,104 +310,109 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/account_about_us_link"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="5dp">
 
                     <ImageView
                         android:layout_width="12dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
-                        android:tint="@color/g6209c3"
                         android:src="@drawable/profile_option_list_drawable"
-                        android:layout_height="match_parent" />
+                        android:tint="@color/g6209c3" />
 
                     <TextView
-                        android:layout_marginLeft="40dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
+                        android:layout_marginLeft="40dp"
                         android:fontFamily="sans-serif"
+                        android:gravity="center"
                         android:text="About Us"
-                        android:textColor="@android:color/black"
-                        />
+                        android:textColor="@android:color/black" />
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:tint="#cccccc"
                         android:src="@drawable/profile_menu_list_arrow_right"
-                        android:layout_height="match_parent" />
+                        android:tint="#cccccc" />
 
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:background="#eeeeee"
                     android:layout_height="1dp"/>
+
                 <RelativeLayout
+                    android:id="@+id/account_term_policy"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="5dp">
 
                     <ImageView
                         android:layout_width="12dp"
-                        android:tint="@color/g1b67e8"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:src="@drawable/profile_option_list_drawable"
-                        android:layout_height="match_parent" />
+                        android:tint="@color/g1b67e8" />
 
                     <TextView
-                        android:layout_marginLeft="40dp"
                         android:layout_width="wrap_content"
-                        android:gravity="center"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="40dp"
                         android:fontFamily="sans-serif"
+                        android:gravity="center"
                         android:text="Terms And Policies"
-                        android:textColor="@android:color/black"
-                        />
+                        android:textColor="@android:color/black" />
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:tint="#cccccc"
                         android:src="@drawable/profile_menu_list_arrow_right"
-                        android:layout_height="match_parent" />
+                        android:tint="#cccccc" />
 
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:background="#eeeeee"
                     android:layout_height="1dp"/>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="5dp">
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="12dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
-                        android:tint="@color/kyc_color"
                         android:src="@drawable/profile_option_list_drawable"
-                        android:layout_height="match_parent" />
+                        android:tint="@color/kyc_color" />
 
                     <TextView
-                        android:layout_marginLeft="40dp"
                         android:layout_width="wrap_content"
-                        android:gravity="center"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="40dp"
                         android:fontFamily="sans-serif"
+                        android:gravity="center"
                         android:text="More"
-                        android:textColor="@android:color/black"
-                        />
+                        android:textColor="@android:color/black" />
+
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:tint="#cccccc"
                         android:src="@drawable/profile_menu_list_arrow_right"
-                        android:layout_height="match_parent" />
+                        android:tint="#cccccc" />
 
                 </RelativeLayout>
                 <View
@@ -470,8 +475,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
+                    android:id="@+id/share_ref_id"
                     android:background="@drawable/profile_drawable_referral_card"
                     android:orientation="vertical"
+                    android:paddingTop="20dp"
                     android:paddingBottom="20dp">
 
 
@@ -489,10 +496,11 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:gravity="center"
-                        android:text="Your Referral Code"
+                        android:text="Share Your Referral Code"
                         android:textColor="@android:color/white" />
 
                     <TextView
+                        android:id="@+id/ref_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"

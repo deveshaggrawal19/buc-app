@@ -85,6 +85,11 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
             final JSONObject data = activeP2pOrders.getJSONObject(position);
             final Bundle bundle = new Bundle();
 
+            if(data.getString("status").equals("WITHDRAW_COMPLETE")){
+                holder.peer_success.setVisibility(View.VISIBLE);
+                holder.view_layout.setVisibility(View.GONE);
+            }
+
             if (data.has("bank")) {
                 JSONObject bank = data.getJSONObject("bank");
                 final String account_no = bank.getString("account");
@@ -119,9 +124,9 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
 
             final String did = String.valueOf(data.getInt("id"));
             final String wid = String.valueOf(data.getInt("key"));
+            final String status = data.getString("status");
 
-
-            holder.amount.setText(String.valueOf(data.getInt("vol")));
+            holder.amount.setText(String.valueOf(data.getInt("vol")/10000));
             holder.id.setText(String.valueOf(data.getString("key")));
             holder.details.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,6 +136,7 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
                     bundle.putString("did", did);
                     bundle.putString("wid", wid);
                     bundle.putInt("position", position);
+                    bundle.putString("status",status);
 
 
                     bankDetails.setArguments(bundle);
@@ -158,7 +164,7 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView amount, id;
+        TextView amount, id,peer_success,view_layout;
         LinearLayout details;
 
         MyViewHolder(@NonNull View itemView) {
@@ -166,7 +172,8 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
             amount = itemView.findViewById(R.id.p2p_order_match_amount);
             id = itemView.findViewById(R.id.p2p_order_match_id);
             details = itemView.findViewById(R.id.p2p_order_match_details_layout);
-
+            peer_success = itemView.findViewById(R.id.peer_success);
+            view_layout = itemView.findViewById(R.id.view_layout_display);
         }
     }
 

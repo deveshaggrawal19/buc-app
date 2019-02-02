@@ -1,16 +1,19 @@
 package com.buyucoin.buyucoin.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -27,6 +30,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,13 +59,14 @@ public class AccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private String ACCESS_TOKEN = null;
-    private TextView email, mob, name;
+    private TextView email, mob, name,ref_id;
     private ProgressBar pb;
     private View ll;
     private AlertDialog.Builder ad;
     private SharedPreferences prefs;
     private SharedPreferences.Editor edit_pref;
     private LinearLayout profile_sheet_handler,
+            share_ref_id,
             referral_sheet_handler,
             chats_sheet_handler,
             settings_sheet_handler,
@@ -72,6 +77,8 @@ public class AccountFragment extends Fragment {
     private boolean applock_enabled;
     private ImageView kyc;
     private ImageView imageView;
+    private RelativeLayout account_about_us, account_term_policy;
+    private String referral_id = "";
 
     public AccountFragment() {
         // Required empty public constructor
@@ -100,12 +107,16 @@ public class AccountFragment extends Fragment {
         InitializeAllViews(view);
         sheetClickHandler();
         HistoryClickHandler();
+        termAndAbout();
         MakeCircularImage();
         AppPassWordHandler(view);
+        shareRefid();
 
         name.setText(prefs.getString("name", ""));
         email.setText(prefs.getString("email", ""));
         mob.setText(prefs.getString("mob", ""));
+        referral_id = prefs.getString("ref_id","N/A");
+        ref_id.setText(referral_id);
 
         new Handler().post(new Runnable() {
             @Override
@@ -114,6 +125,19 @@ public class AccountFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void shareRefid(){
+        share_ref_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setChooserTitle("Share Referral link by")
+                        .setText("https://www.buyucoin.com/referral?referral="+referral_id)
+                        .startChooser();
+            }
+        });
     }
 
     private void sheetClickHandler() {
@@ -197,6 +221,24 @@ public class AccountFragment extends Fragment {
         });
     }
 
+    private void termAndAbout(){
+        account_term_policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buyucoin.com/privacy-policy"));
+                startActivity(intent);
+            }
+        });
+        account_about_us.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buyucoin.com/about"));
+                startActivity(intent);
+            }
+        });
+
+    }
+
     public static void makeViewDisable(final View view){
         view.setEnabled(false);
         view.postDelayed(new Runnable() {
@@ -259,6 +301,7 @@ public class AccountFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 assert response.body() != null;
                 final String s = response.body().string();
+                Log.d("ACCOUNT DATA", "onResponse: "+s);
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -315,6 +358,10 @@ public class AccountFragment extends Fragment {
         account_dep_history = view.findViewById(R.id.account_dep_history);
         account_with_history = view.findViewById(R.id.account_with_history);
         account_trade_history = view.findViewById(R.id.account_trade_history);
+        account_about_us = view.findViewById(R.id.account_about_us_link);
+        account_term_policy = view.findViewById(R.id.account_term_policy);
+        ref_id = view.findViewById(R.id.ref_id);
+        share_ref_id = view.findViewById(R.id.share_ref_id);
     }
 
 

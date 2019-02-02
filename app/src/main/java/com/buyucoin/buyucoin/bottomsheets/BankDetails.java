@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit;
-import com.buyucoin.buyucoin.Dashboard;
-import com.buyucoin.buyucoin.Fragments.P2PFragment;
-import com.buyucoin.buyucoin.Fragments.TriggerActiveOrder;
-import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
-import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -32,10 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.util.Date;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -47,7 +36,7 @@ import okhttp3.Response;
 
 public class BankDetails extends BottomSheetDialogFragment {
 
-    private String account_no,bank_name,b_name,ifsc_code,mode,note,did,wid,tx_hash_string,tx_hash_time = "";
+    private String account_no,bank_name,b_name,ifsc_code,mode,note,did,wid,tx_hash_string,status = "";
     private Context context;
     private static boolean issuccess = true;
     private BuyucoinPref pref;
@@ -67,7 +56,7 @@ public class BankDetails extends BottomSheetDialogFragment {
             did = nullSafety(bundle.getString("did"));
             wid = nullSafety(bundle.getString("wid"));
             tx_hash_string = nullSafety(bundle.getString("tx_hash"));
-            tx_hash_time = nullSafety(bundle.getString("time"));
+            status = nullSafety(bundle.getString("status"));
             context = getContext();
             assert context != null;
             pref = new BuyucoinPref(context);
@@ -86,17 +75,19 @@ public class BankDetails extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.bank_details_bottomsheet,container,false);
 
-        TextView t1,t2,t3,t4,t5,t6,time,tx_hash_tv;
+        TextView t1,t2,t3,t4,t5,t6,kindly,tx_hash_tv;
         final Button remove_request,cancel,mark_complete,submit_hash,see_bank_details,raise_dispute;
         final EditText tx_hash;
-        final LinearLayout action_layout,tx_hash_layout,progress_action_layout,tx_hash_layout_success,bank_layout,tx_hash_layouy_display;
+        final LinearLayout action_layout,tx_hash_layout,tx_hash_layout_success,bank_layout,tx_hash_layouy_display;
+        final  LinearLayout withdraw_accepted_layout,withdraw_completed_layout;
         t1 = view.findViewById(R.id.textView2);
         t2 = view.findViewById(R.id.textView4);
         t3 = view.findViewById(R.id.textView6);
         t4 = view.findViewById(R.id.textView8);
         t5 = view.findViewById(R.id.textView10);
         t6 = view.findViewById(R.id.textView12);
-        time = view.findViewById(R.id.tx_hash_time_tv);
+        kindly = view.findViewById(R.id.kindly);
+
         tx_hash_tv = view.findViewById(R.id.tx_hash_tv);
         remove_request = view.findViewById(R.id.remove_request);
         mark_complete = view.findViewById(R.id.mark_complete);
@@ -105,7 +96,7 @@ public class BankDetails extends BottomSheetDialogFragment {
         tx_hash = view.findViewById(R.id.transition_hash);
         action_layout = view.findViewById(R.id.action_layout);
         tx_hash_layout = view.findViewById(R.id.tx_hash_layout);
-        progress_action_layout = view.findViewById(R.id.progress_action_layout);
+
         see_bank_details = view.findViewById(R.id.see_bank_details);
         raise_dispute = view.findViewById(R.id.raise_dispute);
         tx_hash_layout_success = view.findViewById(R.id.tx_action_layout);
@@ -113,17 +104,32 @@ public class BankDetails extends BottomSheetDialogFragment {
         tx_hash_layouy_display = view.findViewById(R.id.tx_hash_layout_display);
 
 
+        withdraw_accepted_layout = view.findViewById(R.id.withdraw_accepted_layout);
+        withdraw_completed_layout = view.findViewById(R.id.withdraw_completed_layout);
+
+
+        switch (status){
+            case "WITHDRAW_ACCEPTED":
+                withdraw_accepted_layout.setVisibility(View.VISIBLE);
+                bank_layout.setVisibility(View.VISIBLE);
+                action_layout.setVisibility(View.VISIBLE);
+                break;
+            case "DEPOSIT_ACCEPTED":
+                tx_hash_layouy_display.setVisibility(View.VISIBLE);break;
+            case "WITHDRAW_COMPLETE":
+                withdraw_completed_layout.setVisibility(View.VISIBLE);break;
+            case "DISPUTE":
+                tx_hash_layouy_display.setVisibility(View.VISIBLE);
+                tx_hash_layout_success.setVisibility(View.VISIBLE);
+                raise_dispute.setVisibility(View.GONE);
+                kindly.setText("Buyucoin Team working on this dispute");
+                break;
+        }
+
+
 
         if(!tx_hash_string.equals("N/A")){
-            tx_hash_layouy_display.setVisibility(View.VISIBLE);
-            bank_layout.setVisibility(View.GONE);
-            tx_hash_layout.setVisibility(View.GONE);
-            action_layout.setVisibility(View.GONE);
             tx_hash_tv.setText(tx_hash_string);
-
-        }
-        else {
-            tx_hash_layout_success.setVisibility(View.GONE);
         }
 
         see_bank_details.setOnClickListener(new View.OnClickListener() {
@@ -162,15 +168,16 @@ public class BankDetails extends BottomSheetDialogFragment {
         mark_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                action_layout.setVisibility(View.GONE);
+                withdraw_accepted_layout.setVisibility(View.GONE);
                 tx_hash_layout.setVisibility(View.VISIBLE);
+
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                action_layout.setVisibility(View.VISIBLE);
+                withdraw_accepted_layout.setVisibility(View.VISIBLE);
                 tx_hash_layout.setVisibility(View.GONE);
             }
         });
@@ -232,7 +239,6 @@ public class BankDetails extends BottomSheetDialogFragment {
                             if(b){
                                 p.dismiss();
                                 dialog.dismiss();
-                                Objects.requireNonNull(BankDetails.this.getDialog()).dismiss();
                             }else{
                                 p.dismiss();
                                 dialog.dismiss();
@@ -269,7 +275,7 @@ public class BankDetails extends BottomSheetDialogFragment {
                     }else{
                         issuccess = false;
                     }
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if(issuccess){

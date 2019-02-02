@@ -75,7 +75,7 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
     @Override
     public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
         final String id = String.valueOf(arrayList.get(position).getId());
-        holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
+        holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()/10000.0));
         holder.peer_order_id.setText(id);
         P2pOrderMatchesAdpaterWithdraw p2pOrderMatchesAdpaterWithdraw = new P2pOrderMatchesAdpaterWithdraw(arrayList.get(position).getMatched_by(),fragmentManager,context,activity);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));

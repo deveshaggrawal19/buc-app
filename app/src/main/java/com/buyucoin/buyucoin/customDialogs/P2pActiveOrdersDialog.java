@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit;
 import com.buyucoin.buyucoin.Adapters.P2PorderRecyclerViewAdapterWithdraw;
-import com.buyucoin.buyucoin.Fragments.TriggerActiveOrder;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
@@ -29,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -41,6 +41,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
     ArrayList<ActiveP2pOrders> activeP2pOrderslist;
     TextView activeOrderType;
     String type = "";
+    SwipeRefreshLayout p2p_active_orders_layout;
 
 
     public static P2pActiveOrdersDialog newInstance(){
@@ -68,10 +69,20 @@ public class P2pActiveOrdersDialog extends DialogFragment {
         recyclerView_d.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView_w.setLayoutManager(new LinearLayoutManager(this.getContext()));
         activeOrderType = view.findViewById(R.id.p2p_active_orders_type);
+        p2p_active_orders_layout = view.findViewById(R.id.p2p_active_orders_layout);
+
+        p2p_active_orders_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getActiveOrders();
+            }
+        });
+
 
         getActiveOrders();
         return view;
     }
+
 
     private void getActiveOrders() {
         activeP2pOrderslist.clear();
@@ -117,6 +128,9 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                         });
 
                     }
+
+                    p2p_active_orders_layout.setRefreshing(false);
+
 
 
 

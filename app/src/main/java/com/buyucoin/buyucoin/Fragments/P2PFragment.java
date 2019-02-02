@@ -1,6 +1,5 @@
 package com.buyucoin.buyucoin.Fragments;
 
-import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
+import com.buyucoin.buyucoin.Interfaces.TriggerActiveOrder;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.Utilities;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.textWatcher.P2P_TextWatcher;

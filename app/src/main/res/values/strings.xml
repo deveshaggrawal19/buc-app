@@ -162,4 +162,9 @@
     <string name="hide_details">Hide Details</string>
     <string name="dispute">Dispute</string>
     <string name="complete">Complete</string>
+    <string name="successful">Successful</string>
+    <string name="wait_for_depositer_to_deposit_money_in_your_account">Wait for Depositer to deposit money in your account</string>
+    <string name="mark_as_received">mark as received</string>
+    <string name="dispute_raised">Dispute Raised</string>
+    <string name="your_request_is_successfully_completed">Your request is successfully completed</string>
 </resources>

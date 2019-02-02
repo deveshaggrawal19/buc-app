@@ -35,28 +35,31 @@ public class PassCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pass_code);
         viewPref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
         DISABLE_PIN = viewPref.getBoolean("DISABLE_PASS_CODE",false);
+        enter_password = findViewById(R.id.enter_passcode_heading);
+        confirm_password = findViewById(R.id.confirm_passcode_heading);
         if(DISABLE_PIN){
             startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
             finish();
         }
         pin = "";
-        ci = getIntent();
-        enter_password = findViewById(R.id.enter_passcode_heading);
-        confirm_password = findViewById(R.id.confirm_passcode_heading);
-        isConfirmIntent = ci.getBooleanExtra("isConfirm",false);
-
-
         PASSWORD = viewPref.getString("passcode","no");
+
+        if(getIntent()!=null){
+            ci = getIntent();
+            isConfirmIntent = ci.getBooleanExtra("isConfirm",false);
+            if(isConfirmIntent){
+                enter_password.setVisibility(View.GONE);
+                confirm_password.setVisibility(View.VISIBLE);
+            }else{
+                confirm_password.setVisibility(View.GONE);
+                enter_password.setVisibility(View.VISIBLE);
+            }
+
+        }
 
         Log.d("PASSCODE ITEMS",isConfirmIntent+"  "+PASSWORD);
 
-        if(isConfirmIntent){
-            enter_password.setVisibility(View.GONE);
-            confirm_password.setVisibility(View.VISIBLE);
-        }else{
-            confirm_password.setVisibility(View.GONE);
-            enter_password.setVisibility(View.VISIBLE);
-        }
+
     }
 
     public void updatepin(View view) {

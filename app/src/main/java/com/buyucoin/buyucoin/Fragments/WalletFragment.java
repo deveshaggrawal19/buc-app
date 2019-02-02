@@ -1,18 +1,25 @@
 package com.buyucoin.buyucoin.Fragments;
 
 import android.animation.Animator;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,11 +29,15 @@ import com.buyucoin.buyucoin.LoginActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -54,6 +65,13 @@ public class WalletFragment extends Fragment {
     private SharedPreferences.Editor edit_pref;
     private String FRAGMENT_STATE = "WALLET";
     private String WALLET_INR_BALANCE = "0";
+    private LinearLayout account_dep_history;
+    private LinearLayout account_with_history;
+    private LinearLayout account_trade_history;
+    private LinearLayout p2p_history_layout;
+    private LinearLayout p2p_active_orders_layout;
+
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -89,6 +107,25 @@ public class WalletFragment extends Fragment {
         Context context = view.getContext();
         GridLayoutManager  linearLayoutManager = new GridLayoutManager(context,1);
         recyclerView.setLayoutManager(linearLayoutManager);
+        account_dep_history = view.findViewById(R.id.account_dep_history);
+        account_with_history = view.findViewById(R.id.account_with_history);
+        account_trade_history = view.findViewById(R.id.account_trade_history);
+        p2p_history_layout = view.findViewById(R.id.p2p_history_ll);
+        p2p_history_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                P2P_History p2P_history = new P2P_History();
+                p2P_history.show(getFragmentManager(), "P2P HISTORY");
+            }
+        });
+        p2p_active_orders_layout = view.findViewById(R.id.p2p_active_orders_ll);
+        p2p_active_orders_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment active_order = P2pActiveOrdersDialog.newInstance();
+                active_order.show(getChildFragmentManager(),"");
+            }
+        });
 
         pb = (ProgressBar) view.findViewById(R.id.pbWallet);
         err = (TextView) view.findViewById(R.id.tvWalletError);
@@ -114,6 +151,8 @@ public class WalletFragment extends Fragment {
             }
         });
 
+        HistoryClickHandler();
+
 
 
 //        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
@@ -121,25 +160,55 @@ public class WalletFragment extends Fragment {
 
 //        Utilities.hideProgressBar(pb);
         getWalletData();
+        getAccountData();
         return view;
     }
 
+    private void HistoryClickHandler(){
 
 
+        account_dep_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewHistoryFragment(0,account_dep_history);
 
+            }
+        });
 
+        account_with_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewHistoryFragment(1,account_with_history);
+            }
+        });
+        account_trade_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewHistoryFragment(2,account_trade_history);
 
+            }
+        });
+    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    public void createNewHistoryFragment(int position,View view){
+        final DialogFragment historyFragment = new HistoryFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putInt("POSITION",position);
+        historyFragment.setArguments(bundle);
+        historyFragment.show(getChildFragmentManager(),"HISTORY FRAGMENT "+position);
+
+        makeViewDisable(view);
+    }
+
+    public static void makeViewDisable(final View view){
+        view.setEnabled(false);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setEnabled(true);
+            }
+        },1000);
+    }
 
 
     public void getWalletData(){
@@ -183,7 +252,11 @@ public class WalletFragment extends Fragment {
                         return;
                     }
                     JSONObject data = jsonObject.getJSONObject("data");
-//                    Log.d("WALLET_FRAGMENT", "onResponse: "+data.toString());
+                    String refid = data.getString("referral_id");
+                    String remark_id = data.getString("remark");
+                    edit_pref.putString("ref_id",refid).apply();
+                    edit_pref.putString("remark_id",remark_id).apply();
+                    Log.d("WALLET_FRAGMENT", "onResponse: "+data.toString());
                     String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
                     for(int i=0; i<arr.length; i++){
                         try {
@@ -227,6 +300,61 @@ public class WalletFragment extends Fragment {
             }
         });
     }
+
+    private void getAccountData() {
+        OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                final String s = response.body().string();
+                Log.d("ACCOUNT DATA", "onResponse: "+s);
+
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                if (jsonObject.getString("status").equals("redirect")) {
+                                    Utilities.getOTP(getActivity(), ACCESS_TOKEN,new AlertDialog.Builder(getActivity()));
+                                    new Dashboard().ServerErrorFragment();
+                                    return;
+                                }
+                                final JSONObject data = jsonObject.getJSONObject(("data"));
+                                edit_pref.putString("email",data.get("email").toString()).apply();
+                                edit_pref.putString("name",data.get("name").toString()).apply();
+                                edit_pref.putString("mob",data.get("mob").toString()).apply();
+                                edit_pref.putBoolean("kyc_status",data.getBoolean("kyc_status")).apply();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+                else{
+                    Looper.prepare();
+                    new Dashboard().ServerErrorFragment();
+                }
+
+            }
+        });
+    }
+
 
     @Override
     public void onDestroy() {

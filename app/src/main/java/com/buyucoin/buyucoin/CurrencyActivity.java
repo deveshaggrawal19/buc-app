@@ -133,12 +133,12 @@ public class CurrencyActivity extends AppCompatActivity {
                 if(data.hasChild("buy_orders")){
                     for(DataSnapshot d : data.child("buy_orders").getChildren()){
                         Double price = d.child("price").getValue(Double.class);
-                        price *= 1.0;
                         String value = d.child("value").getValue(String.class);
-                        value = String.valueOf(Double.parseDouble(value)*1.0);
-                        Double vol = d.child("vol").getValue(Double.class);
-                        vol *=1.0;
-                        Bids b = new Bids(price,value,vol);
+                        String vol = d.child("vol").getValue(String.class);
+
+                        Log.d("xxxxxxxxxxxxxx", "onDataChange: "+(141.4464/480000));
+
+                        Bids b = new Bids(price,value,Double.parseDouble(vol));
                         arrayListBids.add(b);
                     }
                     BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),arrayListBids);
@@ -147,12 +147,10 @@ public class CurrencyActivity extends AppCompatActivity {
                 if(data.hasChild("sell_orders")){
                     for(DataSnapshot d : data.child("sell_orders").getChildren()){
                         Double price = d.child("price").getValue(Double.class);
-                        price *= 1.0;
+                        price = removeExtraZero(String.valueOf(price));
                         String value = d.child("value").getValue(String.class);
-                        value = String.valueOf(Double.parseDouble(value)*1.0);
-                        Double vol = d.child("vol").getValue(Double.class);
-                        vol *=1.0;
-                        Ask a = new Ask(price,value,vol);
+                        String vol = d.child("vol").getValue(String.class);
+                        Ask a = new Ask(price,value,Double.parseDouble(vol));
                         arrayListAsks.add(a);
                     }
                     AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);
@@ -161,11 +159,8 @@ public class CurrencyActivity extends AppCompatActivity {
                 if (data.hasChild("market_history")){
                     for(DataSnapshot d : data.child("market_history").getChildren()){
                         Double amount = d.child("amount").getValue(Double.class);
-                        amount *=1.0;
                         Double price = d.child("price").getValue(Double.class);
-                        price *=1.0;
                         String value = d.child("value").getValue(String.class);
-                        value = String.valueOf(Double.parseDouble(value)*1.0);
                         Long time = d.child("time").getValue(Long.class);
                         String type = d.child("type").getValue(String.class);
 
@@ -177,8 +172,6 @@ public class CurrencyActivity extends AppCompatActivity {
                         m.setValue(value);
 
                         arrayListMarketHistory.add(m);
-
-
                     }
                     MarketHistoryAdapter marketHistoryAdapter = new MarketHistoryAdapter(getApplicationContext(),arrayListMarketHistory);
                     market_recview.setAdapter(marketHistoryAdapter);
@@ -222,6 +215,8 @@ public class CurrencyActivity extends AppCompatActivity {
         });
 
 
+
+
         OkHttpHandler.get("https://www.buyucoin.com/market-graph?currency=" + s, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -259,6 +254,15 @@ public class CurrencyActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public double removeExtraZero(String s){
+        if(s.contains("0000")){
+            return Double.parseDouble(s)/10000;
+        }
+        else{
+            return Double.parseDouble(s);
+        }
     }
 
     public class XY{

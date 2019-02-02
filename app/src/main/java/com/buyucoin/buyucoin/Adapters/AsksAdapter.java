@@ -50,7 +50,7 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
 
     @Override
     public int getItemCount() {
-        return 5;
+        return askArrayList.size();
     }
 
     class AskViewHolder extends RecyclerView.ViewHolder {

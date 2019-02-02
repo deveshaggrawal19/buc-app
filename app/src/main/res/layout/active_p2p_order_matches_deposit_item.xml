@@ -35,8 +35,22 @@
         android:background="@drawable/pills"
         android:gravity="center"
         android:padding="5dp"
+        android:id="@+id/view_layout_display"
         android:text="View Details"
         android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/peer_success"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/successful"
+        android:textColor="@color/kyc_color"
+        android:textSize="15sp" />
 
 
 

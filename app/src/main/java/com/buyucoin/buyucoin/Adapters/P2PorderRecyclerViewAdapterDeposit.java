@@ -13,13 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Dashboard;
-import com.buyucoin.buyucoin.Fragments.P2PFragment;
-import com.buyucoin.buyucoin.Fragments.TriggerActiveOrder;
 import com.buyucoin.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
-import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.pojos.ActiveP2pOrders;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
@@ -75,7 +72,7 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
     @Override
     public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
         final String id = String.valueOf(arrayList.get(position).getId());
-        holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()));
+        holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()/10000.0));
         holder.peer_order_id.setText(id);
         P2pOrderMatchesAdpaterDeposit p2POrderMatchesAdpaterDeposit = new P2pOrderMatchesAdpaterDeposit(arrayList.get(position).getMatched_by(),fragmentManager,context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));

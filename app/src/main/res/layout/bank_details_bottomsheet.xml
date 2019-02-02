@@ -3,14 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="10dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:background="@color/kyc_color"
+        android:background="@color/colorWhite"
         android:padding="10dp"
+        android:visibility="gone"
         android:id="@+id/tx_hash_layout_display"
         android:layout_height="wrap_content">
         <TextView
@@ -27,60 +27,82 @@
             android:textColor="@color/colorBlack"
             android:gravity="center"
             android:layout_height="wrap_content" />
-        <TextView
-            android:layout_marginTop="10dp"
+
+        <LinearLayout
+            android:id="@+id/tx_action_layout"
             android:layout_width="match_parent"
-            android:text="@string/time_left_in_minutes"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            style="?attr/buttonBarButtonStyle"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/see_bank_details"
+                android:background="#eeeeeeee"
+                android:textColor="@color/colorRed"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="?attr/buttonBarButtonStyle"
+                android:text="@string/see_bank_details" />
+            <Button
+                android:id="@+id/raise_dispute"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="?attr/buttonBarButtonStyle"
+                android:text="@string/raise_dispute" />
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:text="60:00"
-            android:id="@+id/tx_hash_time_tv"
-            android:textColor="@color/colorWhite"
-            android:textSize="50sp"
             android:gravity="center"
+            android:textColor="@color/g1b67e8"
+            android:padding="5dp"
+            android:id="@+id/kindly"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/headings"
+            android:text="Kindly wait for withdrawer confirmation"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/tx_action_layout"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        style="?attr/buttonBarButtonStyle"
+        android:orientation="vertical"
+        android:background="@color/colorWhite"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:id="@+id/withdraw_completed_layout"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/see_bank_details"
-            android:background="#eeeeeeee"
-            android:textColor="@color/colorRed"
-            android:padding="5dp"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="?attr/buttonBarButtonStyle"
-            android:text="@string/see_bank_details" />
-        <Button
-            android:id="@+id/raise_dispute"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:padding="5dp"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="?attr/buttonBarButtonStyle"
-            android:text="@string/raise_dispute" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="@string/your_request_is_successfully_completed"
+            android:textSize="@dimen/headings"
+            android:textColor="@color/kyc_color"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+
 
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/bank_details_layout"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
     <TextView
@@ -186,123 +208,106 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/progress_action_layout"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/processing"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-
-
-
-
-
-
-    <LinearLayout
         android:id="@+id/action_layout"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        style="?attr/buttonBarButtonStyle"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/remove_request"
-            android:background="#eeeeeeee"
-            android:textColor="@color/colorRed"
-            android:padding="5dp"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="?attr/buttonBarButtonStyle"
-            android:text="@string/remove_request" />
-        <Button
-            android:id="@+id/mark_complete"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:padding="5dp"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            style="?attr/buttonBarButtonStyle"
-            android:text="@string/mark_as_complete" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tx_hash_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/history_item_drawable"
-        android:elevation="2dp"
-        android:gravity="center"
         android:orientation="vertical"
+        android:gravity="center"
         android:visibility="gone"
-        android:padding="10dp">
-
-        <EditText
-            android:id="@+id/transition_hash"
+        style="?attr/buttonBarButtonStyle"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/tx_hash_layout"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/input_shape"
-            android:hint="@string/enter_transection_hash"
-            android:padding="10dp" />
+            android:background="@drawable/history_item_drawable"
+            android:elevation="2dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
 
+            <EditText
+                android:id="@+id/transition_hash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_shape"
+                android:hint="@string/enter_transection_hash"
+                android:padding="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                style="?attr/buttonBarButtonStyle">
+
+                <Button
+
+                    android:id="@+id/cancel_request"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#eeeeeeee"
+                    android:padding="5dp"
+                    android:text="@string/cancel"
+                    style="?attr/buttonBarButtonStyle"
+                    android:textColor="@color/colorRed" />
+
+                <Button
+                    android:id="@+id/submit_tx_hash"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    style="?attr/buttonBarButtonStyle"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/submit_tx_hash"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
             android:orientation="horizontal"
-            style="?attr/buttonBarButtonStyle">
-
+            android:layout_marginTop="20dp"
+            android:id="@+id/withdraw_accepted_layout"
+            android:layout_height="wrap_content">
             <Button
-
-                android:id="@+id/cancel_request"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:id="@+id/remove_request"
                 android:background="#eeeeeeee"
+                android:textColor="@color/colorRed"
                 android:padding="5dp"
-                android:text="@string/cancel"
-                style="?attr/buttonBarButtonStyle"
-                android:textColor="@color/colorRed" />
-
-            <Button
-                android:id="@+id/submit_tx_hash"
+                android:layout_gravity="center"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 style="?attr/buttonBarButtonStyle"
+                android:text="@string/remove_request" />
+            <Button
+                android:id="@+id/mark_complete"
                 android:background="@color/colorPrimary"
-                android:text="@string/submit_tx_hash"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="?attr/buttonBarButtonStyle"
+                android:text="@string/mark_as_complete" />
 
         </LinearLayout>
 
+
+
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+
+
 
 
 </LinearLayout>

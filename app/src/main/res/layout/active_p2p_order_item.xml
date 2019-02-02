@@ -35,18 +35,17 @@
             android:textStyle="bold" />
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:background="@drawable/p2p_corder_drawable"
             android:padding="3dp"
-            android:text="Processing"
-            android:textSize="10dp"
-            android:textColor="@android:color/white" />
+            android:text="Matched"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_orange_light" />
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:src="@drawable/profile_menu_list_arrow_right" />
 

@@ -48,15 +48,15 @@ public class SuperSettingsBottomsheet extends BottomSheetDialogFragment {
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buyucoin.com/about"));
+                startActivity(intent);
             }
         });
 
         policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buyucoin.com/privacy_"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://buyucoin.com/privacy-policy"));
                 startActivity(intent);
 
             }

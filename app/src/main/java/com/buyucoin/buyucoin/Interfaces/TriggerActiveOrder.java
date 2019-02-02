@@ -1,4 +1,4 @@
-package com.buyucoin.buyucoin.Fragments;
+package com.buyucoin.buyucoin.Interfaces;
 
 public interface TriggerActiveOrder {
     public void triggerOrder();
