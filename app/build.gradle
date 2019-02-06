@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+
+    signingConfigs {
+        key_config {
+            keyAlias "buc_keyfile"
+            storePassword "12345678"
+            keyPassword "12345678"
+            storeFile file('/home/devesh/keystore/buc_keyfile.jks')
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.buyucoin.buyucoin"
@@ -13,8 +22,22 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
+        }
+
+    }
+    flavorDimensions "default"
+    productFlavors {
+        stagging {
+            buildConfigField("String", "BASE_URL", "\"http://test.buyucoin.com/andrios/\"")
+            signingConfig signingConfigs.key_config
+        }
+        production {
+            buildConfigField("String", "BASE_URL", "\"https://www.buyucoin.com/andrios/\"")
+            signingConfig signingConfigs.key_config
         }
     }
     allprojects {
@@ -23,7 +46,6 @@ android {
         }
     }
     buildToolsVersion '28.0.3'
-
     packagingOptions {
         exclude 'META-INF/proguard/androidx-annotation.pro'
     }

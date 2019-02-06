@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/history_item_drawable"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/conf_otp"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:text="Enter Security Pin"
+        android:id="@+id/pin_textview"
+        android:gravity="center"
+        android:textSize="@dimen/headings"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/pin_password"
+        android:layout_width="match_parent"
+        android:background="@drawable/input_shape"
+        android:padding="5dp"
+        android:inputType="numberPassword"
+        android:hint="Enter Pin"
+        android:gravity="center"
+        android:layout_height="70dp" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:id="@+id/pin_confirm_btn"
+            android:background="@drawable/pills"
+            android:textColor="@color/colorWhite"
+            android:text="confirm pin"
+            android:padding="10dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

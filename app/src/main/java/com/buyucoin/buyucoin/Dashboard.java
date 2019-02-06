@@ -1,38 +1,24 @@
 package com.buyucoin.buyucoin;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Adapters.Dashboard_PagerAdapter;
-import com.buyucoin.buyucoin.Fragments.AccountFragment;
-import com.buyucoin.buyucoin.Fragments.BuySellFragment;
-import com.buyucoin.buyucoin.Fragments.HistoryFragment;
 import com.buyucoin.buyucoin.Fragments.P2PFragment;
-import com.buyucoin.buyucoin.Fragments.RateFragment;
-import com.buyucoin.buyucoin.Fragments.ReferralFragment;
 import com.buyucoin.buyucoin.Fragments.ServerError;
 import com.buyucoin.buyucoin.Fragments.SuperSettingsBottomsheet;
-import com.buyucoin.buyucoin.Fragments.WalletFragment;
 import com.buyucoin.buyucoin.broadcast.NotNetworkBroadCastReceiver;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
@@ -40,14 +26,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -84,6 +68,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+//        DialogFragment dialogFragment = new ConfirmPasscodeDialog();
+//        dialogFragment.setCancelable(false);
+//        dialogFragment.show(getSupportFragmentManager(),"");
 
         bm = findViewById(R.id._btnbar);
         toolbar = findViewById(R.id.toolbar);
@@ -247,6 +235,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         OkHttpHandler.refresh_post("refresh", refresh_token, jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -258,13 +247,16 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
+                Log.d(TAG, "getNonFreshToken: "+s);
+
+
                 try {
                     final JSONObject jsonObject1 = new JSONObject(s);
                     Log.d(TAG, "onResponse: "+jsonObject1.toString());
                     buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getString("access_token"));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new CoustomToast(getApplicationContext(),getParent(),e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
+                    new CoustomToast(Dashboard.this,Dashboard.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
 
 
                 }

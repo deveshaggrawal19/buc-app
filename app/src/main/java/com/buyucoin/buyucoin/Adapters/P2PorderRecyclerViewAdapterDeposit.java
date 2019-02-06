@@ -1,5 +1,6 @@
 package com.buyucoin.buyucoin.Adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -43,9 +44,10 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
     BuyucoinPref pref;
     static boolean issuccess = true;
     AlertDialog.Builder progressDialog;
+    Activity activity;
 
 
-    public P2PorderRecyclerViewAdapterDeposit(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
+    public P2PorderRecyclerViewAdapterDeposit(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager, Activity activity) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
         fragmentManager = childFragmentManager;
@@ -53,6 +55,7 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
         progressDialog = new ProgressDialog.Builder(context);
         progressDialog.setMessage("Processing");
         progressDialog.create();
+        this.activity = activity;
 
     }
 

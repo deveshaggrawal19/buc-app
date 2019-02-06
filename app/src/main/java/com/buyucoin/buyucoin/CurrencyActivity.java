@@ -2,11 +2,6 @@ package com.buyucoin.buyucoin;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,11 +12,9 @@ import android.widget.TextView;
 import com.buyucoin.buyucoin.Adapters.AsksAdapter;
 import com.buyucoin.buyucoin.Adapters.BidsAdapter;
 import com.buyucoin.buyucoin.Adapters.MarketHistoryAdapter;
-import com.buyucoin.buyucoin.DataClasses.Markets;
 import com.buyucoin.buyucoin.config.Config;
 import com.buyucoin.buyucoin.pojos.Ask;
 import com.buyucoin.buyucoin.pojos.Bids;
-
 import com.buyucoin.buyucoin.pojos.MarketHistory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,6 +41,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
@@ -75,7 +70,7 @@ public class CurrencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_currency);
 
 
-        FirebaseDatabase db = new Config().getProductionFirebaseDatabase(getApplicationContext());
+        FirebaseDatabase db = new Config().getProductionFirebaseDatabase();
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
 
@@ -134,13 +129,19 @@ public class CurrencyActivity extends AppCompatActivity {
                     for(DataSnapshot d : data.child("buy_orders").getChildren()){
                         Double price = d.child("price").getValue(Double.class);
                         String value = d.child("value").getValue(String.class);
-                        String vol = d.child("vol").getValue(String.class);
+                        Double vol = d.child("vol").getValue(Double.class);
 
-                        Log.d("xxxxxxxxxxxxxx", "onDataChange: "+(141.4464/480000));
-
-                        Bids b = new Bids(price,value,Double.parseDouble(vol));
+                        Bids b = new Bids(price,value,vol);
                         arrayListBids.add(b);
                     }
+                    Collections.sort(arrayListBids, new Comparator<Bids>() {
+                        @Override
+                        public int compare(Bids o1, Bids o2) {
+                            if(o1.getBid_price() > o2.getBid_price())return 1;
+                            if(o1.getBid_price().equals(o2.getBid_price()))return 0;
+                            else return -1;
+                        }
+                    });
                     BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),arrayListBids);
                     bids_recview.setAdapter(bidsAdapter);
                 }
@@ -149,8 +150,8 @@ public class CurrencyActivity extends AppCompatActivity {
                         Double price = d.child("price").getValue(Double.class);
                         price = removeExtraZero(String.valueOf(price));
                         String value = d.child("value").getValue(String.class);
-                        String vol = d.child("vol").getValue(String.class);
-                        Ask a = new Ask(price,value,Double.parseDouble(vol));
+                        Double vol = d.child("vol").getValue(Double.class);
+                        Ask a = new Ask(price,value,vol);
                         arrayListAsks.add(a);
                     }
                     AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);

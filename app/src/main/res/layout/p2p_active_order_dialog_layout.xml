@@ -5,54 +5,41 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:padding="15dp"
-        android:gravity="center_vertical"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:id="@+id/loading_screen"
+        android:gravity="center"
+        android:layout_height="match_parent">
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="ID"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/empty_screen"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_height="match_parent">
 
-            />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:text="AMOUNT"
-            android:id="@+id/p2p_order_amount"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_width="0dp"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:padding="3dp"
-            android:text="STATUS"
-            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:tint="@color/colorPrimary"
+            android:alpha="0.5"
+            android:src="@drawable/empty_orders"
+            android:layout_height="200dp" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:text="ACTION"
+            android:text="Empty"
+            android:textSize="30sp"
             android:textStyle="bold"
-            />
+            android:textColor="@color/colorPrimary"
+            android:alpha="0.5"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
     <LinearLayout

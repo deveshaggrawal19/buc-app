@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "800944004927",
+    "firebase_url": "https://buyucoin-prod.firebaseio.com",
+    "project_id": "buyucoin-prod",
+    "storage_bucket": "buyucoin-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800944004927:android:533f1b603923e355",
+        "android_client_info": {
+          "package_name": "com.buyucoin.buyucoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800944004927-o52bc8mrjr5gb3tref2aji63u4uiq76f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsjC_udrw4-0yOJfyJb-vXN6tbxYC3-tQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

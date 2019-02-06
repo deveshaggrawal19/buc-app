@@ -5,14 +5,13 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pojos.Bids;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,9 +37,13 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BidsViewHolder holder, int position) {
-        holder.price.setText(String.valueOf(bidsArrayList.get(position).getBid_price()));
+
+        DecimalFormat format2 = new DecimalFormat("0.####");
+        holder.price.setText(String.valueOf(format2.format(bidsArrayList.get(position).getBid_price())));
         holder.value.setText(bidsArrayList.get(position).getBid_value());
-        holder.vol.setText(String.valueOf(bidsArrayList.get(position).getBid_volume()));
+        DecimalFormat format = new DecimalFormat("0.########");
+        String v1 = format.format(bidsArrayList.get(position).getBid_volume());
+        holder.vol.setText(String.valueOf(v1).trim());
         if(position%2==0){
             holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }

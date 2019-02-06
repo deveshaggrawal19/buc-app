@@ -57,6 +57,8 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
         progressDialog.setMessage("Processing");
         progressDialog.create();
 
+
+
     }
 
     public P2PorderRecyclerViewAdapterWithdraw() {
@@ -66,14 +68,13 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
     @Override
     public P2pOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view;
-        view = layoutInflater.inflate(R.layout.active_p2p_order_item,parent,false);
-
+        View view = layoutInflater.inflate(R.layout.active_p2p_order_item,parent,false);
         return new P2pOrderViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
+        Log.d(context.getPackageName(), "onBindViewHolder: "+arrayList.get(position).getId());
         final String id = String.valueOf(arrayList.get(position).getId());
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()/10000.0));
         holder.peer_order_id.setText(id);

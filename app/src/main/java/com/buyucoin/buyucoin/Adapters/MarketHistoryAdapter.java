@@ -1,20 +1,17 @@
 package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.pojos.Ask;
 import com.buyucoin.buyucoin.pojos.MarketHistory;
-import com.google.firebase.database.android.AndroidPlatform;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -42,23 +39,28 @@ public class MarketHistoryAdapter extends RecyclerView.Adapter<MarketHistoryAdap
 
         holder.price.setText(String.valueOf(historyArrayList.get(position).getPrice()));
         holder.value.setText(String.valueOf(historyArrayList.get(position).getValue()));
-        holder.amount.setText(String.valueOf(historyArrayList.get(position).getAmount()));
+
+
+        DecimalFormat format = new DecimalFormat("0.####");
+        String v1 = format.format(historyArrayList.get(position).getAmount());
+        holder.amount.setText(String.valueOf(v1));
         holder.type.setText(historyArrayList.get(position).getType());
+//        holder.type_img.setVisibility(View.GONE);
 
         if(position%2==0){
             holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }
 
         if(historyArrayList.get(position).getType().equals("Buy")){
-            holder.type_img.setImageResource(R.drawable.history_deposite_icon);
-            holder.type_img.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.kyc_color)));
+//            holder.type_img.setImageResource(R.drawable.history_deposite_icon);
+//            holder.type_img.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.kyc_color)));
             holder.price.setTextColor(context.getResources().getColor(R.color.kyc_color));
             holder.value.setTextColor(context.getResources().getColor(R.color.kyc_color));
             holder.amount.setTextColor(context.getResources().getColor(R.color.kyc_color));
             holder.type.setTextColor(context.getResources().getColor(R.color.kyc_color));
         }else{
-            holder.type_img.setImageResource(R.drawable.history_withdraw_icon);
-            holder.type_img.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.colorRed)));
+//            holder.type_img.setImageResource(R.drawable.history_withdraw_icon);
+//            holder.type_img.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.colorRed)));
             holder.price.setTextColor(context.getResources().getColor(R.color.colorRed));
             holder.value.setTextColor(context.getResources().getColor(R.color.colorRed));
             holder.amount.setTextColor(context.getResources().getColor(R.color.colorRed));
@@ -77,7 +79,7 @@ public class MarketHistoryAdapter extends RecyclerView.Adapter<MarketHistoryAdap
 
     class MarketHistoryViewHolder extends RecyclerView.ViewHolder {
         TextView price,value,amount,type;
-        ImageView type_img;
+//        ImageView type_img;
         View progress;
         MarketHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,7 +87,7 @@ public class MarketHistoryAdapter extends RecyclerView.Adapter<MarketHistoryAdap
             value = itemView.findViewById(R.id.item_value);
             amount = itemView.findViewById(R.id.item_amount);
             type = itemView.findViewById(R.id.item_type);
-            type_img = itemView.findViewById(R.id.item_img_type);
+//            type_img = itemView.findViewById(R.id.item_img_type);
 
         }
     }

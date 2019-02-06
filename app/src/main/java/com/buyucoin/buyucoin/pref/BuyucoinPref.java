@@ -19,7 +19,7 @@ public class BuyucoinPref {
     }
 
     public void removeAllPref(){
-         this.editor.clear().apply();
+        this.preferences.edit().clear().apply();
     }
 
     public String getPrefString(String key){

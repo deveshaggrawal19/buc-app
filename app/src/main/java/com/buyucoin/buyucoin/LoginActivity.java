@@ -1,14 +1,11 @@
 package com.buyucoin.buyucoin;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.InputType;
 import android.util.Log;
-
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,11 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -138,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) {
                 try {
                     String s = response.body().string();
+                    Log.d(TAG, "onResponse: loging response "+s);
                     JSONObject jsonObject1 = new JSONObject(s);
                    // Log.d("RESPONSE_______", s);
                     //Log.d("STRING___", jsonObject1.getString("status"));

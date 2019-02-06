@@ -1,53 +1,32 @@
 package com.buyucoin.buyucoin;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.buyucoin.buyucoin.Interfaces.BuyDialogFunction;
 import com.buyucoin.buyucoin.config.Config;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.customDialogs.CustomDialogs;
-import com.buyucoin.buyucoin.Interfaces.SellDialogFunction;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 public class BuySellActivity extends AppCompatActivity{
     Toolbar toolbar;
@@ -96,7 +75,7 @@ public class BuySellActivity extends AppCompatActivity{
         type = i.getStringExtra("type")!=null?i.getStringExtra("type"):"buy";
         coin = i.getStringExtra("type")!=null?i.getStringExtra("coin_name"):"";
 
-        FirebaseDatabase db = new Config().getProductionFirebaseDatabase(getApplicationContext());
+        FirebaseDatabase db = new Config().getProductionFirebaseDatabase();
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
 

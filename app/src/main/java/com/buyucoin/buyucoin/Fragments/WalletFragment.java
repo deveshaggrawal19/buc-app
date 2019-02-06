@@ -1,17 +1,10 @@
 package com.buyucoin.buyucoin.Fragments;
 
-import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -27,10 +20,10 @@ import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.LoginActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
+import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
-import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,10 +32,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import okhttp3.internal.Util;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -58,7 +54,7 @@ public class WalletFragment extends Fragment {
     ArrayList<JSONObject> j = new ArrayList<>();
     RecyclerView recyclerView;
     ProgressBar pb;
-    TextView err,wallet_inr;
+    TextView err,wallet_inr,welcome;
     View nsView;
     CheckBox hidezero_checkbox;
     private SharedPreferences prefs ;
@@ -99,7 +95,7 @@ public class WalletFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_wallet, container, false);
 
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
@@ -135,6 +131,12 @@ public class WalletFragment extends Fragment {
 
         wallet_inr.setText(getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE);
 
+        welcome = view.findViewById(R.id.welcome);
+        String name = "Weclome ";
+        name += prefs.getString("name","Back");
+        welcome.setText(name);
+
+
 
 
         hidezero_checkbox.setOnClickListener(new View.OnClickListener() {
@@ -151,16 +153,12 @@ public class WalletFragment extends Fragment {
             }
         });
 
+
         HistoryClickHandler();
-
-
-
-//        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list, mListener));
-
-
-//        Utilities.hideProgressBar(pb);
         getWalletData();
         getAccountData();
+
+
         return view;
     }
 

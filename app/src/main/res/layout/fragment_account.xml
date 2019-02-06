@@ -454,6 +454,38 @@
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:id="@+id/change_passcode_layout"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_marginLeft="5dp"
+                        android:tint="@color/design_default_color_secondary"
+                        android:src="@drawable/profile_option_list_drawable"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:text="Change App Passcode"
+                        android:textColor="@android:color/black"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/profile_menu_list_arrow_right"
+                        android:tint="#cccccc" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout

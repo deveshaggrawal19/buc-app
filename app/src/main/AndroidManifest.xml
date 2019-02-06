@@ -55,6 +55,7 @@
         <activity
             android:name=".P2POrders"
             android:theme="@style/fontTheme" />
+        <activity android:name=".customDialogs.P2pActiveOrdersDialog"/>
 
         <receiver
             android:name=".broadcast.NotNetworkBroadCastReceiver"

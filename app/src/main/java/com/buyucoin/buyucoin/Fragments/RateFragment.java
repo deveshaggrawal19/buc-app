@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 
 import com.buyucoin.buyucoin.Adapters.MyrateRecyclerViewAdapter;
 import com.buyucoin.buyucoin.DataClasses.Rates;
-import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
 import com.buyucoin.buyucoin.config.Config;
@@ -21,10 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -32,9 +27,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -91,7 +83,7 @@ public class RateFragment extends Fragment {
         adapter = new MyrateRecyclerViewAdapter(list, getActivity().getApplicationContext());
 
 
-        FirebaseDatabase db = new Config().getProductionFirebaseDatabase(getContext());
+        FirebaseDatabase db = new Config().getProductionFirebaseDatabase();
        // Toast.makeText(getActivity(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
     }

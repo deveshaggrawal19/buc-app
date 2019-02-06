@@ -6,12 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pojos.Ask;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -37,9 +37,12 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
     @Override
     public void onBindViewHolder(@NonNull AskViewHolder holder, int position) {
 
-        holder.price.setText(String.valueOf(askArrayList.get(position).getAsk_price()));
+        DecimalFormat format2 = new DecimalFormat("0.####");
+        holder.price.setText(String.valueOf(format2.format(askArrayList.get(position).getAsk_price())));
         holder.value.setText(askArrayList.get(position).getAsk_value());
-        holder.vol.setText(String.valueOf(askArrayList.get(position).getAsk_volume()));
+        DecimalFormat format = new DecimalFormat("0.########");
+        String v1 = format.format(askArrayList.get(position).getAsk_volume());
+        holder.vol.setText(String.valueOf(v1).trim());
         if(position%2==0){
             holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }

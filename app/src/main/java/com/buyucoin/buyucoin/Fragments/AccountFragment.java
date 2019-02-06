@@ -2,24 +2,12 @@ package com.buyucoin.buyucoin.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ShareCompat;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -33,12 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.customDialogs.ChangePasscodeDialog;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 
 import org.json.JSONException;
@@ -47,7 +35,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -77,7 +70,7 @@ public class AccountFragment extends Fragment {
     private boolean applock_enabled;
     private ImageView kyc;
     private ImageView imageView;
-    private RelativeLayout account_about_us, account_term_policy;
+    private RelativeLayout account_about_us, account_term_policy,change_passcode_layout;
     private String referral_id = "";
 
     public AccountFragment() {
@@ -110,6 +103,7 @@ public class AccountFragment extends Fragment {
         termAndAbout();
         MakeCircularImage();
         AppPassWordHandler(view);
+        changePasscodeHandler();
         shareRefid();
 
         name.setText(prefs.getString("name", ""));
@@ -265,11 +259,30 @@ public class AccountFragment extends Fragment {
                 if(isChecked){
                     edit_pref.putBoolean("DISABLE_PASS_CODE",true).apply();
                     new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Disabled",CoustomToast.TYPE_SUCCESS).showToast();
+                    change_passcode_layout.setEnabled(false);
+                    change_passcode_layout.setAlpha(0.5f);
 
                 }else{
                     edit_pref.putBoolean("DISABLE_PASS_CODE",false).apply();
                     new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Enabled",CoustomToast.TYPE_SUCCESS).showToast();
+                    change_passcode_layout.setEnabled(true);
+                    change_passcode_layout.setAlpha(1f);
                 }
+            }
+        });
+    }
+
+    private void changePasscodeHandler(){
+        if(applock_enabled){
+            change_passcode_layout.setEnabled(false);
+            change_passcode_layout.setAlpha(0.5f);
+        }
+        change_passcode_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment changePassocde = new ChangePasscodeDialog();
+                changePassocde.setCancelable(true);
+                changePassocde.show(getChildFragmentManager(),"CHANGE PASSCODE");
             }
         });
     }
@@ -362,6 +375,7 @@ public class AccountFragment extends Fragment {
         account_term_policy = view.findViewById(R.id.account_term_policy);
         ref_id = view.findViewById(R.id.ref_id);
         share_ref_id = view.findViewById(R.id.share_ref_id);
+        change_passcode_layout = view.findViewById(R.id.change_passcode_layout);
     }
 
 
