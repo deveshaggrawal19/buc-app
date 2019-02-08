@@ -62,6 +62,7 @@ public class CurrencyActivity extends AppCompatActivity {
     ArrayList<Bids> arrayListBids ;
     ArrayList<Ask> arrayListAsks ;
     ArrayList<MarketHistory> arrayListMarketHistory;
+    TextView hight24,low24,change24;
     String s;
 
     @Override
@@ -82,6 +83,9 @@ public class CurrencyActivity extends AppCompatActivity {
         bids_recview = findViewById(R.id.rvBid);
         ask_recview = findViewById(R.id.rvAsk);
         market_recview = findViewById(R.id.rvMarketHIstory);
+        hight24 = findViewById(R.id.high24);
+        low24 = findViewById(R.id.low24);
+        change24 = findViewById(R.id.high24change);
 
 
         bids_recview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -103,7 +107,6 @@ public class CurrencyActivity extends AppCompatActivity {
 
 
         TextView tv = findViewById(R.id.tvCurrencyCurr);
-        TextView hrs24 = findViewById(R.id.tvCurrency24Hrs);
         ImageView img = findViewById(R.id.ivCurrencyImg);
 
 
@@ -114,7 +117,12 @@ public class CurrencyActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String marketstring = "market_"+s;
                 DataSnapshot data = dataSnapshot.child(marketstring).child("data");
-                Log.d("MARKET___", data.toString());
+                DataSnapshot crypto = data.child("crypto");
+//                Log.d("MARKET___", data.toString());
+
+                hight24.setText(crypto.child("high_24").getValue(String.class));
+                change24.setText(crypto.child("change").getValue(String.class));
+                low24.setText(crypto.child("low_24").getValue(String.class));
 
                 arrayListBids = new ArrayList<>();
                 arrayListAsks = new ArrayList<>();
@@ -124,61 +132,63 @@ public class CurrencyActivity extends AppCompatActivity {
                 arrayListAsks.clear();
 
 
-
-                if(data.hasChild("buy_orders")){
-                    for(DataSnapshot d : data.child("buy_orders").getChildren()){
-                        Double price = d.child("price").getValue(Double.class);
-                        String value = d.child("value").getValue(String.class);
-                        Double vol = d.child("vol").getValue(Double.class);
-
-                        Bids b = new Bids(price,value,vol);
-                        arrayListBids.add(b);
-                    }
-                    Collections.sort(arrayListBids, new Comparator<Bids>() {
-                        @Override
-                        public int compare(Bids o1, Bids o2) {
-                            if(o1.getBid_price() > o2.getBid_price())return 1;
-                            if(o1.getBid_price().equals(o2.getBid_price()))return 0;
-                            else return -1;
+                try {
+                    if(data.hasChild("buy_orders")){
+                        for(DataSnapshot d : data.child("buy_orders").getChildren()){
+                            Double price = d.child("price").getValue(Double.class);
+                            String value = d.child("value").getValue(String.class);
+                            String vol = d.child("vol").getValue(String.class);
+                            Bids b = new Bids(price,value,Double.valueOf(vol));
+                            arrayListBids.add(b);
                         }
-                    });
-                    BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),arrayListBids);
-                    bids_recview.setAdapter(bidsAdapter);
-                }
-                if(data.hasChild("sell_orders")){
-                    for(DataSnapshot d : data.child("sell_orders").getChildren()){
-                        Double price = d.child("price").getValue(Double.class);
-                        price = removeExtraZero(String.valueOf(price));
-                        String value = d.child("value").getValue(String.class);
-                        Double vol = d.child("vol").getValue(Double.class);
-                        Ask a = new Ask(price,value,vol);
-                        arrayListAsks.add(a);
+                        Collections.sort(arrayListBids, new Comparator<Bids>() {
+                            @Override
+                            public int compare(Bids o1, Bids o2) {
+                                if(o1.getBid_price() > o2.getBid_price())return 1;
+                                if(o1.getBid_price().equals(o2.getBid_price()))return 0;
+                                else return -1;
+                            }
+                        });
+                        BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),arrayListBids);
+                        bids_recview.setAdapter(bidsAdapter);
                     }
-                    AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);
-                    ask_recview.setAdapter(asksAdapter);
-                }
-                if (data.hasChild("market_history")){
-                    for(DataSnapshot d : data.child("market_history").getChildren()){
-                        Double amount = d.child("amount").getValue(Double.class);
-                        Double price = d.child("price").getValue(Double.class);
-                        String value = d.child("value").getValue(String.class);
-                        Long time = d.child("time").getValue(Long.class);
-                        String type = d.child("type").getValue(String.class);
-
-                        MarketHistory m = new MarketHistory();
-                        m.setAmount(amount);
-                        m.setPrice(price);
-                        m.setTime(time);
-                        m.setType(type);
-                        m.setValue(value);
-
-                        arrayListMarketHistory.add(m);
+                    if(data.hasChild("sell_orders")){
+                        for(DataSnapshot d : data.child("sell_orders").getChildren()){
+                            Double price = d.child("price").getValue(Double.class);
+                            price = removeExtraZero(String.valueOf(price));
+                            String value = d.child("value").getValue(String.class);
+                            String vol = d.child("vol").getValue(String.class);
+                            Ask a = new Ask(price,value,Double.valueOf(vol));
+                            arrayListAsks.add(a);
+                        }
+                        AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);
+                        ask_recview.setAdapter(asksAdapter);
                     }
-                    MarketHistoryAdapter marketHistoryAdapter = new MarketHistoryAdapter(getApplicationContext(),arrayListMarketHistory);
-                    market_recview.setAdapter(marketHistoryAdapter);
+                    if (data.hasChild("market_history")){
+                        for(DataSnapshot d : data.child("market_history").getChildren()){
+                            Double amount = d.child("amount").getValue(Double.class);
+                            Double price = d.child("price").getValue(Double.class);
+                            String value = d.child("value").getValue(String.class);
+                            Long time = d.child("time").getValue(Long.class);
+                            String type = d.child("type").getValue(String.class);
+
+                            MarketHistory m = new MarketHistory();
+                            m.setAmount(amount);
+                            m.setPrice(price);
+                            m.setTime(time);
+                            m.setType(type);
+                            m.setValue(value);
+
+                            arrayListMarketHistory.add(m);
+                        }
+                        MarketHistoryAdapter marketHistoryAdapter = new MarketHistoryAdapter(getApplicationContext(),arrayListMarketHistory);
+                        market_recview.setAdapter(marketHistoryAdapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                Log.d("LIST SIZE__", arrayListAsks.size()+""+arrayListBids.size());
+//                Log.d("LIST SIZE__", arrayListAsks.size()+""+arrayListBids.size());
 
 
             }
@@ -198,7 +208,6 @@ public class CurrencyActivity extends AppCompatActivity {
         tv.setText(s.toUpperCase());
         buy.setText("Buy");
         sell.setText("Sell");
-        hrs24.setText("24Hrs Change "+bundle.getString("high_24"));
 
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,7 +294,7 @@ public class CurrencyActivity extends AppCompatActivity {
     }
 
     public void addToGraph(List<XY> list) {
-        Log.d("ARRAY LENGTH", list.size()+ "");
+//        Log.d("ARRAY LENGTH", list.size()+ "");
 
         Collections.sort(list, new Comparator<XY>() {
             DateFormat f = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
@@ -313,7 +322,7 @@ public class CurrencyActivity extends AppCompatActivity {
         }
 
 
-        Log.d("DP LENGTH", dp.length+"");
+//        Log.d("DP LENGTH", dp.length+"");
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
 
         graphView = (GraphView) findViewById(R.id.graphView);

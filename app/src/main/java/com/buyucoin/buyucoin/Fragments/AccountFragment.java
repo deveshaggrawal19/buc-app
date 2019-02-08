@@ -176,12 +176,13 @@ public class AccountFragment extends Fragment {
     }
 
     private void HistoryClickHandler(){
-        final DialogFragment historyFragment = new HistoryFragment();
+
         final Bundle bundle = new Bundle();
 
         account_dep_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final DialogFragment historyFragment = new HistoryFragment();
                 bundle.putInt("POSITION",0);
                 historyFragment.setArguments(bundle);
                 historyFragment.show(getChildFragmentManager(),"TAB:0");
@@ -194,6 +195,7 @@ public class AccountFragment extends Fragment {
         account_with_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final DialogFragment historyFragment = new HistoryFragment();
                 bundle.putInt("POSITION",1);
                 historyFragment.setArguments(bundle);
                 historyFragment.show(getChildFragmentManager(),"TAB:1");
@@ -205,6 +207,7 @@ public class AccountFragment extends Fragment {
         account_trade_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final DialogFragment historyFragment = new HistoryFragment();
                 bundle.putInt("POSITION",2);
                 historyFragment.setArguments(bundle);
                 historyFragment.show(getChildFragmentManager(),"TAB:2");

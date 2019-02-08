@@ -4,18 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -170,29 +169,40 @@ public class Utilities {
     }
 
     public static void getOTPFromUser(final Activity activity, final String ACCESS_TOKEN, final AlertDialog.Builder builder){
-        final EditText otp = new EditText(activity.getApplicationContext());
+        LayoutInflater layoutInflater = activity.getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.otp_layout,null,false);
+        final EditText otp = view.findViewById(R.id.otp_edittext);
+        final Button submit_otp = view.findViewById(R.id.submit_otp_btn);
+//        final EditText otp = new EditText(activity.getApplicationContext());
         //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         //otp.setLayoutParams(lp);
-        builder.setView(otp);
-        builder.setMessage("Enter OTP");
+        builder.setView(view);
+//        builder.setMessage("Enter OTP");
         builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 final AlertDialog dialog = builder.create();
-                dialog.show();
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){
+                submit_otp.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View v) {
                         submitNewOTP(otp.getText().toString(), ACCESS_TOKEN, activity, dialog);
                     }
                 });
+                dialog.show();
+
+//                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){
+//                    @Override
+//                    public void onClick(View view) {
+//                        submitNewOTP(otp.getText().toString(), ACCESS_TOKEN, activity, dialog);
+//                    }
+//                });
             }
         });
 
@@ -218,7 +228,9 @@ public class Utilities {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
                 String s = response.body().string();
+                Log.d("OTP DIALOG", "onResponse: "+s);
                 if(isSuccess(s) || isSuccessRedirect(s)){
                     showToast(activity, "OTP registered");
                     dialog.dismiss();

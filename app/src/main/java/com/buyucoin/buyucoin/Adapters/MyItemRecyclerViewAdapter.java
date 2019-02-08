@@ -1,26 +1,24 @@
 package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 import com.buyucoin.buyucoin.pojos.WalletCoinHorizontal;
 import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -32,7 +30,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     private Context context;
 
 
+
     public MyItemRecyclerViewAdapter(Context context, List<JSONObject> items, boolean hidezero) {
+        boolean hide_zero =  new BuyucoinPref(context).getPrefBoolean("hide_Zero");
+
         this.context = context;
         if(items.size()>0) {
             for (JSONObject js : items) {

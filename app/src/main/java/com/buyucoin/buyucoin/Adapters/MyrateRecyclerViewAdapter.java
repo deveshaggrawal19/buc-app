@@ -1,8 +1,6 @@
 package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +13,11 @@ import com.buyucoin.buyucoin.CurrencyActivity;
 import com.buyucoin.buyucoin.DataClasses.Rates;
 import com.buyucoin.buyucoin.MyResourcesClass;
 import com.buyucoin.buyucoin.R;
-import com.buyucoin.buyucoin.dummy.DummyContent.DummyItem;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecyclerViewAdapter.ViewHolder> {
@@ -45,13 +42,15 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         try {
             String s = mValues.get(position).currency.split("_")[0];
-
+            DecimalFormat format = new DecimalFormat("0.########");
             holder.mItem = mValues.get(position);
             holder.mCurrency.setText(s.toUpperCase());
 
-            holder.mLastTrade.setText(removeZeros(mValues.get(position).last_trade));
-            holder.mAsk.setText(removeZeros(mValues.get(position).ask));
-            holder.mBid.setText(removeZeros(mValues.get(position).bid));
+            holder.mLastTrade.setText(format.format(Double.parseDouble(mValues.get(position).last_trade)));
+
+
+            holder.mAsk.setText(format.format(Double.parseDouble(mValues.get(position).ask)));
+            holder.mBid.setText(format.format(Double.parseDouble(mValues.get(position).bid)));
 
             holder.mImage.setImageResource(MyResourcesClass.COIN_ICON.getInt(s));
 

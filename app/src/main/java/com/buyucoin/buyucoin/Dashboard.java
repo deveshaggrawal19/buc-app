@@ -256,6 +256,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getString("access_token"));
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Looper.prepare();
                     new CoustomToast(Dashboard.this,Dashboard.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
 
 

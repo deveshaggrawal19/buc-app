@@ -36,13 +36,13 @@ import okhttp3.Response;
 
 public class P2pActiveOrdersDialog extends DialogFragment {
 
-    private String ACCESS_TOKEN;
     private RecyclerView recyclerView_d,recyclerView_w;
     private ArrayList<ActiveP2pOrders> activeP2pOrderslist;
     private TextView activeOrderType;
     private String type = "";
     private SwipeRefreshLayout p2p_active_orders_layout;
-    private LinearLayout empty_screen,loading_screen;
+    private LinearLayout loading_screen,empty_screen;
+    private String ACCESS_TOKEN;
 
 
     public static P2pActiveOrdersDialog newInstance(){
@@ -53,9 +53,12 @@ public class P2pActiveOrdersDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
-        BuyucoinPref preferences = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        BuyucoinPref preferences = new BuyucoinPref(Objects.requireNonNull(this.getContext()));
         ACCESS_TOKEN = preferences.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         activeP2pOrderslist = new ArrayList<>();
+
+
+
     }
 
     @Nullable
@@ -63,48 +66,22 @@ public class P2pActiveOrdersDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.p2p_active_order_dialog_layout,container,false);
         activeOrderType = view.findViewById(R.id.p2p_active_orders_type);
-
         p2p_active_orders_layout = view.findViewById(R.id.p2p_active_orders_layout);
-
-        empty_screen = view.findViewById(R.id.empty_screen);
         loading_screen = view.findViewById(R.id.loading_screen);
-
+        empty_screen = view.findViewById(R.id.empty_screen);
         recyclerView_d = view.findViewById(R.id.p2p_active_orders_deposit);
-        recyclerView_w = view.findViewById(R.id.p2p_active_orders_withdraw);
+//        recyclerView_w = view.findViewById(R.id.p2p_active_orders_withdraw);
+        recyclerView_d.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        getActiveOrders();
         p2p_active_orders_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getActiveOrders();
-                switch (type){
-                    case "Active Deposits":
-                        recyclerView_d.setVisibility(View.VISIBLE);
-                        recyclerView_d.setAdapter(new P2PorderRecyclerViewAdapterDeposit(getContext(), activeP2pOrderslist, getChildFragmentManager(), getActivity()));
-                        recyclerView_d.setLayoutManager(new LinearLayoutManager(getContext()));
-                        break;
-                    case "Active Withdrawals":
-                        recyclerView_w.setVisibility(View.VISIBLE);
-                        recyclerView_w.setAdapter(new P2PorderRecyclerViewAdapterWithdraw(getContext(),activeP2pOrderslist,getChildFragmentManager(),getActivity()));
-                        recyclerView_w.setLayoutManager(new LinearLayoutManager(getContext()));
-                        break;
-                }
             }
         });
 
-        switch (type){
-            case "Active Deposits":
-                recyclerView_d.setVisibility(View.VISIBLE);
-                recyclerView_d.setAdapter(new P2PorderRecyclerViewAdapterDeposit(getContext(), activeP2pOrderslist, getChildFragmentManager(), getActivity()));
-                recyclerView_d.setLayoutManager(new LinearLayoutManager(getContext()));
-                break;
-            case "Active Withdrawals":
-                recyclerView_w.setVisibility(View.VISIBLE);
-                recyclerView_w.setAdapter(new P2PorderRecyclerViewAdapterWithdraw(getContext(),activeP2pOrderslist,getChildFragmentManager(),getActivity()));
-                recyclerView_w.setLayoutManager(new LinearLayoutManager(getContext()));
-                break;
-        }
 
+        getActiveOrders();
         return view;
     }
 
@@ -127,59 +104,59 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                     final JSONObject active_withdrawals = j.getJSONObject("active_withdrawals");
 
 
+                    if(!active_withdrawals.toString().equals("{}")){
+                        type = getString(R.string.active_withdrawals);
                         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
-
-                                if(!active_deposite.toString().equals("{}")) {
-                                    type = getString(R.string.active_deposits);
-                                    activeOrderType.setText(type);
-                                    crateOrderView(active_deposite);
-                                    loading_screen.setVisibility(View.GONE);
-                                    p2p_active_orders_layout.setRefreshing(false);
-                                    recyclerView_d.setVisibility(View.VISIBLE);
-                                    recyclerView_d.setAdapter(new P2PorderRecyclerViewAdapterDeposit(getContext(), activeP2pOrderslist, getChildFragmentManager(), getActivity()));
-                                    recyclerView_d.setLayoutManager(new LinearLayoutManager(getContext()));
-                                }
-
-                                if(!active_withdrawals.toString().equals("{}")){
-                                    type = getString(R.string.active_withdrawals);
-                                    activeOrderType.setText(type);
-                                    crateOrderView(active_withdrawals);
-                                    loading_screen.setVisibility(View.GONE);
-                                    p2p_active_orders_layout.setRefreshing(false);
-                                    recyclerView_w.setVisibility(View.VISIBLE);
-                                    recyclerView_w.setAdapter(new P2PorderRecyclerViewAdapterWithdraw(getContext(),activeP2pOrderslist,getChildFragmentManager(),getActivity()));
-                                    recyclerView_w.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                                }
-                                if(!active_deposite.toString().equals("{}") && !active_withdrawals.toString().equals("{}") || activeP2pOrderslist.size()==0){
-                                    empty_screen.setVisibility(View.VISIBLE);
-                                    loading_screen.setVisibility(View.GONE);
-                                    p2p_active_orders_layout.setRefreshing(false);
-
-                                }
-
-
-
-
+                                crateOrderView(active_withdrawals);
+                                activeOrderType.setText(type);
+                                loading_screen.setVisibility(View.GONE);
+                                recyclerView_d.setVisibility(View.VISIBLE);
+                                recyclerView_d.setAdapter(new P2PorderRecyclerViewAdapterWithdraw(getContext(),activeP2pOrderslist,getChildFragmentManager()));
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                                recyclerView_d.setLayoutManager(layoutManager);
+                            }
+                        });
+                    }
+                    if(!active_deposite.toString().equals("{}")){
+                        type = getString(R.string.active_deposits);
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                crateOrderView(active_deposite);
+                                activeOrderType.setText(type);
+                                loading_screen.setVisibility(View.GONE);
+                                recyclerView_d.setVisibility(View.VISIBLE);
+                                recyclerView_d.setAdapter(new P2PorderRecyclerViewAdapterDeposit(getContext(),activeP2pOrderslist,getChildFragmentManager()));
 
                             }
                         });
+                    }
 
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(active_withdrawals.toString().equals("{}") && active_deposite.toString().equals("{}") ){
+                                loading_screen.setVisibility(View.GONE);
+                                empty_screen.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        public void run() {
+                            p2p_active_orders_layout.setRefreshing(false);
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
     }
 
-
-
-    public void crateOrderView(JSONObject active_withdrawals) {
+    private void crateOrderView(JSONObject active_withdrawals) {
         try {
             for (Iterator<String> it = active_withdrawals.keys(); it.hasNext(); ) {
                 String key = it.next();
@@ -187,7 +164,6 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                 Log.d("fdgdhfjghdfhfgmf", o.toString());
                 ActiveP2pOrders activeP2pOrders = new ActiveP2pOrders();
                 JSONArray array = new JSONArray();
-
                 activeP2pOrders.setAmount(o.getDouble("amount"));
                 activeP2pOrders.setBoost(o.getDouble("boost"));
                 activeP2pOrders.setCurrency(o.getInt("currency"));
@@ -198,7 +174,6 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                 activeP2pOrders.setFilled_by(o.getString("filled_by"));
                 activeP2pOrders.setId(o.getInt("id"));
                 activeP2pOrders.setMatched(o.getDouble("matched"));
-
                 if (o.has("matched_by")) {
                     for (Iterator<String> it1 = o.getJSONObject("matched_by").keys(); it1.hasNext(); ) {
                         String s1 = it1.next();
@@ -207,19 +182,15 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                                 .put("id",o.getInt("id"))
                         );
                     }
+                }else{
+                    array = null;
                 }
-
-
                 activeP2pOrders.setMatched_by(array);
-
                 activeP2pOrders.setMatches(o.get("matches"));
-
                 activeP2pOrders.setMin_amount(o.getDouble("min_amount"));
                 activeP2pOrders.setModes(o.getJSONArray("modes"));
                 activeP2pOrders.setNote(o.getString("note"));
-
                 activeP2pOrders.setRejected_matches(o.get("rejected_match"));
-
                 activeP2pOrders.setStatus(o.getInt("status"));
                 activeP2pOrders.setTimestamp(o.getString("timestamp"));
                 activeP2pOrders.setTx_hash(o.getString("tx_hash"));
@@ -228,9 +199,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                 activeP2pOrders.setUser_id(o.getInt("user_id"));
                 activeP2pOrders.setWallet_id(o.getInt("wallet_id"));
                 activeP2pOrders.setWfee_amount(o.getInt("wfee_amount"));
-
                 activeP2pOrderslist.add(activeP2pOrders);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,9 +207,6 @@ public class P2pActiveOrdersDialog extends DialogFragment {
 
     }
 
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        OkHttpHandler.cancelAllRequests();
-//    }
+
+
 }

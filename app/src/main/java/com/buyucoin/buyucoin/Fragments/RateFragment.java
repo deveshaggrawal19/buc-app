@@ -128,6 +128,8 @@ public class RateFragment extends Fragment {
                     String bid = d.child("bid").getValue(String.class);
                     String last_trade = d.child("last_trade").getValue(String.class);
                     String change = d.child("change").getValue(String.class);
+
+                    Log.d("RATE PAGE","DATA=> "+ask+", "+bid+", "+last_trade+", "+change);
                     list.add(new Rates(bid, ask, last_trade, change, currency));
                     i++;
                 }

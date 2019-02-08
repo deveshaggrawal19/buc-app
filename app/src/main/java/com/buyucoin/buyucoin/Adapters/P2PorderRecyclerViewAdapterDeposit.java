@@ -1,6 +1,5 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -44,10 +43,9 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
     BuyucoinPref pref;
     static boolean issuccess = true;
     AlertDialog.Builder progressDialog;
-    Activity activity;
 
 
-    public P2PorderRecyclerViewAdapterDeposit(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager, Activity activity) {
+    public P2PorderRecyclerViewAdapterDeposit(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
         fragmentManager = childFragmentManager;
@@ -55,7 +53,9 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
         progressDialog = new ProgressDialog.Builder(context);
         progressDialog.setMessage("Processing");
         progressDialog.create();
-        this.activity = activity;
+
+        Log.d("M-M-M-M-M-M-M-M", "FROM INSIDE DEPOSIT ADAPTER CONSTRUCTOR");
+        Log.d("M-M-M-M-M-M-M-M", "FROM INSIDE DEPOSIT ADAPTER ARRAYLIST SIZE "+arrayList.size());
 
     }
 
@@ -65,15 +65,17 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
     @NonNull
     @Override
     public P2pOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view;
-        view = layoutInflater.inflate(R.layout.active_p2p_order_item,parent,false);
+        Log.d("M-M-M-M-M-M-M-M", "FROM INSIDE DEPOSIT ADAPTER ON CREATE VIEW HOLDER");
 
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.active_p2p_order_item,parent,false);
         return new P2pOrderViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final P2pOrderViewHolder holder, final int position) {
+        Log.d("M-M-M-M-M-M-M-M", "FROM INSIDE DEPOSIT ADAPTER ON BIND VIEW HOLDER");
+
         final String id = String.valueOf(arrayList.get(position).getId());
         holder.amount.setText(String.valueOf(arrayList.get(position).getAmount()/10000.0));
         holder.peer_order_id.setText(id);
@@ -164,6 +166,8 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
 
     @Override
     public int getItemCount() {
+        Log.d("M-M-M-M-M-M-M-M", "FROM INSIDE DEPOSIT ADAPTER GET ITEM COUNT");
+
         return arrayList.size();
     }
 
@@ -184,6 +188,8 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
         Button cancel_peer_btn;
         public P2pOrderViewHolder(@NonNull View itemView) {
             super(itemView);
+            Log.d("M-M-M-M-M-M-M-M", "FROM INSIDE DEPOSIT ADAPTER P2P ORDER VIEW HOLDER");
+
             amount = itemView.findViewById(R.id.p2p_order_amount);
             recyclerView = itemView.findViewById(R.id.p2p_active_orders_rv);
             p2p_active_orders_layout = itemView.findViewById(R.id.p2p_active_orders_layout);

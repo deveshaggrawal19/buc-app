@@ -5,9 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,15 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.buyucoin.buyucoin.DepositWithdrawActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pojos.History;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,14 +33,11 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
@@ -114,7 +105,10 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String s = response.body().string();
                 try {
-                    final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+                    final JSONObject main = new JSONObject(s).getJSONObject("data");
+                     final JSONArray array = main.getJSONArray("orders");
+                    final JSONArray succes_array = new JSONObject(s).getJSONObject("data").getJSONArray("orders_success");
+                    Log.d("HISTORY====>", "onResponse: "+array.toString());
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject j = array.getJSONObject(i);
                         if(j.getString("status").equals(filter))
@@ -151,6 +145,31 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                             ));}
 
                         }
+
+                        if(filter.equals("all") || filter.equals("Success")){
+                            for(int j = 0; j < succes_array.length(); j++){
+                                JSONObject object = succes_array.getJSONObject(j);
+                                histories.add(new History(
+                                        object.getDouble("amount"),
+                                        object.getString("curr"),
+                                        object.getString("close"),
+                                        object.getString("close"),
+                                        object.getString("status"),
+                                        "",
+                                        "",
+                                        object.getDouble("fee"),
+                                        object.getDouble("filled"),
+                                        object.getDouble("price"),
+                                        object.getString("type"),
+                                        object.getDouble("value"),
+                                        object.getInt("id")
+                                ));
+
+                            }
+
+                        }
+
+
 
 
 
@@ -210,6 +229,8 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
             try {
                 holder.mItem = mValues.get(position);
+
+
 
 
 

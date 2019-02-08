@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,10 +21,11 @@ import com.buyucoin.buyucoin.Adapters.MyItemRecyclerViewAdapter;
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.LoginActivity;
 import com.buyucoin.buyucoin.OkHttpHandler;
-import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.customDialogs.P2pActiveOrdersDialog;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +36,7 @@ import java.util.Objects;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -57,6 +59,8 @@ public class WalletFragment extends Fragment {
     TextView err,wallet_inr,welcome;
     View nsView;
     CheckBox hidezero_checkbox;
+    private ImageView wallet_process_img;
+    private BuyucoinPref buyucoinPref;
     private SharedPreferences prefs ;
     private SharedPreferences.Editor edit_pref;
     private String FRAGMENT_STATE = "WALLET";
@@ -81,6 +85,7 @@ public class WalletFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
         edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
         ACCESS_TOKEN = prefs.getString("access_token", null);
         WALLET_INR_BALANCE = prefs.getString("inr_amount","0");
@@ -101,12 +106,12 @@ public class WalletFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rvWallet);
         wallet_inr = view.findViewById(R.id.wallet_inr);
         Context context = view.getContext();
-        GridLayoutManager  linearLayoutManager = new GridLayoutManager(context,1);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         account_dep_history = view.findViewById(R.id.account_dep_history);
         account_with_history = view.findViewById(R.id.account_with_history);
         account_trade_history = view.findViewById(R.id.account_trade_history);
         p2p_history_layout = view.findViewById(R.id.p2p_history_ll);
+        wallet_process_img = view.findViewById(R.id.wallet_process_img);
         p2p_history_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +141,9 @@ public class WalletFragment extends Fragment {
         name += prefs.getString("name","Back");
         welcome.setText(name);
 
+        HistoryClickHandler();
+        getWalletData();
+        getAccountData();
 
 
 
@@ -143,20 +151,18 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(hidezero_checkbox.isChecked()){
+                    buyucoinPref.setEditpref("hide_zero",true);
                     recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,true));
 
                 }
                 else {
-                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,false));
+                    buyucoinPref.setEditpref("hide_zero",false);
+                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,false));
 
                 }
             }
         });
 
-
-        HistoryClickHandler();
-        getWalletData();
-        getAccountData();
 
 
         return view;
@@ -262,7 +268,11 @@ public class WalletFragment extends Fragment {
                                     .put("currencyname", arr[i])
                                     .put("currencies",data.getJSONObject("currencies").get(arr[i]));
                             list.add(cj);
-
+//                            if(arr[i].equals("inr")){
+//                                String inr_amt = getResources().getText(R.string.rupees)+"";
+//                                inr_amt += data.getJSONObject("inr").getString("available");
+//                                wallet_inr.setText(inr_amt);
+//                            }
 
 
                         }catch(Exception e){
@@ -276,6 +286,7 @@ public class WalletFragment extends Fragment {
                                 nsView.setVisibility(View.VISIBLE);
                                 recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getContext(),list,false));
                                 Utilities.hideProgressBar(pb);
+                                wallet_process_img.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -357,11 +368,8 @@ public class WalletFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(hidezero_checkbox.isChecked()){
+        list.clear();
         hidezero_checkbox.setChecked(false);
-        Log.d("WALLET_FRAGMENT_", "onDestroy() called successfully");
-        }
-        Log.d("WALLET_FRAGMENT_", "onDestroy() called");
     }
 }
 

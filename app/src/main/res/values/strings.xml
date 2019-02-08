@@ -169,4 +169,5 @@
     <string name="your_request_is_successfully_completed">Your request is successfully completed</string>
     <string name="active_withdrawals">Active Withdrawals</string>
     <string name="active_deposits">Active Deposits</string>
+    <string name="digital_assets_exchange_wallet"><![CDATA[Digital Assets Exchange & Wallet]]></string>
 </resources>

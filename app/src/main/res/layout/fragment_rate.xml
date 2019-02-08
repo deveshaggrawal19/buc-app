@@ -14,12 +14,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="0.5"
-        android:gravity="center|left"
+        android:gravity="center"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/ivRate"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@mipmap/ic_launcher"
             />
     </LinearLayout>
@@ -81,7 +81,7 @@
             android:padding="5dp"
             android:textColor="@color/colorRed"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:textSize="10sp"
+            android:textSize="12sp"
             />
 
     </LinearLayout>
@@ -98,7 +98,7 @@
             android:padding="5dp"
             android:textColor="@color/kyc_color"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:textSize="10sp"
+            android:textSize="12sp"
             />
 
     </LinearLayout>
