@@ -55,8 +55,6 @@
         <activity
             android:name=".P2POrders"
             android:theme="@style/fontTheme" />
-        <activity android:name=".customDialogs.P2pActiveOrdersDialog"/>
-
         <receiver
             android:name=".broadcast.NotNetworkBroadCastReceiver"
             android:exported="false">
@@ -67,6 +65,9 @@
             <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
             <!-- </intent-filter> -->
         </receiver>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b151bee15f72d133222a1062d5d53727f87d89d1" />
     </application>
 
 </manifest>

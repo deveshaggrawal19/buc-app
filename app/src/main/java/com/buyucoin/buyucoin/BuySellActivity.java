@@ -14,9 +14,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.config.Config;
-import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.customDialogs.CustomDialogs;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import io.fabric.sdk.android.Fabric;
 
 public class BuySellActivity extends AppCompatActivity{
     Toolbar toolbar;
@@ -50,6 +51,8 @@ public class BuySellActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Fabric.with(this, new Crashlytics());
+        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_sell);
 
@@ -169,7 +172,7 @@ public class BuySellActivity extends AppCompatActivity{
                         order_quantity.setEnabled(true);
 
 
-                    new CoustomToast(getApplicationContext(),BuySellActivity.this,coin+" price :"+coin_price,CoustomToast.TYPE_NORMAL).showToast();
+//                    new CoustomToast(getApplicationContext(),BuySellActivity.this,coin+" price :"+coin_price,CoustomToast.TYPE_NORMAL).showToast();
 
                     Log.d("MARKET___", data.toString());
                     progressDialog.dismiss();

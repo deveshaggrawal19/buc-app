@@ -14,11 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 import androidx.appcompat.app.AppCompatActivity;
+import io.fabric.sdk.android.Fabric;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -36,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Fabric.with(this, new Crashlytics());
+        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 

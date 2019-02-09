@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin.Fragments;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -156,12 +159,30 @@ public class P2P_Deposite_History_Fragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+            DateFormat format = DateFormat.getDateInstance();
+            String date = format.format(new Date(arrayList.get(position).getTimestamp()));
+            String status = numToStatus(arrayList.get(position).getStatus());
+            int color =numToColor(status);
             holder.mCurrency.setText(String.valueOf(arrayList.get(position).getId()));
             holder.mAmount.setText(String.valueOf(arrayList.get(position).getAmount()));
-            holder.mOpenTime.setText(arrayList.get(position).getTimestamp());
-            holder.mStatus.setText(numToStatus(arrayList.get(position).getStatus()));
+            holder.mOpenTime.setText(date);
+            holder.mStatus.setText(status);
+            holder.mStatus.setTextColor(ColorStateList.valueOf(color));
 
 
+
+
+        }
+
+        public int numToColor(String s){
+            switch (s){
+                case "Pending":return R.color.g6209c3;
+                case "Processing":return R.color.colorBlack;
+                case "Success":return R.color.g1b67e8;
+                case "Cancelled":return R.color.colorRed;
+                case "Dispute":return R.color.colorRed;
+                default:return R.color.g6209c3;
+            }
         }
 
         public String numToStatus(int s){

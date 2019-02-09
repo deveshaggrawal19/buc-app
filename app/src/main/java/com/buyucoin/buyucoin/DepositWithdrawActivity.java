@@ -1,19 +1,5 @@
 package com.buyucoin.buyucoin;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -29,15 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buyucoin.buyucoin.Adapters.CoinHistoryAdapter;
-import com.buyucoin.buyucoin.Fragments.HistoryPagerAdapterFragmentOrder;
-import com.buyucoin.buyucoin.Fragments.P2P_History;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pojos.History;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
-import com.google.android.material.navigation.NavigationView;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +29,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import io.fabric.sdk.android.Fabric;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout, empty_layout;
@@ -63,6 +57,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Fabric.with(this, new Crashlytics());
+        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposite_withdraw);
         pref = new BuyucoinPref(getApplicationContext());
@@ -82,29 +78,33 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         card_coin_full_name.setText(COIN_FULL_NAME);
         card_coin_availabel.setText(AVAILABEL);
         card_coin_address.setText(ADDRESS);
+        card_coin_pending.setText(PENDING);
+
+        Log.d("BASE ADDRESS", "onCreate: ."+BASE_ADDRESS);
         try {
             card_coin_img.setImageResource(MyResourcesClass.COIN_ICON.getInt(coin));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (BASE_ADDRESS != null) {
+        if (BASE_ADDRESS!=null && !BASE_ADDRESS.equals("null")) {
             card_coin_base_address.setText(BASE_ADDRESS);
-        } else {
-            card_coin_base_address.setVisibility(View.GONE);
+            card_coin_base_address.setVisibility(View.VISIBLE);
         }
-        card_coin_pending.setText(PENDING);
 
 
-        if (ADDRESS.equals("null")) {
+
+        if (ADDRESS==null) {
             card_coin_address.setVisibility(View.GONE);
             address_gen_btn.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
+            card_coin_base_address.setVisibility(View.GONE);
 
         }
 
         address_gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateAddress(card_coin_address);
+                generateAddress();
             }
         });
 
@@ -200,7 +200,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         address_gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateAddress(card_coin_address);
+                generateAddress();
             }
         });
 
@@ -247,14 +247,54 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         empty_layout = findViewById(R.id.empty_orders);
     }
 
-    private void generateAddress(TextView card_coin_address) {
+    private void generateAddress() {
+        final ProgressDialog progressDialog = new ProgressDialog(DepositWithdrawActivity.this);
+        progressDialog.setMessage("Generating Address");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        OkHttpHandler.auth_get("/generate_address/"+coin, pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-        card_coin_address.setText("ADDRESS GENERATED");
+            }
+
+            @Override
+            public void onResponse(final Call call, Response response) throws IOException {
+                assert response.body() != null;
+                String body = response.body().string();
+                try {
+                    JSONObject data = new JSONObject(body);
+                    final String status = data.getString("status");
+                    final String message = data.getJSONArray("message").getJSONArray(0).getString(0);
+//                    final String address = data.getJSONObject("data").
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            switch (status){
+                                case "error": card_coin_address.setText(message);
+                                card_coin_address.setVisibility(View.VISIBLE);
+                                    address_gen_btn.setVisibility(View.GONE);
+                                break;
+                                case "success": card_coin_address.setText(message);
+                                    card_coin_address.setVisibility(View.VISIBLE);
+                                    address_gen_btn.setVisibility(View.GONE);
+                                break;
+                            }
+                            progressDialog.dismiss();
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
     }
 
     public void getList(final String url) {
-        new CoustomToast(this, this, "loading", CoustomToast.TYPE_NORMAL);
         OkHttpHandler.auth_get(url + "_history", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -265,11 +305,12 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
+
                     try {
+                        assert response.body() != null;
                         String s = response.body().string();
 
-                        try {
+
                             final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
                             Log.d("sdfghjsdfghjk", array.toString());
                             for (int i = 0; i < array.length(); i++) {
@@ -310,10 +351,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                             });
 
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            e.getMessage();
-                        }
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -327,7 +365,6 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                     }
                 }
 
-            }
         });
     }
 
@@ -403,7 +440,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                         final JSONObject cancel_order = new JSONObject();
                         try {
                             cancel_order.put("id", id);
-                            new AlertDialog.Builder(DepositWithdrawActivity.this).setMessage("Do you want to delete this peer")
+                            new AlertDialog.Builder(DepositWithdrawActivity.this).setMessage("Do you want to delete this Order ?")
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {

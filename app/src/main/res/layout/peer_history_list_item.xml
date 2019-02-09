@@ -10,18 +10,17 @@
         android:elevation="0dp"
         android:layout_margin="5dp"
         android:layout_height="60dp">
-
-
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:orientation="horizontal"
             android:layout_height="match_parent">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:text="BTC"
+                android:textSize="12sp"
+
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/tvHistoryCurrency"
@@ -30,11 +29,13 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="match_parent">
             <TextView
                 android:layout_width="match_parent"
                 android:text="566666.78"
+                android:textSize="12sp"
+
                 android:id="@+id/tvHistoryAmount"
                 android:gravity="center"
                 android:layout_height="match_parent" />
@@ -43,32 +44,33 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="match_parent">
             <TextView
                 android:layout_width="match_parent"
                 android:text="01/01/2019"
-                android:gravity="center"
                 android:textSize="12sp"
+
+                android:gravity="center"
                 android:id="@+id/tvHistoryOpenTime"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:gravity="center"
             android:layout_height="match_parent">
             <TextView
-                android:text="status"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:tint="@color/g1b67e8"
                 android:id="@+id/tvHistoryStatus"
-                android:layout_height="wrap_content" />
+                android:text="Success"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>

@@ -1,30 +1,17 @@
 package com.buyucoin.buyucoin;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.buyucoin.buyucoin.Adapters.DepositeWithdrawPagerAdapter;
-import com.buyucoin.buyucoin.Fragments.WithdrawBottomsheet;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.crashlytics.android.Crashlytics;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import io.fabric.sdk.android.Fabric;
 
 public class CoinDepositWithdraw extends AppCompatActivity {
     private static final String DEPOSITE = "DEPOSITE";
@@ -40,9 +27,11 @@ public class CoinDepositWithdraw extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Fabric.with(this, new Crashlytics());
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_coin_deposite_withdraw);
 

@@ -18,6 +18,7 @@ import com.buyucoin.buyucoin.Fragments.SuperSettingsBottomsheet;
 import com.buyucoin.buyucoin.broadcast.NotNetworkBroadCastReceiver;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,6 +37,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
+import io.fabric.sdk.android.Fabric;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -66,6 +68,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Fabric.with(this, new Crashlytics());
+        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 

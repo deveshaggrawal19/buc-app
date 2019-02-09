@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/supter_setting_history"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -23,7 +23,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/supersettings_icon_tint"
+                android:tint="@color/g1b67e8"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_history"
                 android:layout_height="match_parent" />
@@ -33,7 +33,6 @@
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
                 android:text="@string/history"
                 />
 
@@ -41,7 +40,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/supter_setting_about"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -49,7 +48,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/supersettings_icon_tint"
+                android:tint="@color/g6209c3"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_info_black_24dp"
                 android:layout_height="match_parent" />
@@ -59,7 +58,6 @@
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
                 android:text="@string/about"
                 />
 
@@ -67,7 +65,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/supter_setting_policy"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -75,7 +73,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/supersettings_icon_tint"
+                android:tint="@color/colorPrimary"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_verified_user_black_24dp"
                 android:layout_height="match_parent" />
@@ -85,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
                 android:text="@string/privacy_policy"
                 />
 
@@ -93,7 +90,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/super_setting_logout"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -101,7 +98,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/supersettings_icon_tint"
+                android:tint="@color/kyc_color"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_portrait_black_24dp"
                 android:layout_height="match_parent" />
@@ -111,7 +108,6 @@
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif"
                 android:text="Logout"
                 />
 

@@ -421,36 +421,34 @@
                     android:layout_height="1dp"/>
 
 
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical"
-                    android:padding="5dp">
+                    android:padding="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="12dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
-                        android:tint="@color/colorRed"
                         android:src="@drawable/profile_option_list_drawable"
-                        android:layout_height="match_parent" />
+                        android:tint="@color/colorRed" />
 
                     <TextView
-                        android:layout_marginLeft="40dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
-                        android:gravity="center"
+                        android:layout_marginLeft="40dp"
                         android:fontFamily="sans-serif"
+                        android:gravity="center"
                         android:text="Disable App Passcode"
-                        android:textColor="@android:color/black"
-                        />
+                        android:textColor="@android:color/black" />
 
                     <Switch
+                        android:id="@+id/disable_app_lock_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/disable_app_lock_switch"
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
 

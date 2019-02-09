@@ -52,8 +52,9 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder
 
 
     @Override
-    public int getItemCount() {
-        return bidsArrayList.size();
+    public int getItemCount()
+    {
+        return (bidsArrayList.size()<10)?bidsArrayList.size():10;
     }
 
     public class BidsViewHolder extends RecyclerView.ViewHolder {

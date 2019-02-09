@@ -133,6 +133,7 @@
                         android:text="qwe33dft56545454grge4543"
                         android:textColor="@android:color/white"
                         android:padding="10dp"
+                        android:visibility="gone"
                         android:id="@+id/card_coin_base_address"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
