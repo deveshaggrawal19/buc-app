@@ -2,7 +2,6 @@ package com.buyucoin.buyucoin.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,19 +35,21 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull AskViewHolder holder, int position) {
-
         DecimalFormat format2 = new DecimalFormat("0.####");
-        holder.price.setText(String.valueOf(format2.format(askArrayList.get(position).getAsk_price())));
-        holder.value.setText(askArrayList.get(position).getAsk_value());
         DecimalFormat format = new DecimalFormat("0.########");
-        String v1 = format.format(askArrayList.get(position).getAsk_volume());
-        holder.vol.setText(String.valueOf(v1).trim());
+
+        Double price = askArrayList.get(position).getAsk_price();
+        double value = Double.parseDouble(askArrayList.get(position).getAsk_value());
+        String vol = format.format(askArrayList.get(position).getAsk_volume());
+
+        holder.price.setText(String.valueOf(format2.format(price)));
+        holder.value.setText((format.format(value)));
+        holder.vol.setText(vol);
+
+
         if(position%2==0){
             holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }
-
-        Log.d("WIDTH============>",String.valueOf(holder.itemView));
-
     }
 
     @Override

@@ -55,6 +55,8 @@
         <activity
             android:name=".P2POrders"
             android:theme="@style/fontTheme" />
+        <activity android:name=".ConfirmCodeActivity"
+            android:theme="@style/fontTheme"/>
         <receiver
             android:name=".broadcast.NotNetworkBroadCastReceiver"
             android:exported="false">

@@ -135,13 +135,16 @@ public class WalletFragment extends Fragment {
 
         wallet_inr.setText(getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE);
 
+
+
+        HistoryClickHandler();
+        getWalletData();
+
         welcome = view.findViewById(R.id.welcome);
         String name = "Weclome ";
         name += prefs.getString("name","Back");
         welcome.setText(name);
 
-        HistoryClickHandler();
-        getWalletData();
         getAccountData();
 
 
@@ -340,7 +343,7 @@ public class WalletFragment extends Fragment {
                                 }
                                 final JSONObject data = jsonObject.getJSONObject(("data"));
                                 edit_pref.putString("email",data.get("email").toString()).apply();
-                                edit_pref.putString("name",data.get("name").toString()).apply();
+                                edit_pref.putString("name",data.get("name").toString().split(" ")[0]).apply();
                                 edit_pref.putString("mob",data.get("mob").toString()).apply();
                                 edit_pref.putBoolean("kyc_status",data.getBoolean("kyc_status")).apply();
 

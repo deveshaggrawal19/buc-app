@@ -12,6 +12,8 @@ import com.buyucoin.buyucoin.pojos.Bids;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,19 +21,25 @@ import androidx.recyclerview.widget.RecyclerView;
 public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder> {
 
     private Context context;
-    private ArrayList<Bids> bidsArrayList;
+    private List<Bids> bidsArrayList;
 
     public BidsAdapter(Context context, ArrayList<Bids> bidsArrayList) {
         this.context = context;
-        this.bidsArrayList = bidsArrayList;
-    }
+//        this.bidsArrayList = bidsArrayList;
+        if (bidsArrayList.size() < 10) {
+            this.bidsArrayList = bidsArrayList.subList(0, bidsArrayList.size() - 1);
+        } else {
+            this.bidsArrayList = bidsArrayList.subList(0, 9);
+        }
+        Collections.reverse(this.bidsArrayList);
 
+    }
 
 
     @NonNull
     @Override
     public BidsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.bids_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.bids_item, parent, false);
         return new BidsAdapter.BidsViewHolder(view);
     }
 
@@ -39,12 +47,15 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder
     public void onBindViewHolder(@NonNull BidsViewHolder holder, int position) {
 
         DecimalFormat format2 = new DecimalFormat("0.####");
-        holder.price.setText(String.valueOf(format2.format(bidsArrayList.get(position).getBid_price())));
-        holder.value.setText(bidsArrayList.get(position).getBid_value());
         DecimalFormat format = new DecimalFormat("0.########");
+
+        holder.price.setText(String.valueOf(format2.format(bidsArrayList.get(position).getBid_price())));
+        holder.value.setText(String.valueOf(format.format(Double.parseDouble(bidsArrayList.get(position).getBid_value()))));
+
         String v1 = format.format(bidsArrayList.get(position).getBid_volume());
+
         holder.vol.setText(String.valueOf(v1).trim());
-        if(position%2==0){
+        if (position % 2 == 0) {
             holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
         }
 
@@ -52,14 +63,15 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder
 
 
     @Override
-    public int getItemCount()
-    {
-        return (bidsArrayList.size()<10)?bidsArrayList.size():10;
+    public int getItemCount() {
+//        return (bidsArrayList.size()<10)?bidsArrayList.size():10;
+        return bidsArrayList.size();
     }
 
     public class BidsViewHolder extends RecyclerView.ViewHolder {
-        TextView price,value,vol;
+        TextView price, value, vol;
         View progress;
+
         public BidsViewHolder(@NonNull View itemView) {
             super(itemView);
             price = itemView.findViewById(R.id.item_price);

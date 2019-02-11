@@ -68,7 +68,6 @@ public class MarketHistoryAdapter extends RecyclerView.Adapter<MarketHistoryAdap
         }
 
 
-        Log.d("WIDTH============>",String.valueOf(holder.itemView));
 
     }
 

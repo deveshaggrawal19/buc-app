@@ -74,7 +74,13 @@ public class CurrencyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
 
+        init();
 
+
+
+    }
+
+    public void init(){
         FirebaseDatabase db = new Config().getProductionFirebaseDatabase();
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
@@ -100,15 +106,13 @@ public class CurrencyActivity extends AppCompatActivity {
         bundle = intent.getExtras();
         assert bundle != null;
         s = bundle.getString("currency");
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-
+        init();
 
         TextView tv = findViewById(R.id.tvCurrencyCurr);
         ImageView img = findViewById(R.id.ivCurrencyImg);
@@ -141,8 +145,14 @@ public class CurrencyActivity extends AppCompatActivity {
                         for(DataSnapshot d : data.child("buy_orders").getChildren()){
                             Double price = d.child("price").getValue(Double.class);
                             String value = d.child("value").getValue(String.class);
-                            String vol = d.child("vol").getValue(String.class);
-                            Bids b = new Bids(price,value,Double.valueOf(vol));
+                            Bids b = null;
+                            try{
+                                String vol = d.child("vol").getValue(String.class);
+                                b = new Bids(price,value,Double.valueOf(vol));
+                            }catch (Exception e){
+                                Double vol = d.child("vol").getValue(Double.class);
+                                b = new Bids(price,value,vol);
+                            }
                             arrayListBids.add(b);
                         }
                         Collections.sort(arrayListBids, new Comparator<Bids>() {
@@ -153,16 +163,22 @@ public class CurrencyActivity extends AppCompatActivity {
                                 else return -1;
                             }
                         });
+                        Collections.reverse(arrayListBids);
                         BidsAdapter bidsAdapter = new BidsAdapter(getApplicationContext(),arrayListBids);
                         bids_recview.setAdapter(bidsAdapter);
                     }
                     if(data.hasChild("sell_orders")){
                         for(DataSnapshot d : data.child("sell_orders").getChildren()){
                             Double price = d.child("price").getValue(Double.class);
-                            price = removeExtraZero(String.valueOf(price));
                             String value = d.child("value").getValue(String.class);
-                            String vol = d.child("vol").getValue(String.class);
-                            Ask a = new Ask(price,value,Double.valueOf(vol));
+                            Ask a = null;
+                            try{
+                                String vol = d.child("vol").getValue(String.class);
+                                a = new Ask(price,value,Double.valueOf(vol));
+                            }catch (Exception e){
+                                Double vol = d.child("vol").getValue(Double.class);
+                                a = new Ask(price,value,vol);
+                            }
                             arrayListAsks.add(a);
                         }
                         AsksAdapter asksAdapter = new AsksAdapter(getApplicationContext(),arrayListAsks);

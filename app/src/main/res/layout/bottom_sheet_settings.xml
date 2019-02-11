@@ -25,6 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:visibility="gone"
             android:gravity="center_vertical"
             android:padding="5dp">
 
@@ -55,10 +56,12 @@
         <View
             android:layout_width="match_parent"
             android:background="#eeeeee"
+            android:visibility="gone"
             android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:visibility="gone"
             android:gravity="center_vertical"
             android:padding="5dp">
 
@@ -89,10 +92,12 @@
         <View
             android:layout_width="match_parent"
             android:background="#eeeeee"
+            android:visibility="gone"
             android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:visibility="gone"
             android:gravity="center_vertical"
             android:padding="5dp">
 
@@ -123,6 +128,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:id="@+id/change_passcode_layout"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp">
@@ -140,7 +146,7 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
-                android:text="Setup App Passocde"
+                android:text="Change App Passcode"
                 android:textColor="@android:color/black"
                 />
             <ImageView
@@ -159,6 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
+            android:id="@+id/logout_layout"
             android:gravity="center_vertical"
             android:padding="5dp">
 

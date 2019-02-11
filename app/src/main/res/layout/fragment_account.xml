@@ -133,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:id="@+id/bottom_sheet_chats_handler"
                         android:orientation="vertical">
 
@@ -456,6 +457,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:id="@+id/change_passcode_layout"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:padding="5dp">
 

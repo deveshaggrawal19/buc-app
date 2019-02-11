@@ -332,7 +332,7 @@ public class AccountFragment extends Fragment {
                                 }
                                 final JSONObject data = jsonObject.getJSONObject(("data"));
                                 edit_pref.putString("email",data.get("email").toString()).apply();
-                                edit_pref.putString("name",data.get("name").toString()).apply();
+                                edit_pref.putString("name",data.get("name").toString().split(" ")[0]).apply();
                                 edit_pref.putString("mob",data.get("mob").toString()).apply();
                                 edit_pref.putBoolean("kyc_status",data.getBoolean("kyc_status")).apply();
 

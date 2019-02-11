@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -173,18 +175,9 @@ public class Utilities {
         View view = layoutInflater.inflate(R.layout.otp_layout,null,false);
         final EditText otp = view.findViewById(R.id.otp_edittext);
         final Button submit_otp = view.findViewById(R.id.submit_otp_btn);
-//        final EditText otp = new EditText(activity.getApplicationContext());
-        //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        //otp.setLayoutParams(lp);
+        final Button logout_otp_btn = view.findViewById(R.id.logout_otp_btn);
         builder.setView(view);
-//        builder.setMessage("Enter OTP");
         builder.setCancelable(false);
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -195,14 +188,16 @@ public class Utilities {
                         submitNewOTP(otp.getText().toString(), ACCESS_TOKEN, activity, dialog);
                     }
                 });
+                logout_otp_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new CoustomToast(activity.getApplicationContext(), Objects.requireNonNull(activity),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
+                        Intent i = new Intent(activity, LoginActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.startActivity(i);
+                    }
+                });
                 dialog.show();
-
-//                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){
-//                    @Override
-//                    public void onClick(View view) {
-//                        submitNewOTP(otp.getText().toString(), ACCESS_TOKEN, activity, dialog);
-//                    }
-//                });
             }
         });
 
@@ -230,18 +225,32 @@ public class Utilities {
             public void onResponse(Call call, Response response) throws IOException {
                 assert response.body() != null;
                 String s = response.body().string();
-                Log.d("OTP DIALOG", "onResponse: "+s);
-                if(isSuccess(s) || isSuccessRedirect(s)){
-                    showToast(activity, "OTP registered");
-                    dialog.dismiss();
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            activity.recreate();
-                        }
-                    });
-                }else {
-                    showToast(activity, getErrorMessage(s));
+                try {
+                    JSONObject j = new JSONObject(s);
+                    Log.d("OTP DIALOG", "onResponse: "+j.toString());
+                    if(j.has("status")){
+                    if(isSuccess(s) || isSuccessRedirect(s)){
+                        showToast(activity, "OTP registered");
+                        dialog.dismiss();
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                activity.recreate();
+                            }
+                        });
+                    }else {
+                        showToast(activity, getErrorMessage(s));
+                    }
+                    }else{
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new CoustomToast(activity.getApplicationContext(),activity,"Session Expired log in Again",CoustomToast.TYPE_NORMAL).showToast();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
             }

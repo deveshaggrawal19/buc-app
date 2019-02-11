@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,21 +14,22 @@ import com.crashlytics.android.Crashlytics;
 import androidx.appcompat.app.AppCompatActivity;
 import io.fabric.sdk.android.Fabric;
 
-public class PassCodeActivity extends AppCompatActivity {
-    static String pin;
+public class ConfirmCodeActivity extends AppCompatActivity {
+    static String pin = "";
+    String confirm_pin;
     View view;
+    SharedPreferences.Editor pinpref;
     SharedPreferences viewPref;
-    String PASSWORD;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pass_code);
+        setContentView(R.layout.activity_confirm_code);
         viewPref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
-        PASSWORD = viewPref.getString("passcode","no");
-        pin = "";
+        Intent ci = getIntent();
+        confirm_pin = ci.getStringExtra("check_pin");
 
     }
 
@@ -39,34 +39,19 @@ public class PassCodeActivity extends AppCompatActivity {
         if(pin.length()<=4){
             updatePinDote(pin.length(),1);
             if(pin.length()==4){
-                if(pin.equals(PASSWORD)){
-                    startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
+                if(pin.equals(confirm_pin)){
+                    pinpref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
+                    pinpref.putString("passcode",pin).apply();
+                    startActivity(new Intent(ConfirmCodeActivity.this,Dashboard.class));
                     finish();
                 }else{
-                    if(PASSWORD.equals("no")){
-                            Intent resultintent = new Intent(PassCodeActivity.this,ConfirmCodeActivity.class);
-                            resultintent.putExtra("check_pin",pin);
-                            startActivity(resultintent);
-                            finish();
-                    }
-                    else{
-                        clearPinsData();
-
-                    }
-
-
+                    new CoustomToast(getApplicationContext(), ConfirmCodeActivity.this,"Wrong pin",CoustomToast.TYPE_NORMAL).showToast();
+                    clearPinsData();
                 }
-
-
             }
         }else{
-            new CoustomToast(getApplicationContext(),PassCodeActivity.this,"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
+            new CoustomToast(getApplicationContext(), ConfirmCodeActivity.this,"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
         }
-        Log.d("PIN=======>","pin = "+pin+" pin length="+String.valueOf(pin.length()));
-
-
-
-
     }
 
     public void clearPinsData(){
@@ -79,7 +64,7 @@ public class PassCodeActivity extends AppCompatActivity {
             }
         },100);
         pin = "";
-        new CoustomToast(getApplicationContext(),PassCodeActivity.this, "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
+        new CoustomToast(getApplicationContext(), ConfirmCodeActivity.this, "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
     }
 
     public void updatePinDote(int i,int level){
@@ -103,6 +88,7 @@ public class PassCodeActivity extends AppCompatActivity {
         }
         view.getBackground().setLevel(level);
     }
+
 
     public void clearPinByOne(View view) {
         if(pin.length()>0){
