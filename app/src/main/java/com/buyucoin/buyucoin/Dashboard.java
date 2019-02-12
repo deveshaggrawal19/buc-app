@@ -1,6 +1,7 @@
 package com.buyucoin.buyucoin;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Looper;
@@ -228,7 +229,20 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure to exit")
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).create().show();
         }
     }
 
@@ -286,12 +300,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     public void inrToP2P() {
         if (!isFinishing() && !isDestroyed()) {
-            P2PFragment fragment = new P2PFragment();
             toolbar.setTitle("P2P");
             changeTab(R.id._p2p);
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.flContent, fragment);
-            fragmentTransaction.commitAllowingStateLoss();
         }
 
     }

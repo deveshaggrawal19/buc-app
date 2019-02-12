@@ -58,8 +58,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_deposite_withdraw);
         pref = new BuyucoinPref(getApplicationContext());
         InitializeAllViews();

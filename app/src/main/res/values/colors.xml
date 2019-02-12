@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorRed">#fd020f</color>
-    <color name="kyc_color">#69F0AE</color>
+    <color name="kyc_color">#11F083</color>
+    <color name="bids_color">#09BE66</color>
     <color name="g1b67e8">#1b67e8</color>
     <color name="g6209c3">#6209c3</color>
     <color name="supersettings_icon_tint">#aaaaaa</color>

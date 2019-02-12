@@ -1,7 +1,5 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import android.os.Bundle;
-
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.Fragments.AccountFragment;
 import com.buyucoin.buyucoin.Fragments.BuySellFragment;
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class Dashboard_PagerAdapter extends FragmentStatePagerAdapter {
@@ -52,11 +49,11 @@ public class Dashboard_PagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Deposite Orders";
+                return "Deposit Orders";
             case 1:
                 return "WithDraw Orders";
             default:
-                return "Deposite Orders";
+                return "Deposit Orders";
 
         }
     }

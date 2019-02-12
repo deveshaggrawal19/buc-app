@@ -2,7 +2,6 @@ package com.buyucoin.buyucoin.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -28,6 +27,7 @@ import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
 import com.buyucoin.buyucoin.customDialogs.ChangePasscodeDialog;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,8 +45,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 
 public class AccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -56,8 +54,7 @@ public class AccountFragment extends Fragment {
     private ProgressBar pb;
     private View ll;
     private AlertDialog.Builder ad;
-    private SharedPreferences prefs;
-    private SharedPreferences.Editor edit_pref;
+    private BuyucoinPref buyucoinPref;
     private LinearLayout profile_sheet_handler,
             share_ref_id,
             referral_sheet_handler,
@@ -82,12 +79,10 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = Objects.requireNonNull(getActivity()).getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-        ACCESS_TOKEN = prefs.getString("access_token", null);
-        applock_enabled = prefs.getBoolean("DISABLE_PASS_CODE",false);
+        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        ACCESS_TOKEN = buyucoinPref.getPrefString("access_token");
+        applock_enabled = buyucoinPref.getPrefBoolean("DISABLE_PASS_CODE");
         String FRAGMENT_STATE = "ACCOUNT";
-        edit_pref.putString("FRAGMENT_STATE", FRAGMENT_STATE).apply();
         ad = new AlertDialog.Builder(getActivity());
     }
 
@@ -106,10 +101,10 @@ public class AccountFragment extends Fragment {
         changePasscodeHandler();
         shareRefid();
 
-        name.setText(prefs.getString("name", ""));
-        email.setText(prefs.getString("email", ""));
-        mob.setText(prefs.getString("mob", ""));
-        referral_id = prefs.getString("ref_id","N/A");
+        name.setText(buyucoinPref.getPrefString("name"));
+        email.setText(buyucoinPref.getPrefString("email"));
+        mob.setText(buyucoinPref.getPrefString("mob"));
+        referral_id = buyucoinPref.getPrefString("ref_id");
         ref_id.setText(referral_id);
 
         new Handler().post(new Runnable() {
@@ -260,13 +255,13 @@ public class AccountFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    edit_pref.putBoolean("DISABLE_PASS_CODE",true).apply();
+                   buyucoinPref.setEditpref("DISABLE_PASS_CODE",true);
                     new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Disabled",CoustomToast.TYPE_SUCCESS).showToast();
                     change_passcode_layout.setEnabled(false);
                     change_passcode_layout.setAlpha(0.5f);
 
                 }else{
-                    edit_pref.putBoolean("DISABLE_PASS_CODE",false).apply();
+                    buyucoinPref.setEditpref("DISABLE_PASS_CODE",false);
                     new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Enabled",CoustomToast.TYPE_SUCCESS).showToast();
                     change_passcode_layout.setEnabled(true);
                     change_passcode_layout.setAlpha(1f);
@@ -331,10 +326,10 @@ public class AccountFragment extends Fragment {
                                     return;
                                 }
                                 final JSONObject data = jsonObject.getJSONObject(("data"));
-                                edit_pref.putString("email",data.get("email").toString()).apply();
-                                edit_pref.putString("name",data.get("name").toString().split(" ")[0]).apply();
-                                edit_pref.putString("mob",data.get("mob").toString()).apply();
-                                edit_pref.putBoolean("kyc_status",data.getBoolean("kyc_status")).apply();
+                                buyucoinPref.setEditpref("email",data.get("email").toString());
+                                buyucoinPref.setEditpref("name",data.get("name").toString().split(" ")[0]);
+                                buyucoinPref.setEditpref("mob",data.get("mob").toString());
+                                buyucoinPref.setEditpref("kyc_status",data.getBoolean("kyc_status"));
 
                                 email.setText(data.getString("email"));
                                 name.setText(data.getString("name"));

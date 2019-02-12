@@ -3,8 +3,6 @@ package com.buyucoin.buyucoin.Adapters;
 import android.os.Bundle;
 
 import com.buyucoin.buyucoin.Fragments.DepositePagerFragment;
-import com.buyucoin.buyucoin.Fragments.P2P_Deposite_History_Fragment;
-import com.buyucoin.buyucoin.Fragments.P2P_Withdraw_History_Fragment;
 import com.buyucoin.buyucoin.Fragments.WithdrawPagerFragment;
 
 import androidx.annotation.NonNull;
@@ -51,11 +49,11 @@ public class DepositeWithdrawPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Deposite Orders";
+                return "Deposit Orders";
             case 1:
                 return "WithDraw Orders";
             default:
-                return "Deposite Orders";
+                return "Deposit Orders";
 
         }
     }

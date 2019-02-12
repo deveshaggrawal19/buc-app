@@ -286,7 +286,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                         final JSONObject cancel_order = new JSONObject();
                         try {
                             cancel_order.put("id", id);
-                            new AlertDialog.Builder(getContext()).setMessage("Do you want to delete this peer")
+                            new AlertDialog.Builder(getContext()).setMessage("Do you want to delete this Order")
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {

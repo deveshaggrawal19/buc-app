@@ -1,14 +1,13 @@
 package com.buyucoin.buyucoin;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +17,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
     static String pin = "";
     String confirm_pin;
     View view;
-    SharedPreferences.Editor pinpref;
-    SharedPreferences viewPref;
+    BuyucoinPref buyucoinPref;
 
 
     @Override
@@ -27,7 +25,8 @@ public class ConfirmCodeActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_code);
-        viewPref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
+
+        buyucoinPref = new BuyucoinPref(this);
         Intent ci = getIntent();
         confirm_pin = ci.getStringExtra("check_pin");
 
@@ -40,8 +39,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
             updatePinDote(pin.length(),1);
             if(pin.length()==4){
                 if(pin.equals(confirm_pin)){
-                    pinpref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
-                    pinpref.putString("passcode",pin).apply();
+                    buyucoinPref.setEditpref("passcode",pin);
                     startActivity(new Intent(ConfirmCodeActivity.this,Dashboard.class));
                     finish();
                 }else{

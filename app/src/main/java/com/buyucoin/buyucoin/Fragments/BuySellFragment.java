@@ -1,12 +1,7 @@
 package com.buyucoin.buyucoin.Fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.icu.util.UniversalTimeScale;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +13,7 @@ import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.Utilities;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONObject;
 
@@ -28,13 +24,10 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class BuySellFragment extends Fragment {
 
@@ -44,18 +37,15 @@ public class BuySellFragment extends Fragment {
     ProgressBar pb;
     TextView errorText;
     TextView trade;
-    private SharedPreferences prefs ;
-    private SharedPreferences.Editor edit_pref ;
+    private BuyucoinPref buyucoinPref;
     private String FRAGMENT_STATE = "BUYSELL";
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        edit_pref =  getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-        edit_pref.putString("FRAGMENT_STATE",FRAGMENT_STATE).apply();
-        ACCESS_TOKEN = prefs.getString("access_token", null);
+        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         list = new ArrayList<>();
 
 

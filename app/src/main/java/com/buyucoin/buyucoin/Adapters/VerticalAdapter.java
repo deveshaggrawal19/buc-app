@@ -1,11 +1,7 @@
 package com.buyucoin.buyucoin.Adapters;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +12,95 @@ import com.buyucoin.buyucoin.CoinDepositWithdraw;
 import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.DepositWithdrawActivity;
 import com.buyucoin.buyucoin.R;
+import com.buyucoin.buyucoin.pojos.WalletCoinHorizontal;
 import com.buyucoin.buyucoin.pojos.WalletCoinVertical;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder> {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-    private ArrayList<WalletCoinVertical> arrayList;
+public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder> {
 
-    VerticalAdapter(ArrayList<WalletCoinVertical> arrayList) {
-        this.arrayList = arrayList;
+    private ArrayList<WalletCoinVertical> walletCoinVerticals;
+    private BuyucoinPref pref;
+    private Context context;
+
+    public VerticalAdapter(Context context, ArrayList<JSONObject> list, boolean hidezero) {
+        this.context = context;
+        ArrayList<WalletCoinVertical> arrayList = new ArrayList<>();
+        if(list.size()>0) {
+            for (JSONObject js : list) {
+                try {
+                    if (hidezero) {
+                        if (!js.getString("available").equals("0")) {
+                            WalletCoinVertical wl = new WalletCoinVertical();
+                            wl.setCoinname(js.getString("currencyname"));
+                            wl.setAmount(js.getString("available"));
+                            wl.setAddress(js.getString("address"));
+                            wl.setAvailabel(js.getString("available"));
+                            wl.setBase_address(js.getString("base_address"));
+                            wl.setDescription(js.getString("desciption"));
+                            wl.setFees(js.getString("fees"));
+                            wl.setMin_width(js.getString("min_with"));
+                            wl.setPending(js.getString("pending"));
+                            wl.setPortfolio(js.getString("portfolio"));
+                            wl.setTag(js.getString("tag"));
+                            wl.setFull_coin_name(js.getString("currencies"));
+                            arrayList.add(wl);
+                        }
+
+                    } else {
+
+                        WalletCoinVertical wl = new WalletCoinVertical();
+                        wl.setCoinname(js.getString("currencyname"));
+                        wl.setAmount(js.getString("available"));
+                        wl.setAddress(js.getString("address"));
+                        wl.setAvailabel(js.getString("available"));
+                        wl.setBase_address(js.getString("base_address"));
+                        wl.setDescription(js.getString("desciption"));
+                        wl.setFees(js.getString("fees"));
+                        wl.setMin_width(js.getString("min_with"));
+                        wl.setPending(js.getString("pending"));
+                        wl.setPortfolio(js.getString("portfolio"));
+                        wl.setTag(js.getString("tag"));
+                        wl.setFull_coin_name(js.getString("currencies"));
+
+                        if (!js.getString("available").equals("0")) {
+                            if (js.getString("currencyname").equals("inr")) {
+                                arrayList.add(0, wl);
+                            } else {
+                                arrayList.add(wl);
+                            }
+
+                        } else {
+                            arrayList.add(wl);
+                        }
+                    }
+                    WalletCoinHorizontal wh = new WalletCoinHorizontal();
+                    wh.setCoinname(js.getString("currencyname"));
+                    wh.setAmount(js.getString("available"));
+                    wh.setAddress(js.getString("address"));
+                    wh.setAvailabel(js.getString("available"));
+                    wh.setBase_address(js.getString("base_address"));
+                    wh.setDescription(js.getString("desciption"));
+                    wh.setFees(js.getString("fees"));
+                    wh.setMin_width(js.getString("min_with"));
+                    wh.setPending(js.getString("pending"));
+                    wh.setPortfolio(js.getString("portfolio"));
+                    wh.setTag(js.getString("tag"));
+                    wh.setFull_coin_name(js.getString("currencies"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            this.walletCoinVerticals = arrayList;
+        }
     }
 
     @NonNull
@@ -39,19 +114,19 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
     public void onBindViewHolder(@NonNull final VerticalAdapter.MyViewHolder myViewHolder, final int i) {
 
         final Context context = myViewHolder.itemView.getContext();
-
+        pref = new BuyucoinPref(context);
         final String coin_name,availabel,pendings,address,description,tag,full_coin_name,porfolio,pending,base_address;
 
-        coin_name = arrayList.get(i).getCoinname();
-        availabel =  arrayList.get(i).getAvailabel();
-        pendings = arrayList.get(i).getPending();
-        address =  arrayList.get(i).getAddress();
-        description =  arrayList.get(i).getDescription();
-        tag =   arrayList.get(i).getTag();
-        full_coin_name =  arrayList.get(i).getFull_coin_name();
-        porfolio = arrayList.get(i).getPortfolio();
-        pending = arrayList.get(i).getPending();
-        base_address = arrayList.get(i).getBase_address();
+        coin_name = walletCoinVerticals.get(i).getCoinname();
+        availabel =  walletCoinVerticals.get(i).getAvailabel();
+        pendings = walletCoinVerticals.get(i).getPending();
+        address =  walletCoinVerticals.get(i).getAddress();
+        description =  walletCoinVerticals.get(i).getDescription();
+        tag =   walletCoinVerticals.get(i).getTag();
+        full_coin_name =  walletCoinVerticals.get(i).getFull_coin_name();
+        porfolio = walletCoinVerticals.get(i).getPortfolio();
+        pending = walletCoinVerticals.get(i).getPending();
+        base_address = walletCoinVerticals.get(i).getBase_address();
 
 
         myViewHolder.coinname.setText(coin_name.toUpperCase());
@@ -95,8 +170,8 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
         }
 
         if(coin_name.equals("inr")){
-            SharedPreferences.Editor editor = context.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
-            editor.putString("inr_amount",String.valueOf(availabel)).apply();
+           pref.setEditpref("inr_amount",String.valueOf(availabel));
+//           new WalletFragment().WalletBalance();
             myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -157,7 +232,7 @@ class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder>
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return walletCoinVerticals.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class P2P_PagerAdapter extends FragmentStatePagerAdapter{
@@ -39,11 +38,11 @@ public class P2P_PagerAdapter extends FragmentStatePagerAdapter{
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Deposite Orders";
+                return "Deposit Orders";
             case 1:
                 return "WithDraw Orders";
             default:
-                return "Deposite Orders";
+                return "Deposit Orders";
 
         }
     }

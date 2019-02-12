@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.buyucoin.buyucoin.Dashboard;
 import com.buyucoin.buyucoin.LoginActivity;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
@@ -72,6 +71,7 @@ public class SuperSettingsBottomsheet extends BottomSheetDialogFragment {
                 Intent i = new Intent(getActivity(), LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

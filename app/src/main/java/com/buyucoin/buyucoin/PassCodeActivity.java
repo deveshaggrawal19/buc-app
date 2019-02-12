@@ -1,8 +1,6 @@
 package com.buyucoin.buyucoin;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,7 @@ import io.fabric.sdk.android.Fabric;
 public class PassCodeActivity extends AppCompatActivity {
     static String pin;
     View view;
-    SharedPreferences viewPref;
+    BuyucoinPref buyucoinPref;
     String PASSWORD;
 
     @Override
@@ -27,8 +26,8 @@ public class PassCodeActivity extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_code);
-        viewPref = this.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE);
-        PASSWORD = viewPref.getString("passcode","no");
+        buyucoinPref = new BuyucoinPref(this);
+        PASSWORD = buyucoinPref.getPrefString("passcode");
         pin = "";
 
     }
@@ -43,7 +42,7 @@ public class PassCodeActivity extends AppCompatActivity {
                     startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
                     finish();
                 }else{
-                    if(PASSWORD.equals("no")){
+                    if(PASSWORD==null || PASSWORD.equals("no")){
                             Intent resultintent = new Intent(PassCodeActivity.this,ConfirmCodeActivity.class);
                             resultintent.putExtra("check_pin",pin);
                             startActivity(resultintent);

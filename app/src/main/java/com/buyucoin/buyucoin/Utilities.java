@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.buyucoin.buyucoin.customDialogs.CoustomToast;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -192,9 +193,11 @@ public class Utilities {
                     @Override
                     public void onClick(View v) {
                         new CoustomToast(activity.getApplicationContext(), Objects.requireNonNull(activity),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
+                        new BuyucoinPref(activity).removeAllPref();
                         Intent i = new Intent(activity, LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i);
+                        activity.finish();
                     }
                 });
                 dialog.show();

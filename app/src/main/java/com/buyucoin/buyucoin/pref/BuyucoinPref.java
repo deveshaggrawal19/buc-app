@@ -3,6 +3,8 @@ package com.buyucoin.buyucoin.pref;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.buyucoin.buyucoin.cipher.CipherAES;
+
 public class BuyucoinPref {
     public static String ACCESS_TOKEN = "access_token";
     public static String REFRESH_TOKEN = "refresh_token";
@@ -10,7 +12,7 @@ public class BuyucoinPref {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Context context;
-
+    public static final String KEY = "qwaserdftyghuijkoplzxcvbnmlkjhgf";
     public BuyucoinPref(Context context) {
         this.context = context;
         this.preferences = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
@@ -23,7 +25,13 @@ public class BuyucoinPref {
     }
 
     public String getPrefString(String key){
-        return preferences.getString(key,null);
+        String encrypted_data  = preferences.getString(key,null);
+        try {
+            return new CipherAES(KEY).decrypt(encrypted_data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     public int getPrefInt(String key){
         return preferences.getInt(key,0);
@@ -37,7 +45,11 @@ public class BuyucoinPref {
 
 
     public void setEditpref(String key, String value){
-        editor.putString(key,value).apply();
+        try {
+            editor.putString(key,new CipherAES(KEY).encrypt(value)).apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
     public void setEditpref(String key, int value){

@@ -2,7 +2,6 @@ package com.buyucoin.buyucoin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -14,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoin.buyucoin.cipher.CipherAES;
+import com.buyucoin.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONObject;
@@ -36,14 +37,29 @@ public class LoginActivity extends AppCompatActivity {
     TextView _signupLink;
     ProgressDialog progressDialog;
     CheckBox show_password;
+    BuyucoinPref buyucoinPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.splash_screen);
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_login);
 
+        try {
+            String name = "vinod karadiya";
+            String enc = new CipherAES(BuyucoinPref.KEY).encrypt(name);
+            String dec = new CipherAES(BuyucoinPref.KEY).decrypt(enc);
+
+            Log.d("ORIGINAL NAME", "=> "+name);
+            Log.d("ENCRYPTED NAME", "=> "+enc);
+            Log.d("DECRYPTED NAME", "=> "+dec);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        buyucoinPref = new BuyucoinPref(getApplicationContext());
         _emailText = (EditText)findViewById(R.id.input_email);
         _passwordText = (EditText)findViewById(R.id.input_password);
         final int type = _passwordText.getInputType();
@@ -85,9 +101,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences prefs = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        String s = prefs.getString("access_token", null);
-        String r = prefs.getString("refresh_token", null);
+        String s = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+        String r = buyucoinPref.getPrefString(BuyucoinPref.REFRESH_TOKEN);
         if(s != null){
             Intent i = new Intent(this, PassCodeActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -140,16 +155,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) {
                 try {
                     String s = response.body().string();
-                    Log.d(TAG, "onResponse: loging response "+s);
+//                    Log.d(TAG, "onResponse: loging response "+s);
                     JSONObject jsonObject1 = new JSONObject(s);
                    // Log.d("RESPONSE_______", s);
                     //Log.d("STRING___", jsonObject1.getString("status"));
                     if(jsonObject1.getString("status").equals("success")) {
 
-                        SharedPreferences.Editor editor = getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-                        editor.putString("access_token", jsonObject1.getJSONObject("data").getString("access_token"));
-                        editor.putString("refresh_token", jsonObject1.getJSONObject("data").getString("refresh_token"));
-                        editor.apply();
+
+                        buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN, jsonObject1.getJSONObject("data").getString("access_token"));
+                        buyucoinPref.setEditpref(BuyucoinPref.REFRESH_TOKEN, jsonObject1.getJSONObject("data").getString("refresh_token"));
                         onLoginSuccess(s);
                     }
                     else
