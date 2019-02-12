@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -216,6 +217,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
 
         public MyHistoryRecyclerViewAdapter(ArrayList<History> items) {
             mValues = items;
+            Collections.reverse(mValues);
         }
 
         @Override

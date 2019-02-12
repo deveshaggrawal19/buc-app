@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class DepositePagerFragment extends Fragment {
     private Bundle b;
     private ClipboardManager clipboardManager;
     private Context context;
+    LinearLayout wallet_maintain_layout,deposite_layout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public class DepositePagerFragment extends Fragment {
         ImageView deposite_layout_qr_img;
         final TextView deposite_layout_address_txt;
         context = view.getContext();
-
+        wallet_maintain_layout = view.findViewById(R.id.wallet_maintain_layout);
+        deposite_layout = view.findViewById(R.id.deposite_layout);
         deposite_layout_qr_img = view.findViewById(R.id.coin_address_qrcode);
         deposite_layout_address_txt = view.findViewById(R.id.coin_address);
         clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -72,7 +75,9 @@ public class DepositePagerFragment extends Fragment {
             }
         });
 
-        if(ad!=null){
+        if(ad!=null && !ad.equals("null")){
+            wallet_maintain_layout.setVisibility(View.GONE);
+            deposite_layout.setVisibility(View.VISIBLE);
             deposite_layout_address_txt.setText(ad);
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {

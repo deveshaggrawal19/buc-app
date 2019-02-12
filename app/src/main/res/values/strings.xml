@@ -169,4 +169,5 @@
     <string name="active_withdrawals">Active Withdrawals</string>
     <string name="active_deposits">Active Deposits</string>
     <string name="digital_assets_exchange_wallet"><![CDATA[Digital Assets Exchange & Wallet]]></string>
+    <string name="maintainance">This Wallet is Under Maintainance</string>
 </resources>

@@ -14,7 +14,6 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
             android:id="@+id/nsView">
 
             <LinearLayout
@@ -251,7 +250,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Trade"
+                                android:text="Orders"
                                 android:textColor="@color/kyc_color" />
 
                         </LinearLayout>
@@ -313,7 +312,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Active Orders"
+                            android:text="Active Peers"
                             android:textColor="@android:color/white"
                             android:textSize="20sp" />
 
@@ -345,11 +344,13 @@
 
         <TextView
             android:id="@+id/tvWalletError"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="Server Error"
-            android:visibility="gone" />
+            android:textSize="20sp"
+            />
 
     </FrameLayout>
 

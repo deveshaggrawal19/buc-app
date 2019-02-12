@@ -25,7 +25,10 @@ public class BuyucoinPref {
     }
 
     public String getPrefString(String key){
-        String encrypted_data  = preferences.getString(key,null);
+        String encrypted_data = "";
+        if(key.equals("inr_amount")){ encrypted_data  = preferences.getString(key,"0"); }
+        else{ encrypted_data  = preferences.getString(key,null);
+        }
         try {
             return new CipherAES(KEY).decrypt(encrypted_data);
         } catch (Exception e) {

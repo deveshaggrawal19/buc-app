@@ -2,8 +2,6 @@ package com.buyucoin.buyucoin.Fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,24 +19,21 @@ import com.buyucoin.buyucoin.OkHttpHandler;
 import com.buyucoin.buyucoin.R;
 import com.buyucoin.buyucoin.pojos.History;
 import com.buyucoin.buyucoin.pref.BuyucoinPref;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class HistoryPagerAdapterFragmentDeposite extends DialogFragment {
@@ -185,7 +180,9 @@ public class HistoryPagerAdapterFragmentDeposite extends DialogFragment {
         private final ArrayList<History> mValues;
 
         public MyHistoryRecyclerViewAdapter(ArrayList<History> items) {
+
             mValues = items;
+            Collections.reverse(mValues);
         }
 
         @Override

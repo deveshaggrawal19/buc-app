@@ -6,48 +6,78 @@
     android:background="@color/colorPrimary"
     android:layout_height="match_parent">
     <LinearLayout
-        android:layout_marginTop="50dp"
-        android:id="@+id/deposite_layout"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
         android:layout_height="match_parent">
-
-        <TextView
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:id="@+id/deposite_layout"
             android:layout_width="match_parent"
-            android:text="Scan this QR Code to get Address "
+            android:orientation="vertical"
             android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content" />
+            android:visibility="gone"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="200dp"
-            android:src="@drawable/qr"
-            android:id="@+id/coin_address_qrcode"
-            android:layout_gravity="center"
-            android:layout_height="200dp" />
-        <TextView
-            android:layout_marginTop="20dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Scan this QR Code to get Address "
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="200dp"
+                android:src="@drawable/qr"
+                android:id="@+id/coin_address_qrcode"
+                android:layout_gravity="center"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:text="Your Wallet Address"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:text="AQ23WSDE45RFGT67"
+                android:id="@+id/coin_address"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:id="@+id/wallet_maintain_layout"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:text="Your Wallet Address"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:text="AQ23WSDE45RFGT67"
-            android:id="@+id/coin_address"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content" />
-
-
-
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="200dp"
+                android:tint="@color/colorWhite"
+                android:src="@drawable/ic_account_balance_wallet_black_24dp"
+                android:layout_gravity="center"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:text="@string/maintainance"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
+
 
 </androidx.core.widget.NestedScrollView>

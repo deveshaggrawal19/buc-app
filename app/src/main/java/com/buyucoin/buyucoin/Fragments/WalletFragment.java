@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,7 +54,6 @@ public class WalletFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar pb;
     private TextView err,wallet_inr,welcome;
-    private View nsView;
     private CheckBox hidezero_checkbox;
     private ImageView wallet_process_img;
     private BuyucoinPref buyucoinPref;
@@ -65,6 +65,7 @@ public class WalletFragment extends Fragment {
     private LinearLayout p2p_history_layout;
     private LinearLayout p2p_active_orders_layout;
     private Context context;
+    private NestedScrollView nsView;
 
 
     /**
@@ -233,6 +234,7 @@ public class WalletFragment extends Fragment {
                                     public void run() {
                                         err.setText(e);
                                         err.setVisibility(View.VISIBLE);
+                                        nsView.setVisibility(View.GONE);
                                     }
                                 });
 
