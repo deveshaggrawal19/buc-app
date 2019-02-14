@@ -8,6 +8,22 @@
     android:orientation="vertical"
     android:background="@android:color/white"
     tools:context=".BuySellActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:background="@color/colorWhite"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:elevation="0dp">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
 <androidx.core.widget.NestedScrollView

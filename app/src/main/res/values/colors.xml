@@ -12,5 +12,6 @@
     <color name="colorPending">@android:color/holo_orange_light</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
+    <color name="marketRow">#F5F0F0</color>
 
 </resources>

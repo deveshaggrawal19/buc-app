@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:gravity="start"
-    android:layout_margin="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:layout_height="20dp">
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
             android:id="@+id/item_price"
             android:text="Ask"
             android:gravity="start"
-            android:textColor="@color/kyc_color"
+            android:textColor="@color/bids_color"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -22,7 +23,7 @@
             android:id="@+id/item_vol"
             android:text="Ask"
             android:gravity="center"
-            android:textColor="@color/kyc_color"
+            android:textColor="@color/bids_color"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_width="0dp"
@@ -30,7 +31,7 @@
             android:id="@+id/item_value"
             android:text="Ask"
             android:gravity="end"
-            android:textColor="@color/kyc_color"
+            android:textColor="@color/bids_color"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

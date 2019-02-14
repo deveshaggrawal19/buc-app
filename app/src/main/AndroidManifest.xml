@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.buyucoin.buyucoin">
-
+    package="com.buyucoinApp.buyucoin">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:testOnly="false"
         android:icon="@drawable/buyucoin_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/buyucoin_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".HowToSlider"></activity>
+        <activity android:name="com.buyucoinApp.buyucoin.HowToSlider"></activity>
         <activity
-            android:name=".SplashActivity"
+            android:name="com.buyucoinApp.buyucoin.SplashActivity"
             android:theme="@style/fontTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,42 +23,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.buyucoinApp.buyucoin.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/fontTheme" />
-        <activity android:name=".SignupActivity" />
+        <activity android:name="com.buyucoinApp.buyucoin.SignupActivity" />
         <activity
-            android:name=".ScrollingActivity"
+            android:name="com.buyucoinApp.buyucoin.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/fontTheme" />
         <activity
-            android:name=".Dashboard"
+            android:name="com.buyucoinApp.buyucoin.Dashboard"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/fontTheme" />
         <activity
-            android:name=".CurrencyActivity"
+            android:name="com.buyucoinApp.buyucoin.CurrencyActivity"
             android:label="@string/title_activity_currency"
             android:theme="@style/fontTheme" />
         <activity
-            android:name=".BuySellActivity"
+            android:name="com.buyucoinApp.buyucoin.BuySellActivity"
             android:theme="@style/fontTheme" />
         <activity
-            android:name=".DepositWithdrawActivity"
+            android:name="com.buyucoinApp.buyucoin.DepositWithdrawActivity"
             android:theme="@style/fontTheme" />
         <activity
-            android:name=".CoinDepositWithdraw"
+            android:name="com.buyucoinApp.buyucoin.CoinDepositWithdraw"
             android:theme="@style/fontTheme" />
         <activity
-            android:name=".PassCodeActivity"
+            android:name="com.buyucoinApp.buyucoin.PassCodeActivity"
             android:theme="@style/fontTheme" />
-        <activity android:name=".config.Config" />
+        <activity android:name="com.buyucoinApp.buyucoin.config.Config" />
         <activity
-            android:name=".P2POrders"
+            android:name="com.buyucoinApp.buyucoin.P2POrders"
             android:theme="@style/fontTheme" />
-        <activity android:name=".ConfirmCodeActivity"
+        <activity android:name="com.buyucoinApp.buyucoin.ConfirmCodeActivity"
             android:theme="@style/fontTheme"/>
         <receiver
-            android:name=".broadcast.NotNetworkBroadCastReceiver"
+            android:name="com.buyucoinApp.buyucoin.broadcast.NotNetworkBroadCastReceiver"
             android:exported="false">
 
             <!-- <intent-filter> -->

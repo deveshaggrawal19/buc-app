@@ -7,6 +7,24 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".CoinDepositWithdraw">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <RadioGroup
