@@ -17,7 +17,6 @@ import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrders;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -159,7 +158,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                             p2p_active_orders_layout.setRefreshing(false);
                         }
                     });
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

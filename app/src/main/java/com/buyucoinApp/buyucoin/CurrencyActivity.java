@@ -1,6 +1,7 @@
 package com.buyucoinApp.buyucoin;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -346,27 +348,20 @@ public class CurrencyActivity extends AppCompatActivity {
                 DateFormat df = new SimpleDateFormat("yy-MM-dd hh:mm:ss", Locale.ENGLISH);
                 Date date = df.parse(list.get(i).x);
                 dp[i] = new DataPoint(date, list.get(i).y);
-//                Log.d("Date", dp[i].getX()+"");
             }
         } catch(ParseException e){
             e.printStackTrace();
         }
-
-
-//        Log.d("DP LENGTH", dp.length+"");
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
-
+        series.setThickness(5);
         graphView = (GraphView) findViewById(R.id.graphView);
-
-//        graphView.getViewport().setScrollable(true);
-//        graphView.getViewport().setScrollableY(true);
-//        graphView.getViewport().setScalable(true);
-//        graphView.getViewport().setScalableY(true);
-
+        GridLabelRenderer gl = graphView.getGridLabelRenderer();
+        gl.setGridColor(Color.TRANSPARENT);
         graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
-        graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
+        graphView.getGridLabelRenderer().setNumHorizontalLabels(5);
+        graphView.getGridLabelRenderer().setNumVerticalLabels(10);
+        graphView.getGridLabelRenderer().setTextSize(20f);
         graphView.addSeries(series);
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

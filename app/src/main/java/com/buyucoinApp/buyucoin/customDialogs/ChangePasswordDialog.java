@@ -2,14 +2,16 @@ package com.buyucoinApp.buyucoin.customDialogs;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.buyucoinApp.buyucoin.LoginActivity;
@@ -31,11 +33,12 @@ import okhttp3.Response;
 
 public class ChangePasswordDialog extends DialogFragment {
 
-    private EditText old_password_et,new_password_et;
+    private EditText old_password_et,new_password_et,confirm_password;
     private Button change_password_btn;
     private ProgressBar progressBar;
-    private SharedPreferences preferences;
+    private BuyucoinPref buyucoinPref;
     private String ACCESS_TOKEN;
+    private ImageView goback;
 
     public static ChangePasswordDialog newInstance(){
         return new ChangePasswordDialog();
@@ -45,10 +48,8 @@ public class ChangePasswordDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
-        preferences = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS",Context.MODE_PRIVATE);
-        ACCESS_TOKEN = preferences.getString("access_token", null);
-
-
+        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
 
     }
 
@@ -57,9 +58,47 @@ public class ChangePasswordDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.change_password_dialog,container,false);
 
+        goback = view.findViewById(R.id.goback);
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Objects.requireNonNull(getDialog()).dismiss();
+            }
+        });
+        
+        
+        
         old_password_et = view.findViewById(R.id.old_password);
         new_password_et = view.findViewById(R.id.new_password);
+        confirm_password = view.findViewById(R.id.confirm_password);
         change_password_btn = view.findViewById(R.id.change_password_btn);
+
+        change_password_btn.setEnabled(false);
+
+
+        confirm_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String val = s.toString();
+                if(val.equals(new_password_et.getText().toString())){
+                    change_password_btn.setEnabled(true);
+                }else {
+                    change_password_btn.setEnabled(false);
+                }
+
+            }
+        });
+
 
         progressBar = view.findViewById(R.id.change_password_pb);
 
@@ -68,15 +107,20 @@ public class ChangePasswordDialog extends DialogFragment {
             public void onClick(View v) {
                 String old_password = old_password_et.getText().toString();
                 String new_password = new_password_et.getText().toString();
+                String conifrm_password = confirm_password.getText().toString();
+                if(conifrm_password.equals(new_password)){
                 progressBar.setVisibility(View.VISIBLE);
-                makeChangePasswordRequest(view.getContext(),old_password,new_password);
+                makeChangePasswordRequest(view.getContext(),old_password,new_password,conifrm_password);
+                }else {
+                    confirm_password.setError("Confirm Password not matched");
+                }
 
             }
         });
         return view;
     }
 
-    private void makeChangePasswordRequest(final Context context, String old_password, String new_password) {
+    private void makeChangePasswordRequest(final Context context, String old_password, String new_password, String conifrm_password) {
 
 
 
@@ -86,7 +130,7 @@ public class ChangePasswordDialog extends DialogFragment {
             jsonObject = new JSONObject()
                     .put("old_password", old_password)
                     .put("new_password", new_password)
-                    .put("re_new_password",new_password);
+                    .put("re_new_password",conifrm_password);
         }catch(Exception e){
             e.printStackTrace();
         }
