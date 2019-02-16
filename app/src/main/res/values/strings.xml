@@ -171,4 +171,6 @@
     <string name="digital_assets_exchange_wallet"><![CDATA[Digital Assets Exchange & Wallet]]></string>
     <string name="maintainance">This Wallet is Under Maintainance</string>
     <string name="market_history">MARKET HISTORY</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
 </resources>

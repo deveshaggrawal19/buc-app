@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:background="@drawable/search_dw"
+        android:elevation="2dp"
+        android:layout_margin="10dp"
+        app:divider="@android:color/transparent"
+        app:queryHint="Search Coin here"
+        android:layout_gravity="center"
+        android:id="@+id/searchview"
+        android:layout_height="wrap_content">
+    </androidx.appcompat.widget.SearchView>
     <LinearLayout
         android:layout_width="match_parent"
         android:padding="5dp"
@@ -95,7 +107,6 @@
             android:name="com.buyucoin.buyucoin.Fragments.RateFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="LinearLayoutManager"
             tools:context=".Fragments.RateFragment"
             tools:listitem="@layout/fragment_rate" />
 

@@ -2,15 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <item android:id="@+id/action_logout"
+    <item android:id="@+id/action_super_setting"
+        android:icon="@drawable/ic_more_vert_black_24dp"
         android:orderInCategory="100"
-        android:title="Logout"
-        app:showAsAction="never"/>
+        android:title="@string/settings"
+        app:showAsAction="ifRoom"
+        />
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+
 </menu>

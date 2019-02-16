@@ -39,6 +39,7 @@ public class RateFragment extends Fragment {
 
     String ACCESS_TOKEN = null;
     RecyclerView recyclerView;
+    androidx.appcompat.widget.SearchView searchView;
     ProgressBar pb;
 
     ArrayList<Rates> list = new ArrayList<>();
@@ -89,6 +90,16 @@ public class RateFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rate_list, container, false);
 
+        searchView = view.findViewById(R.id.searchview);
+
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+                searchView.requestFocus();
+            }
+        });
+
         recyclerView = view.findViewById(R.id.list);
         pb = view.findViewById(R.id.pbRate);
         // Set the adapter
@@ -101,6 +112,27 @@ public class RateFragment extends Fragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             }
         }
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(adapter!=null){
+                    adapter.getFilter().filter(newText);
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        });
+
+
+
+
 
         return view;
     }
@@ -131,6 +163,7 @@ public class RateFragment extends Fragment {
 
                 adapter = new MyrateRecyclerViewAdapter(list, getActivity());
                 adapter.notifyDataSetChanged();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
                 Utilities.hideProgressBar(pb);
 
@@ -143,10 +176,6 @@ public class RateFragment extends Fragment {
             }
         });
     }
-
-
-
-
 
 
 

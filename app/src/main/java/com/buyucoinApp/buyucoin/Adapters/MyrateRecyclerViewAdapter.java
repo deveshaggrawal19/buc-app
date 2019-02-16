@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,15 +22,17 @@ import java.util.ArrayList;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecyclerViewAdapter.ViewHolder> {
+public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecyclerViewAdapter.ViewHolder> implements Filterable {
 
-    private final ArrayList<Rates> mValues;
+    private ArrayList<Rates> mValues;
+    private ArrayList<Rates> filtered;
 
     Context mContext;
 
     public MyrateRecyclerViewAdapter(ArrayList<Rates> items, Context context) {
-        mValues = items;
+        filtered = items;
         mContext = context;
+        mValues = filtered;
     }
 
     @Override
@@ -76,15 +80,48 @@ public class MyrateRecyclerViewAdapter extends RecyclerView.Adapter<MyrateRecycl
         });
     }
 
-    public String removeZeros(String s){
-        int dot = s.indexOf('.');
-        int zero = s.indexOf('0',dot);
-        return s.substring(0,zero+1);
-    }
+
 
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String searchString = constraint.toString();
+                if(searchString.isEmpty()){
+                    mValues = filtered;
+                }
+                else{
+                    ArrayList<Rates> resultList = new ArrayList<>();
+                    for(Rates item : filtered){
+                        try {
+                            String full_currency_name = MyResourcesClass.COIN_FULL_NAME.getString(item.currency).toLowerCase();
+                            String currency = item.currency.toLowerCase();
+                            if (currency.toLowerCase().contains(searchString.toLowerCase()) || full_currency_name.contains(searchString.toLowerCase()) ){
+                                resultList.add(item);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mValues = resultList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mValues;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mValues = (ArrayList<Rates>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

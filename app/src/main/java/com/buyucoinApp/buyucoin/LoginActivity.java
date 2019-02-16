@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.buyucoinApp.buyucoin.cipher.CipherAES;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
 
@@ -47,25 +46,13 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        try {
-            String name = "vinod karadiya";
-            String enc = new CipherAES(BuyucoinPref.KEY).encrypt(name);
-            String dec = new CipherAES(BuyucoinPref.KEY).decrypt(enc);
-
-            Log.d("ORIGINAL NAME", "=> "+name);
-            Log.d("ENCRYPTED NAME", "=> "+enc);
-            Log.d("DECRYPTED NAME", "=> "+dec);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         buyucoinPref = new BuyucoinPref(getApplicationContext());
-        _emailText = (EditText)findViewById(R.id.input_email);
-        _passwordText = (EditText)findViewById(R.id.input_password);
+        _emailText = findViewById(R.id.input_email);
+        _passwordText = findViewById(R.id.input_password);
         final int type = _passwordText.getInputType();
         show_password = findViewById(R.id.checkBox_show_password);
-        _loginButton = (Button)findViewById(R.id.btn_login);
-        _signupLink = (TextView)findViewById(R.id.link_signup);
+        _loginButton = findViewById(R.id.btn_login);
+        _signupLink = findViewById(R.id.link_signup);
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

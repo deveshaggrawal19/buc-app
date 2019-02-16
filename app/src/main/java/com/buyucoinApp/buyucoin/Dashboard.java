@@ -6,9 +6,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,7 +66,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //    NavigationView navigationView;
 //    DrawerLayout drawer ;
 //    ActionBarDrawerToggle toggle;
-    ImageView imageview_menu;
+//    ImageView imageview_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //        View header = navigationView.getHeaderView(0);
 //        navname = header.findViewById(R.id.tvName);
 //        navemail = header.findViewById(R.id.tvEmail);
-        imageview_menu = findViewById(R.id.imageview_menu);
+//        imageview_menu = findViewById(R.id.imageview_menu);
 
 
         refresh_token = buyucoinPref.getPrefString("refresh_token");
@@ -112,13 +112,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-        imageview_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
-                superSettingsBottomsheet.show(getSupportFragmentManager(), "SUPER SETTINGS BOTTOM SHEET");
-            }
-        });
+//        imageview_menu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
+//                superSettingsBottomsheet.show(getSupportFragmentManager(), "SUPER SETTINGS BOTTOM SHEET");
+//            }
+//        });
 
 
 
@@ -352,5 +352,24 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         }
 //        drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id== R.id.action_super_setting){
+                SuperSettingsBottomsheet superSettingsBottomsheet = new SuperSettingsBottomsheet();
+                superSettingsBottomsheet.show(getSupportFragmentManager(), "SUPER SETTINGS BOTTOM SHEET");
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

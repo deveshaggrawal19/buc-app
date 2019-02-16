@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.buyucoinApp.buyucoin">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:testOnly="false"
         android:icon="@drawable/buyucoin_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/buyucoin_logo"
         android:supportsRtl="true"
+        android:testOnly="false"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name="com.buyucoinApp.buyucoin.HowToSlider"></activity>
+        <activity android:name=".VerifyUser"></activity>
+        <activity android:name=".HowToSlider" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.SplashActivity"
+            android:name=".SplashActivity"
             android:theme="@style/fontTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,42 +25,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.buyucoinApp.buyucoin.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/fontTheme" />
-        <activity android:name="com.buyucoinApp.buyucoin.SignupActivity" />
+        <activity android:name=".SignupActivity" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.ScrollingActivity"
+            android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/fontTheme" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.Dashboard"
+            android:name=".Dashboard"
             android:label="@string/title_activity_dashboard"
-            android:theme="@style/fontTheme" />
+            android:theme="@style/fontTheme">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name="com.buyucoinApp.buyucoin.CurrencyActivity"
+            android:name=".CurrencyActivity"
             android:label="@string/title_activity_currency"
             android:theme="@style/fontTheme" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.BuySellActivity"
+            android:name=".BuySellActivity"
             android:theme="@style/fontTheme" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.DepositWithdrawActivity"
+            android:name=".DepositWithdrawActivity"
             android:theme="@style/fontTheme" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.CoinDepositWithdraw"
+            android:name=".CoinDepositWithdraw"
             android:theme="@style/fontTheme" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.PassCodeActivity"
+            android:name=".PassCodeActivity"
             android:theme="@style/fontTheme" />
-        <activity android:name="com.buyucoinApp.buyucoin.config.Config" />
+        <activity android:name=".config.Config" />
         <activity
-            android:name="com.buyucoinApp.buyucoin.P2POrders"
+            android:name=".P2POrders"
             android:theme="@style/fontTheme" />
-        <activity android:name="com.buyucoinApp.buyucoin.ConfirmCodeActivity"
-            android:theme="@style/fontTheme"/>
+        <activity
+            android:name=".ConfirmCodeActivity"
+            android:theme="@style/fontTheme" />
+
         <receiver
-            android:name="com.buyucoinApp.buyucoin.broadcast.NotNetworkBroadCastReceiver"
+            android:name=".broadcast.NotNetworkBroadCastReceiver"
             android:exported="false">
 
             <!-- <intent-filter> -->
@@ -67,6 +79,7 @@
             <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
             <!-- </intent-filter> -->
         </receiver>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="b151bee15f72d133222a1062d5d53727f87d89d1" />

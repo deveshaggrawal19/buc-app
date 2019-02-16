@@ -191,7 +191,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/snap/android-studio/70/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_mode_edit_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/snap/android-studio/71/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_youtube_searched_for_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -201,7 +201,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="edit_pencil" />
+                            <entry key="outputName" value="ic_searched" />
                             <entry key="sourceFile" value="$USER_HOME$" />
                           </map>
                         </option>
