@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.buyucoinApp.buyucoin.DepositWithdrawActivity;
 import com.buyucoinApp.buyucoin.MyResourcesClass;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
@@ -114,14 +113,14 @@ public class CoinActiveOrderAdapter extends RecyclerView.Adapter<CoinActiveOrder
                                         p.show();
                                         boolean b = cancelOrder(currency, cancel_order.toString());
                                         if(b){
-                                            new CoustomToast(context,new DepositWithdrawActivity(),mainmsg,CoustomToast.TYPE_SUCCESS).showToast();
+                                            new CoustomToast(context,mainmsg,CoustomToast.TYPE_SUCCESS).showToast();
                                             mValues.remove(position);
                                             notifyItemRemoved(position);
                                             notifyDataSetChanged();
                                             p.dismiss();
                                             dialog.dismiss();
                                         }else{
-                                            new CoustomToast(context,new DepositWithdrawActivity(),mainmsg,CoustomToast.TYPE_DANGER).showToast();
+                                            new CoustomToast(context,mainmsg,CoustomToast.TYPE_DANGER).showToast();
                                             dialog.dismiss();
                                         }
                                     }

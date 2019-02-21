@@ -1,4 +1,4 @@
-package com.buyucoinApp.buyucoin.Fragments;
+package com.buyucoinApp.buyucoin.bottomsheets;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -132,26 +132,35 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
         make_p2p_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                upi_address = upi.getText().toString();
                 if(upi_checkobx.isChecked()){
-                    if(!upi.getText().toString().equals("")){
-                        upi_address = upi.getText().toString();
-                    }else {
-                        new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Enter UPI Address",CoustomToast.TYPE_DANGER).showToast();
+                    if(upi_address.equals("")){
+                        new CoustomToast(getContext(),"Enter UPI Address",CoustomToast.TYPE_DANGER).showToast();
+                        return;
                     }
                 }
+                if(imps_checkbox.isChecked()){
+                    JSONObject order = new JSONObject();
+                    try {
+                        order.put("amount",amount)
+                                .put("min_amount",min_amount)
+                                .put("type",type)
+                                .put("modes",new JSONArray(modes))
+                                .put("boost",boost);
 
-                JSONObject order = new JSONObject();
-                try {
-                    order.put("amount",amount)
-                            .put("min_amount",min_amount)
-                            .put("type",type)
-                            .put("modes",new JSONArray(modes))
-                            .put("note",upi_address)
-                            .put("boost",boost);
-                    makeRequest(order,modes,view.getContext());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        if(!upi_address.equals("")){
+                            order.put("note",upi_address);
+                        }
+                        makeRequest(order,modes,view.getContext());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+                if(!imps_checkbox.isChecked() &&  !upi_checkobx.isChecked()){
+                    new CoustomToast(getContext(),"Choose at least one mode of payment",CoustomToast.TYPE_DANGER).showToast();
+                }
+
+
             }
         });
         return  view;
@@ -184,11 +193,11 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
 
 
                             if(status.equals("success")){
-                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
+                                new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
                                 dismiss();
                             }
                             else{
-                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),tmsg,CoustomToast.TYPE_DANGER).showToast();
+                                new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_DANGER).showToast();
                             }
 
                         }

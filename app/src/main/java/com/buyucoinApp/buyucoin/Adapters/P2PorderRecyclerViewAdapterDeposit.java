@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.buyucoinApp.buyucoin.Dashboard;
 import com.buyucoinApp.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
@@ -106,13 +105,13 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
                                 public void onClick(DialogInterface dialog, int which) {
                                     boolean b = peerAction(object.toString());
                                     if(b){
-                                        new CoustomToast(context,(Dashboard)context,"Deleted Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                        new CoustomToast(context,"Deleted Successfully",CoustomToast.TYPE_SUCCESS).showToast();
                                         dialog.dismiss();
                                         arrayList.remove(position);
                                         notifyItemRemoved(position);
                                         notifyDataSetChanged();
                                     }else{
-                                        new CoustomToast(context,(Dashboard)context,"Error While Deleting...",CoustomToast.TYPE_DANGER).showToast();
+                                        new CoustomToast(context,"Error While Deleting...",CoustomToast.TYPE_DANGER).showToast();
                                         dialog.dismiss();
                                     }
                                 }

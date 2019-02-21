@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.buyucoinApp.buyucoin.Adapters.MyrateRecyclerViewAdapter;
@@ -97,6 +98,10 @@ public class RateFragment extends Fragment {
             public void onClick(View v) {
                 searchView.setIconified(false);
                 searchView.requestFocus();
+                searchView.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                        ));
             }
         });
 
@@ -146,10 +151,8 @@ public class RateFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 DataSnapshot crypto = dataSnapshot.child("rates").child("data").child("crypto");
-                Log.d("RATE PAGE FRAG", "onDataChange: "+crypto.toString());
 
                 list.clear();
-                Log.d("logging", crypto.toString());
                 int i=0;
                 for(DataSnapshot d : crypto.getChildren()){
                     String currency = d.getKey();

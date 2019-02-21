@@ -12,11 +12,10 @@ import android.widget.RadioGroup;
 
 import com.buyucoinApp.buyucoin.Interfaces.TriggerActiveOrder;
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.bottomsheets.P2P_PayBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoinApp.buyucoin.textWatcher.P2P_TextWatcher;
-
-import java.util.Objects;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -168,13 +167,13 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
                 }
 
                 if (amt < 100) {
-                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Amount must be 100 or more",CoustomToast.TYPE_DANGER).showToast();
+                    new CoustomToast(getContext(),"Amount must be 100 or more",CoustomToast.TYPE_DANGER).showToast();
                 }
                 if (min_amt < 100) {
-                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Min Amount must be 100",CoustomToast.TYPE_DANGER).showToast();
+                    new CoustomToast(getContext(),"Min Amount must be 100",CoustomToast.TYPE_DANGER).showToast();
                 }
                 if (min_amt > amt) {
-                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Min Amount must be low",CoustomToast.TYPE_DANGER).showToast();
+                    new CoustomToast(getContext(),"Min Amount must be low",CoustomToast.TYPE_DANGER).showToast();
                     min_amount.setText("100");
                 }
 

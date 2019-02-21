@@ -1,4 +1,4 @@
-package com.buyucoinApp.buyucoin.Fragments;
+package com.buyucoinApp.buyucoin.bottomsheets;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

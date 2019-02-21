@@ -50,16 +50,13 @@ public class PassCodeActivity extends AppCompatActivity {
                     }
                     else{
                         clearPinsData();
-
                     }
-
-
                 }
-
 
             }
         }else{
-            new CoustomToast(getApplicationContext(),PassCodeActivity.this,"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
+            new CoustomToast(getApplicationContext(),"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
+            pin = "";
         }
         Log.d("PIN=======>","pin = "+pin+" pin length="+String.valueOf(pin.length()));
 
@@ -78,7 +75,7 @@ public class PassCodeActivity extends AppCompatActivity {
             }
         },100);
         pin = "";
-        new CoustomToast(getApplicationContext(),PassCodeActivity.this, "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
+        new CoustomToast(getApplicationContext(), "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
     }
 
     public void updatePinDote(int i,int level){

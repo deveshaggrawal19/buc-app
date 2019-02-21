@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.bottomsheets.HistoryBottomsheet;
 import com.buyucoinApp.buyucoin.pojos.History;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 

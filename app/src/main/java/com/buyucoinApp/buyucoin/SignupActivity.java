@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONObject;
@@ -124,7 +124,7 @@ public class SignupActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Account created. Verify your E-mail to login", Toast.LENGTH_LONG).show();
+                new CoustomToast(getBaseContext(), "Account created. Verify your E-mail to login",CoustomToast.TYPE_SUCCESS).showToast();
                 _signupButton.setEnabled(true);
 
             }
@@ -137,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Signup error: " + msg, Toast.LENGTH_LONG).show();
+                new CoustomToast(getBaseContext(), "Signup error: " + msg,CoustomToast.TYPE_DANGER).showToast();
                 _signupButton.setEnabled(true);
             }
         });

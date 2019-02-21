@@ -161,12 +161,12 @@ public class ChangePasswordDialog extends DialogFragment {
                             public void run() {
                                 progressBar.setVisibility(View.INVISIBLE);
                                 if(status.equals("success")){
-                                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()), finalMessage,CoustomToast.TYPE_SUCCESS).showToast();
+                                    new CoustomToast(getContext(),finalMessage,CoustomToast.TYPE_SUCCESS).showToast();
                                     new BuyucoinPref(context).removePref(BuyucoinPref.ACCESS_TOKEN).remove(BuyucoinPref.REFRESH_TOKEN).apply();
                                     Objects.requireNonNull(getContext()).startActivity(new Intent(getActivity(),LoginActivity.class));
                                 }
                                 if(status.equals("error")){
-                                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()), finalMessage,CoustomToast.TYPE_DANGER).showToast();
+                                    new CoustomToast(getContext(),finalMessage,CoustomToast.TYPE_DANGER).showToast();
 
                                 }
 //                                dismiss();

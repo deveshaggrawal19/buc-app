@@ -2,6 +2,7 @@ package com.buyucoinApp.buyucoin.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,16 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
         ArrayList<WalletCoinVertical> arrayList = new ArrayList<>();
         if(list.size()>0) {
             for (JSONObject js : list) {
+                Log.d("WALLET COIN", "VerticalAdapter: "+list.toString());
                 try {
                     if (hidezero) {
                         if (!js.getString("available").equals("0")) {
                             WalletCoinVertical wl = new WalletCoinVertical();
                             wl.setCoinname(js.getString("currencyname"));
                             wl.setAmount(js.getString("available"));
-                            wl.setAddress(js.getString("address"));
+                            wl.setAddress(js.getString("base_address"));
                             wl.setAvailabel(js.getString("available"));
-                            wl.setBase_address(js.getString("base_address"));
+                            wl.setBase_address(js.getString("address"));
                             wl.setDescription(js.getString("desciption"));
                             wl.setFees(js.getString("fees"));
                             wl.setMin_width(js.getString("min_with"));

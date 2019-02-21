@@ -1,4 +1,4 @@
-package com.buyucoinApp.buyucoin.Fragments;
+package com.buyucoinApp.buyucoin.bottomsheets;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,6 @@ import com.buyucoinApp.buyucoin.customDialogs.ChangePasscodeDialog;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,7 +52,7 @@ public class SettingsBottomsheet extends BottomSheetDialogFragment {
                 if(buyucoinPref!=null){
                     buyucoinPref.removeAllPref();
                 }
-                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
+                new CoustomToast(getContext(),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
                 Intent i = new Intent(getActivity(), LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

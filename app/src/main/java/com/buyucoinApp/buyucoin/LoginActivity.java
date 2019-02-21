@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
 
@@ -37,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     CheckBox show_password;
     BuyucoinPref buyucoinPref;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 
     @Override
@@ -144,14 +150,25 @@ public class LoginActivity extends AppCompatActivity {
                     String s = response.body().string();
 //                    Log.d(TAG, "onResponse: loging response "+s);
                     JSONObject jsonObject1 = new JSONObject(s);
-                   // Log.d("RESPONSE_______", s);
-                    //Log.d("STRING___", jsonObject1.getString("status"));
+                    JSONObject data = jsonObject1.getJSONObject("data");
+                    Log.d("LOGIN RESPONSE", s);
+                    Log.d("LOGIN ACTIVITY RESPONSE", jsonObject1.getString("status"));
                     if(jsonObject1.getString("status").equals("success")) {
 
+                        if(data.getBoolean("email_verified")) {
+                            buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN, data.getString("access_token"));
+                            buyucoinPref.setEditpref(BuyucoinPref.REFRESH_TOKEN, data.getString("refresh_token"));
+                            buyucoinPref.setEditpref("kyc_status", data.getBoolean("kyc_verified"));
+                            buyucoinPref.setEditpref("mob_verified", data.getBoolean("mob_verified"));
+                            buyucoinPref.setEditpref("email_verified", data.getBoolean("email_verified"));
 
-                        buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN, jsonObject1.getJSONObject("data").getString("access_token"));
-                        buyucoinPref.setEditpref(BuyucoinPref.REFRESH_TOKEN, jsonObject1.getJSONObject("data").getString("refresh_token"));
-                        onLoginSuccess(s);
+
+                            onLoginSuccess(data.getBoolean("email_verified"));
+                        }else {
+                            onLoginSuccess(data.getBoolean("email_verified"));
+                        }
+
+
                     }
                     else
                         onLoginFailed(jsonObject1.getJSONArray("message").getJSONArray(0).getString(0));
@@ -163,8 +180,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -183,19 +198,28 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess(final String response) {
-        runOnUiThread(new Runnable(){
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-                _loginButton.setEnabled(true);
-                Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_LONG).show();
-            }
-        });
-        finish();
-        Intent intent = new Intent(this, PassCodeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+    public void onLoginSuccess(final boolean email) {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(email) {
+                    progressDialog.dismiss();
+                    _loginButton.setEnabled(true);
+                    new CoustomToast(getApplicationContext(), "Logged in",CoustomToast.TYPE_SUCCESS).showToast();
+                    finish();
+                    Intent intent = new Intent(LoginActivity.this, PassCodeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    }else{
+                        progressDialog.dismiss();
+                        _loginButton.setEnabled(true);
+                        new CoustomToast(getApplicationContext(), "Your email is not verified, \n verify your email first to login",CoustomToast.TYPE_PENDING).showToast();
+                    }
+                }
+            });
+
+
     }
 
     public void onLoginFailed(final String error) {

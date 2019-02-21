@@ -4,33 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".VerifyUser">
 
     <ImageView
         android:layout_width="match_parent"
-        android:src="@drawable/conf_otp"
-        android:scaleType="center"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        android:src="@drawable/conf_otp" />
 
-
+    <Button
+        android:id="@+id/send_otp_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/pills"
+        android:padding="10dp"
+        android:text="Add mobile number"
+        android:textColor="@color/colorWhite" />
 
     <LinearLayout
         android:id="@+id/enter_number_layout"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/history_item_drawable"
-        android:elevation="2dp"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Enter mobile no to get OTP"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="18sp"
-            android:layout_height="wrap_content" />
+            android:text="Enter mobile no to get OTP"
+            android:textSize="18sp" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
@@ -38,54 +47,41 @@
 
 
         <EditText
-            android:layout_width="match_parent"
             android:id="@+id/enter_number_etv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
+            android:background="@drawable/input_shape"
             android:inputType="number"
             android:maxLines="1"
-            android:background="@drawable/input_shape"
-            android:layout_height="50dp"/>
+            android:padding="5dp" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <Button
-            android:id="@+id/send_otp_btn"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-            android:text="get otp"
-            android:background="@drawable/pills"
-            android:textColor="@color/colorWhite"
-            android:padding="10dp"
-            android:layout_height="wrap_content" />
-
-
-
 
     </LinearLayout>
-
 
 
     <LinearLayout
         android:id="@+id/enter_otp_layout"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:background="@drawable/history_item_drawable"
         android:elevation="2dp"
+        android:orientation="vertical"
         android:padding="10dp"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
-            android:text="Enter OTP"
-            android:textSize="18sp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            android:text="Enter OTP"
+            android:textSize="18sp" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
@@ -95,11 +91,11 @@
         <EditText
             android:id="@+id/enter_otp_etv"
             android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:inputType="number"
-            android:maxLines="1"
             android:background="@drawable/input_shape"
-            android:layout_height="50dp"/>
+            android:inputType="number"
+            android:maxLines="1" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
@@ -107,18 +103,26 @@
 
         <Button
             android:id="@+id/submit_otp_btn"
-            android:layout_gravity="end"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_margin="10dp"
-            android:text="submit otp"
             android:background="@drawable/pills"
-            android:textColor="@color/colorWhite"
             android:padding="10dp"
-            android:layout_height="wrap_content" />
-
-
-
+            android:text="submit otp"
+            android:textColor="@color/colorWhite" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="end"
+        android:layout_margin="20dp"
+        android:background="@drawable/curr_btn"
+        android:elevation="0dp"
+        android:text="logout"
+        android:textColor="@drawable/curr_btn_text" />
 
 </LinearLayout>

@@ -23,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -190,10 +189,11 @@ public class WithdrawDetails extends BottomSheetDialogFragment {
                         @Override
                         public void run() {
                             if(issuccess){
-                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),msg,CoustomToast.TYPE_SUCCESS).showToast();
+                                new CoustomToast(getContext(), msg,CoustomToast.TYPE_SUCCESS).showToast();
+
 
                             }else{
-                                new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),msg,CoustomToast.TYPE_DANGER).showToast();
+                                new CoustomToast(getContext(), msg,CoustomToast.TYPE_DANGER).showToast();
 
                             }
                         }

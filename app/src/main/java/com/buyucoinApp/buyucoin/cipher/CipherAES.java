@@ -28,14 +28,15 @@ public class CipherAES {
     }
 
     public String decrypt(String encrypteddata) throws Exception{
-        Key key = generateKey();
-        Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
-        byte ivbytes[] =  new byte[c.getBlockSize()];
-        IvParameterSpec iv = new IvParameterSpec(ivbytes);
-        c.init(Cipher.DECRYPT_MODE,key,iv);
-        byte[] decodedValue = Base64.decode(encrypteddata,Base64.DEFAULT);
-        byte[] decval = c.doFinal(decodedValue);
-        return new String(decval);
+
+                Key key = generateKey();
+                Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
+                byte ivbytes[] = new byte[c.getBlockSize()];
+                IvParameterSpec iv = new IvParameterSpec(ivbytes);
+                c.init(Cipher.DECRYPT_MODE, key, iv);
+                byte[] decodedValue = Base64.decode(encrypteddata, Base64.DEFAULT);
+                byte[] decval = c.doFinal(decodedValue);
+                return new String(decval);
     }
 
     private Key generateKey() {

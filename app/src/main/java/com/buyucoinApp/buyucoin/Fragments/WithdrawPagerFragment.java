@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.bottomsheets.WithdrawBottomsheet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +31,7 @@ public class WithdrawPagerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.withdraw_pager_layout, container, false);
-        final String ty, co, av, ad, de, tag, cfn;
+        final String ty, co, av, ad,bd, de, tag, cfn;
         LinearLayout tag_layout;
         Button withdraw_layout_btnview;
         TextView withdraw_coin_name;
@@ -40,6 +41,7 @@ public class WithdrawPagerFragment extends Fragment {
         co = b.getString("coin");
         av = b.getString("available");
         ad = b.getString("address");
+        bd = b.getString("base_address");
         de = b.getString("description");
         tag = b.getString("tag");
         cfn = b.getString("coin_full_name");
@@ -74,6 +76,7 @@ public class WithdrawPagerFragment extends Fragment {
                         bundle.putString("coin_tag", tag);
                         bundle.putDouble("coin_amount", amount);
                         bundle.putString("coin_address", address);
+                        bundle.putString("coin_base_address",bd);
                         bundle.putString("coin_name",co);
 
 

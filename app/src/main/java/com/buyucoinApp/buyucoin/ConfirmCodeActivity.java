@@ -43,12 +43,13 @@ public class ConfirmCodeActivity extends AppCompatActivity {
                     startActivity(new Intent(ConfirmCodeActivity.this,Dashboard.class));
                     finish();
                 }else{
-                    new CoustomToast(getApplicationContext(), ConfirmCodeActivity.this,"Wrong pin",CoustomToast.TYPE_NORMAL).showToast();
+                    new CoustomToast(getApplicationContext(),"Wrong pin",CoustomToast.TYPE_NORMAL).showToast();
                     clearPinsData();
                 }
             }
         }else{
-            new CoustomToast(getApplicationContext(), ConfirmCodeActivity.this,"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
+            new CoustomToast(getApplicationContext(),"pin exceed",CoustomToast.TYPE_NORMAL).showToast();
+            pin="";
         }
     }
 
@@ -62,7 +63,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
             }
         },100);
         pin = "";
-        new CoustomToast(getApplicationContext(), ConfirmCodeActivity.this, "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
+        new CoustomToast(getApplicationContext(), "Wrong pin", CoustomToast.TYPE_DANGER).showToast();
     }
 
     public void updatePinDote(int i,int level){

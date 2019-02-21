@@ -32,6 +32,7 @@ public class ConfirmPasscodeDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
         pref = new BuyucoinPref(Objects.requireNonNull(getContext()));
         password = pref.getPrefString("passcode");
         isDisabled = pref.getPrefBoolean("DISABLE_PASS_CODE");
@@ -55,7 +56,7 @@ public class ConfirmPasscodeDialog extends DialogFragment {
                    dismiss();
                 }
                 else{
-                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Wrong Password",CoustomToast.TYPE_DANGER).showToast();
+                    new CoustomToast(getContext(), "Wrong Password",CoustomToast.TYPE_DANGER).showToast();
                 }
             }
         });

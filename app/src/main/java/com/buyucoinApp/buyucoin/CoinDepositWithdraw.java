@@ -53,6 +53,7 @@ public class CoinDepositWithdraw extends AppCompatActivity {
         String AVAILABEL = i.getStringExtra("available");
         String ADDRESS = i.getStringExtra("address");
         String DESCRIPTION = i.getStringExtra("description");
+        String BASE_ADDRESS = i.getStringExtra("base_address");
         String TAG = i.getStringExtra("tag");
         String COIN_FULL_NAME = i.getStringExtra("full_coin_name");
 
@@ -65,6 +66,7 @@ public class CoinDepositWithdraw extends AppCompatActivity {
         b.putString("description", DESCRIPTION);
         b.putString("tag", TAG);
         b.putString("coin_full_name", COIN_FULL_NAME);
+        b.putString("base_address",BASE_ADDRESS);
 
 
         radioGroup = findViewById(R.id.deposit_withdraw_rg);

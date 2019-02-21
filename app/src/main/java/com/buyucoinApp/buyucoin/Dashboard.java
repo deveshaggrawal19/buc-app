@@ -2,7 +2,9 @@ package com.buyucoinApp.buyucoin;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -15,13 +17,13 @@ import android.widget.TextView;
 import com.buyucoinApp.buyucoin.Adapters.Dashboard_PagerAdapter;
 import com.buyucoinApp.buyucoin.Fragments.P2PFragment;
 import com.buyucoinApp.buyucoin.Fragments.ServerError;
-import com.buyucoinApp.buyucoin.Fragments.SuperSettingsBottomsheet;
+import com.buyucoinApp.buyucoin.bottomsheets.SuperSettingsBottomsheet;
 import com.buyucoinApp.buyucoin.broadcast.NotNetworkBroadCastReceiver;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.buyucoinApp.buyucoin.update.ForceUpdateChecker;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +45,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Dashboard extends AppCompatActivity implements ForceUpdateChecker.OnUpdateNeededListener{
 
     private static final String TAG = "DASHBOARD" ;
     String ACCESS_TOKEN = null, refresh_token = null;
@@ -74,6 +76,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
+
+
 
 //        DialogFragment dialogFragment = new ConfirmPasscodeDialog();
 //        dialogFragment.setCancelable(false);
@@ -263,7 +269,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
                 Looper.prepare();
-                new CoustomToast(Dashboard.this,Dashboard.this,"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+                new CoustomToast(Dashboard.this,"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
             }
 
             @Override
@@ -279,7 +285,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 } catch (Exception e) {
                     e.printStackTrace();
                     Looper.prepare();
-                    new CoustomToast(Dashboard.this,Dashboard.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
+                    new CoustomToast(Dashboard.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
 
 
                 }
@@ -291,7 +297,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new CoustomToast(getApplicationContext(),Dashboard.this,s,CoustomToast.TYPE_DANGER).showToast();
+                new CoustomToast(getApplicationContext(),s,CoustomToast.TYPE_DANGER).showToast();
             }
         });
     }
@@ -329,33 +335,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
        else noInternet.setVisibility(View.GONE);
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_account:
-                DashboardViewpager.setCurrentItem(4);
-                break;
-            case R.id.nav_wallet:
-                DashboardViewpager.setCurrentItem(0);
-                break;
-            case R.id.nav_rate:
-                DashboardViewpager.setCurrentItem(1);
-                break;
-            case R.id.nav_p2p:
-                DashboardViewpager.setCurrentItem(3);
-                break;
-            case R.id.nav_buysell:
-                DashboardViewpager.setCurrentItem(2);
-                break;
-
-        }
-//        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.dashboard,menu);
@@ -371,5 +350,33 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onUpdateNeeded(final String updateUrl) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("New version available")
+                .setMessage("Please, update app to new version to continue reposting.")
+                .setPositiveButton("Update",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                redirectStore(updateUrl);
+                            }
+                        }).setNegativeButton("No, thanks",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        }).create();
+        dialog.show();
+
+    }
+
+    private void redirectStore(String updateUrl) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

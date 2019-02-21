@@ -1,4 +1,4 @@
-package com.buyucoinApp.buyucoin.Fragments;
+package com.buyucoinApp.buyucoin.bottomsheets;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.buyucoinApp.buyucoin.Fragments.ReferralFragment;
 import com.buyucoinApp.buyucoin.MyResourcesClass;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;

@@ -23,7 +23,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
@@ -40,12 +40,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:textColor="@android:color/black"
                 android:text="100" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
@@ -62,12 +63,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:textColor="@android:color/black"
                 android:text="1000" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
@@ -77,19 +79,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="Fess" />
+                android:text="Fees" />
 
             <TextView
                 android:id="@+id/dialog_fees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:textColor="@android:color/black"
                 android:text="40 + GST 10%" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
@@ -101,7 +104,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Total"
-                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <TextView
@@ -115,34 +117,31 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <Button
-                android:id="@+id/agree_action_btn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/cancel_action_btn"
-                android:background="@drawable/pills"
-                android:text="Agree"
-                android:textColor="@android:color/white" />
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/cancel_action_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_centerInParent="true"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
                 android:background="@android:color/white"
-                android:text="Cancel"
-                android:textColor="@android:color/holo_red_light" />
-        </RelativeLayout>
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/agree_action_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:background="@drawable/pills"
+                android:text="Agree"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
 
 
     </LinearLayout>

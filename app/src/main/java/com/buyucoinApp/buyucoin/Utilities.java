@@ -26,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -192,7 +191,7 @@ public class Utilities {
                 logout_otp_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new CoustomToast(activity.getApplicationContext(), Objects.requireNonNull(activity),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
+                        new CoustomToast(activity.getApplicationContext(),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
                         new BuyucoinPref(activity).removeAllPref();
                         Intent i = new Intent(activity, LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -221,7 +220,12 @@ public class Utilities {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                new CoustomToast(activity.getApplicationContext(),activity, "Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         new CoustomToast(activity.getApplicationContext(), "Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+                    }
+                });
             }
 
             @Override
@@ -248,7 +252,7 @@ public class Utilities {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                new CoustomToast(activity.getApplicationContext(),activity,"Session Expired log in Again",CoustomToast.TYPE_NORMAL).showToast();
+                                new CoustomToast(activity.getApplicationContext(),"Session Expired log in Again",CoustomToast.TYPE_NORMAL).showToast();
                             }
                         });
                     }
@@ -270,11 +274,19 @@ public class Utilities {
 
     public static void addMobile(final Activity activity, final String ACCESS_TOKEN, final AlertDialog.Builder builder){
 
+        Log.d("ADD MOBILE", "addMobile: "+ACCESS_TOKEN);
+
         OkHttpHandler.auth_get("add_mobile", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                showToast(activity, "Error retrieving API");
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new CoustomToast(activity, "Error retrieving API",CoustomToast.TYPE_DANGER);
+                    }
+                });
+
             }
 
             @Override
@@ -414,7 +426,8 @@ public class Utilities {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            activity.recreate();
+                            activity.startActivity(new Intent(activity,Dashboard.class));
+                            activity.finish();
                         }
                     });
                 }else {

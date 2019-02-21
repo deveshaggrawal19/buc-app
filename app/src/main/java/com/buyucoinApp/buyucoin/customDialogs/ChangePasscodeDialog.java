@@ -30,6 +30,7 @@ public class ChangePasscodeDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
         pref = new BuyucoinPref(Objects.requireNonNull(getContext()));
         password = pref.getPrefString("passcode");
 
@@ -39,6 +40,8 @@ public class ChangePasscodeDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.change_passcode,container,false);
+
+
         old_passcode = view.findViewById(R.id.old_passcode);
         new_passcode = view.findViewById(R.id.new_passcode);
         change_passcode_btn = view.findViewById(R.id.change_passcode_btn);
@@ -55,7 +58,6 @@ public class ChangePasscodeDialog extends DialogFragment {
                         pref.setEditpref("passcode",np);
                         new CoustomToast(
                                 getContext(),
-                                Objects.requireNonNull(getActivity()),
                                 np+" is your new pass code",
                                 CoustomToast.TYPE_SUCCESS
                         ).showToast();
@@ -68,7 +70,6 @@ public class ChangePasscodeDialog extends DialogFragment {
                 }else {
                     new CoustomToast(
                             getContext(),
-                            Objects.requireNonNull(getActivity()),
                             "Both Field Required",
                             CoustomToast.TYPE_DANGER
                     ).showToast();

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.bottomsheets.HistoryBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pojos.History;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
@@ -297,14 +298,14 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                                             p.show();
                                             boolean b = cancelOrder(currency, cancel_order.toString());
                                             if(b){
-                                                new CoustomToast(getContext(),getActivity(),"Order Cancelled Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                                new CoustomToast(getContext(),"Order Cancelled Successfully",CoustomToast.TYPE_SUCCESS).showToast();
                                                 mValues.remove(position);
                                                 notifyItemRemoved(position);
                                                 notifyDataSetChanged();
                                                 p.dismiss();
                                                 dialog.dismiss();
                                             }else{
-                                                new CoustomToast(getContext(),getActivity(),"Error",CoustomToast.TYPE_DANGER).showToast();
+                                                new CoustomToast(getContext(),"Error",CoustomToast.TYPE_DANGER).showToast();
                                                 dialog.dismiss();
                                             }
                                         }

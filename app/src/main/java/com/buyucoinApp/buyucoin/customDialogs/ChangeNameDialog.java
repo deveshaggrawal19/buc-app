@@ -143,14 +143,14 @@ public class ChangeNameDialog extends DialogFragment {
                             try {
                                 if(jsonObject1.getString("status").equals("success")) {
                                     progressBar.setVisibility(View.INVISIBLE);
-                                    new CoustomToast(context,getActivity(),"Name Changed Successfully",CoustomToast.TYPE_SUCCESS).showToast();
+                                    new CoustomToast(context,"Name Changed Successfully",CoustomToast.TYPE_SUCCESS).showToast();
                                     dismiss();
                                     Objects.requireNonNull(getActivity()).recreate();
                                 }
                                 else{
     //                        progressBar.setVisibility(View.INVISIBLE);
                                     Log.d("NAME STATUS","ERROR NAME NOT CHANGED");
-                                    new CoustomToast(context,getActivity(),"Name Not Changed",CoustomToast.TYPE_DANGER).showToast();
+                                    new CoustomToast(context,"Name Not Changed",CoustomToast.TYPE_DANGER).showToast();
                                     change_name_btn.setVisibility(View.VISIBLE);
                                     progressBar.setVisibility(View.GONE);
                                 }

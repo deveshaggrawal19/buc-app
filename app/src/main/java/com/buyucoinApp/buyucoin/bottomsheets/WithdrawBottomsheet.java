@@ -1,4 +1,4 @@
-package com.buyucoinApp.buyucoin.Fragments;
+package com.buyucoinApp.buyucoin.bottomsheets;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import okhttp3.Response;
 public class WithdrawBottomsheet extends BottomSheetDialogFragment {
     Bundle bundle;
     private Double coin_amount;
-    private String coin_tag,coin_address,coin_name;
+    private String coin_tag,coin_address,coin_base_address,coin_name;
     private TextView amount,tag,address;
     private Button proceedToWithdraw;
     private BuyucoinPref buyucoinPref;
@@ -45,6 +45,7 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
         coin_amount = bundle.getDouble("coin_amount",0);
         coin_tag = bundle.getString("coin_tag","N/A");
         coin_address = bundle.getString("coin_address","N/A");
+        coin_base_address = bundle.getString("coin_base_address","N/A");
         coin_name = bundle.getString("coin_name","N/A");
 
             Log.d("===========>",String.valueOf(coin_amount)+"  "+coin_tag);
@@ -70,8 +71,10 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
                 try {
                     order_ob.put("address",coin_address)
                             .put("amount",coin_amount)
-                            .put("currency",coin_name)
-                            .put("tag",coin_tag);
+                            .put("currency",coin_name);
+                    if(coin_tag.equals("true")){
+                        order_ob.put("tag",coin_base_address);
+                    }
 
                     makeRequest(order_ob.toString(),view.getContext());
 

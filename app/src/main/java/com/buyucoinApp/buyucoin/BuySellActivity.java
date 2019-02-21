@@ -15,7 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.buyucoinApp.buyucoin.config.Config;
-import com.buyucoinApp.buyucoin.customDialogs.CustomDialogs;
+import com.buyucoinApp.buyucoin.bottomsheets.BuySellConfirm;
+import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.database.DataSnapshot;
@@ -45,8 +46,7 @@ public class BuySellActivity extends AppCompatActivity{
     String WalletInr;
     DatabaseReference myRef;
     BuyucoinPref buyucoinPref;
-    Double fees = 1.0;
-    final String PERCENT = "0.5% to 1.0% including GST";
+    final String fees = "0.5% to 1.0% including GST";;
     public static String coin_buy_price;
     public static String coin_sell_price;
     ProgressDialog progressDialog;
@@ -123,12 +123,10 @@ public class BuySellActivity extends AppCompatActivity{
         if(type.equals("buy")){
             buy_radio_btn.setChecked(true);
             type = "buy";
-            fees = 1.0;
         }
         if(type.equals("sell")) {
             sell_radio_btn.setChecked(true);
             type = "sell";
-            fees = 0.5;
 
         }
 
@@ -136,7 +134,7 @@ public class BuySellActivity extends AppCompatActivity{
         order_price.setEnabled(false);
         order_quantity.setEnabled(false);
 
-        order_fees.setText(String.valueOf(PERCENT));
+        order_fees.setText(String.valueOf(fees));
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -244,25 +242,31 @@ public class BuySellActivity extends AppCompatActivity{
 
                 String quanitiy = order_quantity.getText().toString();
                 String price  = order_price.getText().toString();
-                String total = String.valueOf(Double.valueOf(price) * Double.valueOf(quanitiy));
 
-                if(!quanitiy.equals("") && !price.equals("")){
+                if(!quanitiy.equals("") && !price.equals("")) {
+                    String total = String.valueOf(Double.valueOf(price) * Double.valueOf(quanitiy));
+                    if (!total.equals("") && !quanitiy.equals("") && !price.equals("")) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("quantity",quanitiy);
-                bundle.putString("price",price);
-                bundle.putString("fees",fees+PERCENT);
-                bundle.putString("total",total);
-                bundle.putString("type",type);
-                bundle.putString("coin",coin);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("quantity", quanitiy);
+                        bundle.putString("price", price);
+                        bundle.putString("fees", fees);
+                        bundle.putString("total", total);
+                        bundle.putString("type", type);
+                        bundle.putString("coin", coin);
 
-                    DialogFragment dialogFragment = CustomDialogs.newInstance();
-                    dialogFragment.setArguments(bundle);
-                    dialogFragment.show(getSupportFragmentManager(),"");
+                        DialogFragment dialogFragment = BuySellConfirm.newInstance();
+                        dialogFragment.setArguments(bundle);
+                        dialogFragment.show(getSupportFragmentManager(), "");
 
 
+                    }
+                    makeViewDisable(order_btn);
                 }
-                makeViewDisable(order_btn);
+                else{
+                    String msg = (quanitiy.equals(""))?"Amount":(price.equals(""))?"Price":"Amount and Price";
+                    new CoustomToast(getApplicationContext(),"Enter "+msg,CoustomToast.TYPE_DANGER).showToast();
+                }
 
             }
         });
@@ -272,7 +276,6 @@ public class BuySellActivity extends AppCompatActivity{
     private void updateLayout(String type, Double fees, String coin_price) {
         this.type = type;
         order_btn.setText(type);
-        this.fees = fees;
 //        order_fees.setText(String.valueOf(fees)+"%");
         String ls = "1 "+coin.toUpperCase()+" = "+coin_price;
         latest_price_tv.setText(ls);

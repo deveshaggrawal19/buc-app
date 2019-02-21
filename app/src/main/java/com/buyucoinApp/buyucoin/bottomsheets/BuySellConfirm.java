@@ -1,4 +1,4 @@
-package com.buyucoinApp.buyucoin.customDialogs;
+package com.buyucoinApp.buyucoin.bottomsheets;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.buyucoinApp.buyucoin.Fragments.AccountFragment;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -29,7 +30,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class CustomDialogs extends BottomSheetDialogFragment {
+public class BuySellConfirm extends BottomSheetDialogFragment {
 
     private String dialog_title;
     private String quantity;
@@ -39,8 +40,8 @@ public class CustomDialogs extends BottomSheetDialogFragment {
     private String type;
     private String coin;
 
-    public static CustomDialogs newInstance(){
-        return new CustomDialogs();
+    public static BuySellConfirm newInstance(){
+        return new BuySellConfirm();
     }
 
     @Override
@@ -86,6 +87,7 @@ public class CustomDialogs extends BottomSheetDialogFragment {
         agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!quantity.equals("") && !price.equals("")){
                 final JSONObject order = new JSONObject();
                 try {
                     order.put("amount",Double.parseDouble(quantity))
@@ -102,6 +104,10 @@ public class CustomDialogs extends BottomSheetDialogFragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                }else{
+                    String msg = (quantity.equals(""))?"Amount":(price.equals(""))?"Price":"Amount and Price";
+                    new CoustomToast(getContext(),"Enter "+msg,CoustomToast.TYPE_DANGER).showToast();
                 }
             }
         });
@@ -145,11 +151,11 @@ public class CustomDialogs extends BottomSheetDialogFragment {
 
 
                         if(status.equals("success")){
-                            new CoustomToast(getContext(),getActivity(),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
+                            new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
                             dismiss();
                         }
                         else{
-                            new CoustomToast(getContext(),getActivity(),tmsg,CoustomToast.TYPE_PENDING).showToast();
+                            new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_PENDING).showToast();
 
                         }
 

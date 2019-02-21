@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import com.buyucoinApp.buyucoin.LoginActivity;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.Utilities;
+import com.buyucoinApp.buyucoin.VerifyUser;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
@@ -64,6 +66,8 @@ public class WalletFragment extends Fragment {
     private LinearLayout account_trade_history;
     private LinearLayout p2p_history_layout;
     private LinearLayout p2p_active_orders_layout;
+    private LinearLayout kyc_layout;
+    private Button kyc_button;
     private Context context;
     private NestedScrollView nsView;
 
@@ -95,11 +99,28 @@ public class WalletFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
 
 
-
         initView(view);
         HistoryClickHandler();
-        getWalletData();
-        getAccountData();
+
+        if(!buyucoinPref.getPrefBoolean("kyc_status")){
+            kyc_layout.setVisibility(View.VISIBLE);
+        }
+        else{
+            getWalletData();
+            getAccountData();
+        }
+        if(!buyucoinPref.getPrefBoolean("mob_verified")){
+            startActivity(new Intent(getContext(), VerifyUser.class));
+            try {
+                Objects.requireNonNull(getActivity()).finish();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
+
+
 
 
 
@@ -135,6 +156,13 @@ public class WalletFragment extends Fragment {
             }
         });
 
+        kyc_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 
         return view;
@@ -156,6 +184,8 @@ public class WalletFragment extends Fragment {
         nsView = view.findViewById(R.id.nsView);
         hidezero_checkbox = view.findViewById(R.id.wallet_checkbox);
         welcome = view.findViewById(R.id.welcome);
+        kyc_layout = view.findViewById(R.id.kyc_layout);
+        kyc_button = view.findViewById(R.id.kyc_button);
     }
 
     private void HistoryClickHandler(){
@@ -305,9 +335,12 @@ public class WalletFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-
-                        Looper.prepare();
-                        new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                            new CoustomToast(getActivity(),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+                            }
+                        });
 
 
             }

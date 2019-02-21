@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buyucoinApp.buyucoin.Adapters.CoinActiveOrderAdapter;
 import com.buyucoinApp.buyucoin.Adapters.CoinHistoryAdapter;
+import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pojos.History;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.crashlytics.android.Crashlytics;
@@ -95,7 +95,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 if(!cd.equals("") && cd!=null){
                     ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                     clipboardManager.setPrimaryClip(clipData);
-                    Toast.makeText(DepositWithdrawActivity.this, "ADDRESS COPIED !", Toast.LENGTH_SHORT).show();
+                    new CoustomToast(getApplicationContext(), "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
+
                 }
             }
         });
@@ -114,10 +115,10 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String cd = card_coin_base_address.getText().toString();
-                    if(!cd.equals("") && cd!=null){
+                    if(cd!=null && !cd.equals("")){
                         ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                         clipboardManager.setPrimaryClip(clipData);
-                        Toast.makeText(DepositWithdrawActivity.this, "ADDRESS COPIED !", Toast.LENGTH_SHORT).show();
+                        new CoustomToast(getApplicationContext(), "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
                     }
                 }
             });
@@ -134,7 +135,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         }
 
-        qrCodeGenrator(ADDRESS);
+        qrCodeGenrator(ADDRESS,BASE_ADDRESS);
 
         address_gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,6 +210,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 intent.putExtra("coin_name", COIN);
                 intent.putExtra("available", AVAILABEL);
                 intent.putExtra("address", ADDRESS);
+                intent.putExtra("base_address", BASE_ADDRESS);
                 intent.putExtra("description", DESCRIPTION);
                 intent.putExtra("tag", TAG);
                 intent.putExtra("full_coin_name", COIN_FULL_NAME);
@@ -224,6 +226,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 intent.putExtra("coin_name", COIN);
                 intent.putExtra("available", AVAILABEL);
                 intent.putExtra("address", ADDRESS);
+                intent.putExtra("base_address", BASE_ADDRESS);
                 intent.putExtra("description", DESCRIPTION);
                 intent.putExtra("tag", TAG);
                 intent.putExtra("full_coin_name", COIN_FULL_NAME);
@@ -243,11 +246,19 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     }
 
 
-    public void qrCodeGenrator(String address){
+    public void qrCodeGenrator(String address,String bass_address){
         if(address!=null && !address.equals("null")){
+            String fulladdress = "";
+            if(bass_address!=null && !bass_address.equals("null")){
+            fulladdress = "address : ["+address+"] \n tag : ["+bass_address+"]";
+            }else{
+                fulladdress = "address : ["+address+"]";
+            }
+
+
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {
-                BitMatrix bitMatrix = multiFormatWriter.encode(address, BarcodeFormat.QR_CODE,500,500);
+                BitMatrix bitMatrix = multiFormatWriter.encode(fulladdress, BarcodeFormat.QR_CODE,500,500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                 Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                 imageView.setImageBitmap(bitmap);

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,10 @@ import com.buyucoinApp.buyucoin.Dashboard;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.Utilities;
+import com.buyucoinApp.buyucoin.bottomsheets.ChatsBottomsheet;
+import com.buyucoinApp.buyucoin.bottomsheets.ProfileBottomsheet;
+import com.buyucoinApp.buyucoin.bottomsheets.ReferralBottomsheet;
+import com.buyucoinApp.buyucoin.bottomsheets.SettingsBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.ChangePasscodeDialog;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
@@ -51,6 +56,7 @@ public class AccountFragment extends Fragment {
 
     private String ACCESS_TOKEN = null;
     private TextView email, mob, name,ref_id;
+    private Button kyc_button;
     private ProgressBar pb;
     private View ll;
     private AlertDialog.Builder ad;
@@ -62,7 +68,8 @@ public class AccountFragment extends Fragment {
             settings_sheet_handler,
             account_dep_history,
             account_with_history,
-            account_trade_history;
+            account_trade_history,
+            kyc_layout;
     private Switch app_pass_switch;
     private boolean applock_enabled;
     private ImageView kyc;
@@ -110,7 +117,13 @@ public class AccountFragment extends Fragment {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                getAccountData();
+
+                if(!buyucoinPref.getPrefBoolean("kyc_status")){
+                    kyc_layout.setVisibility(View.VISIBLE);
+                }
+                else{
+                    getAccountData();
+                }
             }
         });
         return view;
@@ -256,13 +269,13 @@ public class AccountFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                    buyucoinPref.setEditpref("DISABLE_PASS_CODE",true);
-                    new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Disabled",CoustomToast.TYPE_SUCCESS).showToast();
+                    new CoustomToast(view.getContext(), "App Lock Disabled",CoustomToast.TYPE_SUCCESS).showToast();
                     change_passcode_layout.setEnabled(false);
                     change_passcode_layout.setAlpha(0.5f);
 
                 }else{
                     buyucoinPref.setEditpref("DISABLE_PASS_CODE",false);
-                    new CoustomToast(view.getContext(), Objects.requireNonNull(getActivity()),"App Lock Enabled",CoustomToast.TYPE_SUCCESS).showToast();
+                    new CoustomToast(view.getContext(),"App Lock Enabled",CoustomToast.TYPE_SUCCESS).showToast();
                     change_passcode_layout.setEnabled(true);
                     change_passcode_layout.setAlpha(1f);
                 }
@@ -298,11 +311,10 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                new Handler().post(new Runnable() {
+                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                    Looper.prepare();
-                    new CoustomToast(getContext(), Objects.requireNonNull(getActivity()),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+                        new CoustomToast(getContext(),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
 
                     }
                 });
@@ -347,7 +359,7 @@ public class AccountFragment extends Fragment {
                 else{
                     try {
                         Looper.prepare();
-                        new CoustomToast(getContext(),getActivity(),"Server Error",CoustomToast.TYPE_DANGER).showToast();
+                        new CoustomToast(getContext(),"Server Error",CoustomToast.TYPE_DANGER).showToast();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -378,6 +390,8 @@ public class AccountFragment extends Fragment {
         ref_id = view.findViewById(R.id.ref_id);
         share_ref_id = view.findViewById(R.id.share_ref_id);
         change_passcode_layout = view.findViewById(R.id.change_passcode_layout);
+        kyc_layout = view.findViewById(R.id.kyc_layout);
+        kyc_button = view.findViewById(R.id.kyc_button);
     }
 
 
