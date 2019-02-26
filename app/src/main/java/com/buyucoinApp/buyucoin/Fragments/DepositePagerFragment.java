@@ -31,11 +31,14 @@ public class DepositePagerFragment extends Fragment {
     private ClipboardManager clipboardManager;
     private Context context;
     private LinearLayout wallet_maintain_layout,deposite_layout;
-    private ImageView deposite_layout_qr_img;
+    private ImageView deposite_layout_qr_img,deposite_layout_tag_qr_img;
     private String ty,co,av,ad,bd,de,tag,cfn;
     private TextView deposite_layout_address_txt;
     private TextView deposite_layout_base_address;
-
+    private TextView deposite_layout_tag_textview;
+    private TextView address_label;
+    private TextView base_address_label;
+    private final String ADDRESS_TEXT = "Scan this QR Code to get ";
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,10 @@ public class DepositePagerFragment extends Fragment {
         deposite_layout_qr_img = view.findViewById(R.id.coin_address_qrcode);
         deposite_layout_address_txt = view.findViewById(R.id.coin_address);
         deposite_layout_base_address = view.findViewById(R.id.coin_base_address);
+        deposite_layout_tag_textview = view.findViewById(R.id.coin_address_tag_tv);
+        deposite_layout_tag_qr_img = view.findViewById(R.id.coin_address_tag_qrcode);
+        address_label = view.findViewById(R.id.coin_address_label);
+        base_address_label = view.findViewById(R.id.coin_base_address_label);
         clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
 
@@ -70,11 +77,35 @@ public class DepositePagerFragment extends Fragment {
 
         Log.d("DEPOSIT PAGER FRAGMENT", "ADDRESS=>"+ad+"  BASE ADDRESS=>"+bd+"  TAG=>"+tag);
 
+        if(ad!=null && !ad.equals("null") && tag.equals("true")) {
+            deposite_layout_address_txt.setText(ad);
+            deposite_layout_base_address.setText(bd);
+            deposite_layout_tag_textview.setText(ADDRESS_TEXT + " " + de);
+            base_address_label.setText("Your "+de);
+            qrCodeGenrator(ad, bd);
+
+        }else{
+            deposite_layout_tag_qr_img.setVisibility(View.GONE);
+            deposite_layout_tag_textview.setVisibility(View.GONE);
+            base_address_label.setVisibility(View.GONE);
+            deposite_layout_base_address.setVisibility(View.GONE);
+            wallet_maintain_layout.setVisibility(View.VISIBLE);
+            deposite_layout.setVisibility(View.GONE);
+
+            if(ad!=null && !ad.equals("null") && tag.equals("false")){
+                deposite_layout_address_txt.setText(ad);
+                qrCodeGenrator(ad, bd);
+                wallet_maintain_layout.setVisibility(View.GONE);
+                deposite_layout.setVisibility(View.VISIBLE);
+
+            }else{
+                wallet_maintain_layout.setVisibility(View.VISIBLE);
+                deposite_layout.setVisibility(View.GONE);
+            }
+        }
 
 
 
-        deposite_layout_address_txt.setText(ad);
-        deposite_layout_base_address.setText(bd);
         deposite_layout_address_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,37 +113,47 @@ public class DepositePagerFragment extends Fragment {
                 if(!cd.equals("") && cd!=null){
                     ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                     clipboardManager.setPrimaryClip(clipData);
-                    new CoustomToast(context, "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
+                    new CoustomToast(context, "Address copied !",CoustomToast.TYPE_NORMAL).showToast();
                 }
             }
         });
 
-        if(ad!=null && !ad.equals("null")){
-            wallet_maintain_layout.setVisibility(View.GONE);
-            deposite_layout.setVisibility(View.VISIBLE);
-            deposite_layout_address_txt.setText(ad);
-            qrCodeGenrator(ad,bd);
-        }
+        deposite_layout_base_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cd = deposite_layout_base_address.getText().toString();
+                if(!cd.equals("") && cd!=null){
+                    ClipData clipData = ClipData.newPlainText("BASE ADDRESS",cd);
+                    clipboardManager.setPrimaryClip(clipData);
+                    new CoustomToast(context, de+" copied",CoustomToast.TYPE_NORMAL).showToast();
+                }
+            }
+        });
+
+//        if(ad!=null && !ad.equals("null")){
+//            wallet_maintain_layout.setVisibility(View.GONE);
+//            deposite_layout.setVisibility(View.VISIBLE);
+//            deposite_layout_address_txt.setText(ad);
+//            qrCodeGenrator(ad,bd);
+//        }
 
         return view;
     }
 
     public void qrCodeGenrator(String address,String bass_address){
         if(address!=null && !address.equals("null")){
-            String fulladdress ;
-            if(bass_address!=null && !bass_address.equals("null")){
-                fulladdress = "address : ["+address+"] \n tag : ["+bass_address+"]";
-            }else{
-                fulladdress = "address : ["+address+"]";
-            }
-
-
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {
-                BitMatrix bitMatrix = multiFormatWriter.encode(fulladdress, BarcodeFormat.QR_CODE,500,500);
+                BitMatrix address_Matrix = multiFormatWriter.encode(address, BarcodeFormat.QR_CODE,500,500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                deposite_layout_qr_img.setImageBitmap(bitmap);
+                Bitmap bitmapAddress = barcodeEncoder.createBitmap(address_Matrix);
+                deposite_layout_qr_img.setImageBitmap(bitmapAddress);
+
+                if(tag.equals("true")) {
+                    BitMatrix base_Matrix = multiFormatWriter.encode(bass_address, BarcodeFormat.QR_CODE, 500, 500);
+                    Bitmap bitmapBase = barcodeEncoder.createBitmap(base_Matrix);
+                    deposite_layout_tag_qr_img.setImageBitmap(bitmapBase);
+                }
 
             } catch (WriterException e) {
                 e.printStackTrace();

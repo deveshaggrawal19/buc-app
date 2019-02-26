@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.27.1'
     }
 }
 buildscript {
@@ -19,7 +19,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.26.1'
+        classpath 'io.fabric.tools:gradle:1.27.1'
     }
 }
 
@@ -47,21 +47,19 @@ android {
         applicationId "com.buyucoinApp.buyucoin"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled true
         }
-
     }
     flavorDimensions "default"
     productFlavors {
         stagging {
             buildConfigField("String", "BASE_URL", "\"http://test.buyucoin.com/andrios/\"")
-
         }
         production {
             buildConfigField("String", "BASE_URL", "\"https://www.buyucoin.com/andrios/\"")
@@ -82,22 +80,20 @@ android {
 
 
 dependencies {
-    def work_version = "1.0.0-beta03"
+    def work_version = "1.0.0-rc01"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
     api 'com.google.android.material:material:1.1.0-alpha03'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'com.google.android.material:material:1.1.0-alpha03'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-database:16.0.6'
     implementation 'com.google.firebase:firebase-config:16.3.0'
     implementation 'com.jjoe64:graphview:4.2.2'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'androidx.annotation:annotation:1.0.1'
     implementation 'androidx.annotation:annotation:1.0.1'
     implementation "android.arch.work:work-runtime:$work_version"

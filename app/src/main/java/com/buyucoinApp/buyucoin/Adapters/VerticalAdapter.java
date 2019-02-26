@@ -20,6 +20,7 @@ import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -43,9 +44,9 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
                             WalletCoinVertical wl = new WalletCoinVertical();
                             wl.setCoinname(js.getString("currencyname"));
                             wl.setAmount(js.getString("available"));
-                            wl.setAddress(js.getString("base_address"));
+                            wl.setAddress(js.getString("address"));
                             wl.setAvailabel(js.getString("available"));
-                            wl.setBase_address(js.getString("address"));
+                            wl.setBase_address(js.getString("base_address"));
                             wl.setDescription(js.getString("desciption"));
                             wl.setFees(js.getString("fees"));
                             wl.setMin_width(js.getString("min_with"));
@@ -136,9 +137,12 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
 
 
         myViewHolder.coinname.setText(coin_name.toUpperCase());
-        myViewHolder.balance.setText(availabel);
         myViewHolder.portfolio.setText(porfolio);
         myViewHolder.pending.setText(pending);
+
+        if(!coin_name.equals("inr")){
+            myViewHolder.balance.setText(availabel);
+        }
 
         int r = (int) (Math.random() * 6);
 
@@ -176,8 +180,10 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
         }
 
         if(coin_name.equals("inr")){
-           pref.setEditpref("inr_amount",String.valueOf(availabel));
-//           new WalletFragment().WalletBalance();
+            DecimalFormat decimalFormat = new DecimalFormat("0.####");
+            String INR = decimalFormat.format(Double.parseDouble(availabel));
+            myViewHolder.balance.setText(INR);
+           pref.setEditpref("inr_amount",INR);
             myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

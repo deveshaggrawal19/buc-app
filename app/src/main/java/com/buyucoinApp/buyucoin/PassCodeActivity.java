@@ -14,7 +14,7 @@ import com.crashlytics.android.Crashlytics;
 import androidx.appcompat.app.AppCompatActivity;
 import io.fabric.sdk.android.Fabric;
 
-public class PassCodeActivity extends AppCompatActivity {
+public class PassCodeActivity extends AppCompatActivity{
     static String pin;
     View view;
     BuyucoinPref buyucoinPref;
@@ -39,8 +39,14 @@ public class PassCodeActivity extends AppCompatActivity {
             updatePinDote(pin.length(),1);
             if(pin.length()==4){
                 if(pin.equals(PASSWORD)){
+                    if(buyucoinPref.getPrefBoolean("wallet")){
+
                     startActivity(new Intent(PassCodeActivity.this,Dashboard.class));
                     finish();
+                    }else{
+                     startActivity(new Intent(PassCodeActivity.this,GenerateWallet.class));
+                     finish();
+                    }
                 }else{
                     if(PASSWORD==null || PASSWORD.equals("no")){
                             Intent resultintent = new Intent(PassCodeActivity.this,ConfirmCodeActivity.class);
@@ -107,4 +113,6 @@ public class PassCodeActivity extends AppCompatActivity {
         }
 
     }
+
+
 }

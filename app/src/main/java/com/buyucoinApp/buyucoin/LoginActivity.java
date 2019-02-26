@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         String s = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         String r = buyucoinPref.getPrefString(BuyucoinPref.REFRESH_TOKEN);
         if(s != null){
-            Intent i = new Intent(this, PassCodeActivity.class);
+            Intent i = new Intent(this, Decide.class);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
             finish();
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) {
                 try {
                     String s = response.body().string();
-//                    Log.d(TAG, "onResponse: loging response "+s);
+                    Log.d(TAG, "onResponse: loging response "+s);
                     JSONObject jsonObject1 = new JSONObject(s);
                     JSONObject data = jsonObject1.getJSONObject("data");
                     Log.d("LOGIN RESPONSE", s);
@@ -158,11 +158,13 @@ public class LoginActivity extends AppCompatActivity {
                         if(data.getBoolean("email_verified")) {
                             buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN, data.getString("access_token"));
                             buyucoinPref.setEditpref(BuyucoinPref.REFRESH_TOKEN, data.getString("refresh_token"));
+                            buyucoinPref.setEditpref("bank_upload",data.getBoolean("bank_upload"));
+                            buyucoinPref.setEditpref("email_verified", data.getBoolean("email_verified"));
+                            buyucoinPref.setEditpref("kyc_upload",data.getBoolean("kyc_upload"));
                             buyucoinPref.setEditpref("kyc_status", data.getBoolean("kyc_verified"));
                             buyucoinPref.setEditpref("mob_verified", data.getBoolean("mob_verified"));
-                            buyucoinPref.setEditpref("email_verified", data.getBoolean("email_verified"));
-
-
+                            buyucoinPref.setEditpref("user_status",data.getString("user_status"));
+                            buyucoinPref.setEditpref("wallet",data.getBoolean("wallet"));
                             onLoginSuccess(data.getBoolean("email_verified"));
                         }else {
                             onLoginSuccess(data.getBoolean("email_verified"));
@@ -208,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                     _loginButton.setEnabled(true);
                     new CoustomToast(getApplicationContext(), "Logged in",CoustomToast.TYPE_SUCCESS).showToast();
                     finish();
-                    Intent intent = new Intent(LoginActivity.this, PassCodeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, Decide.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                     }else{

@@ -426,14 +426,13 @@ public class Utilities {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            activity.startActivity(new Intent(activity,Dashboard.class));
+                            activity.startActivity(new Intent(activity,Decide.class));
                             activity.finish();
                         }
                     });
                 }else {
                     showToast(activity, getErrorMessage(s));
                 }
-
             }
         });
     }

@@ -6,16 +6,20 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 
 public class ForceUpdateChecker {
+    public static final String KEY_UPDATE_NAME = "name";
     private static final String TAG = ForceUpdateChecker.class.getSimpleName();
-
-    public static final String KEY_UPDATE_REQUIRED = "force_update_required";
-    public static final String KEY_CURRENT_VERSION = "force_update_current_version";
-    public static final String KEY_UPDATE_URL = "force_update_store_url";
+    public static final String KEY_UPDATE_REQUIRED = "isUpdate";
+    public static final String KEY_CURRENT_VERSION = "version";
+    public static final String KEY_UPDATE_URL = "url";
 
     private OnUpdateNeededListener onUpdateNeededListener;
     private Context context;
@@ -28,28 +32,47 @@ public class ForceUpdateChecker {
         return new Builder(context);
     }
 
-    public ForceUpdateChecker(@NonNull Context context,
-                              OnUpdateNeededListener onUpdateNeededListener) {
+    private ForceUpdateChecker(@NonNull Context context,
+                               OnUpdateNeededListener onUpdateNeededListener) {
         this.context = context;
         this.onUpdateNeededListener = onUpdateNeededListener;
-        new CoustomToast(context,"Checking.. update",CoustomToast.TYPE_NORMAL).showToast();
     }
 
-    public void check() {
-        final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+    private void check() {
+        new CoustomToast(context,"Checking for Update",CoustomToast.TYPE_NORMAL).showToast();
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        if (remoteConfig.getBoolean(KEY_UPDATE_REQUIRED)) {
-            String currentVersion = remoteConfig.getString(KEY_CURRENT_VERSION);
-            String appVersion = getAppVersion(context);
-            String updateUrl = remoteConfig.getString(KEY_UPDATE_URL);
+        DatabaseReference updateref = firebaseDatabase.getReference();
 
-            Log.d(TAG, "check: "+currentVersion+""+appVersion+""+updateUrl);
+        updateref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataSnapshot update = dataSnapshot.child("update");
+                boolean isUpdate = update.child(KEY_UPDATE_REQUIRED).getValue(Boolean.class);
+                String currentVersion = getAppVersion(context);
+                String appVersion = update.child(KEY_CURRENT_VERSION).getValue(String.class);
+                String updateUrl = update.child(KEY_UPDATE_URL).getValue(String.class);
 
-            if (!TextUtils.equals(currentVersion, appVersion)
-                    && onUpdateNeededListener != null) {
-                onUpdateNeededListener.onUpdateNeeded(updateUrl);
+                Log.d(TAG, "ISUPDATE :"+isUpdate);
+                Log.d(TAG, "CURRENT VERSION :"+currentVersion);
+                Log.d(TAG, "APP VERSION :"+appVersion);
+                Log.d(TAG, "URL :"+updateUrl);
+
+
+
+                if (isUpdate) {
+                    if (!TextUtils.equals(currentVersion, appVersion) && onUpdateNeededListener != null) {
+                        onUpdateNeededListener.onUpdateNeeded(updateUrl);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private String getAppVersion(Context context) {

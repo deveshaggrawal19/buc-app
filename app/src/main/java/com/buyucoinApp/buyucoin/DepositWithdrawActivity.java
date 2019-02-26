@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.buyucoinApp.buyucoin.Adapters.CoinActiveOrderAdapter;
 import com.buyucoinApp.buyucoin.Adapters.CoinHistoryAdapter;
+import com.buyucoinApp.buyucoin.Fragments.HistoryFragment;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pojos.History;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
@@ -39,6 +40,7 @@ import java.util.Objects;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.fabric.sdk.android.Fabric;
@@ -47,10 +49,10 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class DepositWithdrawActivity extends AppCompatActivity {
-    LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout, empty_layout;
-    ImageView imageView, card_coin_img,big_qr_code;
+    LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout,history_layout, empty_layout;
+    ImageView imageView, card_coin_img,big_qr_code_address,big_qr_code_base_address;
     RecyclerView history_recyclerview;
-    TextView card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address;
+    TextView card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address,big_qr_code_base_address_label;
     Intent i;
     Button address_gen_btn;
     NestedScrollView nestedScrollView;
@@ -58,8 +60,18 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     ProgressBar pb;
     String coin,coin_full_name;
     private ArrayList<History> histories;
-    Toolbar toolbar;
+    static Toolbar toolbar;
     private ClipboardManager clipboardManager;
+
+    String COIN;
+    String AVAILABEL;
+    String PENDING;
+    String ADDRESS;
+    String BASE_ADDRESS;
+    String DESCRIPTION;
+    String TAG;
+    String COIN_FULL_NAME;
+    final String ADDRESS_TEXT = "Scan this QR Code to get ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,22 +84,41 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         i = getIntent();
 
-        final String COIN = coin = i.getStringExtra("coin_name");
-        final String AVAILABEL = i.getStringExtra("available");
-        final String PENDING = i.getStringExtra("pendings");
-        final String ADDRESS = i.getStringExtra("address");
-        final String BASE_ADDRESS = i.getStringExtra("base_address");
-        final String DESCRIPTION = i.getStringExtra("description");
-        final String TAG = i.getStringExtra("tag");
-        final String COIN_FULL_NAME = coin_full_name = i.getStringExtra("full_coin_name");
+        COIN = coin = i.getStringExtra("coin_name");
+        AVAILABEL = i.getStringExtra("available");
+        PENDING = i.getStringExtra("pendings");
+        ADDRESS = i.getStringExtra("address");
+        BASE_ADDRESS = i.getStringExtra("base_address");
+        DESCRIPTION = i.getStringExtra("description");
+        TAG = i.getStringExtra("tag");
+        COIN_FULL_NAME = coin_full_name = i.getStringExtra("full_coin_name");
 
         histories = new ArrayList<>();
         InitializeAllViews();
 
 
+
         card_coin_full_name.setText(COIN_FULL_NAME);
         card_coin_availabel.setText(AVAILABEL);
-        card_coin_address.setText(ADDRESS);
+        card_coin_pending.setText(PENDING);
+        qrCodeGenrator(ADDRESS,BASE_ADDRESS);
+
+        if(ADDRESS!=null && !ADDRESS.equals("null") && TAG.equals("true")) {
+            card_coin_address.setText(ADDRESS);
+            card_coin_base_address.setText(BASE_ADDRESS);
+            big_qr_code_base_address_label.setText(ADDRESS_TEXT + " " + DESCRIPTION);
+            card_coin_base_address.setVisibility(View.VISIBLE);
+
+        }else{
+            big_qr_code_base_address.setVisibility(View.GONE);
+            big_qr_code_base_address_label.setVisibility(View.GONE);
+
+            if(ADDRESS!=null && !ADDRESS.equals("null") && TAG.equals("false")){
+                card_coin_address.setText(ADDRESS);
+            }
+        }
+
+
         card_coin_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,18 +131,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 }
             }
         });
-        card_coin_pending.setText(PENDING);
 
-        Log.d("BASE ADDRESS", "onCreate: ."+BASE_ADDRESS);
-
-        try {
-            card_coin_img.setImageResource(MyResourcesClass.COIN_ICON.getInt(coin));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (BASE_ADDRESS!=null && !BASE_ADDRESS.equals("null")) {
-            card_coin_base_address.setText(BASE_ADDRESS);
-            card_coin_base_address.setOnClickListener(new View.OnClickListener() {
+        card_coin_base_address.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String cd = card_coin_base_address.getText().toString();
@@ -119,11 +140,16 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                         ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                         clipboardManager.setPrimaryClip(clipData);
                         new CoustomToast(getApplicationContext(), "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
-                    }
-                }
-            });
-            card_coin_base_address.setVisibility(View.VISIBLE);
+                    } }
+        });
+
+        try {
+            card_coin_img.setImageResource(MyResourcesClass.COIN_ICON.getInt(coin));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+
 
 
 
@@ -134,8 +160,6 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             card_coin_base_address.setVisibility(View.GONE);
 
         }
-
-        qrCodeGenrator(ADDRESS,BASE_ADDRESS);
 
         address_gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,6 +259,17 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             }
         });
 
+        history_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DialogFragment historyFragment = new HistoryFragment();
+                final Bundle bundle = new Bundle();
+                bundle.putString("coin",coin);
+                historyFragment.setArguments(bundle);
+                historyFragment.show(getSupportFragmentManager(),"HISTORY "+coin);
+            }
+        });
+
         address_gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,27 +277,24 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             }
         });
 
-        getList("order");
+        getList();
     }
 
 
     public void qrCodeGenrator(String address,String bass_address){
         if(address!=null && !address.equals("null")){
-            String fulladdress = "";
-            if(bass_address!=null && !bass_address.equals("null")){
-            fulladdress = "address : ["+address+"] \n tag : ["+bass_address+"]";
-            }else{
-                fulladdress = "address : ["+address+"]";
-            }
-
-
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {
-                BitMatrix bitMatrix = multiFormatWriter.encode(fulladdress, BarcodeFormat.QR_CODE,500,500);
+                BitMatrix address_Matrix = multiFormatWriter.encode(address, BarcodeFormat.QR_CODE,500,500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                imageView.setImageBitmap(bitmap);
-                big_qr_code.setImageBitmap(bitmap);
+                Bitmap bitmapAddress = barcodeEncoder.createBitmap(address_Matrix);
+                big_qr_code_address.setImageBitmap(bitmapAddress);
+
+                if(TAG.equals("true")) {
+                    BitMatrix base_Matrix = multiFormatWriter.encode(bass_address, BarcodeFormat.QR_CODE, 500, 500);
+                    Bitmap bitmapBase = barcodeEncoder.createBitmap(base_Matrix);
+                    big_qr_code_base_address.setImageBitmap(bitmapBase);
+                }
 
             } catch (WriterException e) {
                 e.printStackTrace();
@@ -297,6 +329,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         sell_layout = findViewById(R.id.sell_layout_card);
         deposite_layout = findViewById(R.id.deposite_layout_card);
         withdraw_layout = findViewById(R.id.withdraw_layout_card);
+        history_layout = findViewById(R.id.history_layout_card);
 
         card_coin_full_name = findViewById(R.id.card_coin_full_name);
         card_coin_availabel = findViewById(R.id.card_coin_availabel);
@@ -311,7 +344,9 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         pb = findViewById(R.id.order_pb);
         empty_layout = findViewById(R.id.empty_orders);
 
-        big_qr_code = findViewById(R.id.big_qr_code);
+        big_qr_code_address = findViewById(R.id.big_qr_code_address);
+        big_qr_code_base_address = findViewById(R.id.big_qr_code_base_address);
+        big_qr_code_base_address_label = findViewById(R.id.big_qr_code_base_address_label);
     }
 
     private void generateAddress() {
@@ -361,8 +396,8 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
     }
 
-    public void getList(final String url) {
-        OkHttpHandler.auth_get(url+"_history", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
+    public void getList() {
+        OkHttpHandler.auth_get("order_history", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -376,7 +411,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                         String s = response.body().string();
 
 
-                            final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+                            final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray("order");
                             Log.d("sdfghjsdfghjk", array.toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject j = array.getJSONObject(i);

@@ -51,7 +51,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
     ProgressBar pb;
     ArrayList<History> histories;
     BuyucoinPref buyucoinPref;
-    String url;
+    String url,coin;
     Bundle b;
     RadioGroup filter_group;
     LinearLayout empty_layout;
@@ -68,6 +68,9 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
             b = getArguments();
         }
         url = b.getString("URL");
+        if(b.getString("COIN")!=null){
+            coin =  b.getString("COIN");
+        }
     }
 
     @Override
@@ -82,21 +85,137 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.filter_all:pb.setVisibility(View.VISIBLE);getList(url,"all");break;
-                    case R.id.filter_success:pb.setVisibility(View.VISIBLE);getList(url,"Success");break;
-                    case R.id.filter_pending:pb.setVisibility(View.VISIBLE);getList(url,"Pending");break;
-                    case R.id.filter_canceled:pb.setVisibility(View.VISIBLE);getList(url,"Cancelled");break;
+                    case R.id.filter_all:
+                        pb.setVisibility(View.VISIBLE);
+                        if(coin!=null) getListCoin(url,"all",coin);
+                        else getList(url,"all");
+                        break;
+                    case R.id.filter_success:
+                        pb.setVisibility(View.VISIBLE);
+                        if(coin!=null) getListCoin(url,"Success",coin);
+                        else getList(url,"Success");
+                        break;
+                    case R.id.filter_pending:
+                        pb.setVisibility(View.VISIBLE);
+                        if(coin!=null) getListCoin(url,"Pending",coin);
+                        else getList(url,"Pending");
+                        break;
+                    case R.id.filter_canceled:
+                        pb.setVisibility(View.VISIBLE);
+                        if(coin!=null) getListCoin(url,"Cancelled",coin);
+                        else getList(url,"Cancelled");
+                        break;
                 }
             }
         });
-        getList(url,"all");
+        if(coin!=null){
+            getListCoin(url,"all",coin);
+
+        }else{
+            getList(url,"all");
+
+        }
         return view;
     }
 
+    public void getListCoin(final String url, final String filter,final String coin) {
+        histories.clear();
+        OkHttpHandler.cancelAllRequests();
 
+        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String s = response.body().string();
+                //Log.d("RESPONSE____", s);
+                try {
+                    final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+                    Log.d("ARRAY______", array.length() + "");
+                    Log.d("_____", array.toString());
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject j = array.getJSONObject(i);
+                        if(j.getString("status").equals(filter)) {
+                            if(j.getString("curr").equals(coin))
+                                histories.add(new History(
+                                        j.getDouble("amount"),
+                                        j.getString("curr"),
+                                        j.getString("open"),
+                                        j.getString("open"),
+                                        j.getString("status"),
+                                        "",
+                                        "",
+                                        j.getDouble("fee"),
+                                        j.getDouble("filled"),
+                                        j.getDouble("price"),
+                                        j.getString("type"),
+                                        j.getDouble("value"),
+                                        j.getInt("id")
+
+                                ));
+                        }
+                        if( filter.equals("all")){
+                            if(j.getString("curr").equals(coin))
+                                histories.add(new History(
+                                        j.getDouble("amount"),
+                                        j.getString("curr"),
+                                        j.getString("open"),
+                                        j.getString("open"),
+                                        j.getString("status"),
+                                        "",
+                                        "",
+                                        j.getDouble("fee"),
+                                        j.getDouble("filled"),
+                                        j.getDouble("price"),
+                                        j.getString("type"),
+                                        j.getDouble("value"),
+                                        j.getInt("id")
+
+                                ));}
+
+
+                    }
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(histories.size()>0){
+
+                                rv.setAdapter(new MyHistoryRecyclerViewAdapter(histories));
+                                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                                    public void onAnimationEnd(Animator animator) {
+                                        pb.setVisibility(View.GONE);
+                                        pb.setAlpha(1f);
+                                    }
+                                });
+                                empty_layout.setVisibility(View.GONE);
+                            }else{
+
+                                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                                    public void onAnimationEnd(Animator animator) {
+                                        pb.setVisibility(View.GONE);
+                                        pb.setAlpha(1f);
+                                    }
+                                });
+                                empty_layout.setVisibility(View.VISIBLE);
+
+                            }
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     public void getList(final String url,final String filter) {
         histories.clear();
+        OkHttpHandler.cancelAllRequests();
+
         OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -113,23 +232,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                     Log.d("HISTORY====>", "onResponse: "+array.toString());
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject j = array.getJSONObject(i);
-                        if(j.getString("status").equals(filter))
-                                histories.add(new History(
-                                        j.getDouble("amount"),
-                                        j.getString("curr"),
-                                        j.getString("open"),
-                                        j.getString("open"),
-                                        j.getString("status"),
-                                        "",
-                                        "",
-                                        j.getDouble("fee"),
-                                        j.getDouble("filled"),
-                                        j.getDouble("price"),
-                                        j.getString("type"),
-                                        j.getDouble("value"),
-                                        j.getInt("id")
-                                ));
-                        if( filter.equals("all")){
+                        if(j.getString("status").equals(filter) && j.getString("curr").equals(coin)  && !j.getString("status").equals("all")) {
                             histories.add(new History(
                                     j.getDouble("amount"),
                                     j.getString("curr"),
@@ -144,7 +247,25 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
                                     j.getString("type"),
                                     j.getDouble("value"),
                                     j.getInt("id")
-                            ));}
+                            ));
+                        }
+                        if( filter.equals("all") && j.getString("curr").equals(coin)){
+                            histories.add(new History(
+                                    j.getDouble("amount"),
+                                    j.getString("curr"),
+                                    j.getString("open"),
+                                    j.getString("open"),
+                                    j.getString("status"),
+                                    "",
+                                    "",
+                                    j.getDouble("fee"),
+                                    j.getDouble("filled"),
+                                    j.getDouble("price"),
+                                    j.getString("type"),
+                                    j.getDouble("value"),
+                                    j.getInt("id")
+                            ));
+                        }
 
                         }
 
@@ -221,6 +342,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
             Collections.reverse(mValues);
         }
 
+        @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
@@ -232,10 +354,6 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
             try {
                 holder.mItem = mValues.get(position);
-
-
-
-
 
                 holder.mCurrency.setText(holder.mItem.getCurr().toUpperCase());
                 holder.mAmount.setText(String.valueOf(holder.mItem.getAmount()));
@@ -270,6 +388,12 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
 
                         break;
                     case "Cancelled":
+                        holder.cancel_btn.setVisibility(View.GONE);
+                        holder.mStatus.setVisibility(View.VISIBLE);
+                        holder.mStatus.setText(holder.mItem.getStatus());
+                        holder.mStatus.setTextColor(getResources().getColor(R.color.colorRed));
+                        break;
+                    case "Failed":
                         holder.cancel_btn.setVisibility(View.GONE);
                         holder.mStatus.setVisibility(View.VISIBLE);
                         holder.mStatus.setText(holder.mItem.getStatus());

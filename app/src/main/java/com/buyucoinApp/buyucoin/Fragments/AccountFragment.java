@@ -68,14 +68,15 @@ public class AccountFragment extends Fragment {
             settings_sheet_handler,
             account_dep_history,
             account_with_history,
-            account_trade_history,
-            kyc_layout;
+            account_trade_history;
     private Switch app_pass_switch;
     private boolean applock_enabled;
     private ImageView kyc;
     private ImageView imageView;
     private RelativeLayout account_about_us, account_term_policy,change_passcode_layout;
     private String referral_id = "";
+    private Button generate_wallet;
+
 
     public AccountFragment() {
         // Required empty public constructor
@@ -117,17 +118,15 @@ public class AccountFragment extends Fragment {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-
-                if(!buyucoinPref.getPrefBoolean("kyc_status")){
-                    kyc_layout.setVisibility(View.VISIBLE);
-                }
-                else{
                     getAccountData();
-                }
             }
         });
+
+
         return view;
     }
+
+
 
     private void shareRefid(){
         share_ref_id.setOnClickListener(new View.OnClickListener() {
@@ -390,8 +389,7 @@ public class AccountFragment extends Fragment {
         ref_id = view.findViewById(R.id.ref_id);
         share_ref_id = view.findViewById(R.id.share_ref_id);
         change_passcode_layout = view.findViewById(R.id.change_passcode_layout);
-        kyc_layout = view.findViewById(R.id.kyc_layout);
-        kyc_button = view.findViewById(R.id.kyc_button);
+
     }
 
 

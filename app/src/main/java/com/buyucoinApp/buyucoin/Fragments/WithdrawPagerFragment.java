@@ -52,7 +52,7 @@ public class WithdrawPagerFragment extends Fragment {
         coin_amonut = view.findViewById(R.id.withdraw_layout_amount_et);
         coin_address = view.findViewById(R.id.withdraw_layout_address_et);
         withdraw_coin_name = view.findViewById(R.id.withdraw_coin_name);
-        withdraw_coin_name.setText(co);
+        withdraw_coin_name.setText(co.toUpperCase());
 
         if (tag.equals("true")) {
             tag_layout.setVisibility(View.VISIBLE);

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:853650883531:android:533f1b603923e355",
         "android_client_info": {
-          "package_name": "com.buyucoinApp.android"
+          "package_name": "com.buyucoin.android"
         }
       },
       "oauth_client": [
@@ -82,6 +82,37 @@
               }
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853650883531:android:6291ebd2d18edbb2",
+        "android_client_info": {
+          "package_name": "com.buyucoinApp.buyucoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853650883531-1db6or2t8j43jkr8k62cfft0lrm5mb58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtFKn465jaOXThP4dnQl3Y102ltjB9KMg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

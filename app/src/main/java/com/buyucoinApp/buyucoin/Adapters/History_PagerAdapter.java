@@ -13,9 +13,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class History_PagerAdapter extends FragmentStatePagerAdapter {
+    String COIN;
 
-    public History_PagerAdapter(@NonNull FragmentManager fm) {
+    public History_PagerAdapter(@NonNull FragmentManager fm, String coin) {
         super(fm);
+        if(coin!=null){
+            COIN = coin;
+        }
     }
 
     @NonNull
@@ -27,16 +31,21 @@ public class History_PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 fragment = new HistoryPagerAdapterFragmentDeposite();
                 b.putString("URL","deposit");
+                b.putString("COIN",COIN);
                 fragment.setArguments(b);
                 break;
             case 1:
                 fragment =  new HistoryPagerAdapterFragmentWithdraw();
                 b.putString("URL","withdraw");
+                b.putString("COIN",COIN);
+
                 fragment.setArguments(b);
                 break;
                 case 2:
                fragment =  new HistoryPagerAdapterFragmentOrder();
                     b.putString("URL","order");
+                    b.putString("COIN",COIN);
+
                     fragment.setArguments(b);
                break;
             default:

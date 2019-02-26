@@ -1,39 +1,28 @@
 package com.buyucoinApp.buyucoin.Fragments;
 
 import android.os.Bundle;
-
-import com.buyucoinApp.buyucoin.Adapters.History_PagerAdapter;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.buyucoinApp.buyucoin.Adapters.History_PagerAdapter;
 import com.buyucoinApp.buyucoin.R;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HistoryFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HistoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HistoryFragment extends DialogFragment {
 
     Bundle b;
     TabLayout tabLayout;
     ViewPager viewPager;
     int position = 0;
+    String coin = "";
     private ImageView goback;
 
     @Override
@@ -42,7 +31,8 @@ public class HistoryFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
         if(getArguments()!=null){
             b = getArguments();
-        position = b.getInt("POSITION");
+         position = b.getInt("POSITION");
+         coin = b.getString("coin");
         }
 
     }
@@ -64,7 +54,7 @@ public class HistoryFragment extends DialogFragment {
         viewPager = view.findViewById(R.id.history_view_pager);
 
         tabLayout.setupWithViewPager(viewPager);
-        History_PagerAdapter history_pagerAdapter = new History_PagerAdapter(getChildFragmentManager());
+        History_PagerAdapter history_pagerAdapter = new History_PagerAdapter(getChildFragmentManager(),coin);
         viewPager.setAdapter(history_pagerAdapter);
 
         viewPager.setCurrentItem(position);

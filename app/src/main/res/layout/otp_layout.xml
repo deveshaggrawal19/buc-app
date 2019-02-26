@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:background="@drawable/history_item_drawable"
+    android:theme="@style/fontTheme"
     android:layout_height="match_parent">
 
     <ImageView
@@ -56,13 +57,15 @@
 
         <Button
             android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:id="@+id/logout_otp_btn"
             android:background="@drawable/history_item_drawable"
             android:textColor="@color/colorBlack"
             android:elevation="2dp"
             android:text="Logout"
+            android:layout_gravity="center"
             android:padding="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

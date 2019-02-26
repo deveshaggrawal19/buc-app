@@ -1,6 +1,5 @@
 package com.buyucoinApp.buyucoin;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,20 +40,19 @@ public class VerifyUser extends AppCompatActivity {
         progressDialog.setMessage("we are sending OTP , please wait for couple of minutes");
         buyucoinPref = new BuyucoinPref(this);
         initView();
-        getNonFreshToken(buyucoinPref.getPrefString(BuyucoinPref.REFRESH_TOKEN));
         send_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.addMobile(VerifyUser.this,buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN),new AlertDialog.Builder(VerifyUser.this));
+//                Utilities.addMobile(VerifyUser.this,buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN),new AlertDialog.Builder(VerifyUser.this));
 
-//                String mobile_num = mobile.getText().toString();
-//                if(mobile_num.length()>=10){
-//
-////                    getAuthKey(buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN),mobile_num);
-//                }
-//                else{
-//                    mobile.setError("Mobile number required");
-//                }
+                String mobile_num = mobile.getText().toString();
+                if(mobile_num.length()>=10){
+                    send_otp.setEnabled(false);
+                    getAuthKey(buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN),mobile_num);
+                }
+                else{
+                    mobile.setError("Mobile number required");
+                }
             }
         });
 
@@ -65,6 +63,7 @@ public class VerifyUser extends AppCompatActivity {
                 if(otp!=null && otp_.length()>=6){
                     try {
                         submitOtp(finalObject.put("otp",otp_));
+                        submit_otp.setEnabled(false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -81,6 +80,7 @@ public class VerifyUser extends AppCompatActivity {
                 if(buyucoinPref!=null){
                     buyucoinPref.removeAllPref();
                 }
+                buyucoinPref.removeAllPref();
                 new CoustomToast(getApplicationContext(),"Logging out....",CoustomToast.TYPE_SUCCESS).showToast();
                 Intent i = new Intent(VerifyUser.this, LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -104,12 +104,17 @@ public class VerifyUser extends AppCompatActivity {
     }
 
     public void getAuthKey(final String token,final String mobile){
-        Log.d("avi","token:"+token);
         progressDialog.show();
         OkHttpHandler.auth_get("add_mobile",token, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        send_otp.setEnabled(true);
+                    }
+                });
             }
 
             @Override
@@ -118,21 +123,13 @@ public class VerifyUser extends AppCompatActivity {
                 String s = response.body().string();
                 if(s!=null){
                     try {
-                        Log.d("ON AUTH KEY RES  TOKEN", "onResponse: "+buyucoinPref.getPrefString(
-                                BuyucoinPref.ACCESS_TOKEN
-                        ));
                         JSONObject res = new JSONObject(s);
-
-                        Log.d("GET AUTH KEY", res.toString());
+                        Log.d("GET AUTH KEY RESPONSE", "onResponse: "+res.toString());
                         String message = "";
                         if(res.has("data") && res.getJSONObject("data").has("auth_key")){
-                            if(res.has("message")){
-                                res.getJSONArray("message").getJSONArray(0).getString(0);
-                            }
                             String auth_key = res.getJSONObject("data").getString("auth_key");
                           JSONObject object = new JSONObject().put("auth_key",auth_key).put("mob",mobile);
                           getFreshOtp(object);
-
                         }
                         else{
                             message = res.getString("msg");
@@ -142,6 +139,7 @@ public class VerifyUser extends AppCompatActivity {
                                   public void run() {
                                       progressDialog.dismiss();
                                       new CoustomToast(getApplicationContext(),"Session Expired, Login again.",CoustomToast.TYPE_NORMAL).showToast();
+                                      send_otp.setEnabled(true);
                                   }
                               });
                           }
@@ -162,6 +160,13 @@ public class VerifyUser extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        send_otp.setEnabled(true);
+
+                    }
+                });
             }
 
             @Override
@@ -170,17 +175,23 @@ public class VerifyUser extends AppCompatActivity {
                 String s = response.body().string();
                 if(s!=null){
                     try {
-                        JSONObject res = new JSONObject(s);
+                        final JSONObject res = new JSONObject(s);
                         Log.d("GET FRESH OTP", res.toString());
-
 //                      String data = res.getJSONObject("data");
-                        String message = res.getJSONArray("message").getJSONArray(0).getString(0);
-                        String status = res.getString("status");
+                                    String message = res.getJSONArray("message").getJSONArray(0).getString(0);
+                                    String status = res.getString("status");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(res.has("data")){
+                                    finalObject = object;
+                                    mobile_layout.setVisibility(View.GONE);
+                                    otp_layout.setVisibility(View.VISIBLE);
+                                }
+                                progressDialog.dismiss();
+                            }
+                        });
 
-                        finalObject = object;
-                        mobile_layout.setVisibility(View.GONE);
-                        otp_layout.setVisibility(View.VISIBLE);
-                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -192,10 +203,19 @@ public class VerifyUser extends AppCompatActivity {
     }
 
     public void submitOtp(JSONObject object){
-        OkHttpHandler.auth_post("confirm_mobile", buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN), object.toString(), new Callback() {
+        progressDialog.setTitle("Verifying OTP");
+        progressDialog.setMessage("Please Wait some moments");
+        progressDialog.show();
+        OkHttpHandler.auth_post("add_mobile", buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN), object.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        submit_otp.setEnabled(true);
+                        progressDialog.dismiss();
+                    }
+                });
             }
 
             @Override
@@ -207,9 +227,35 @@ public class VerifyUser extends AppCompatActivity {
                         JSONObject res = new JSONObject(s);
                         Log.d("GET SUBMIT OTP", res.toString());
 
-//                      String data = res.getJSONObject("data");
-                        String message = res.getJSONArray("message").getJSONArray(0).getString(0);
+                        final String message = (res.getJSONArray("message").length()>0)?res.getJSONArray("message").getJSONArray(0).getString(0):"Something goes wrong";
+
                         String status = res.getString("status");
+                        final int sub_status = (res.has("sub_status"))?res.getInt("sub_status"):0;
+                        if(status.equals("redirect")){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getNonFreshToken(buyucoinPref.getPrefString(BuyucoinPref.REFRESH_TOKEN),message);
+                                }
+                            });
+                        }
+                        else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(sub_status==8){
+                                        new CoustomToast(getApplicationContext(),"Wrong OTP",CoustomToast.TYPE_DANGER).showToast();
+                                    }else{
+                                        new CoustomToast(getApplicationContext(),message,CoustomToast.TYPE_DANGER).showToast();
+                                    }
+                                    progressDialog.dismiss();
+                                    submit_otp.setEnabled(true);
+                                    otp_layout.setVisibility(View.GONE);
+                                    mobile_layout.setVisibility(View.VISIBLE);
+                                    send_otp.setEnabled(true);
+                                }
+                            });
+                        }
 
 
                     } catch (JSONException e) {
@@ -222,7 +268,7 @@ public class VerifyUser extends AppCompatActivity {
 
     }
 
-    public void getNonFreshToken(String refresh_token) {
+    public void getNonFreshToken(String refresh_token, final String message) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject().put("refresh_token", refresh_token);
@@ -238,26 +284,43 @@ public class VerifyUser extends AppCompatActivity {
                     @Override
                     public void run() {
                         new CoustomToast(VerifyUser.this,"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
+
                     }
                 });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
                 String s = response.body().string();
                 try {
-                    final JSONObject jsonObject1 = new JSONObject(s);
-                    buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN,jsonObject1.getString("access_token"));
-                    Log.d("ON REFRESH TOKEN", "onResponse: "+buyucoinPref.getPrefString(
-                            BuyucoinPref.ACCESS_TOKEN
-                    ));
+
+                    final JSONObject data = new JSONObject(s);
+                    Log.d("get non fresh token", "onResponse: "+data.toString());
+                    buyucoinPref.setEditpref(BuyucoinPref.ACCESS_TOKEN, data.getString("access_token"));
+                    buyucoinPref.setEditpref("bank_upload",data.getBoolean("bank_upload"));
+                    buyucoinPref.setEditpref("email_verified", data.getBoolean("email_verified"));
+                    buyucoinPref.setEditpref("kyc_upload",data.getBoolean("kyc_upload"));
+                    buyucoinPref.setEditpref("kyc_status", data.getBoolean("kyc_verified"));
+                    buyucoinPref.setEditpref("mob_verified", data.getBoolean("mob_verified"));
+                    buyucoinPref.setEditpref("user_status",data.getString("user_status"));
+                    buyucoinPref.setEditpref("wallet",data.getBoolean("wallet"));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new CoustomToast(getApplicationContext(),message,CoustomToast.TYPE_SUCCESS).showToast();
+                            startActivity(new Intent(VerifyUser.this,Decide.class));
+                            finish();
+
+                        }
+                    });
+
+
                 } catch (final Exception e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                        new CoustomToast(VerifyUser.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
+                            new CoustomToast(VerifyUser.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
                         }
                     });
 
@@ -266,4 +329,5 @@ public class VerifyUser extends AppCompatActivity {
             }
         });
     }
+
 }

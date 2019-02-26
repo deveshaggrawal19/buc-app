@@ -80,20 +80,9 @@
         android:gravity="center"
         android:layout_height="match_parent">
         <ImageView
-            android:layout_width="100dp"
-            android:src="@drawable/ic_empty"
-            android:tint="#aaaaaa"
-            android:layout_gravity="center"
-            android:layout_height="100dp" />
-        <TextView
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="30dp"
-            android:textAlignment="center"
-            android:textColor="#aaaaaa"
-            android:text="@string/no_withdraw_orders"/>
+            android:src="@drawable/no_data_found"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
     <ProgressBar

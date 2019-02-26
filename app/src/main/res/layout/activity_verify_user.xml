@@ -14,16 +14,7 @@
         android:layout_height="300dp"
         android:src="@drawable/conf_otp" />
 
-    <Button
-        android:id="@+id/send_otp_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/pills"
-        android:padding="10dp"
-        android:text="Add mobile number"
-        android:textColor="@color/colorWhite" />
+
 
     <LinearLayout
         android:id="@+id/enter_number_layout"
@@ -32,7 +23,7 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -53,8 +44,20 @@
             android:layout_margin="10dp"
             android:background="@drawable/input_shape"
             android:inputType="number"
-            android:maxLines="1"
-            android:padding="5dp" />
+            android:gravity="center"
+            android:maxLength="10"
+            android:maxLines="1"/>
+
+        <Button
+            android:id="@+id/send_otp_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/pills"
+            android:padding="10dp"
+            android:text="Add mobile number"
+            android:textColor="@color/colorWhite" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
@@ -70,8 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@drawable/history_item_drawable"
-        android:elevation="2dp"
         android:orientation="vertical"
         android:padding="10dp"
         android:visibility="gone">
@@ -95,7 +96,9 @@
             android:layout_margin="10dp"
             android:background="@drawable/input_shape"
             android:inputType="number"
-            android:maxLines="1" />
+            android:padding="5dp"
+            android:gravity="center"
+            android:maxLength="6" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
