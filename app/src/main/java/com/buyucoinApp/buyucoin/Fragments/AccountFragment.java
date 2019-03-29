@@ -310,13 +310,14 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                if(getActivity()!=null){
                 Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new CoustomToast(getContext(),"Error retreiving API",CoustomToast.TYPE_DANGER).showToast();
-
+                        new CoustomToast(getContext(),"Something Went Wrong",CoustomToast.TYPE_DANGER).showToast();
                     }
                 });
+                }
             }
 
             @Override

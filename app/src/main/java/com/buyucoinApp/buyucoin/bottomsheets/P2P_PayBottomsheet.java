@@ -35,18 +35,17 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
 
     private CheckBox upi_checkobx,imps_checkbox;
     private EditText upi;
-    SeekBar boost_seekbar;
-    TextView boost_value_text,pay_amt,pay_min_amt,pay_boost_amt;
-    Button make_p2p_request;
-    int amount;
-    int min_amount;
-    String type = "deposit";
+    private TextView boost_value_text;
+    private TextView pay_boost_amt;
+    private int amount;
+    private int min_amount;
+    private String type = "deposit";
     private String[] IMPS_UPI = new String[]{"imps","upi"};
     private String[] IMPS_ONLY = new String[]{"imps"};
-    String[] modes = IMPS_ONLY;
-    String upi_address;
-    int boost = 0;
-    BuyucoinPref buyucoinPref;
+    private String[] modes = IMPS_ONLY;
+    private String upi_address;
+    private int boost = 0;
+    private BuyucoinPref buyucoinPref;
 
 
 
@@ -65,12 +64,12 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
         upi.setVisibility(View.GONE);
         imps_checkbox = view.findViewById(R.id.checkBox);
         upi_checkobx = view.findViewById(R.id.checkBox2);
-        boost_seekbar = view.findViewById(R.id.seekBar);
+        SeekBar boost_seekbar = view.findViewById(R.id.seekBar);
         boost_value_text = view.findViewById(R.id.boost_value_text);
-        make_p2p_request = view.findViewById(R.id.make_p2p_request);
+        Button make_p2p_request = view.findViewById(R.id.make_p2p_request);
 
-        pay_amt = view.findViewById(R.id.pay_amt);
-        pay_min_amt = view.findViewById(R.id.pay_min_amt);
+        TextView pay_amt = view.findViewById(R.id.pay_amt);
+        TextView pay_min_amt = view.findViewById(R.id.pay_min_amt);
         pay_boost_amt = view.findViewById(R.id.pay_boost_amt);
 
         if(getArguments()!=null){
@@ -179,32 +178,41 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
                 String s = response.body().string();
-                try {
-                    final JSONObject jsonObject1 = new JSONObject(s);
-                    final JSONArray msg = jsonObject1.getJSONArray("message");
-                    final String status = jsonObject1.getString("status");
+                if(s!=null){
+                    try {
+                        final JSONObject jsonObject1 = new JSONObject(s);
+                        final JSONArray msg = jsonObject1.getJSONArray("message");
+                        final String status = jsonObject1.getString("status");
 
-                    final String tmsg = msg.getJSONArray(0).getString(0);
+                        final String tmsg = msg.getJSONArray(0).getString(0);
 
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
 
-                            if(status.equals("success")){
-                                new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
-                                dismiss();
+                                if(status.equals("success")){
+                                    new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_SUCCESS).showToast();
+                                    dismiss();
+                                }
+                                else{
+                                    new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_DANGER).showToast();
+                                }
+
                             }
-                            else{
-                                new CoustomToast(getContext(),tmsg,CoustomToast.TYPE_DANGER).showToast();
-                            }
-
-                        }
-                    });
+                        });
 //                dismiss();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                     if(getActivity()!=null){
+                        new CoustomToast(getContext(),"Something went wrong",CoustomToast.TYPE_DANGER).showToast();
+                     }
+
                 }
 
 

@@ -8,6 +8,15 @@ import com.buyucoinApp.buyucoin.cipher.CipherAES;
 public class BuyucoinPref {
     public static String ACCESS_TOKEN = "access_token";
     public static String REFRESH_TOKEN = "refresh_token";
+    public static String NAME = "name";
+    public static String EMAIL = "email";
+    public static String KYC_STATUS = "kyc_status";
+    public static String MOB = "mob";
+    public static String INR_AMOUNT = "inr_amount";
+    public static String PASSCODE = "passcode";
+
+
+
     private String PREF_NAME = "BUYUCOIN_USER_PREFS";
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;

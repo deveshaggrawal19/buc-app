@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -43,29 +44,20 @@ import okhttp3.Response;
 
 public class WalletFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-
     String ACCESS_TOKEN = null;
-    ArrayList<JSONObject> list;
-    ArrayList<JSONObject> j = new ArrayList<>();
+    private ArrayList<JSONObject> list;
     private RecyclerView recyclerView;
     private ProgressBar pb;
     private TextView err,wallet_inr,welcome;
     private CheckBox hidezero_checkbox;
     private ImageView wallet_process_img;
     private BuyucoinPref buyucoinPref;
-    private String FRAGMENT_STATE = "WALLET";
     private String WALLET_INR_BALANCE = "0";
     private LinearLayout account_dep_history;
     private LinearLayout account_with_history;
     private LinearLayout account_trade_history;
     private LinearLayout p2p_history_layout;
     private LinearLayout p2p_active_orders_layout;
-
-    private Context context;
     private NestedScrollView nsView;
 
 
@@ -85,14 +77,12 @@ public class WalletFragment extends Fragment {
         buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
         ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         list = new ArrayList<>();
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
 
@@ -111,7 +101,8 @@ public class WalletFragment extends Fragment {
 
 
         WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
-        wallet_inr.setText(getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE);
+        String WALLET_STRING = getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE;
+        wallet_inr.setText(WALLET_STRING);
         String name = "Weclome ";
         name += buyucoinPref.getPrefString("name");
         welcome.setText(name);
@@ -122,6 +113,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 P2P_History p2P_history = new P2P_History();
+                assert getFragmentManager() != null;
                 p2P_history.show(getFragmentManager(), "P2P HISTORY");
             }
         });
@@ -152,7 +144,7 @@ public class WalletFragment extends Fragment {
     private void   initView(View view){
         recyclerView = view.findViewById(R.id.rvWallet);
         wallet_inr = view.findViewById(R.id.wallet_inr);
-        context = view.getContext();
+        Context context = view.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayout.HORIZONTAL,false));
         account_dep_history = view.findViewById(R.id.account_dep_history);
         account_with_history = view.findViewById(R.id.account_with_history);
@@ -196,7 +188,7 @@ public class WalletFragment extends Fragment {
         });
     }
 
-    public void createNewHistoryFragment(int position,View view){
+    private void createNewHistoryFragment(int position, View view){
         final DialogFragment historyFragment = new HistoryFragment();
         final Bundle bundle = new Bundle();
         bundle.putInt("POSITION",position);
@@ -206,7 +198,7 @@ public class WalletFragment extends Fragment {
         makeViewDisable(view);
     }
 
-    public static void makeViewDisable(final View view){
+    private static void makeViewDisable(final View view){
         view.setEnabled(false);
         view.postDelayed(new Runnable() {
             @Override
@@ -217,7 +209,7 @@ public class WalletFragment extends Fragment {
     }
 
 
-    public void getWalletData(){
+    private void getWalletData(){
         list.clear();
         hidezero_checkbox.setChecked(false);
         OkHttpHandler.auth_get("get_wallet", ACCESS_TOKEN, new Callback() {
@@ -228,7 +220,8 @@ public class WalletFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
+                String s = response.body() != null ? response.body().string() : null;
+                if(s!=null)
                 try{
                     JSONObject jsonObject = new JSONObject(s);
                     if(jsonObject.getString("status").equals("error") || jsonObject.getString("status").equals("redirect")){
@@ -237,18 +230,15 @@ public class WalletFragment extends Fragment {
                             buyucoinPref.removePref("refresh_token").apply();
                             Utilities.showToast(getActivity(), "Login again to access wallet");
                             startActivity(new Intent(getActivity(), LoginActivity.class));
-                            getActivity().finish();
+                            if(getActivity()!=null)getActivity().finish();
                         }else{
                             if(jsonObject.has("message")){
                                 final String e = jsonObject.getJSONArray("message").getJSONArray(0).getString(0);
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        err.setText(e);
-                                        err.setVisibility(View.VISIBLE);
-                                        nsView.setVisibility(View.GONE);
-                                    }
-                                });
+                               if(getActivity()!=null){
+                                   err.setText(e);
+                                   err.setVisibility(View.VISIBLE);
+                                   nsView.setVisibility(View.GONE);
+                               }
 
                             }
                         }
@@ -263,17 +253,16 @@ public class WalletFragment extends Fragment {
                     buyucoinPref.setEditpref("remark_id",remark_id);
                     Log.d("WALLET_FRAGMENT", "onResponse: "+data.toString());
                     String[] arr = {"btc", "eth", "inr", "ltc", "bcc", "xmr", "qtum", "etc", "zec", "xem", "gnt", "neo", "xrp", "dash", "strat", "steem", "rep", "lsk", "fct", "omg", "cvc", "sc", "pay", "ark", "doge", "dgb", "nxt", "bat", "bts", "cloak", "pivx", "dcn", "buc", "pac"};
-                    for(int i=0; i<arr.length; i++){
+                    for (String anArr : arr)
                         try {
-                            JSONObject cj = data.getJSONObject(arr[i])
-                                    .put("currencyname", arr[i])
-                                    .put("currencies",data.getJSONObject("currencies").get(arr[i]));
+                            JSONObject cj = data.getJSONObject(anArr)
+                                    .put("currencyname", anArr)
+                                    .put("currencies", data.getJSONObject("currencies").get(anArr));
                             list.add(cj);
 
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
                     if(getActivity()!=null) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -309,6 +298,7 @@ public class WalletFragment extends Fragment {
         OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
                 e.printStackTrace();
                         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                             @Override
@@ -362,7 +352,7 @@ public class WalletFragment extends Fragment {
         });
     }
 
-    public void WalletBalance(){
+    private void WalletBalance(){
         WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
         String wallet_balance = getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE;
         wallet_inr.setText(wallet_balance);

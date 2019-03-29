@@ -33,7 +33,7 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
 
 
     public P2pOrderMatchesAdpaterWithdraw(JSONArray activeP2pOrders, FragmentManager fragmentManager, Context context) {
-        this.activeP2pOrders = (activeP2pOrders.length()>0)?activeP2pOrders:null;
+        this.activeP2pOrders = (activeP2pOrders!=null && activeP2pOrders.length()>0)?activeP2pOrders:null;
         this.fragmentManager = fragmentManager;
         this.context = context;
         pref = new BuyucoinPref(context);
@@ -127,7 +127,7 @@ public class P2pOrderMatchesAdpaterWithdraw extends RecyclerView.Adapter<P2pOrde
 
     @Override
     public int getItemCount() {
-        return activeP2pOrders.length();
+        return(activeP2pOrders!=null)?activeP2pOrders.length():0;
     }
 
     @Override

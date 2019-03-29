@@ -33,7 +33,7 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
 
 
     public P2pOrderMatchesAdpaterDeposit(JSONArray activeP2pOrders, FragmentManager fragmentManager, Context context) {
-        this.activeP2pOrders = activeP2pOrders;
+        this.activeP2pOrders = (activeP2pOrders!=null && activeP2pOrders.length()>0)?activeP2pOrders:null;
         this.fragmentManager = fragmentManager;
         this.context = context;
         pref = new BuyucoinPref(context);
@@ -70,70 +70,73 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        try {
-            final JSONObject data = activeP2pOrders.getJSONObject(position);
-            final Bundle bundle = new Bundle();
 
-            if(data.getString("status").equals("WITHDRAW_COMPLETE")){
-                holder.peer_success.setVisibility(View.VISIBLE);
-                holder.view_layout.setVisibility(View.GONE);
-            }
+        if(activeP2pOrders!=null){
+            try {
+                final JSONObject data = activeP2pOrders.getJSONObject(position);
+                final Bundle bundle = new Bundle();
 
-            if (data.has("bank")) {
-                JSONObject bank = data.getJSONObject("bank");
-                final String account_no = bank.getString("account");
-                final String bank_name = bank.getString("bank_name");
-                final String b_name = bank.getString("beneficiary");
-                final String ifsc_code = bank.getString("ifsc_code");
-                bundle.putString("account_no", account_no);
-                bundle.putString("bank_name", bank_name);
-                bundle.putString("b_name", b_name);
-                bundle.putString("ifsc_code", ifsc_code);
-            }
-            if (data.has("tx_hash")) {
-                final String tx_hash = data.getString("tx_hash");
-                bundle.putString("tx_hash", tx_hash);
-            } else {
-                bundle.putString("tx_hash", "");
-
-            }
-            if (data.has("mode")) {
-                final String mode = data.getString("mode");
-                bundle.putString("mode", mode);
-
-
-            }
-            if (data.has("note")) {
-                final String note = data.getString("note");
-                bundle.putString("note", note);
-
-
-            }
-
-
-            final String did = String.valueOf(data.getInt("id"));
-            final String wid = String.valueOf(data.getInt("key"));
-            final String status = data.getString("status");
-
-            holder.amount.setText(String.valueOf(data.getInt("vol")/10000));
-            holder.id.setText(String.valueOf(data.getString("key")));
-            holder.details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DialogFragment bankDetails = new BankDetails();
-
-                    bundle.putString("did", did);
-                    bundle.putString("wid", wid);
-                    bundle.putInt("position", position);
-                    bundle.putString("status",status);
-
-
-                    bankDetails.setArguments(bundle);
-                    bankDetails.show(fragmentManager, "fdsgfh");
+                if(data.getString("status").equals("WITHDRAW_COMPLETE")){
+                    holder.peer_success.setVisibility(View.VISIBLE);
+                    holder.view_layout.setVisibility(View.GONE);
                 }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+                if (data.has("bank")) {
+                    JSONObject bank = data.getJSONObject("bank");
+                    final String account_no = bank.getString("account");
+                    final String bank_name = bank.getString("bank_name");
+                    final String b_name = bank.getString("beneficiary");
+                    final String ifsc_code = bank.getString("ifsc_code");
+                    bundle.putString("account_no", account_no);
+                    bundle.putString("bank_name", bank_name);
+                    bundle.putString("b_name", b_name);
+                    bundle.putString("ifsc_code", ifsc_code);
+                }
+                if (data.has("tx_hash")) {
+                    final String tx_hash = data.getString("tx_hash");
+                    bundle.putString("tx_hash", tx_hash);
+                } else {
+                    bundle.putString("tx_hash", "");
+
+                }
+                if (data.has("mode")) {
+                    final String mode = data.getString("mode");
+                    bundle.putString("mode", mode);
+
+
+                }
+                if (data.has("note")) {
+                    final String note = data.getString("note");
+                    bundle.putString("note", note);
+
+
+                }
+
+
+                final String did = String.valueOf(data.getInt("id"));
+                final String wid = String.valueOf(data.getInt("key"));
+                final String status = data.getString("status");
+
+                holder.amount.setText(String.valueOf(data.getInt("vol")/10000));
+                holder.id.setText(String.valueOf(data.getString("key")));
+                holder.details.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DialogFragment bankDetails = new BankDetails();
+
+                        bundle.putString("did", did);
+                        bundle.putString("wid", wid);
+                        bundle.putInt("position", position);
+                        bundle.putString("status",status);
+
+
+                        bankDetails.setArguments(bundle);
+                        bankDetails.show(fragmentManager, "fdsgfh");
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -142,7 +145,7 @@ public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrder
 
     @Override
     public int getItemCount() {
-        return activeP2pOrders.length();
+        return (activeP2pOrders!=null)?activeP2pOrders.length():0;
     }
 
     @Override
