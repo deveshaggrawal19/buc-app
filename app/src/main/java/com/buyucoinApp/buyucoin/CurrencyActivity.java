@@ -71,7 +71,6 @@ public class CurrencyActivity extends AppCompatActivity {
     ArrayList<MarketHistory> arrayListMarketHistory;
     TextView hight24,low24,change24;
     String s;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,7 @@ public class CurrencyActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), ""+db.getReference().toString(), Toast.LENGTH_LONG).show();
         myRef = db.getReference();
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

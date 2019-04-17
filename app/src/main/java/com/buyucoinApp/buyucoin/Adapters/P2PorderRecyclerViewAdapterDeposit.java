@@ -16,7 +16,7 @@ import com.buyucoinApp.buyucoin.Interfaces.MatchedPeer;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
-import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrders;
+import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrder;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONException;
@@ -36,7 +36,7 @@ import okhttp3.Response;
 
 public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2PorderRecyclerViewAdapterDeposit.P2pOrderViewHolder> implements MatchedPeer {
 
-    private ArrayList<ActiveP2pOrders> arrayList ;
+    private ArrayList<ActiveP2pOrder> arrayList ;
     private Context context;
     private FragmentManager fragmentManager;
     BuyucoinPref pref;
@@ -44,7 +44,7 @@ public class P2PorderRecyclerViewAdapterDeposit extends RecyclerView.Adapter<P2P
     AlertDialog.Builder progressDialog;
 
 
-    public P2PorderRecyclerViewAdapterDeposit(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
+    public P2PorderRecyclerViewAdapterDeposit(Context context, ArrayList<ActiveP2pOrder> activeP2pOrderslist, FragmentManager childFragmentManager) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
         fragmentManager = childFragmentManager;

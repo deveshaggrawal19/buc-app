@@ -16,14 +16,12 @@ public class BuyucoinPref {
     public static String PASSCODE = "passcode";
 
 
-
-    private String PREF_NAME = "BUYUCOIN_USER_PREFS";
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    private Context context;
     public static final String KEY = "qwaserdftyghuijkoplzxcvbnmlkjhgf";
     public BuyucoinPref(Context context) {
-        this.context = context;
+        Context context1 = context;
+        String PREF_NAME = "BUYUCOIN_USER_PREFS";
         this.preferences = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         this.editor = preferences.edit();
 

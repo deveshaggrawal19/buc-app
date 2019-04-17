@@ -27,7 +27,6 @@ public class CoinDepositWithdraw extends AppCompatActivity {
     ViewPager viewPager;
     RadioGroup radioGroup;
     RadioButton depoite_rb, withdraw_rb;
-    private Toolbar toolbar;
 
 
     @Override
@@ -40,7 +39,7 @@ public class CoinDepositWithdraw extends AppCompatActivity {
 
         setContentView(R.layout.activity_coin_deposite_withdraw);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

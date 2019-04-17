@@ -29,9 +29,6 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     EditText amount, min_amount;
     Button b;
     String ACCESS_TOKEN = null;
@@ -40,12 +37,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
     LinearLayout min_amt_layout, p2p_history_layout,p2p_active_orders_layout;
 
 
-
-    private SharedPreferences prefs;
-    private SharedPreferences.Editor edit_pref;
-    private String FRAGMENT_STATE = "P2P";
-
-//    private OnFragmentInteractionListener mListener;
+    //    private OnFragmentInteractionListener mListener;
 
     public P2PFragment() {
         // Required empty public constructor
@@ -73,11 +65,13 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
+        SharedPreferences.Editor edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
+        String FRAGMENT_STATE = "P2P";
         edit_pref.putString("FRAGMENT_STATE", FRAGMENT_STATE).apply();
         ACCESS_TOKEN = prefs.getString("access_token", null);
     }

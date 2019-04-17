@@ -1,5 +1,6 @@
 package com.buyucoinApp.buyucoin;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -60,6 +61,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     ProgressBar pb;
     String coin,coin_full_name;
     private ArrayList<History> histories;
+    @SuppressLint("StaticFieldLeak")
     static Toolbar toolbar;
     private ClipboardManager clipboardManager;
 
@@ -73,6 +75,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     String COIN_FULL_NAME;
     final String ADDRESS_TEXT = "Scan this QR Code to get ";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Fabric.with(this, new Crashlytics());
@@ -123,7 +126,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cd = card_coin_address.getText().toString();
-                if(!cd.equals("") && cd!=null){
+                if(!cd.equals("")){
                     ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                     clipboardManager.setPrimaryClip(clipData);
                     new CoustomToast(getApplicationContext(), "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
@@ -136,7 +139,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String cd = card_coin_base_address.getText().toString();
-                    if(cd!=null && !cd.equals("")){
+                    if(!cd.equals("")){
                         ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                         clipboardManager.setPrimaryClip(clipData);
                         new CoustomToast(getApplicationContext(), "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
@@ -410,48 +413,61 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                         assert response.body() != null;
                         String s = response.body().string();
 
+                            JSONObject mainobj = new JSONObject(s).getJSONObject("data");
 
-                            final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray("order");
-                            Log.d("sdfghjsdfghjk", array.toString());
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject j = array.getJSONObject(i);
-                                if (j.getString("curr").equals(coin) && j.getString("status").equals("Pending")) {
-                                    histories.add(new History(
-                                            j.getDouble("amount"),
-                                            j.getString("curr"),
-                                            j.getString("open"),
-                                            j.getString("open"),
-                                            j.getString("status"),
-                                            "",
-                                            "",
-                                            j.getDouble("fee"),
-                                            j.getDouble("filled"),
-                                            j.getDouble("price"),
-                                            j.getString("type"),
-                                            j.getDouble("value"),
-                                            j.getInt("id")
-                                    ));
+                            if(mainobj.has("order")) {
+                                final JSONArray array = mainobj.getJSONArray("order");
+                                Log.d("sdfghjsdfghjk", array.toString());
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject j = array.getJSONObject(i);
+                                    if (j.getString("curr").equals(coin) && j.getString("status").equals("Pending")) {
+                                        histories.add(new History(
+                                                j.getDouble("amount"),
+                                                j.getString("curr"),
+                                                j.getString("open"),
+                                                j.getString("open"),
+                                                j.getString("status"),
+                                                "",
+                                                "",
+                                                j.getDouble("fee"),
+                                                j.getDouble("filled"),
+                                                j.getDouble("price"),
+                                                j.getString("type"),
+                                                j.getDouble("value"),
+                                                j.getInt("id")
+                                        ));
+                                    }
+
                                 }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        if (histories.size() > 0) {
+                                            history_recyclerview.setAdapter(new CoinActiveOrderAdapter(histories, getApplicationContext()));
+                                            history_recyclerview.setVisibility(View.VISIBLE);
+                                            pb.setVisibility(View.GONE);
+                                        } else {
+                                            pb.setVisibility(View.GONE);
+                                            empty_layout.setVisibility(View.VISIBLE);
+
+                                        }
+                                    }
+                                });
+
 
                             }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
+                            else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
 
-                                    if (histories.size() > 0) {
-                                        history_recyclerview.setAdapter(new CoinActiveOrderAdapter(histories,getApplicationContext()));
-                                        history_recyclerview.setVisibility(View.VISIBLE);
-                                        pb.setVisibility(View.GONE);
-                                    } else {
-                                        pb.setVisibility(View.GONE);
-                                        empty_layout.setVisibility(View.VISIBLE);
-
+                                    pb.setVisibility(View.GONE);
+                                    empty_layout.setVisibility(View.VISIBLE);
                                     }
-                                }
-                            });
+                                });
 
-
-
+                            }
 
                     } catch (Exception e) {
                         e.printStackTrace();

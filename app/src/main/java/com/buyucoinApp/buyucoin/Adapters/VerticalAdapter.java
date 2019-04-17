@@ -29,11 +29,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder> {
 
     private ArrayList<WalletCoinVertical> walletCoinVerticals;
-    private BuyucoinPref pref;
-    private Context context;
 
     public VerticalAdapter(Context context, ArrayList<JSONObject> list, boolean hidezero) {
-        this.context = context;
+        Context context1 = context;
         ArrayList<WalletCoinVertical> arrayList = new ArrayList<>();
         if(list.size()>0) {
             for (JSONObject js : list) {
@@ -121,7 +119,7 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
     public void onBindViewHolder(@NonNull final VerticalAdapter.MyViewHolder myViewHolder, final int i) {
 
         final Context context = myViewHolder.itemView.getContext();
-        pref = new BuyucoinPref(context);
+        BuyucoinPref pref = new BuyucoinPref(context);
         final String coin_name,availabel,pendings,address,description,tag,full_coin_name,porfolio,pending,base_address;
 
         coin_name = walletCoinVerticals.get(i).getCoinname();

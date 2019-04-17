@@ -74,6 +74,7 @@ public class Dashboard extends AppCompatActivity implements ForceUpdateChecker.O
     }
 
     private void setUpBottomNavigationListner() {
+        bm.inflateMenu(R.menu.bottom_navigation_menu_old);
         bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

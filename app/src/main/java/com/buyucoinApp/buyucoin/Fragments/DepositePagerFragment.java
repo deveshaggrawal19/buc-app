@@ -30,15 +30,12 @@ public class DepositePagerFragment extends Fragment {
     private Bundle b;
     private ClipboardManager clipboardManager;
     private Context context;
-    private LinearLayout wallet_maintain_layout,deposite_layout;
     private ImageView deposite_layout_qr_img,deposite_layout_tag_qr_img;
-    private String ty,co,av,ad,bd,de,tag,cfn;
+    private String de;
+    private String tag;
     private TextView deposite_layout_address_txt;
     private TextView deposite_layout_base_address;
-    private TextView deposite_layout_tag_textview;
-    private TextView address_label;
-    private TextView base_address_label;
-    private final String ADDRESS_TEXT = "Scan this QR Code to get ";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,32 +51,33 @@ public class DepositePagerFragment extends Fragment {
 
 
         context = view.getContext();
-        wallet_maintain_layout = view.findViewById(R.id.wallet_maintain_layout);
-        deposite_layout = view.findViewById(R.id.deposite_layout);
+        LinearLayout wallet_maintain_layout = view.findViewById(R.id.wallet_maintain_layout);
+        LinearLayout deposite_layout = view.findViewById(R.id.deposite_layout);
         deposite_layout_qr_img = view.findViewById(R.id.coin_address_qrcode);
         deposite_layout_address_txt = view.findViewById(R.id.coin_address);
         deposite_layout_base_address = view.findViewById(R.id.coin_base_address);
-        deposite_layout_tag_textview = view.findViewById(R.id.coin_address_tag_tv);
+        TextView deposite_layout_tag_textview = view.findViewById(R.id.coin_address_tag_tv);
         deposite_layout_tag_qr_img = view.findViewById(R.id.coin_address_tag_qrcode);
-        address_label = view.findViewById(R.id.coin_address_label);
-        base_address_label = view.findViewById(R.id.coin_base_address_label);
+        TextView address_label = view.findViewById(R.id.coin_address_label);
+        TextView base_address_label = view.findViewById(R.id.coin_base_address_label);
         clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
 
-        ty = b.getString("type");
-        co = b.getString("coin");
-        av = b.getString("available");
-        ad = b.getString("address");
-        bd = b.getString("base_address");
+        String ty = b.getString("type");
+        String co = b.getString("coin");
+        String av = b.getString("available");
+        String ad = b.getString("address");
+        String bd = b.getString("base_address");
         de = b.getString("description");
         tag = b.getString("tag");
-        cfn = b.getString("coin_full_name");
+        String cfn = b.getString("coin_full_name");
 
-        Log.d("DEPOSIT PAGER FRAGMENT", "ADDRESS=>"+ad+"  BASE ADDRESS=>"+bd+"  TAG=>"+tag);
+        Log.d("DEPOSIT PAGER FRAGMENT", "ADDRESS=>"+ ad +"  BASE ADDRESS=>"+ bd +"  TAG=>"+tag);
 
-        if(ad!=null && !ad.equals("null") && tag.equals("true")) {
+        if(ad !=null && !ad.equals("null") && tag.equals("true")) {
             deposite_layout_address_txt.setText(ad);
             deposite_layout_base_address.setText(bd);
+            String ADDRESS_TEXT = "Scan this QR Code to get ";
             deposite_layout_tag_textview.setText(ADDRESS_TEXT + " " + de);
             base_address_label.setText("Your "+de);
             qrCodeGenrator(ad, bd);
@@ -92,7 +90,7 @@ public class DepositePagerFragment extends Fragment {
             wallet_maintain_layout.setVisibility(View.VISIBLE);
             deposite_layout.setVisibility(View.GONE);
 
-            if(ad!=null && !ad.equals("null") && tag.equals("false")){
+            if(ad !=null && !ad.equals("null") && tag.equals("false")){
                 deposite_layout_address_txt.setText(ad);
                 qrCodeGenrator(ad, bd);
                 wallet_maintain_layout.setVisibility(View.GONE);

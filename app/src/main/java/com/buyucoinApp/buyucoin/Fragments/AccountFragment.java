@@ -71,7 +71,6 @@ public class AccountFragment extends Fragment {
             account_trade_history;
     private Switch app_pass_switch;
     private boolean applock_enabled;
-    private ImageView kyc;
     private ImageView imageView;
     private RelativeLayout account_about_us, account_term_policy,change_passcode_layout;
     private String referral_id = "";
@@ -371,7 +370,7 @@ public class AccountFragment extends Fragment {
 
     private void InitializeAllViews(View view){
         email = view.findViewById(R.id.tvAccountEmail);
-        kyc = view.findViewById(R.id.tvAccountKyc);
+        ImageView kyc = view.findViewById(R.id.tvAccountKyc);
         mob = view.findViewById(R.id.tvAccountMobile);
         name = view.findViewById(R.id.tvAccountName);
         pb = view.findViewById(R.id.pbAccount);

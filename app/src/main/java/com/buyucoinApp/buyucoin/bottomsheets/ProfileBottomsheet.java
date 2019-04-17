@@ -21,8 +21,6 @@ import androidx.fragment.app.DialogFragment;
 
 public class ProfileBottomsheet extends BottomSheetDialogFragment {
 
-    private Button password_btn,name_btn;
-    private TextView profile_name,profile_phone,profile_email,profile_kyc;
     BuyucoinPref buyucoinPref;
     @Nullable
     @Override
@@ -32,15 +30,14 @@ public class ProfileBottomsheet extends BottomSheetDialogFragment {
         buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
 
 
+        Button password_btn = view.findViewById(R.id.bottomsheet_update_password_btn);
+        Button name_btn = view.findViewById(R.id.bottomsheet_update_name_btn);
 
-        password_btn = view.findViewById(R.id.bottomsheet_update_password_btn);
-        name_btn = view.findViewById(R.id.bottomsheet_update_name_btn);
 
-
-        profile_name = view.findViewById(R.id.profile_name);
-        profile_phone = view.findViewById(R.id.profile_phone);
-        profile_kyc = view.findViewById(R.id.profile_kyc);
-        profile_email = view.findViewById(R.id.profile_email);
+        TextView profile_name = view.findViewById(R.id.profile_name);
+        TextView profile_phone = view.findViewById(R.id.profile_phone);
+        TextView profile_kyc = view.findViewById(R.id.profile_kyc);
+        TextView profile_email = view.findViewById(R.id.profile_email);
 
         profile_name.setText(String.valueOf(buyucoinPref.getPrefString("name")));
         profile_phone.setText(String.valueOf(buyucoinPref.getPrefString("mob")));

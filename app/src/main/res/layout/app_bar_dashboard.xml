@@ -95,7 +95,7 @@
             app:itemIconTint="@drawable/bottom_navigation_colors"
             app:itemTextColor="@drawable/bottom_navigation_colors"
             android:id="@+id/_btnbar"
-            app:menu="@menu/bottom_navigation_menu">
+            >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

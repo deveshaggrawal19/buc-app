@@ -13,7 +13,7 @@ import com.buyucoinApp.buyucoin.Adapters.P2PorderRecyclerViewAdapterDeposit;
 import com.buyucoinApp.buyucoin.Adapters.P2PorderRecyclerViewAdapterWithdraw;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
-import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrders;
+import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrder;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONArray;
@@ -37,13 +37,12 @@ import okhttp3.Response;
 public class P2pActiveOrdersDialog extends DialogFragment {
 
     private RecyclerView recyclerView_d,recyclerView_w;
-    private ArrayList<ActiveP2pOrders> activeP2pOrderslist;
+    private ArrayList<ActiveP2pOrder> activeP2pOrderslist;
     private TextView activeOrderType;
     private String type = "";
     private SwipeRefreshLayout p2p_active_orders_layout;
     private LinearLayout loading_screen,empty_screen;
     private String ACCESS_TOKEN;
-    private ImageView goback;
 
     public static P2pActiveOrdersDialog newInstance(){
         return new P2pActiveOrdersDialog();
@@ -67,7 +66,7 @@ public class P2pActiveOrdersDialog extends DialogFragment {
         final View view = inflater.inflate(R.layout.p2p_active_order_dialog_layout,container,false);
 
 
-        goback = view.findViewById(R.id.goback);
+        ImageView goback = view.findViewById(R.id.goback);
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +171,8 @@ public class P2pActiveOrdersDialog extends DialogFragment {
                 String key = it.next();
                 JSONObject o = active_withdrawals.getJSONObject(key).getJSONObject("peer");
                 Log.d("fdgdhfjghdfhfgmf", o.toString());
-                ActiveP2pOrders activeP2pOrders = new ActiveP2pOrders();
+                ActiveP2pOrder activeP2pOrders = new ActiveP2pOrder();
+
                 JSONArray array = new JSONArray();
                 activeP2pOrders.setAmount(o.getDouble("amount"));
                 activeP2pOrders.setBoost(o.getDouble("boost"));

@@ -37,7 +37,6 @@ public class WithdrawDetails extends BottomSheetDialogFragment {
     private Context context;
     private static boolean issuccess = true;
     private BuyucoinPref pref;
-    private int position;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class WithdrawDetails extends BottomSheetDialogFragment {
             context = getContext();
             assert context != null;
             pref = new BuyucoinPref(context);
-            position = bundle.getInt("position");
+            int position = bundle.getInt("position");
             status = bundle.getString("status");
         }
     }

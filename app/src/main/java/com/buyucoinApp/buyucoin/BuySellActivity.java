@@ -46,7 +46,7 @@ public class BuySellActivity extends AppCompatActivity{
     String WalletInr;
     DatabaseReference myRef;
     BuyucoinPref buyucoinPref;
-    final String fees = "0.5% to 1.0% including GST";;
+    final String fees = "0.5% to 1.0% including GST";
     public static String coin_buy_price;
     public static String coin_sell_price;
     ProgressDialog progressDialog;
@@ -141,10 +141,10 @@ public class BuySellActivity extends AppCompatActivity{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.sell_radio_btn:
-                        updateLayout("sell",0.5,coin_sell_price);
+                        updateLayout("sell", coin_sell_price);
                         break;
                     case R.id.buy_radio_btn:
-                        updateLayout("buy",1.0,coin_buy_price);
+                        updateLayout("buy", coin_buy_price);
                         break;
                 }
             }
@@ -208,12 +208,16 @@ public class BuySellActivity extends AppCompatActivity{
                 b = true;
                 try{
 
+                    if(!order_price.getText().toString().equals("") && !order_quantity.getText().toString().equals("")){
+
+
                 Double op = Double.parseDouble(order_price.getText().toString());
                 Double oq = Double.parseDouble(order_quantity.getText().toString());
 
                 Double total = op * oq;
 
                 order_total.setText(String.valueOf(total));
+                    }
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -273,7 +277,7 @@ public class BuySellActivity extends AppCompatActivity{
 
     }
 
-    private void updateLayout(String type, Double fees, String coin_price) {
+    private void updateLayout(String type, String coin_price) {
         this.type = type;
         order_btn.setText(type);
 //        order_fees.setText(String.valueOf(fees)+"%");

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
-import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrders;
+import com.buyucoinApp.buyucoin.pojos.ActiveP2pOrder;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONException;
@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2PorderRecyclerViewAdapterWithdraw.P2pOrderViewHolder> {
 
-    private ArrayList<ActiveP2pOrders> arrayList;
+    private ArrayList<ActiveP2pOrder> arrayList;
     private Context context;
     private FragmentManager fragmentManager;
     BuyucoinPref pref;
@@ -43,7 +43,7 @@ public class P2PorderRecyclerViewAdapterWithdraw extends RecyclerView.Adapter<P2
     AlertDialog.Builder progressDialog;
 
 
-    public P2PorderRecyclerViewAdapterWithdraw(Context context, ArrayList<ActiveP2pOrders> activeP2pOrderslist, FragmentManager childFragmentManager) {
+    public P2PorderRecyclerViewAdapterWithdraw(Context context, ArrayList<ActiveP2pOrder> activeP2pOrderslist, FragmentManager childFragmentManager) {
         this.context = context;
         this.arrayList = activeP2pOrderslist;
         fragmentManager = childFragmentManager;

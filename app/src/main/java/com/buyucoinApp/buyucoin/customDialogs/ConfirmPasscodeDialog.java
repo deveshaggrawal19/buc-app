@@ -22,7 +22,6 @@ public class ConfirmPasscodeDialog extends DialogFragment {
     Button pin_confirm_btn;
     BuyucoinPref pref;
 
-    private boolean isDisabled = false;
     private String password = "";
 
 
@@ -35,7 +34,7 @@ public class ConfirmPasscodeDialog extends DialogFragment {
 //        setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
         pref = new BuyucoinPref(Objects.requireNonNull(getContext()));
         password = pref.getPrefString("passcode");
-        isDisabled = pref.getPrefBoolean("DISABLE_PASS_CODE");
+        boolean isDisabled = pref.getPrefBoolean("DISABLE_PASS_CODE");
 
     }
 

@@ -46,7 +46,6 @@ public class RateFragment extends Fragment {
     ArrayList<Rates> list = new ArrayList<>();
     DatabaseReference myRef;
     MyrateRecyclerViewAdapter adapter;
-    private BuyucoinPref buyucoinPref;
     private String FRAGMENT_STATE = "RATES";
 
     /**
@@ -73,7 +72,7 @@ public class RateFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-        buyucoinPref  = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        BuyucoinPref buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
 
         ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
 

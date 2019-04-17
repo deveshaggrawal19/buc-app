@@ -35,9 +35,7 @@ public class ChangeNameDialog extends DialogFragment {
     private EditText new_name_et;
     private Button change_name_btn;
     private ProgressBar progressBar;
-    private BuyucoinPref buyucoinPref;
     private String ACCESS_TOKEN;
-    private ImageView goback;
 
     public static ChangeNameDialog newInstance(){
         return new ChangeNameDialog();
@@ -47,7 +45,7 @@ public class ChangeNameDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL,R.style.MyFullScreenDialog);
-        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        BuyucoinPref buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
         ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
     }
 
@@ -56,7 +54,7 @@ public class ChangeNameDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.change_name_dialog,container,false);
 
-        goback = view.findViewById(R.id.goback);
+        ImageView goback = view.findViewById(R.id.goback);
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

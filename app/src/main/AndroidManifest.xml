@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".GenerateWallet" android:theme="@style/fontTheme" />
+        <activity android:name=".OTCActivity"></activity>
+        <activity
+            android:name=".GenerateWallet"
+            android:theme="@style/fontTheme" />
         <activity
             android:name=".UploadKyc"
             android:theme="@style/fontTheme" />

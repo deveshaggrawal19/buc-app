@@ -32,8 +32,6 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
     Bundle bundle;
     private Double coin_amount;
     private String coin_tag,coin_address,coin_base_address,coin_name;
-    private TextView amount,tag,address;
-    private Button proceedToWithdraw;
     private BuyucoinPref buyucoinPref;
 
     @Override
@@ -59,10 +57,10 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.bottomsheet_withdraw,container,false);
-        amount = view.findViewById(R.id.amount);
-        tag = view.findViewById(R.id.tag);
-        address = view.findViewById(R.id.address);
-        proceedToWithdraw = view.findViewById(R.id.proceed_to_withdraw);
+        TextView amount = view.findViewById(R.id.amount);
+        TextView tag = view.findViewById(R.id.tag);
+        TextView address = view.findViewById(R.id.address);
+        Button proceedToWithdraw = view.findViewById(R.id.proceed_to_withdraw);
 
         proceedToWithdraw.setOnClickListener(new View.OnClickListener() {
             @Override

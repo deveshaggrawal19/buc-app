@@ -84,4 +84,15 @@
     <string name="market_history">MARKET HISTORY</string>
     <string name="search">Search</string>
     <string name="settings">Settings</string>
+    <string name="user_picture">user picture</string>
+    <string name="deposit_history_button">deposit history button</string>
+    <string name="referral_programme">Referral Programme</string>
+    <string name="mbar007">MBAR007</string>
+    <string name="share_your_referral_code">Share Your Referral Code</string>
+    <string name="refer_to_your_friends">Refer to your Friends</string>
+    <string name="change_app_passcode">Change App Passcode</string>
+    <string name="disa_ble_app_passcode">Disa ble App Passcode</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="otc">OTC</string>
 </resources>

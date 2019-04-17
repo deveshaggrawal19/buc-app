@@ -1,8 +1,5 @@
 package com.buyucoinApp.buyucoin.Adapters;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,29 +10,23 @@ import android.widget.TextView;
 import com.buyucoinApp.buyucoin.CurrencyActivity;
 import com.buyucoinApp.buyucoin.MyResourcesClass;
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.pojos.BuySellData;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecyclerViewAdapter.ViewHolder> {
 
-    private final List<JSONObject> mValues;
+    private final List<BuySellData> mValues;
 
-    private ArrayList<String> buysell_list = new ArrayList<>();
 
-    public BuySellRecyclerViewAdapter(List<JSONObject> items) {
-        mValues = items;
-        try {
-            for (JSONObject j : mValues) {
-                buysell_list.add(j.getString("currencyname"));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public BuySellRecyclerViewAdapter(ArrayList<BuySellData> items) {
+        this.mValues = items;
     }
 
     @NonNull
@@ -51,9 +42,9 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
 
-        holder.coinname.setText(buysell_list.get(position).toUpperCase());
+        holder.coinname.setText(mValues.get(position).getName());
         try {
-            holder.coinimg.setImageResource(MyResourcesClass.COIN_ICON.getInt(buysell_list.get(position)));
+            holder.coinimg.setImageResource(MyResourcesClass.COIN_ICON.getInt(mValues.get(position).getCoin()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,7 +54,7 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
 
                 Intent currencyIntent = new Intent(holder.mView.getContext(), CurrencyActivity.class);
-                currencyIntent.putExtra("currency", buysell_list.get(position));
+                currencyIntent.putExtra("currency", mValues.get(position).getCoin());
                 holder.mView.getContext().startActivity(currencyIntent);
             }
         });
@@ -78,8 +69,8 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView coinname;
-        public final ImageView coinimg;
+        private final TextView coinname;
+        private final ImageView coinimg;
 
         public ViewHolder(View view) {
             super(view);

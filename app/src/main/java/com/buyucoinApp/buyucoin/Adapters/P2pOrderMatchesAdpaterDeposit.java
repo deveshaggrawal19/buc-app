@@ -25,19 +25,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class P2pOrderMatchesAdpaterDeposit extends RecyclerView.Adapter<P2pOrderMatchesAdpaterDeposit.MyViewHolder> implements MatchedPeer {
-    private BuyucoinPref pref;
-    private AlertDialog.Builder progressDialog;
     private JSONArray activeP2pOrders;
     private FragmentManager fragmentManager;
-    private android.content.Context context;
 
 
     public P2pOrderMatchesAdpaterDeposit(JSONArray activeP2pOrders, FragmentManager fragmentManager, Context context) {
         this.activeP2pOrders = (activeP2pOrders!=null && activeP2pOrders.length()>0)?activeP2pOrders:null;
         this.fragmentManager = fragmentManager;
-        this.context = context;
-        pref = new BuyucoinPref(context);
-        progressDialog = new ProgressDialog.Builder(context);
+        Context context1 = context;
+        BuyucoinPref pref = new BuyucoinPref(context);
+        AlertDialog.Builder progressDialog = new ProgressDialog.Builder(context);
         progressDialog.setMessage("Processing");
         progressDialog.create();
     }

@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="@+id/viewPager"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="664dp"></LinearLayout>
+        tools:layout_editor_absoluteY="664dp" />
 
     <Button
         android:id="@+id/button"

@@ -39,7 +39,7 @@
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:background="@drawable/circular_img"
-                        android:contentDescription="user picture"
+                        android:contentDescription="@string/user_picture"
                         android:cropToPadding="true"
                         android:padding="5dp"
                         android:scaleType="centerCrop"
@@ -62,11 +62,10 @@
                         android:id="@+id/tvAccountName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginStart="80dp"
                         android:padding="5dp"
-                        android:text="Name"
+                        android:text="@string/name"
                         android:textColor="@android:color/white"
-                        android:textFontWeight="100"
                         android:textSize="20sp" />
 
 
@@ -74,11 +73,11 @@
                         android:id="@+id/tvAccountEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginStart="80dp"
                         android:layout_marginTop="25dp"
                         android:layout_marginBottom="20dp"
                         android:padding="5dp"
-                        android:text="Email"
+                        android:text="@string/email"
                         android:textColor="@android:color/white" />
 
                     <LinearLayout
@@ -229,7 +228,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:src="@drawable/coin_buy"
-                                android:tint="@color/g1b67e8" />
+                                android:tint="@color/g1b67e8"
+                                android:contentDescription="@string/deposit_history_button" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -443,7 +443,7 @@
                             android:layout_marginLeft="40dp"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
-                            android:text="Disable App Passcode"
+                            android:text="@string/disa_ble_app_passcode"
                             android:textColor="@android:color/black" />
 
                         <Switch
@@ -475,7 +475,7 @@
                             android:layout_marginLeft="40dp"
                             android:fontFamily="sans-serif"
                             android:gravity="center"
-                            android:text="Change App Passcode"
+                            android:text="@string/change_app_passcode"
                             android:textColor="@android:color/black" />
 
                         <ImageView
@@ -497,9 +497,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:padding="5dp"
-                        android:text="Referral Programme"
+                        android:text="@string/referral_programme"
                         android:textSize="@dimen/headings" />
 
                     <LinearLayout
@@ -517,7 +517,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Refer to your Friends"
+                            android:text="@string/refer_to_your_friends"
                             android:textColor="@android:color/white"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -527,7 +527,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:gravity="center"
-                            android:text="Share Your Referral Code"
+                            android:text="@string/share_your_referral_code"
                             android:textColor="@android:color/white" />
 
                         <TextView
@@ -535,24 +535,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="MBAR007"
+                            android:text="@string/mbar007"
                             android:textColor="@android:color/white"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/scenery_illustration" />
-                </LinearLayout>
+                    android:orientation="vertical"/>
 
 
             </LinearLayout>

@@ -23,7 +23,6 @@ public class HistoryFragment extends DialogFragment {
     ViewPager viewPager;
     int position = 0;
     String coin = "";
-    private ImageView goback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class HistoryFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        goback = view.findViewById(R.id.goback);
+        ImageView goback = view.findViewById(R.id.goback);
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

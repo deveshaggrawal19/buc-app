@@ -19,10 +19,6 @@ import androidx.viewpager.widget.ViewPager;
 
 public class P2P_History extends DialogFragment {
 
-    private ViewPager p2p_history_viewpager;
-    private TabLayout tabLayout;
-    private ImageView goback;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +30,7 @@ public class P2P_History extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.p2p_history_fragment,container,false);
 
-        goback = view.findViewById(R.id.goback);
+        ImageView goback = view.findViewById(R.id.goback);
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,8 +38,8 @@ public class P2P_History extends DialogFragment {
             }
         });
 
-        p2p_history_viewpager = view.findViewById(R.id.p2p_history_viewpager);
-        tabLayout = view.findViewById(R.id.p2p_history_tab);
+        ViewPager p2p_history_viewpager = view.findViewById(R.id.p2p_history_viewpager);
+        TabLayout tabLayout = view.findViewById(R.id.p2p_history_tab);
 
         tabLayout.setupWithViewPager(p2p_history_viewpager);
 
