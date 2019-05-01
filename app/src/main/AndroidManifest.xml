@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".OTCActivity"></activity>
+        <activity android:name=".OTCActivity"
+            android:theme="@style/fontTheme"
+            android:label="OTC DESK"/>
         <activity
             android:name=".GenerateWallet"
             android:theme="@style/fontTheme" />

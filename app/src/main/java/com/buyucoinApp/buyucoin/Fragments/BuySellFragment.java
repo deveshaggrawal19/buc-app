@@ -83,7 +83,7 @@ public class BuySellFragment extends Fragment {
                             d.child("buy_rate").getValue(String.class),
                             d.child("buy_rate_btc").getValue(String.class),
                             d.child("buy_vol").getValue(String.class),
-                            d.child("min_trade").getValue(String.class),
+                            String.valueOf(d.child("min_trade").getValue(Object.class)),
                             d.child("name").getValue(String.class),
                             d.child("positive").getValue(String.class),
                             d.child("sell_margin").getValue(String.class),

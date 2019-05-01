@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                     String s = response.body().string();
                     Log.d(TAG, "onResponse: loging response "+s);
                     JSONObject jsonObject1 = new JSONObject(s);
-                    JSONObject data = jsonObject1.getJSONObject("data");
+                    JSONObject data = (jsonObject1.has("data"))? jsonObject1.getJSONObject("data"):jsonObject1;
                     Log.d("LOGIN RESPONSE", s);
                     Log.d("LOGIN ACTIVITY RESPONSE", jsonObject1.getString("status"));
                     if(jsonObject1.getString("status").equals("success")) {

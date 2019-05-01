@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.buyucoinApp.buyucoin.CurrencyActivity;
 import com.buyucoinApp.buyucoin.MyResourcesClass;
+import com.buyucoinApp.buyucoin.OTCActivity;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.pojos.BuySellData;
 
@@ -53,7 +54,7 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
             public void onClick(View v) {
 
 
-                Intent currencyIntent = new Intent(holder.mView.getContext(), CurrencyActivity.class);
+                Intent currencyIntent = new Intent(holder.mView.getContext(), OTCActivity.class);
                 currencyIntent.putExtra("currency", mValues.get(position).getCoin());
                 holder.mView.getContext().startActivity(currencyIntent);
             }
