@@ -68,4 +68,6 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="otc">OTC</string>
+    <string name="buy">BUY</string>
+    <string name="sell">SELL</string>
 </resources>

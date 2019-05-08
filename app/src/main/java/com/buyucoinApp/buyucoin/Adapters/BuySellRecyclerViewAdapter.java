@@ -44,6 +44,8 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
 
         holder.coinname.setText(mValues.get(position).getName());
+        holder.buy_rate_tv.setText(mValues.get(position).getBuy_rate());
+        holder.sell_rate_tv.setText(mValues.get(position).getSell_rate());
         try {
             holder.coinimg.setImageResource(MyResourcesClass.COIN_ICON.getInt(mValues.get(position).getCoin()));
         } catch (JSONException e) {
@@ -70,7 +72,7 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        private final TextView coinname;
+        private final TextView coinname,buy_rate_tv,sell_rate_tv;
         private final ImageView coinimg;
 
         public ViewHolder(View view) {
@@ -78,6 +80,8 @@ public class BuySellRecyclerViewAdapter extends RecyclerView.Adapter<BuySellRecy
             mView = view;
             coinimg = view.findViewById(R.id.coinimg);
             coinname = view.findViewById(R.id.coin_name);
+            buy_rate_tv = view.findViewById(R.id.buy_rate_list_item);
+            sell_rate_tv = view.findViewById(R.id.sell_rate_list_item);
         }
 
 

@@ -2,11 +2,7 @@
 <level-list  xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:maxLevel="0">
         <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
-            <gradient android:angle="45"
-                android:startColor="#eeeeee"
-                android:endColor="#aaaaaa">
-
-            </gradient>
+           <solid android:color="@color/colorWhite"/>
             <corners android:radius="50dp">
 
             </corners>

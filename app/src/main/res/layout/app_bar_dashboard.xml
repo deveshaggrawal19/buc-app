@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/colorBlack"
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:background="@drawable/custom_toolbar"
+            android:background="@color/colorBlack"
             android:layout_height="?attr/actionBarSize"
             app:elevation="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
@@ -52,7 +52,6 @@
     <FrameLayout
         android:id="@+id/flContent"
         android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_marginBottom="60dp"
         android:layout_height="match_parent" />
@@ -91,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@android:color/white"
+            android:background="@color/colorBlack"
             app:itemIconTint="@drawable/bottom_navigation_colors"
             app:itemTextColor="@drawable/bottom_navigation_colors"
             android:id="@+id/_btnbar"

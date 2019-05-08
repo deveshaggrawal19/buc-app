@@ -22,10 +22,102 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">@color/colorPrimary</item>
-no    </style>
+    </style>
 
     <style name="fontTheme" parent="AppTheme.NoActionBar">
         <item name="android:fontFamily">@font/fonts</item>
+    </style>
+
+    <style name="WalletMore">
+        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/wallet_shortcut_design</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="BuySellRadioButton">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:background">@drawable/my_coustom_radio</item>
+        <item name="android:textColor">@drawable/my_coustom_radio_text</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+    <style name="BuySellRadioButton.dark">
+        <item name="android:background">@drawable/my_coustom_radio_dark</item>
+    </style>
+
+    <style name="BuySellInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@drawable/input_shape</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+
+    <style name="BuySellInput.dark">
+        <item name="android:background">@drawable/input_shape_dark</item>
+    </style>
+
+    <style name="BuySellInputInner">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">4</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+    </style>
+    <style name="BuySellInputInner.dark">
+        <item name="android:background">#2C2C2C</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+    </style>
+
+    <style name="PasswordButton">
+        <item name="android:layout_width">0dp</item>
+         <item name="android:layout_height">match_parent</item>
+         <item name="android:layout_margin">2dp</item>
+         <item name="android:layout_weight">1</item>
+         <item name="android:gravity">center</item>
+         <item name="android:onClick">updatepin</item>
+         <item name="android:padding">10dp</item>
+         <item name="android:textColor">@color/g1b67e8</item>
+         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="PasswordDots">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@drawable/passcode_dots_drawable</item>
+        <item name="android:layout_height">15dp</item>
+    </style>
+
+    <style name="PasswordButtonLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">70dp</item>
+    </style>
+
+    <style name="BuySellOptions">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@drawable/bsc_header_design</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

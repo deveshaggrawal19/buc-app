@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
-    android:layout_width="250dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginBottom="20dp"
-    android:background="@drawable/grd1"
-    android:elevation="5dp"
-    android:orientation="vertical">
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:background="@drawable/otc_list_bg"
+    android:elevation="2dp"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -28,61 +28,63 @@
             android:textColor="@android:color/white"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/wallet_card_portfolio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:text="Portfolio"
-            android:textColor="@android:color/white" />
+
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="0.4"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="2dp"
             android:text="text"
             android:textColor="@android:color/white"
-            android:textSize="36sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/wallet_card_portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Portfolio"
+            android:textColor="@android:color/white" />
 
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:text="Available"
+                android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/balance"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -91,16 +93,15 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:text="Pending"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
@@ -110,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginLeft="10dp"
                 android:text="2.18%"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -119,30 +121,31 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/white"
-        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_weight="0.7"
+        android:layout_height="match_parent"
+        android:gravity="end"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/vertical_deposite_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:text="@string/deposit"
-            android:textColor="@color/colorPrimary" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/colorWhite"
+            android:button="@android:color/transparent"
+            android:background="@drawable/wallet_coin_deposit"
+            />
 
         <Button
             android:id="@+id/vertical_withdraw_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:text="Withdraw"
-            android:textColor="@color/colorPrimary" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="@color/colorWhite"
+            android:button="@android:color/transparent"
+            android:background="@drawable/wallet_coin_withdraw"
+            />
 
     </LinearLayout>
 

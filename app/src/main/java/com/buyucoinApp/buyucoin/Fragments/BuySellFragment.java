@@ -25,6 +25,7 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BuySellFragment extends Fragment {
@@ -57,8 +58,8 @@ public class BuySellFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.rvWallet);
         Context context = view.getContext();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3,RecyclerView.VERTICAL,false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3,RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         pb = view.findViewById(R.id.pbWallet);
 //        TextView errorText = view.findViewById(R.id.tvBuySellError);
 //        getWalletData();

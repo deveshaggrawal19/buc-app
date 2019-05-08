@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorBlack"
     android:orientation="vertical"
-    android:background="@android:color/white"
     tools:context=".BuySellActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,8 +16,9 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:background="@color/colorWhite"
             android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/colorWhite"
+            android:background="@color/colorBlack"
             android:gravity="end"
             app:elevation="0dp">
 
@@ -26,233 +27,219 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-<androidx.core.widget.NestedScrollView
-     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="50dp"
-    android:layout_height="wrap_content">
-    <RadioGroup
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:padding="5dp"
-        android:id="@+id/buy_sell_radio_group"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:layout_width="150dp"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:id="@+id/buy_radio_btn"
-            android:gravity="center"
-            android:button="@android:color/transparent"
-            android:background="@drawable/my_coustom_radio"
-            android:checked="true"
-            android:textColor="@drawable/my_coustom_radio_text"
-            android:text="Buy"
-            android:layout_height="50dp" />
-        <RadioButton
-            android:layout_width="150dp"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:id="@+id/sell_radio_btn"
-            android:button="@android:color/transparent"
-            android:background="@drawable/my_coustom_radio"
-            android:textColor="@drawable/my_coustom_radio_text"
-            android:text="Sell"
-            android:gravity="center"
-            android:layout_height="50dp" />
-    </RadioGroup>
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/buy_layout"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_height="match_parent">
-
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/input_shape"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:padding="2dp"
-            android:layout_height="60dp">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:hint="@string/amount"
-                android:id="@+id/order_quantity_edittext"
-
-                android:inputType="numberDecimal"
-                android:paddingLeft="20dp"
-                android:background="@android:color/white"
-                android:layout_height="match_parent" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="BTC"
-                android:id="@+id/order_coin_textview"
-                android:gravity="center"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="36dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_swap_vertical_circle_black_24dp"
-                android:layout_height="36dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="@drawable/input_shape"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:padding="2dp"
-            android:layout_height="60dp">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:hint="@string/price"
-                android:id="@+id/order_price_edittext"
-                android:inputType="numberDecimal"
-                android:paddingLeft="20dp"
-                android:background="@android:color/white"
-                android:layout_height="match_parent" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="PRICE"
-                android:gravity="center"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_height="40dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="left"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:text="Order fees"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:id="@+id/order_fees"
-                    android:gravity="left"
-                    android:textStyle="bold"
-                    android:text="0"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="right"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="Total Price"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:gravity="right"
-                    android:id="@+id/order_total"
-                    android:textStyle="bold"
-                    android:text="0.0"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="match_parent"
-                android:text="Buy"
-                android:padding="10dp"
-                android:background="@drawable/pills"
-                android:textColor="@android:color/white"
-                android:id="@+id/order_btn"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp"
-                android:layout_height="70dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="Your Balance"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textSize="20sp"
-                    android:id="@+id/wallet_inr"
-                    android:textStyle="bold"
-                    android:text="3,720.45"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@color/kyc_color"
-                android:padding="10dp"
-                android:gravity="center"
-                android:layout_height="70dp">
+            android:paddingBottom="50dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/buy_sell_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <RadioButton
+                    android:id="@+id/buy_radio_btn"
+                    style="@style/BuySellRadioButton.dark"
+                    android:checked="true"
+                    android:text="Buy" />
+
+                <RadioButton
+                    android:id="@+id/sell_radio_btn"
+                    style="@style/BuySellRadioButton.dark"
+                    android:text="Sell" />
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:id="@+id/buy_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <LinearLayout style="@style/BuySellInput.dark">
+
+                    <EditText
+                        android:id="@+id/order_quantity_edittext"
+                        style="@style/BuySellInputInner.dark"
+                        android:hint="@string/amount" />
+
+                    <TextView
+                        android:id="@+id/order_coin_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@color/kyc_color"
+                        android:gravity="center"
+                        android:text="BTC" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_swap_vertical_circle_black_24dp"
+                        android:tint="@color/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/BuySellInput.dark">
+
+                    <EditText
+                        android:id="@+id/order_price_edittext"
+                        style="@style/BuySellInputInner.dark"
+                        android:hint="@string/price" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/kyc_color"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="PRICE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
-                    android:textSize="15sp"
-                    android:textColor="@android:color/white"
-                    android:id="@+id/coin_price_latest"
-                    android:text="3,720.45"
-                    android:layout_height="wrap_content" />
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorWhite"
+                            android:text="Order fees" />
+
+                        <TextView
+                            android:id="@+id/order_fees"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:textColor="@color/colorWhite"
+                            android:text="0"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorWhite"
+                            android:text="Total Price" />
+
+                        <TextView
+                            android:id="@+id/order_total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="0.0"
+                            android:textColor="@color/colorWhite"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp">
+
+                    <Button
+                        android:id="@+id/order_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/pills"
+                        android:padding="10dp"
+                        android:text="Buy"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorWhite"
+                            android:text="Your Balance" />
+
+                        <TextView
+                            android:id="@+id/wallet_inr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3,720.45"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:background="@color/kyc_color"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/coin_price_latest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="3,720.45"
+                            android:textColor="@android:color/white"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
             </LinearLayout>
+
 
         </LinearLayout>
-
-
-    </LinearLayout>
-
-
-
-
-</LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

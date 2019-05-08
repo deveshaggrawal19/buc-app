@@ -1,0 +1,11 @@
+<layer-list  android:opacity="transparent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#40ffffff"/>
+        </shape>
+    </item>
+    <item android:gravity="center"
+        android:drawable="@drawable/coin_buy">
+
+    </item>
+</layer-list>

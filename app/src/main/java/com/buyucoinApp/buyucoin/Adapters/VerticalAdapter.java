@@ -142,9 +142,9 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
             myViewHolder.balance.setText(availabel);
         }
 
-        int r = (int) (Math.random() * 6);
-
-        myViewHolder.itemView.getBackground().setLevel(r);
+//        int r = (int) (Math.random() * 6);
+//
+//        myViewHolder.itemView.getBackground().setLevel(r);
 
 
 
@@ -182,6 +182,7 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
             String INR = decimalFormat.format(Double.parseDouble(availabel));
             myViewHolder.balance.setText(INR);
            pref.setEditpref("inr_amount",INR);
+           pref.setEditpref("portfolio",porfolio);
             myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

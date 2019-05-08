@@ -48,11 +48,12 @@ public class WalletFragment extends Fragment {
     private ArrayList<JSONObject> list;
     private RecyclerView recyclerView;
     private ProgressBar pb;
-    private TextView err,wallet_inr,welcome;
+    private TextView err,wallet_inr,welcome,total_crypto_portfolio;
     private CheckBox hidezero_checkbox;
     private ImageView wallet_process_img;
     private BuyucoinPref buyucoinPref;
     private String WALLET_INR_BALANCE = "0";
+    private String WALLET_CRYTPO_PORTFOLIO = "0";
     private LinearLayout account_dep_history;
     private LinearLayout account_with_history;
     private LinearLayout account_trade_history;
@@ -145,7 +146,7 @@ public class WalletFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvWallet);
         wallet_inr = view.findViewById(R.id.wallet_inr);
         Context context = view.getContext();
-        recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayout.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         account_dep_history = view.findViewById(R.id.account_dep_history);
         account_with_history = view.findViewById(R.id.account_with_history);
         account_trade_history = view.findViewById(R.id.account_trade_history);
@@ -157,6 +158,7 @@ public class WalletFragment extends Fragment {
         nsView = view.findViewById(R.id.nsView);
         hidezero_checkbox = view.findViewById(R.id.wallet_checkbox);
         welcome = view.findViewById(R.id.welcome);
+        total_crypto_portfolio = view.findViewById(R.id.wallet_crypto_port);
 
 
 
@@ -353,12 +355,20 @@ public class WalletFragment extends Fragment {
     }
 
     private void WalletBalance(){
-        WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
-        String wallet_balance = getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE;
-        wallet_inr.setText(wallet_balance);
-        String name = "Weclome ";
-        name += buyucoinPref.getPrefString("name");
-        welcome.setText(name);
+        try {
+            WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
+            WALLET_CRYTPO_PORTFOLIO = buyucoinPref.getPrefString("portfolio");
+            String rupess = getResources().getText(R.string.rupees).toString();
+            String wallet_balance = rupess+" "+WALLET_INR_BALANCE;
+            String crypto_portfolio = rupess+" "+WALLET_CRYTPO_PORTFOLIO;
+            wallet_inr.setText(wallet_balance);
+            String name = "";
+            name += buyucoinPref.getPrefString("name");
+            welcome.setText(name);
+            total_crypto_portfolio.setText(crypto_portfolio);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
