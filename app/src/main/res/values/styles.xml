@@ -26,6 +26,11 @@
 
     <style name="fontTheme" parent="AppTheme.NoActionBar">
         <item name="android:fontFamily">@font/fonts</item>
+        <item name="windowBackGroundColor">@color/windowColorWhite</item>
+    </style>
+
+    <style name="fontTheme.dark" parent="AppTheme.NoActionBar">
+        <item name="windowBackGroundColor">@color/windowColorDark</item>
     </style>
 
     <style name="WalletMore">
@@ -118,6 +123,16 @@
         <item name="android:padding">5dp</item>
         <item name="android:background">@drawable/bsc_header_design</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CurrencyButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:background">@drawable/curr_btn</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 </resources>

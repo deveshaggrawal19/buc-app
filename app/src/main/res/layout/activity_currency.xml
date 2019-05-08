@@ -168,24 +168,15 @@
 
                     <Button
                         android:id="@+id/tvCurrencyBuy"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/curr_btn"
+                        style="@style/CurrencyButton"
                         android:text="BUY"
-                        android:textColor="@drawable/curr_btn_text" />
+                        />
 
                     <Button
                         android:id="@+id/tvCurrencySell"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/curr_btn"
+                        style="@style/CurrencyButton"
                         android:text="SELL"
-                        android:textColor="@drawable/curr_btn_text" />
+                        />
 
                 </LinearLayout>
             </LinearLayout>

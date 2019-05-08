@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorBlack"
     android:orientation="vertical"
     tools:context=".CoinDepositWithdraw">
     <com.google.android.material.appbar.AppBarLayout
@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:gravity="end"
             app:popupTheme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
+            app:elevation="2dp">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -37,28 +37,16 @@
 
         <RadioButton
             android:id="@+id/deposite_layout_rb"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/my_coustom_radio_dwp"
-            android:button="@android:color/transparent"
-            android:checked="true"
-            android:gravity="center"
-            android:padding="10dp"
+            style="@style/BuySellRadioButton.dark"
             android:text="@string/deposit"
-            android:textColor="@drawable/my_coustom_radio_text_dwp" />
+            android:checked="true"
+            />
 
         <RadioButton
             android:id="@+id/withdraw_layout_rb"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/my_coustom_radio_dwp"
-            android:button="@android:color/transparent"
-            android:gravity="center"
-            android:padding="10dp"
+            style="@style/BuySellRadioButton.dark"
             android:text="Withdraw"
-            android:textColor="@drawable/my_coustom_radio_text_dwp" />
+           />
 
     </RadioGroup>
 
