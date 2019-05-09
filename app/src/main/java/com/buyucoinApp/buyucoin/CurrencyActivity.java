@@ -93,6 +93,7 @@ public class CurrencyActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitle("Market / Order Book");
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
 
         pb = findViewById(R.id.pbCurrencyActivity);

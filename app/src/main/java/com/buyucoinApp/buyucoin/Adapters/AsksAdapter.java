@@ -47,9 +47,9 @@ public class AsksAdapter extends RecyclerView.Adapter<AsksAdapter.AskViewHolder>
         holder.vol.setText(vol);
 
 
-        if(position%2==0){
-            holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
-        }
+//        if(position%2==0){
+//            holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
+//        }
     }
 
     @Override

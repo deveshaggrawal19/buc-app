@@ -17,11 +17,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:background="@color/colorBlack"
-            android:layout_height="?attr/actionBarSize"
-            app:titleTextColor="@color/colorWhite"
-            android:gravity="end"
+            style="@style/CustomToolbar"
             app:elevation="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
         </androidx.appcompat.widget.Toolbar>

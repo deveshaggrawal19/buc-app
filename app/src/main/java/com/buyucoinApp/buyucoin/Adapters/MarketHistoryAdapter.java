@@ -45,9 +45,9 @@ public class MarketHistoryAdapter extends RecyclerView.Adapter<MarketHistoryAdap
         holder.type.setText(historyArrayList.get(position).getType());
 //        holder.type_img.setVisibility(View.GONE);
 
-        if(position%2==0){
-            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.marketRow));
-        }
+//        if(position%2==0){
+//            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.marketRow));
+//        }
 
         if(historyArrayList.get(position).getType().equals("Buy")){
 //            holder.type_img.setImageResource(R.drawable.history_deposite_icon);

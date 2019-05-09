@@ -14,6 +14,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="CustomToolbar">
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/g1b67e8</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:gravity">end</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -133,6 +143,64 @@
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:background">@drawable/curr_btn</item>
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CurrencyLabels">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CurrencyDetails">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CurrencyOrderBookTitle">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ORDER BOOK"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold"
+    </style>
+
+    <style name="CurrencyOrderBookCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/orderbook_card_drawable</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="CurrencyOrderBookCard.Dark">
+        <item name="android:background">@drawable/orderbook_card_drawable_dark</item>
+    </style>
+
+    <style name="CurrencyOrderBookLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CurrencyOrderBookLabel.Dark">
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
 </resources>

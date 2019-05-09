@@ -12,11 +12,9 @@
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
+            style="@style/CustomToolbar"
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:background="@color/colorWhite"
-            android:layout_height="?attr/actionBarSize"
-            android:gravity="end"
+            app:titleTextColor="@color/colorWhite"
             app:elevation="0dp">
 
         </androidx.appcompat.widget.Toolbar>
@@ -28,7 +26,7 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorBlack">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,11 +36,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/history_item_drawable"
+                android:background="@drawable/currency_header_design"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -50,38 +44,27 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
                     android:orientation="horizontal">
 
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        style="@style/CurrencyLabels"
                         android:text="24Hrs High"
-                        android:textSize="12sp" />
+                       />
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        style="@style/CurrencyLabels"
                         android:text="24Hrs Change"
-                        android:textSize="12sp" />
+                        />
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        style="@style/CurrencyLabels"
                         android:text="24Hrs Low"
-                        android:textSize="12sp" />
+                         />
 
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
                     android:orientation="horizontal"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
@@ -90,35 +73,26 @@
 
                     <TextView
                         android:id="@+id/high24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        style="@style/CurrencyDetails"
                         android:text="24Hrs High"
-                        android:textSize="16sp" />
+                        />
                     <TextView
                         android:id="@+id/high24change"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        style="@style/CurrencyDetails"
                         android:text="24Hrs Change"
-                        android:textSize="16sp" />
+                        />
                     <TextView
                         android:id="@+id/low24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        style="@style/CurrencyDetails"
                         android:text="24Hrs Low"
-                        android:textSize="16sp" />
+                       />
 
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center|center_vertical"
@@ -126,8 +100,10 @@
 
                     <ImageView
                         android:id="@+id/ivCurrencyImg"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:background="@drawable/otc_list"
+                        android:padding="10dp"
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
                         android:src="@mipmap/ic_launcher" />
 
                     <TextView
@@ -135,6 +111,7 @@
                         android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:layout_height="match_parent"
                         android:text="Currency"
                         android:textSize="18dp" />
@@ -197,25 +174,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/history_item_drawable"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:elevation="2dp"
-                android:padding="5dp"
-                android:orientation="vertical">
+                style="@style/CurrencyOrderBookCard.Dark">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                   style="@style/CurrencyOrderBookLabel"
                     android:text="BIDS"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                   />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -226,17 +190,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@color/colorWhite"
                         android:gravity="start"
                         android:text="PRICE" />
 
                     <TextView
                         android:layout_width="0dp"
+                        android:textColor="@color/colorWhite"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="VOLUME" />
 
                     <TextView
+                        android:textColor="@color/colorWhite"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -257,25 +224,12 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/history_item_drawable"
-                android:elevation="2dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:padding="5dp"
-                android:orientation="vertical">
+                style="@style/CurrencyOrderBookCard.Dark">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    style="@style/CurrencyOrderBookLabel"
                     android:text="ASK"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -287,9 +241,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start"
+                        android:textColor="@color/colorWhite"
                         android:text="PRICE" />
 
                     <TextView
+                        android:textColor="@color/colorWhite"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -297,6 +253,7 @@
                         android:text="VOLUME" />
 
                     <TextView
+                        android:textColor="@color/colorWhite"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -317,26 +274,12 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/history_item_drawable"
-                android:elevation="2dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:padding="5dp"
-                android:orientation="vertical">
+                style="@style/CurrencyOrderBookCard.Dark">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    style="@style/CurrencyOrderBookLabel"
                     android:text="@string/market_history"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                   />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -346,6 +289,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
+                        android:textColor="@color/colorWhite"
                         android:gravity="start"
                         android:text="TYPE" />
 
@@ -354,16 +298,19 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
                         android:gravity="center"
+                        android:textColor="@color/colorWhite"
                         android:text="AMOUNT" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@color/colorWhite"
                         android:gravity="center"
                         android:text="PRICE" />
                     <TextView
                         android:layout_width="0dp"
+                        android:textColor="@color/colorWhite"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"

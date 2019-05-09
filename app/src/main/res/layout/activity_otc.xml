@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorWhite"
     android:layout_height="match_parent"
+    android:background="?attr/windowBackGroundColor"
+    android:orientation="vertical"
     tools:context=".OTCActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,12 +15,9 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:background="@color/colorWhite"
-            android:layout_height="?attr/actionBarSize"
+            style="@style/CustomToolbar"
             android:gravity="end"
-            app:elevation="0dp"
-            >
+            app:elevation="0dp">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -29,59 +26,61 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="(0% Fee)"
-        android:textSize="20sp"
-        android:padding="5dp"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="wrap_content" />
+        android:padding="5dp"
+        android:text="(0% Fee)"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="First Indian Wholesale platform for cryptocurrency"
         android:textSize="18sp"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
-   <ImageView
-       android:layout_width="30dp"
-       android:id="@+id/otc_img"
-       android:src="@drawable/btc"
-       android:layout_gravity="center_horizontal"
-       android:layout_height="30dp" />
+    <ImageView
+        android:id="@+id/otc_img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/btc" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:text="COIN NAME"
         android:id="@+id/coin_name_tv"
-        android:textSize="20sp"
-        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="wrap_content" />
+        android:padding="5dp"
+        android:text="COIN NAME"
+        android:textSize="20sp" />
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
-            android:background="@color/bids_color"
-            android:layout_weight="1"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="5dp"
-            android:layout_height="wrap_content">
+            android:layout_weight="1"
+            android:background="@color/bids_color"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:text="Buy Price"
-                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_height="wrap_content" />
+                android:text="Buy Price"
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/buy_price"
@@ -93,14 +92,15 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
-                android:text="Buy Volume"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
+                android:text="Buy Volume"
 
-                android:layout_height="wrap_content" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/buy_vol"
@@ -113,21 +113,22 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
-            android:background="@color/colorRed"
-            android:layout_weight="1"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="5dp"
-            android:layout_height="wrap_content">
+            android:layout_weight="1"
+            android:background="@color/colorRed"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:text="Sell Price"
-                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_height="wrap_content" />
+                android:text="Sell Price"
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/sell_price"
@@ -138,13 +139,14 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:text="Sell Volume"
-                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:layout_height="wrap_content" />
+                android:text="Sell Volume"
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/sell_vol"
@@ -158,12 +160,14 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:text="Choose Type"
-        android:gravity="center"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_height="wrap_content" />
+        android:gravity="center"
+        android:text="Choose Type" />
+
     <RadioGroup
         android:id="@+id/otc_type_rgb"
         android:layout_width="match_parent"
@@ -202,42 +206,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:text="Total : 0"
             android:id="@+id/otc_total_tv"
-            android:textSize="20sp"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content" />
+            android:gravity="center"
+            android:text="Total : 0"
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:background="@drawable/input_shape"
-            android:padding="10dp"
-            android:hint="Enter Quantity"
             android:id="@+id/otc_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_shape"
+            android:hint="Enter Quantity"
             android:inputType="numberDecimal"
-            android:layout_height="wrap_content" />
-
+            android:padding="10dp" />
 
 
         <Button
-            android:layout_width="match_parent"
-            android:text="Buy"
             android:id="@+id/otc_btn"
-            android:background="@color/bids_color"
-            android:textColor="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_height="wrap_content" />
+            android:background="@color/bids_color"
+            android:text="Buy"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
-
-
 
 
 </LinearLayout>

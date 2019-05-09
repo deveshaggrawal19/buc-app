@@ -54,9 +54,9 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.BidsViewHolder
         String v1 = format.format(bidsArrayList.get(position).getBid_volume());
 
         holder.vol.setText(String.valueOf(v1).trim());
-        if (position % 2 == 0) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
-        }
+//        if (position % 2 == 0) {
+//            holder.itemView.setBackgroundColor(Color.parseColor("#eeeeee"));
+//        }
 
     }
 

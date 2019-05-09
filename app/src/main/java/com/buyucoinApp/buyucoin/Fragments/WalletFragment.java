@@ -346,8 +346,14 @@ public class WalletFragment extends Fragment {
                     });
                 }
                 else{
-                    Looper.prepare();
-                    new Dashboard().ServerErrorFragment();
+                    if(getActivity()!=null){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Dashboard().ServerErrorFragment();
+                            }
+                        });
+                    }
                 }
 
             }
