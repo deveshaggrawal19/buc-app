@@ -14,6 +14,24 @@
     <color name="marketRow">#F5F0F0</color>
     <color name="windowColorDark">#000000</color>
     <color name="windowColorWhite">#ffffff</color>
+
+    <!--INPUT COLORS-->
     <color name="inputShapeDark">#353333</color>
+    <color name="inputShapeLight">#ffffff</color>
+    <color name="inputLabelDark">#AAA1A1</color>
+    <color name="inputLabelLight">#cccccc</color>
+    <color name="inputColorLight">#000000</color>
+    <color name="inputColorDark">#ffffff</color>
+
+    <!--TEXT COLORS-->
+    <color name="textColor1">#000000</color>
+    <color name="textColor2">#8B8484</color>
+    <color name="textColor3">#aaaaaa</color>
+    <color name="textColor4">#cccccc</color>
+    <color name="textColor5">#eeeeee</color>
+    <color name="textColor6">#ffffff</color>
+
+
+
 
 </resources>

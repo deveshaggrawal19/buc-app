@@ -34,6 +34,7 @@ public class OTCActivity extends AppCompatActivity {
      private  OTCData o = null;
      private EditText otc_qty;
      private TextView otc_total_tv;
+    private Button otc_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class OTCActivity extends AppCompatActivity {
         final TextView buy_vol_tv = findViewById(R.id.buy_vol);
         final TextView sell_vol_tv = findViewById(R.id.sell_vol);
         final RadioGroup otc_type_rgb= findViewById(R.id.otc_type_rgb);
-        final Button otc_btn = findViewById(R.id.otc_btn);
+        otc_btn = findViewById(R.id.otc_btn);
         final ImageView otc_img = findViewById(R.id.otc_img);
         otc_qty = findViewById(R.id.otc_qty);
         otc_total_tv = findViewById(R.id.otc_total_tv);
@@ -207,14 +208,19 @@ public class OTCActivity extends AppCompatActivity {
             if(qty < min){
                  m = "Minimum "+OTC_TYPE.toLowerCase()+" is "+OTC_MIN_QTY;
                 otc_total_tv.setTextColor(getResources().getColor(R.color.colorRed));
+                otc_btn.setEnabled(false);
             }
             else if(qty > max){
                 m = "Maximum "+OTC_TYPE.toLowerCase()+" is "+OTC_MAX_QTY;
+                otc_btn.setEnabled(false);
                 otc_total_tv.setTextColor(getResources().getColor(R.color.colorRed));
             }else{
                 double total = (qty*rate);
                 m = "Total : "+total;
-                otc_total_tv.setTextColor(getResources().getColor(R.color.colorBlack));
+                otc_total_tv.setTextColor(getResources().getColor(R.color.textColor6));
+                otc_btn.setEnabled(true);
+
+
             }
             otc_total_tv.setText(m);
         }else{

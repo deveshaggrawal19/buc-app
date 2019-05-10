@@ -16,6 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/CustomToolbar"
+            app:titleTextColor="@color/colorWhite"
             app:elevation="0dp">
 
         </androidx.appcompat.widget.Toolbar>
@@ -23,15 +24,15 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="(0% Fee)"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="5dp"-->
+        <!--android:text="(0% Fee)"-->
+        <!--android:textColor="@color/colorPrimary"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="bold" />-->
 
     <TextView
         android:layout_width="match_parent"
@@ -44,6 +45,7 @@
         android:visibility="gone" />
 
     <ImageView
+        android:layout_marginTop="10dp"
         android:id="@+id/otc_img"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -52,27 +54,17 @@
 
     <TextView
         android:id="@+id/coin_name_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="COIN NAME"
-        android:textSize="20sp" />
+        style="@style/OtcTotalHeading" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
+            style="@style/OtcCoinDetailsCard"
             android:background="@color/bids_color"
-            android:orientation="vertical"
-            android:padding="5dp">
+            >
 
             <TextView
                 android:layout_width="match_parent"
@@ -114,13 +106,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
+            style="@style/OtcCoinDetailsCard"
             android:background="@color/colorRed"
-            android:orientation="vertical"
-            android:padding="5dp">
+            >
 
             <TextView
                 android:layout_width="match_parent"
@@ -161,10 +149,10 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/OtcTotalHeading"
+        android:layout_marginBottom="0dp"
+        android:textSize="@dimen/normal"
         android:layout_marginTop="20dp"
-        android:gravity="center"
         android:text="Choose Type" />
 
     <RadioGroup
@@ -211,23 +199,17 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/otc_total_tv"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
             android:text="Total : 0"
-            android:textSize="20sp" />
+            style="@style/OtcTotalHeading" />
 
-        <LinearLayout
-            style="@style/BuySellInput.dark">
-        <EditText
-            android:id="@+id/otc_qty"
-            style="@style/BuySellInputInner.dark"
-            android:hint="Enter Quantity"
-            android:inputType="numberDecimal"
-           />
+        <LinearLayout style="@style/BuySellInput">
+
+            <EditText
+                android:id="@+id/otc_qty"
+                style="@style/BuySellInputInner"
+                android:hint="Enter Quantity"
+                android:inputType="numberDecimal" />
         </LinearLayout>
 
 
@@ -237,6 +219,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@color/bids_color"
+            android:enabled="false"
             android:text="Buy"
             android:textColor="@color/colorWhite" />
     </LinearLayout>

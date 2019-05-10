@@ -2,6 +2,23 @@
 <resources>
     <declare-styleable name="BucAppTheme">
         <attr name="windowBackGroundColor" format="color"/>
+
+        <!--EDIT TEXT-->
+        <attr name="EditTextBgColor" format="color"/>
         <attr name="EditTextColor" format="color"/>
+        <attr name="EditTextLabelColor" format="color"/>
+
+        <!--TEXT-->
+        <attr name="textColorNormal" format="color"/>
+        <attr name="textColorHeading" format="color"/>
+        <attr name="textColorSuperHeading" format="color"/>
+        <attr name="textColorBody" format="color"/>
+
+        <attr name="textSizeNormal" format="dimension"/>
+        <attr name="textSizeHeading" format="dimension"/>
+        <attr name="textSizeSuperHeading" format="dimension"/>
+        <attr name="textSizeBody" format="dimension"/>
+
+
     </declare-styleable>
 </resources>

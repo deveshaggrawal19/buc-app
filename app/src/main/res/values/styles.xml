@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/fonts</item>
+        <item name="textColorHeading">@color/colorWhite</item>
+        <item name="textSizeHeading">20sp</item>
     </style>
 
 
@@ -16,7 +18,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="CustomToolbar">
+    <style name="CustomToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
         <item name="colorControlNormal">@color/colorWhite</item>
         <item name="android:textColorSecondary">@color/colorWhite</item>
@@ -39,12 +41,18 @@
     <style name="fontTheme" parent="AppTheme.NoActionBar">
         <item name="android:fontFamily">@font/fonts</item>
         <item name="windowBackGroundColor">@color/windowColorWhite</item>
-        <item name="EditTextColor">@color/colorWhite</item>
+        <item name="EditTextColor">@color/inputColorLight</item>
+        <item name="EditTextBgColor">@color/inputShapeLight</item>
+        <item name="EditTextLabelColor">@color/inputLabelLight</item>
+        <item name="textColorHeading">@color/textColor1</item>
     </style>
 
     <style name="fontTheme.dark" parent="AppTheme.NoActionBar">
         <item name="windowBackGroundColor">@color/windowColorDark</item>
-        <item name="EditTextColor">@color/inputShapeDark</item>
+        <item name="EditTextColor">@color/inputColorDark</item>
+        <item name="EditTextBgColor">@color/inputShapeDark</item>
+        <item name="EditTextLabelColor">@color/inputLabelDark</item>
+        <item name="textColorHeading">@color/textColor4</item>
     </style>
 
     <style name="WalletMore">
@@ -77,7 +85,7 @@
         <item name="android:background">@drawable/input_shape</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
-        <item name="android:padding">2dp</item>
+        <item name="android:padding">3dp</item>
         <item name="android:layout_height">60dp</item>
     </style>
 
@@ -90,10 +98,10 @@
         <item name="android:layout_weight">4</item>
         <item name="android:inputType">numberDecimal</item>
         <item name="android:paddingLeft">20dp</item>
-        <item name="android:background">?attr/EditTextColor</item>
+        <item name="android:background">?attr/EditTextBgColor</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:textColorHint">@color/colorBlack</item>
+        <item name="android:textColor">?attr/EditTextColor</item>
+        <item name="android:textColorHint">?attr/EditTextLabelColor</item>
     </style>
     <style name="BuySellInputInner.dark">
         <item name="android:background">?attr/EditTextColor</item>
@@ -207,6 +215,23 @@
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
+    <style name="OtcTotalHeading">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/textColorHeading</item>
+        <item name="android:textSize">?attr/textSizeHeading</item>
+    </style>
+
+    <style name="OtcCoinDetailsCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">5dp</item>
+    </style>
 
 
 </resources>
