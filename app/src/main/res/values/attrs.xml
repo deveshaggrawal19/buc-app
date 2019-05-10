@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="BucAppTheme">
         <attr name="windowBackGroundColor" format="color"/>
+        <attr name="EditTextColor" format="color"/>
     </declare-styleable>
 </resources>

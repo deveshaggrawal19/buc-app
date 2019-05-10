@@ -16,7 +16,6 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/CustomToolbar"
-            android:gravity="end"
             app:elevation="0dp">
 
         </androidx.appcompat.widget.Toolbar>
@@ -212,22 +211,24 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/otc_total_tv"
             android:layout_width="match_parent"
+            android:id="@+id/otc_total_tv"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:gravity="center"
+            android:textColor="@color/colorWhite"
             android:text="Total : 0"
             android:textSize="20sp" />
 
+        <LinearLayout
+            style="@style/BuySellInput.dark">
         <EditText
             android:id="@+id/otc_qty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/input_shape"
+            style="@style/BuySellInputInner.dark"
             android:hint="Enter Quantity"
             android:inputType="numberDecimal"
-            android:padding="10dp" />
+           />
+        </LinearLayout>
 
 
         <Button
