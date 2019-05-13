@@ -39,7 +39,7 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/fontTheme">
+            android:theme="@style/fontTheme.dark">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -54,7 +54,7 @@
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:theme="@style/fontTheme" />
+            android:theme="@style/fontTheme.dark" />
         <activity
             android:name=".Dashboard"
             android:theme="@style/fontTheme">

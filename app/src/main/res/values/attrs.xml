@@ -13,11 +13,14 @@
         <attr name="textColorHeading" format="color"/>
         <attr name="textColorSuperHeading" format="color"/>
         <attr name="textColorBody" format="color"/>
+        <attr name="loginScreenLabel" format="color"/>
 
         <attr name="textSizeNormal" format="dimension"/>
         <attr name="textSizeHeading" format="dimension"/>
         <attr name="textSizeSuperHeading" format="dimension"/>
         <attr name="textSizeBody" format="dimension"/>
+
+        <attr name="OrderBookCardBG" format="color"/>
 
 
     </declare-styleable>

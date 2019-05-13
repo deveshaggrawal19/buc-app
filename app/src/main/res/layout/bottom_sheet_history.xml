@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/bottom_sheet_bg_drawable"
+    android:background="@drawable/bottomsheet_card_drawable"
     android:layout_height="match_parent">
 
     <TextView
@@ -11,9 +11,9 @@
         android:background="@drawable/pills"
         android:textColor="@android:color/white"
         android:gravity="center"
-        android:layout_margin="10dp"
         android:textSize="@dimen/headings"
         android:padding="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_height="wrap_content" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -21,340 +21,165 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:padding="10dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="Amount"
-                android:layout_marginRight="5dp"
-                />
-
-            <TextView
-                android:id="@+id/history_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
-
-
+        <LinearLayout style="@style/OrderDetailsLayout">
+            <TextView android:text="Amount" style="@style/OrderDetailsLayoutItem" />
+            <TextView android:id="@+id/history_amount" style="@style/OrderDetailsLayoutItem.Right" android:text="500000" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Address" />
 
             <TextView
                 android:id="@+id/history_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000"/>
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Currency" />
 
             <TextView
                 android:id="@+id/history_currency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000" />
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Time" />
 
             <TextView
                 android:id="@+id/history_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000"/>
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Status" />
 
             <TextView
                 android:id="@+id/history_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000" />
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Type" />
 
             <TextView
                 android:id="@+id/history_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000"/>
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Fees" />
 
             <TextView
                 android:id="@+id/history_fees"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000"/>
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Filled" />
 
             <TextView
                 android:id="@+id/history_filled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000" />
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Value" />
 
             <TextView
                 android:id="@+id/history_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000" />
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="TX_Hash" />
 
             <TextView
                 android:id="@+id/history_tx_hash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000" />
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="10dp">
+            style="@style/OrderDetailsLayout">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:fontFamily="sans-serif"
+                style="@style/OrderDetailsLayoutItem"
                 android:text="Price" />
 
             <TextView
                 android:id="@+id/history_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif"
-                android:text="500000"
-                android:textColor="@android:color/black" />
+                style="@style/OrderDetailsLayoutItem.Right"
+                android:text="5000000"/>
 
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
+
 
 
 

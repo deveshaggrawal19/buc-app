@@ -10,12 +10,14 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import retrofit2.Retrofit;
 
 public class OkHttpHandler {
 
     private static String BASE_URL = new Config().getAPI_BASE_URL();
     private static OkHttpClient.Builder client = new OkHttpClient().newBuilder().readTimeout(15, TimeUnit.SECONDS).connectTimeout(15,TimeUnit.SECONDS);
     private static MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
 
     static void post(String url, String content, Callback callback){
         RequestBody body = RequestBody.create(mediaType, content);

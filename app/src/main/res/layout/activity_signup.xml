@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="?attr/windowBackGroundColor"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -11,65 +12,73 @@
         android:orientation="vertical"
         android:layout_marginTop="60dp"
         android:padding="20dp">
-
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_gravity="center"
+            android:src="@drawable/buyucoin_logo"
+            android:layout_height="72dp" />
         <TextView
-            android:layout_width="match_parent"
+            style="@style/OtcTotalHeading.LoginLabel"
             android:text="Buyucoin"
             android:textStyle="bold"
             android:textSize="30sp"
-            android:layout_height="wrap_content" />
+            />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            style="@style/BuySellInput.LoginInput"
+            android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/input_name"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/input_shape"
+                style="@style/BuySellInputInner"
                 android:padding="10dp"
                 android:inputType="textCapWords"
                 android:hint="Name" />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        style="@style/BuySellInput.LoginInput"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/input_email"
+            style="@style/BuySellInputInner"
+            android:padding="10dp"
+            android:inputType="textEmailAddress"
+            android:hint="Email" />
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            style="@style/BuySellInput.LoginInput"
+            android:layout_height="wrap_content">
 
             <EditText
-                android:layout_marginTop="10dp"
-                android:id="@+id/input_email"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/input_shape"
-                android:padding="10dp"
-                android:inputType="textEmailAddress"
-                android:hint="Email" />
-
-            <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/input_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_shape"
+                style="@style/BuySellInputInner"
                 android:padding="10dp"
                 android:inputType="textPassword"
                 android:hint="Password"/>
 
+        </LinearLayout>
+
+
+
+
+
+
         <!-- Signup Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_signup"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:padding="12dp"
-            android:background="@drawable/pills"
-            android:textColor="@android:color/white"
+            style="@style/CustomButton.Big"
             android:text="Create Account"/>
 
-        <TextView android:id="@+id/link_login"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="24dp"
+        <TextView
             android:text="Already a member? Login"
             android:padding="10dp"
-            android:background="@android:color/white"
-            android:gravity="center"
-            android:textSize="16dip"/>
+            android:layout_marginTop="0dp"
+            android:id="@+id/link_login"
+            style="@style/CustomButton.Big"
+            android:textSize="16dp"/>
 
     </LinearLayout>
 </ScrollView>

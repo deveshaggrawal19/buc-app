@@ -9,6 +9,7 @@
         <item name="android:fontFamily">@font/fonts</item>
         <item name="textColorHeading">@color/colorWhite</item>
         <item name="textSizeHeading">20sp</item>
+        <item name="loginScreenLabel">@color/g1b67e8</item>
     </style>
 
 
@@ -45,6 +46,7 @@
         <item name="EditTextBgColor">@color/inputShapeLight</item>
         <item name="EditTextLabelColor">@color/inputLabelLight</item>
         <item name="textColorHeading">@color/textColor1</item>
+        <item name="OrderBookCardBG">@color/colorWhite</item>
     </style>
 
     <style name="fontTheme.dark" parent="AppTheme.NoActionBar">
@@ -53,6 +55,7 @@
         <item name="EditTextBgColor">@color/inputShapeDark</item>
         <item name="EditTextLabelColor">@color/inputLabelDark</item>
         <item name="textColorHeading">@color/textColor4</item>
+        <item name="OrderBookCardBG">@color/orderBookCardColor</item>
     </style>
 
     <style name="WalletMore">
@@ -75,6 +78,9 @@
         <item name="android:textColor">@drawable/my_coustom_radio_text</item>
         <item name="android:layout_height">50dp</item>
     </style>
+
+
+
     <style name="BuySellRadioButton.dark">
         <item name="android:background">@drawable/my_coustom_radio_dark</item>
     </style>
@@ -87,6 +93,14 @@
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:padding">3dp</item>
         <item name="android:layout_height">60dp</item>
+    </style>
+
+    <style name="BuySellInput.NoMargin">
+        <item name="android:layout_margin">0dp</item>
+    </style>
+    <style name="BuySellInput.LoginInput">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
     </style>
 
     <style name="BuySellInput.dark">
@@ -103,6 +117,11 @@
         <item name="android:textColor">?attr/EditTextColor</item>
         <item name="android:textColorHint">?attr/EditTextLabelColor</item>
     </style>
+
+    <style name="BuySellInputInner.NoPadding">
+        <item name="android:padding">0dp</item>
+    </style>
+
     <style name="BuySellInputInner.dark">
         <item name="android:background">?attr/EditTextColor</item>
         <item name="android:textColor">@color/colorWhite</item>
@@ -112,13 +131,15 @@
     <style name="PasswordButton">
         <item name="android:layout_width">0dp</item>
          <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/password_btn</item>
          <item name="android:layout_margin">2dp</item>
          <item name="android:layout_weight">1</item>
          <item name="android:gravity">center</item>
          <item name="android:onClick">updatepin</item>
          <item name="android:padding">10dp</item>
          <item name="android:textColor">@color/g1b67e8</item>
-         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+         <item name="android:textSize">28sp</item>
     </style>
 
     <style name="PasswordDots">
@@ -132,7 +153,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_height">80dp</item>
     </style>
 
     <style name="BuySellOptions">
@@ -224,6 +245,10 @@
         <item name="android:textSize">?attr/textSizeHeading</item>
     </style>
 
+    <style name="OtcTotalHeading.LoginLabel">
+        <item name="android:textColor">?attr/loginScreenLabel</item>
+    </style>
+
     <style name="OtcCoinDetailsCard">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -231,6 +256,58 @@
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
         <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="LoginPasswordToggle">
+        <item name="android:layout_width">155dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:textColor">?attr/loginScreenLabel</item>
+        <item name="android:layout_height">56dp</item>
+
+    </style>
+
+
+    <style name="CustomButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:background">@drawable/curr_btn</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="CustomButton.Big">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="CustomButton.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="OrderDetailsLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+    <style name="OrderDetailsLayoutItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/textColorHeading</item>
+    </style>
+    <style name="OrderDetailsLayoutItem.Right">
+        <item name="android:gravity">end</item>
+
     </style>
 
 
