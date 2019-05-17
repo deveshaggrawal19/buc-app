@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.buyucoinApp.buyucoin.Adapters.VerticalAdapter;
 import com.buyucoinApp.buyucoin.Dashboard;
@@ -32,12 +38,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -212,6 +212,7 @@ public class WalletFragment extends Fragment {
 
 
     private void getWalletData(){
+
         list.clear();
         hidezero_checkbox.setChecked(false);
         OkHttpHandler.auth_get("get_wallet", ACCESS_TOKEN, new Callback() {

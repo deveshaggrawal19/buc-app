@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.buyucoinApp.buyucoin">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,7 +14,9 @@
         android:roundIcon="@drawable/buyucoin_logo"
         android:supportsRtl="true"
         android:testOnly="false"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.AppCompat.Light"
+        tools:targetApi="m">
         <activity android:name=".OTCActivity"
             android:theme="@style/fontTheme.dark"
             android:label="OTC DESK"/>

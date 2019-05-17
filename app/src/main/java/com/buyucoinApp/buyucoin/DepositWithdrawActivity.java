@@ -400,88 +400,76 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     }
 
     public void getList() {
-        OkHttpHandler.auth_get("order_history", pref.getPrefString(BuyucoinPref.ACCESS_TOKEN), new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+        try {
+
+
+            JSONObject order_his = new JSONObject(pref.getPrefString("order_his"));
+
+
+            if(order_his.has("order")) {
+                final JSONArray array = order_his.getJSONArray("order");
+                Log.d("sdfghjsdfghjk", array.toString());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject j = array.getJSONObject(i);
+                    if (j.getString("curr").equals(coin) && j.getString("status").equals("Pending")) {
+                        histories.add(new History(
+                                j.getDouble("amount"),
+                                j.getString("curr"),
+                                j.getString("open"),
+                                j.getString("open"),
+                                j.getString("status"),
+                                "",
+                                "",
+                                j.getDouble("fee"),
+                                j.getDouble("filled"),
+                                j.getDouble("price"),
+                                j.getString("type"),
+                                j.getDouble("value"),
+                                j.getInt("id")
+                        ));
+                    }
+
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (histories.size() > 0) {
+                            history_recyclerview.setAdapter(new CoinActiveOrderAdapter(histories, getApplicationContext()));
+                            history_recyclerview.setVisibility(View.VISIBLE);
+                            pb.setVisibility(View.GONE);
+                        } else {
+                            pb.setVisibility(View.GONE);
+                            empty_layout.setVisibility(View.VISIBLE);
+
+                        }
+                    }
+                });
+
+
+            }
+            else{
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        pb.setVisibility(View.GONE);
+                        empty_layout.setVisibility(View.VISIBLE);
+                    }
+                });
+
             }
 
-            @Override
-            public void onResponse(Call call, Response response) {
-
-                    try {
-                        assert response.body() != null;
-                        String s = response.body().string();
-
-                            JSONObject mainobj = new JSONObject(s).getJSONObject("data");
-
-                            if(mainobj.has("order")) {
-                                final JSONArray array = mainobj.getJSONArray("order");
-                                Log.d("sdfghjsdfghjk", array.toString());
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject j = array.getJSONObject(i);
-                                    if (j.getString("curr").equals(coin) && j.getString("status").equals("Pending")) {
-                                        histories.add(new History(
-                                                j.getDouble("amount"),
-                                                j.getString("curr"),
-                                                j.getString("open"),
-                                                j.getString("open"),
-                                                j.getString("status"),
-                                                "",
-                                                "",
-                                                j.getDouble("fee"),
-                                                j.getDouble("filled"),
-                                                j.getDouble("price"),
-                                                j.getString("type"),
-                                                j.getDouble("value"),
-                                                j.getInt("id")
-                                        ));
-                                    }
-
-                                }
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        if (histories.size() > 0) {
-                                            history_recyclerview.setAdapter(new CoinActiveOrderAdapter(histories, getApplicationContext()));
-                                            history_recyclerview.setVisibility(View.VISIBLE);
-                                            pb.setVisibility(View.GONE);
-                                        } else {
-                                            pb.setVisibility(View.GONE);
-                                            empty_layout.setVisibility(View.VISIBLE);
-
-                                        }
-                                    }
-                                });
-
-
-                            }
-                            else{
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                    pb.setVisibility(View.GONE);
-                                    empty_layout.setVisibility(View.VISIBLE);
-                                    }
-                                });
-
-                            }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                pb.setVisibility(View.GONE);
-                                empty_layout.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
+        } catch (Exception e) {
+            e.printStackTrace();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pb.setVisibility(View.GONE);
+                    empty_layout.setVisibility(View.VISIBLE);
                 }
-
-        });
+            });
+        }
     }
 
 

@@ -45,6 +45,7 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
     private static JSONArray MainArray;
     private JSONArray succes_array;
     private LinearLayout empty_layout;
+    private static BuyucoinPref buyucoinPref;
 
 
 
@@ -52,8 +53,14 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         histories = new ArrayList<>();
-        BuyucoinPref buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
-        ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+        try{
+            buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getActivity()));
+            ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
         if(getArguments()!=null){
             b = getArguments();
         }
@@ -100,10 +107,10 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
             }
         });
         if(coin!=null){
-            getListCoin(url,coin);
+            getListCoin(url,"all",coin);
 
         }else{
-            getList(url);
+            getList(url,"all");
 
         }
         return view;
@@ -112,66 +119,39 @@ public class HistoryPagerAdapterFragmentOrder extends DialogFragment {
 
 
 
-    public void getListCoin(final String url,final String coin) {
+    public void getListCoin(final String url,final String filter,final String coin) {
         histories.clear();
-        OkHttpHandler.cancelAllRequests();
+        try {
+            MainArray = new JSONObject(buyucoinPref.getPrefString("order_his")).getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+            succes_array = new JSONObject(buyucoinPref.getPrefString("order_his")).getJSONArray("orders_success");
 
-        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getListCoin_(filter,coin);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                //Log.d("RESPONSE____", s);
-                try {
-                    MainArray = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
-                    succes_array = new JSONObject(s).getJSONObject("data").getJSONArray("orders_success");
-
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                           getListCoin_("all",coin);
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void getList(final String url) {
-        OkHttpHandler.cancelAllRequests();
-
-        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-                try {
-                    final JSONObject main = new JSONObject(s).getJSONObject("data");
-                    MainArray = main.getJSONArray("orders");
-                    succes_array = new JSONObject(s).getJSONObject("data").getJSONArray("orders_success");
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getList_(url);
-                        }
-                    });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+    private void getList(final String url, final String filter) {
+        try {
+            MainArray = new JSONObject(buyucoinPref.getPrefString("order_his")).getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+            succes_array = new JSONObject(buyucoinPref.getPrefString("order_his")).getJSONArray("orders_success");
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getList_(filter);
                 }
-            }
-        });
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

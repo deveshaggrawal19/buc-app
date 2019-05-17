@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.buyucoinApp.buyucoin.Dashboard;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
+import com.buyucoinApp.buyucoin.RetrofitHandler;
 import com.buyucoinApp.buyucoin.Utilities;
 import com.buyucoinApp.buyucoin.bottomsheets.ChatsBottomsheet;
 import com.buyucoinApp.buyucoin.bottomsheets.ProfileBottomsheet;
@@ -33,6 +34,10 @@ import com.buyucoinApp.buyucoin.bottomsheets.SettingsBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.ChangePasscodeDialog;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.buyucoinApp.buyucoin.retrofitClients.RetrofitClients;
+import com.buyucoinApp.buyucoin.retrofitRepos.account.AccountResponse;
+import com.buyucoinApp.buyucoin.retrofitRepos.account.Data;
+import com.buyucoinApp.buyucoin.retrofitRepos.login.ResponseData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,7 +122,7 @@ public class AccountFragment extends Fragment {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                    getAccountData();
+                getAccountData();
             }
         });
 
@@ -296,6 +301,65 @@ public class AccountFragment extends Fragment {
         });
     }
 
+
+    private void getAccountDataNew(){
+        RetrofitClients retrofitClients =  RetrofitHandler.createAuthService(RetrofitClients.class,ACCESS_TOKEN);
+
+        retrofit2.Call<AccountResponse> account_call = retrofitClients.getAccount();
+
+        account_call.enqueue(new retrofit2.Callback<AccountResponse>() {
+            @Override
+            public void onResponse(retrofit2.Call<AccountResponse> call, final retrofit2.Response<AccountResponse> response) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AccountResponse ar = response.body();
+                            Data d = ar.getData();
+                            if (ar.getStatus().equals("redirect")) {
+                                Utilities.getOTP(getActivity(), ACCESS_TOKEN, ad);
+                                new Dashboard().ServerErrorFragment();
+                                return;
+                            }
+
+                            buyucoinPref.setEditpref("email",d.getEmail());
+                            buyucoinPref.setEditpref("name",d.getName().split(" ")[0]);
+                            buyucoinPref.setEditpref("mob",d.getMob());
+                            buyucoinPref.setEditpref("kyc_status",d.getKycStatus());
+
+                            email.setText(d.getEmail());
+                            name.setText(d.getName());
+                            mob.setText(d.getMob());
+//                          kyc.getBackground().setTint(Color.green(R.color.kyc_color));
+                            ll.setVisibility(View.VISIBLE);
+                            Utilities.hideProgressBar(pb);
+
+                        }
+                    });
+                }
+                else{
+                    try {
+                        Looper.prepare();
+                        new CoustomToast(getContext(),"Server Error",CoustomToast.TYPE_DANGER).showToast();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<AccountResponse> call, Throwable t) {
+                if(getActivity()!=null){
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new CoustomToast(getContext(),"Something Went Wrong",CoustomToast.TYPE_DANGER).showToast();
+                        }
+                    });
+                }
+            }
+        });
+    }
 
 
 

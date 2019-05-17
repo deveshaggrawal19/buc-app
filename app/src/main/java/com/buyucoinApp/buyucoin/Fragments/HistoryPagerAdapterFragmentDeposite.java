@@ -3,6 +3,7 @@ package com.buyucoinApp.buyucoin.Fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,14 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 
 import com.buyucoinApp.buyucoin.Adapters.MyHistoryDepositeRecyclerViewAdapter;
+import com.buyucoinApp.buyucoin.HistoryHelper;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.pojos.History;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -44,6 +47,7 @@ public class HistoryPagerAdapterFragmentDeposite extends DialogFragment {
     private static   JSONArray MainArray;
 
     private LinearLayout empty_layout;
+    private static BuyucoinPref buyucoinPref;
 
 
 
@@ -51,8 +55,15 @@ public class HistoryPagerAdapterFragmentDeposite extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         histories = new ArrayList<>();
-        BuyucoinPref buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
+        try{
+        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getActivity()));
         ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+
         if(getArguments()!=null){
             b = getArguments();
         }
@@ -98,74 +109,45 @@ public class HistoryPagerAdapterFragmentDeposite extends DialogFragment {
             }
         });
         if(coin!=null){
-            getListCoin(url,coin);
+            getListCoin(url,"all",coin);
 
         }else{
-            getList(url);
+            getList(url,"all");
 
         }
         return view;
     }
 
 
-    private void getListCoin(final String url, final String coin) {
+    private void getListCoin(final String url,final String filter, final String coin) {
         histories.clear();
-//        OkHttpHandler.cancelAllRequests();
-        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            MainArray = new JSONObject(buyucoinPref.getPrefString("deposit_his")).getJSONArray( url + "_comp");
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getListCoin_(filter,coin);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String s = response.body().string();
-                try {
-                    MainArray = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
-
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getListCoin_("all",coin);
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void getList(final String url) {
-        histories.clear();
-        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
+    private void getList(final String url, final String filter) {
+        try {
+            MainArray = new JSONObject(buyucoinPref.getPrefString("deposit_his")).getJSONArray( url + "_comp");
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getList_(filter);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String s = response.body().string();
-                //Log.d("RESPONSE____", s);
-                try {
-                    MainArray = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
-
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getList_(url);
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -68,6 +68,8 @@ public class OkHttpHandler {
         return call;
     }
 
+
+
 //    public static Call get_rates(Callback callback){
 //        Request request = new Request.Builder()
 //                .url("https://www.buyucoin.com/api/v1.2/currency/markets")

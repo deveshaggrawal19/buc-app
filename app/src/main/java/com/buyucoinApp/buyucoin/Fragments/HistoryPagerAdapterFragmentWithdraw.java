@@ -16,6 +16,7 @@ import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.pojos.History;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,10 +39,12 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
     private RecyclerView rv;
     private ProgressBar pb;
     private ArrayList<History> histories;
+    private static   JSONArray MainArray;
     private String url,coin;
     private Bundle b;
 
     private LinearLayout empty_layout;
+    private static BuyucoinPref buyucoinPref;
 
 
 
@@ -49,8 +52,14 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         histories = new ArrayList<>();
-        BuyucoinPref buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
-        ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+        try{
+            buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getActivity()));
+            ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
         if(getArguments()!=null){
             b = getArguments();
         }
@@ -65,6 +74,7 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_page, container, false);
         rv = view.findViewById(R.id.rvHistory);
+        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         pb = view.findViewById(R.id.pbHistory);
         empty_layout = view.findViewById(R.id.empty_orders);
         RadioGroup filter_group = view.findViewById(R.id.filter_radio_group);
@@ -109,185 +119,179 @@ public class HistoryPagerAdapterFragmentWithdraw extends DialogFragment {
 
     private void getListCoin(final String url, final String filter, final String coin) {
         histories.clear();
-        OkHttpHandler.cancelAllRequests();
-        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String s = response.body().string();
-                //Log.d("RESPONSE____", s);
-                try {
-                    final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
-                    Log.d("ARRAY______", array.length() + "");
-                    Log.d("_____", array.toString());
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject j = array.getJSONObject(i);
-                        if(j.getString("status").equals(filter) && j.getString("curr").equals(coin) && !j.getString("status").equals("all")) {
-                                histories.add(new History(
-                                        j.getDouble("amount"),
-                                        j.getString("curr"),
-                                        j.getString("open_time"),
-                                        j.getString("open_time"),
-                                        j.getString("status"),
-                                        j.getString("tx_hash"),
-                                        j.getString("address"),
-                                        0.0,
-                                        0.0,
-                                        0.0,
-                                        "",
-                                        0.0,
-                                        0
-
-                                ));
-                        }
-                        if( filter.equals("all") && j.getString("curr").equals(coin)) {
-                            histories.add(new History(
-                                    j.getDouble("amount"),
-                                    j.getString("curr"),
-                                    j.getString("open_time"),
-                                    j.getString("open_time"),
-                                    j.getString("status"),
-                                    j.getString("tx_hash"),
-                                    j.getString("address"),
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    "",
-                                    0.0,
-                                    0
-
-                            ));
-                        }
-
-                    }
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(histories.size()>0){
-                                rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                                rv.setAdapter(new MyHistoryWithdrawRecyclerViewAdapter(histories,getActivity(),getChildFragmentManager()));
-                                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
-                                    public void onAnimationEnd(Animator animator) {
-                                        pb.setVisibility(View.GONE);
-                                        pb.setAlpha(1f);
-                                    }
-                                });
-                                empty_layout.setVisibility(View.GONE);
-                            }else{
-
-                                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
-                                    public void onAnimationEnd(Animator animator) {
-                                        pb.setVisibility(View.GONE);
-                                        pb.setAlpha(1f);
-                                    }
-                                });
-                                empty_layout.setVisibility(View.VISIBLE);
-
-                            }
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
+        try {
+            MainArray =  new JSONObject(buyucoinPref.getPrefString("withdraw_his")).getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getListCoin_(filter,coin);
                 }
-            }
-        });
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
 
     private void getList(final String url, final String filter) {
+        try {
+            MainArray =  new JSONObject(buyucoinPref.getPrefString("withdraw_his")).getJSONArray(url.equals("order") ? "orders" : url + "_comp");
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getList_(filter);
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+           }
+
+    private void getList_(final String filter){
         histories.clear();
-        OkHttpHandler.cancelAllRequests();
-        OkHttpHandler.auth_get(url + "_history", ACCESS_TOKEN, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
+        Log.d("wwwwwwwwwwwwwww",MainArray.toString());
+        try {
+        for (int i = 0; i < MainArray.length(); i++) {
+            JSONObject j = MainArray.getJSONObject(i);
+            if(j.getString("status").equals(filter) || filter.equals("all"))
+                if(j.getString("status").equals(filter))
+                    histories.add(new History(
+                            j.getDouble("amount"),
+                            j.getString("curr"),
+                            j.getString("open_time"),
+                            j.getString("open_time"),
+                            j.getString("status"),
+                            j.getString("tx_hash"),
+                            j.getString("address"),
+                            0.0,
+                            0.0,
+                            0.0,
+                            "",
+                            0.0,
+                            0
+                    ));
+            if( filter.equals("all")){
+                histories.add(new History(
+                        j.getDouble("amount"),
+                        j.getString("curr"),
+                        j.getString("open_time"),
+                        j.getString("open_time"),
+                        j.getString("status"),
+                        j.getString("tx_hash"),
+                        j.getString("address"),
+                        0.0,
+                        0.0,
+                        0.0,
+                        "",
+                        0.0,
+                        0
+                ));}
+        }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                String s = response.body().string();
-                //Log.d("RESPONSE____", s);
-                try {
-                    final JSONArray array = new JSONObject(s).getJSONObject("data").getJSONArray(url.equals("order") ? "orders" : url + "_comp");
-                    Log.d("ARRAY______", array.length() + "");
-                    Log.d("_____", array.toString());
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject j = array.getJSONObject(i);
-                        if(j.getString("status").equals(filter) || filter.equals("all"))
-                            if(j.getString("status").equals(filter))
-                                histories.add(new History(
-                                        j.getDouble("amount"),
-                                        j.getString("curr"),
-                                        j.getString("open_time"),
-                                        j.getString("open_time"),
-                                        j.getString("status"),
-                                        j.getString("tx_hash"),
-                                        j.getString("address"),
-                                        0.0,
-                                        0.0,
-                                        0.0,
-                                        "",
-                                        0.0,
-                                        0
-                                ));
-                        if( filter.equals("all")){
-                            histories.add(new History(
-                                    j.getDouble("amount"),
-                                    j.getString("curr"),
-                                    j.getString("open_time"),
-                                    j.getString("open_time"),
-                                    j.getString("status"),
-                                    j.getString("tx_hash"),
-                                    j.getString("address"),
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    "",
-                                    0.0,
-                                    0
-                            ));}
-                    }
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(histories.size()>0){
+        Log.d("wwwwwwwwwwwwww",histories.size()+"");
 
-                            rv.setAdapter(new MyHistoryWithdrawRecyclerViewAdapter(histories,getActivity(),getChildFragmentManager()));
-                            pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
-                                public void onAnimationEnd(Animator animator) {
-                                    pb.setVisibility(View.GONE);
-                                    pb.setAlpha(1f);
-                                }
-                            });
-                            empty_layout.setVisibility(View.GONE);
-                            }else{
+                if(histories.size()>0){
 
-                                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
-                                    public void onAnimationEnd(Animator animator) {
-                                        pb.setVisibility(View.GONE);
-                                        pb.setAlpha(1f);
-                                    }
-                                });
-                                empty_layout.setVisibility(View.VISIBLE);
-
-                            }
-
+                    rv.setAdapter(new MyHistoryWithdrawRecyclerViewAdapter(histories,getActivity(),getChildFragmentManager()));
+                    pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                        public void onAnimationEnd(Animator animator) {
+                            pb.setVisibility(View.GONE);
+                            pb.setAlpha(1f);
                         }
                     });
+                    empty_layout.setVisibility(View.GONE);
+                }else{
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                        public void onAnimationEnd(Animator animator) {
+                            pb.setVisibility(View.GONE);
+                            pb.setAlpha(1f);
+                        }
+                    });
+                    empty_layout.setVisibility(View.VISIBLE);
+
                 }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void getListCoin_(final String filter, final String coin){
+        try {
+            for (int i = 0; i < MainArray.length(); i++) {
+                JSONObject j = MainArray.getJSONObject(i);
+                if(j.getString("status").equals(filter) && j.getString("curr").equals(coin) && !j.getString("status").equals("all")) {
+                    histories.add(new History(
+                            j.getDouble("amount"),
+                            j.getString("curr"),
+                            j.getString("open_time"),
+                            j.getString("open_time"),
+                            j.getString("status"),
+                            j.getString("tx_hash"),
+                            j.getString("address"),
+                            0.0,
+                            0.0,
+                            0.0,
+                            "",
+                            0.0,
+                            0
+
+                    ));
+                }
+                if( filter.equals("all") && j.getString("curr").equals(coin)) {
+                    histories.add(new History(
+                            j.getDouble("amount"),
+                            j.getString("curr"),
+                            j.getString("open_time"),
+                            j.getString("open_time"),
+                            j.getString("status"),
+                            j.getString("tx_hash"),
+                            j.getString("address"),
+                            0.0,
+                            0.0,
+                            0.0,
+                            "",
+                            0.0,
+                            0
+
+                    ));
+                }
+
             }
-        });
+
+            if(histories.size()>0){
+                rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                rv.setAdapter(new MyHistoryWithdrawRecyclerViewAdapter(histories,getActivity(),getChildFragmentManager()));
+                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                    public void onAnimationEnd(Animator animator) {
+                        pb.setVisibility(View.GONE);
+                        pb.setAlpha(1f);
+                    }
+                });
+                empty_layout.setVisibility(View.GONE);
+            }else{
+
+                pb.animate().alpha(0f).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).setListener(new AnimatorListenerAdapter() {
+                    public void onAnimationEnd(Animator animator) {
+                        pb.setVisibility(View.GONE);
+                        pb.setAlpha(1f);
+                    }
+                });
+                empty_layout.setVisibility(View.VISIBLE);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 
