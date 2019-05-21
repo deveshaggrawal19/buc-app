@@ -15,25 +15,21 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.AppCompat.Light"
+        android:theme="@style/AppTheme.Dark"
         tools:targetApi="m">
         <activity android:name=".OTCActivity"
-            android:theme="@style/fontTheme.dark"
+
             android:label="OTC DESK"/>
         <activity
-            android:name=".GenerateWallet"
-            android:theme="@style/fontTheme" />
+            android:name=".GenerateWallet" />
         <activity
-            android:name=".UploadKyc"
-            android:theme="@style/fontTheme" />
+            android:name=".UploadKyc" />
         <activity android:name=".Decide" />
         <activity
-            android:name=".VerifyUser"
-            android:theme="@style/fontTheme" />
+            android:name=".VerifyUser" />
         <activity android:name=".HowToSlider" />
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/fontTheme">
+            android:name=".SplashActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
@@ -41,8 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/fontTheme.dark">
+            android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -56,11 +51,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignupActivity"
-            android:theme="@style/fontTheme.dark" />
-        <activity
-            android:name=".Dashboard"
-            android:theme="@style/fontTheme">
+            android:name=".SignupActivity" />
+        <activity android:name=".Dashboard">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -70,27 +62,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CurrencyActivity"
-            android:theme="@style/fontTheme" />
+            android:name=".CurrencyActivity" />
         <activity
-            android:name=".BuySellActivity"
-            android:theme="@style/fontTheme" />
+            android:name=".BuySellActivity" />
         <activity
-            android:name=".DepositWithdrawActivity"
-            android:theme="@style/fontTheme" />
+            android:name=".DepositWithdrawActivity" />
         <activity
-            android:name=".CoinDepositWithdraw"
-            android:theme="@style/fontTheme" />
+            android:name=".CoinDepositWithdraw" />
         <activity
-            android:name=".PassCodeActivity"
-            android:theme="@style/fontTheme" />
+            android:name=".PassCodeActivity" />
         <activity android:name=".config.Config" />
         <activity
-            android:name=".P2POrders"
-            android:theme="@style/fontTheme" />
+            android:name=".P2POrders" />
         <activity
-            android:name=".ConfirmCodeActivity"
-            android:theme="@style/fontTheme" />
+            android:name=".ConfirmCodeActivity" />
 
         <receiver
             android:name=".broadcast.NotNetworkBroadCastReceiver"

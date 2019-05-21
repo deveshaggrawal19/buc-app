@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/AppTheme.NoActionBar"
+    android:background="?attr/windowBackGroundColor"
     tools:context=".Fragments.AccountFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -28,8 +28,9 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_design"
+                    android:layout_margin="10dp"
                     android:gravity="center"
+                    android:background="@drawable/wallet_header_design"
                     android:orientation="vertical"
                     android:padding="20dp">
 
@@ -196,109 +197,97 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+
+                <HorizontalScrollView
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="#ffffff"
+                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="History"
-                        android:textSize="@dimen/headings" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp">
+                        android:layout_width="wrap_content"
+                        android:layout_height="130dp"
+                        android:paddingStart="40dp">
 
                         <LinearLayout
-                            android:id="@+id/account_dep_history"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@android:color/white"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            style="@style/WalletMore"
+                            android:id="@+id/account_dep_history">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:src="@drawable/coin_buy"
-                                android:tint="@color/g1b67e8"
-                                android:contentDescription="@string/deposit_history_button" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="@string/deposit"
-                                android:textColor="@color/g1b67e8" />
+                                android:text="Deposit History"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="20sp" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/account_with_history"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="2dp"
-                            android:layout_weight="1"
-                            android:background="@android:color/white"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            style="@style/WalletMore"
+                            android:id="@+id/account_with_history">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:src="@drawable/coin_sell"
-                                android:tint="@color/g6209c3" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Withdraw"
-                                android:textColor="@color/g6209c3" />
+                                android:text="Withdraw History"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="20sp" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/account_trade_history"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="2dp"
-                            android:layout_weight="1"
-                            android:background="@android:color/white"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            style="@style/WalletMore"
+                            android:id="@+id/account_trade_history">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:src="@drawable/coin_deposite"
-                                android:tint="@color/kyc_color" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Trade"
-                                android:textColor="@color/kyc_color" />
+                                android:text="Orders"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="20sp" />
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/p2p_history_ll"
+                            style="@style/WalletMore">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="P2P History"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/p2p_active_orders_ll"
+                            style="@style/WalletMore">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Active Peers"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#eeeeee" />
 
-                </LinearLayout>
+                </HorizontalScrollView>
 
 
                 <LinearLayout
@@ -309,79 +298,42 @@
 
                     <RelativeLayout
                         android:id="@+id/account_about_us_link"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="5dp">
+                        style="@style/AccountList">
 
                         <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:src="@drawable/profile_option_list_drawable"
+                            style="@style/AccountListIcon"
                             android:tint="@color/g6209c3" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="40dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="center"
-                            android:text="About Us"
-                            android:textColor="@android:color/black" />
+                            style="@style/AccountListText"
+                            android:text="About Us" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:src="@drawable/profile_menu_list_arrow_right"
+                            style="@style/AccountListIconRight"
                             android:tint="#cccccc" />
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#eeeeee" />
 
                     <RelativeLayout
                         android:id="@+id/account_term_policy"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="5dp">
+                        style="@style/AccountList">
 
                         <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:src="@drawable/profile_option_list_drawable"
+                            style="@style/AccountListIcon"
                             android:tint="@color/g1b67e8" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="40dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="center"
-                            android:text="Terms And Policies"
-                            android:textColor="@android:color/black" />
+                            style="@style/AccountListText"
+                            android:text="Terms And Policies" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:src="@drawable/profile_menu_list_arrow_right"
+                            style="@style/AccountListIconRight"
                             android:tint="#cccccc" />
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#eeeeee" />
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -416,10 +368,6 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#eeeeee" />
 
 
                     <RelativeLayout
@@ -495,12 +443,8 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:padding="5dp"
-                        android:text="@string/referral_programme"
-                        android:textSize="@dimen/headings" />
+                        style="@style/OtcTotalHeading"
+                        android:text="@string/referral_programme" />
 
                     <LinearLayout
                         android:id="@+id/share_ref_id"

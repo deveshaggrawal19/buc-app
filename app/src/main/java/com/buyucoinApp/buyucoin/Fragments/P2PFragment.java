@@ -10,15 +10,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import com.buyucoinApp.buyucoin.Interfaces.TriggerActiveOrder;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.bottomsheets.P2P_PayBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.customDialogs.P2pActiveOrdersDialog;
-import com.buyucoinApp.buyucoin.textWatcher.P2P_TextWatcher;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -34,7 +33,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
     String ACCESS_TOKEN = null;
     int amt, min_amt;
     String type = "deposit";
-    LinearLayout min_amt_layout, p2p_history_layout,p2p_active_orders_layout;
+    LinearLayout p2p_active_orders_layout;
 
 
     //    private OnFragmentInteractionListener mListener;
@@ -83,16 +82,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
         View view = inflater.inflate(R.layout.fragment_p2p, container, false);
 
         amount = (EditText) view.findViewById(R.id.etP2PAmount);
-        min_amount = (EditText) view.findViewById(R.id.etP2PMinAmount);
-        min_amt_layout = view.findViewById(R.id.min_amt_layout);
-        p2p_history_layout = view.findViewById(R.id.p2p_history_ll);
-        p2p_history_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                P2P_History p2P_history = new P2P_History();
-                p2P_history.show(getFragmentManager(), "P2P HISTORY");
-            }
-        });
+
         p2p_active_orders_layout = view.findViewById(R.id.p2p_active_orders_ll);
         p2p_active_orders_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +91,6 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
                 active_order.show(getChildFragmentManager(),"");
             }
         });
-        amount.addTextChangedListener(new P2P_TextWatcher(min_amount, min_amt_layout));
         amount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -146,7 +135,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
             @Override
             public void onClick(View view) {
                 amt = (!amount.getText().toString().equals("")) ? Integer.parseInt(amount.getText().toString()) : 0;
-                min_amt = (!min_amount.getText().toString().equals("")) ? Integer.parseInt(min_amount.getText().toString()) : 0;
+                min_amt = 100;
 
                 if ((amt >= 100 && min_amt <= amt && min_amt != 0)) {
                     P2P_PayBottomsheet p2P_payBottomsheet = new P2P_PayBottomsheet();

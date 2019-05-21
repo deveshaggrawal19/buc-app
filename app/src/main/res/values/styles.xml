@@ -7,9 +7,25 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/fonts</item>
-        <item name="textColorHeading">@color/colorWhite</item>
         <item name="textSizeHeading">20sp</item>
         <item name="loginScreenLabel">@color/g1b67e8</item>
+        <item name="windowBackGroundColor">@color/windowColorWhite</item>
+        <item name="EditTextColor">@color/inputColorLight</item>
+        <item name="EditTextBgColor">@color/inputShapeLight</item>
+        <item name="EditTextLabelColor">@color/inputLabelLight</item>
+        <item name="textColorHeading">@color/textColor1</item>
+        <item name="OrderBookCardBG">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.Dark">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowBackGroundColor">@color/windowColorDark</item>
+        <item name="EditTextColor">@color/inputColorDark</item>
+        <item name="EditTextBgColor">@color/inputShapeDark</item>
+        <item name="EditTextLabelColor">@color/inputLabelDark</item>
+        <item name="textColorHeading">@color/textColor4</item>
+        <item name="OrderBookCardBG">@color/orderBookCardColor</item>
     </style>
 
 
@@ -27,6 +43,7 @@
         <item name="android:background">@color/g1b67e8</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:gravity">end</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -308,6 +325,37 @@
     <style name="OrderDetailsLayoutItem.Right">
         <item name="android:gravity">end</item>
 
+    </style>
+
+    <style name="AccountList">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="AccountListIcon">
+        <item name="android:layout_width">12dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:src">@drawable/profile_option_list_drawable</item>
+
+    </style>
+
+    <style name="AccountListText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/textColorHeading</item>
+    </style>
+
+    <style name="AccountListIconRight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:src">@drawable/profile_menu_list_arrow_right</item>
     </style>
 
 

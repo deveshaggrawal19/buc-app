@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="?attr/windowBackGroundColor"
     android:orientation="vertical"
     tools:context=".Fragments.P2PFragment">
 
@@ -13,51 +13,28 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/p2p_history_ll"
-                android:background="@drawable/profile_drawable_referral_card"
                 android:gravity="center"
+                android:layout_height="wrap_content"
                 android:padding="10dp">
-
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available INR"
+                    android:textColor="@color/textColor2"
+                    android:textSize="?attr/textSizeHeading" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="History"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:layout_marginLeft="20dp"
+                    android:text="1000000000"
+                    android:textColor="?attr/textColorHeading"
+                    android:textSize="?attr/textSizeHeading" />
             </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/p2p_active_orders_ll"
-                    android:background="@drawable/credit_card"
-                    android:gravity="center"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Active Orders"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:id="@+id/p2p_order_place_order_layout"
@@ -68,132 +45,218 @@
                     android:id="@+id/rgp2p"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/radioButton"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/my_coustom_radio"
-                        android:button="@android:color/transparent"
+                        style="@style/BuySellRadioButton"
                         android:checked="true"
-                        android:drawableStart="@drawable/coin_deposite"
-                        android:drawableTint="@drawable/my_coustom_radio_text"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Deposit INR"
-                        android:textColor="@drawable/my_coustom_radio_text" />
+                        android:text="Deposit INR" />
 
                     <RadioButton
                         android:id="@+id/radioButton2"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="5dp"
-                        android:background="@drawable/my_coustom_radio"
-                        android:button="@android:color/transparent"
-                        android:drawableStart="@drawable/coin_withdraw"
-                        android:drawableTint="@drawable/my_coustom_radio_text"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Withdrawl INR"
-                        android:textColor="@drawable/my_coustom_radio_text" />
+                        style="@style/BuySellRadioButton"
+                        android:text="Withdrawl INR" />
                 </RadioGroup>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
                     android:padding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:text="Total INR Amount* (Enter Amount in Multiple of 100)"
                             android:layout_marginBottom="10dp"
-                            android:text="Amount" />
+                            android:textColor="?attr/textColorHeading" />
+
+                    <LinearLayout style="@style/BuySellInput.NoMargin">
 
                         <EditText
                             android:id="@+id/etP2PAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/input_shape"
-                            android:hint="Amount"
-                            android:text="100"
+                            style="@style/BuySellInputInner"
                             android:inputType="number"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:text="100" />
+
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.05" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Get up to 5% extra bonus on Deposit amount greater then 1000   "
+                        android:textColor="?attr/textColorHeading" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/min_amt_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <CheckBox
+                            android:id="@+id/checkBox"
+                            android:layout_width="70dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="5dp"
+                            android:buttonTint="?attr/textColorHeading"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="IMPS"
+                            android:textColor="?attr/textColorHeading"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox2"
+                            android:layout_width="70dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="5dp"
+                            android:buttonTint="?attr/textColorHeading"
+                            android:gravity="center"
+                            android:text="UPI"
+                            android:textColor="?attr/textColorHeading"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BuySellInput"
                         android:visibility="gone">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="Minimum Amount" />
-
                         <EditText
-                            android:id="@+id/etP2PMinAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginBottom="20dp"
-                            android:background="@drawable/input_shape"
-                            android:hint="Min Amount"
-                            android:text="100"
-                            android:inputType="number"
-                            android:padding="10dp" />
-
+                            android:id="@+id/etP2PUpiId"
+                            style="@style/BuySellInputInner"
+                            android:hint="UPI ID" />
                     </LinearLayout>
 
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/bP2Prequest"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/pills"
-                    android:padding="15dp"
-                    android:text="Deposit Request"
-                    android:textColor="@android:color/white" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/orderbook_card_drawable"
+                    android:elevation="2dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Esitmated time in which you want to get money in your bank account"
+                        android:textColor="?attr/textColorHeading" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="24 Hours"
+                            android:textColor="?attr/textColorHeading" />
+
+                        <TextView
+                            android:id="@+id/boost_value_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="10dp"
+                            android:text="344 Hours"
+                            android:textColor="?attr/textColorHeading" />
+
+                    </RelativeLayout>
+
+
+                    <SeekBar
+                        android:id="@+id/seekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/textColor1"
+                        android:foregroundTint="@color/textColor4"
+                        android:indeterminateTint="@color/textColor3"
+                        android:max="344"
+                        android:min="24"
+                        android:progressBackgroundTint="@color/textColor2"
+                        android:progressTint="@color/textColor1"
+                        android:secondaryProgressTint="@color/textColor1"
+                        android:thumbTint="@color/textColor6"
+                        android:tickMarkTint="@color/textColor5" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="?attr/textColorHeading"
+                        android:text="No time boundation"
+                        android:textColor="?attr/textColorHeading" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <Button
+                        android:id="@+id/bP2Prequest"
+                        style="@style/CustomButton.Big"
+                        android:layout_margin="0dp"
+                        android:text="Deposit Request"
+                        android:textColor="@android:color/white" />
+
+                    <LinearLayout
+                        android:id="@+id/p2p_active_orders_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/credit_card"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="See Active Orders"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-
-
-
-
-
 
 
         </LinearLayout>
 
 
-
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
