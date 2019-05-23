@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.buyucoinApp.buyucoin.CoinDepositWithdraw;
 import com.buyucoinApp.buyucoin.Dashboard;
 import com.buyucoinApp.buyucoin.DepositWithdrawActivity;
@@ -22,9 +25,6 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyViewHolder> {
 
@@ -175,6 +175,11 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
                     myViewHolder.itemView.getContext().startActivity(intent);
                 }
             });
+        }
+
+        if (coin_name.equals("buc")) {
+            String BUC = availabel;
+            pref.setEditpref("buc_amount", BUC);
         }
 
         if(coin_name.equals("inr")){

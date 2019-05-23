@@ -109,7 +109,7 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:padding">3dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_height">48dp</item>
     </style>
 
     <style name="BuySellInput.NoMargin">
@@ -154,7 +154,7 @@
          <item name="android:gravity">center</item>
          <item name="android:onClick">updatepin</item>
          <item name="android:padding">10dp</item>
-         <item name="android:textColor">@color/g1b67e8</item>
+        <item name="android:textColor">@color/colorPasswordButtonText</item>
         <item name="android:textStyle">bold</item>
          <item name="android:textSize">28sp</item>
     </style>
@@ -358,5 +358,38 @@
         <item name="android:src">@drawable/profile_menu_list_arrow_right</item>
     </style>
 
+    <style name="P2PBottomSheetList">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="P2PBottomSheetListLabel">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">?attr/textColorHeading</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="P2PBottomSheetListItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/textColorHeading</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CoustomBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
 </resources>

@@ -1,15 +1,19 @@
 package com.buyucoinApp.buyucoin.Fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -18,22 +22,32 @@ import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.bottomsheets.P2P_PayBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.customDialogs.P2pActiveOrdersDialog;
+import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
-import static android.content.Context.MODE_PRIVATE;
+import org.json.JSONArray;
+
+import java.util.Objects;
 
 
-public class P2PFragment extends Fragment implements TriggerActiveOrder {
+public class P2PFragment extends Fragment implements TriggerActiveOrder, CompoundButton.OnCheckedChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    EditText amount, min_amount;
+    EditText amount;
+    CheckBox imps_cb, upi_cb, notime_cb;
+    SeekBar timelimit_sb;
+    TextView require_buc_tv, avialable_buc_tv, bonus_tv;
+    LinearLayout upi_layout, buc_token_info, fee_layout;
+
     Button b;
     String ACCESS_TOKEN = null;
-    int amt, min_amt;
+    int amt, min_amt = 100;
     String type = "deposit";
     LinearLayout p2p_active_orders_layout;
+    JSONArray payment_method_arry = new JSONArray();
+    String buc_amount = "0";
 
 
     //    private OnFragmentInteractionListener mListener;
@@ -68,20 +82,55 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        SharedPreferences prefs = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE);
-        SharedPreferences.Editor edit_pref = getActivity().getSharedPreferences("BUYUCOIN_USER_PREFS", MODE_PRIVATE).edit();
-        String FRAGMENT_STATE = "P2P";
-        edit_pref.putString("FRAGMENT_STATE", FRAGMENT_STATE).apply();
-        ACCESS_TOKEN = prefs.getString("access_token", null);
+        BuyucoinPref prefs = new BuyucoinPref(Objects.requireNonNull(getActivity()));
+
+        ACCESS_TOKEN = prefs.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+        buc_amount = prefs.getPrefString("buc_amount");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_p2p, container, false);
 
-        amount = (EditText) view.findViewById(R.id.etP2PAmount);
+        amount = view.findViewById(R.id.etP2PAmount);
+        imps_cb = view.findViewById(R.id.imps_cb);
+        upi_cb = view.findViewById(R.id.upi_cb);
+        notime_cb = view.findViewById(R.id.notime_cb);
+        timelimit_sb = view.findViewById(R.id.seekBar);
+        bonus_tv = view.findViewById(R.id.bonus);
+        require_buc_tv = view.findViewById(R.id.buc_needed);
+        avialable_buc_tv = view.findViewById(R.id.buc_available);
+        fee_layout = view.findViewById(R.id.fees_layout);
+        buc_token_info = view.findViewById(R.id.buc_token_info_layout);
+        upi_layout = view.findViewById(R.id.upi_layout);
+        payment_method_arry.put("imps");
+
+        avialable_buc_tv.setText(buc_amount);
+
+
+        timelimit_sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                require_buc_tv.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+
+
+
 
         p2p_active_orders_layout = view.findViewById(R.id.p2p_active_orders_ll);
         p2p_active_orders_layout.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +158,12 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
             }
         });
 
+        imps_cb.setOnCheckedChangeListener(this);
+        upi_cb.setOnCheckedChangeListener(this);
 
-        final RadioGroup rg = (RadioGroup) view.findViewById(R.id.rgp2p);
-        b = (Button) view.findViewById(R.id.bP2Prequest);
+
+        final RadioGroup rg = view.findViewById(R.id.rgp2p);
+        b = view.findViewById(R.id.bP2Prequest);
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -121,11 +173,21 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
                     case R.id.radioButton:
                         b.setText("Deposit Request");
                         type = "deposit";
+                        fee_layout.setVisibility(View.GONE);
+                        bonus_tv.setVisibility(View.VISIBLE);
+                        buc_token_info.setVisibility(View.GONE);
+                        upi_layout.setVisibility(View.GONE);
                         break;
                     case R.id.radioButton2:
 
                         b.setText("Withdraw Request");
                         type = "withdraw";
+                        fee_layout.setVisibility(View.VISIBLE);
+                        bonus_tv.setVisibility(View.GONE);
+                        buc_token_info.setVisibility(View.VISIBLE);
+                        if (upi_cb.isChecked()) {
+                            upi_layout.setVisibility(View.VISIBLE);
+                        }
                         break;
                 }
             }
@@ -157,7 +219,6 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
                 }
                 if (min_amt > amt) {
                     new CoustomToast(getContext(),"Min Amount must be low",CoustomToast.TYPE_DANGER).showToast();
-                    min_amount.setText("100");
                 }
 
             }
@@ -177,7 +238,38 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder {
     }
 
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        try {
+
+            if (imps_cb.isChecked()) {
+                payment_method_arry.put(0, "imps");
+                payment_method_arry.remove(1);
+            }
+            if (upi_cb.isChecked()) {
+                payment_method_arry.put(1, "upi");
+                payment_method_arry.remove(0);
+                if (type.equals("withdraw")) {
+                    upi_layout.setVisibility(View.VISIBLE);
+                } else {
+                    upi_layout.setVisibility(View.GONE);
+                }
 
 
+            } else {
+                upi_layout.setVisibility(View.GONE);
+            }
+            if (imps_cb.isChecked() && upi_cb.isChecked()) {
+                payment_method_arry.put(0, "imps");
+                payment_method_arry.put(1, "upi");
 
+            }
+            if (!imps_cb.isChecked() && !upi_cb.isChecked()) {
+                imps_cb.setChecked(true);
+            }
+            new CoustomToast(getActivity(), payment_method_arry.toString(), CoustomToast.TYPE_DANGER).showToast();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

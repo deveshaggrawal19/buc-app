@@ -60,11 +60,25 @@
                         android:text="Withdrawl INR" />
                 </RadioGroup>
 
+                <TextView
+                    android:id="@+id/bonus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#95035A83"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Get up to 5% extra bonus on Deposit amount greater then 1000   "
+                    android:textColor="?attr/textColorHeading" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/orderbook_card_drawable"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -86,12 +100,7 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Get up to 5% extra bonus on Deposit amount greater then 1000   "
-                        android:textColor="?attr/textColorHeading" />
+
 
 
                 </LinearLayout>
@@ -99,15 +108,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/orderbook_card_drawable"
+                    android:padding="10dp"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Payment Method*"
+                        android:textColor="?attr/textColorHeading" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <CheckBox
-                            android:id="@+id/checkBox"
+                            android:id="@+id/imps_cb"
                             android:layout_width="70dp"
                             android:layout_height="35dp"
                             android:layout_margin="5dp"
@@ -119,7 +138,7 @@
                             android:textStyle="bold" />
 
                         <CheckBox
-                            android:id="@+id/checkBox2"
+                            android:id="@+id/upi_cb"
                             android:layout_width="70dp"
                             android:layout_height="35dp"
                             android:layout_margin="5dp"
@@ -131,7 +150,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/BuySellInput"
+                        android:id="@+id/upi_layout"
+                        style="@style/BuySellInput.NoMargin"
                         android:visibility="gone">
 
                         <EditText
@@ -152,6 +172,8 @@
                     android:layout_marginRight="5dp"
                     android:background="@drawable/orderbook_card_drawable"
                     android:elevation="2dp"
+                    android:id="@+id/fees_layout"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -204,10 +226,50 @@
 
                     <CheckBox
                         android:layout_width="wrap_content"
+                        android:id="@+id/notime_cb"
                         android:layout_height="wrap_content"
                         android:buttonTint="?attr/textColorHeading"
                         android:text="No time boundation"
                         android:textColor="?attr/textColorHeading" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buc_token_info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/orderbook_card_drawable"
+                    android:elevation="2dp"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:visibility="gone">
+
+                    <LinearLayout style="@style/P2PBottomSheetList">
+
+                        <TextView
+                            style="@style/P2PBottomSheetListLabel"
+                            android:text="Buyucoin token Needed for the requesr" />
+
+                        <TextView
+                            android:id="@+id/buc_needed"
+                            style="@style/P2PBottomSheetListItem"
+                            android:text="5000" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/P2PBottomSheetList">
+
+                        <TextView
+                            style="@style/P2PBottomSheetListLabel"
+                            android:text="Buyucoin Token Available" />
+
+                        <TextView
+                            android:id="@+id/buc_available"
+                            style="@style/P2PBottomSheetListItem"
+                            android:text="5000" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -223,6 +285,7 @@
                         android:id="@+id/bP2Prequest"
                         style="@style/CustomButton.Big"
                         android:layout_margin="0dp"
+                        android:enabled="true"
                         android:text="Deposit Request"
                         android:textColor="@android:color/white" />
 

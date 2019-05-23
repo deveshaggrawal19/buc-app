@@ -1,166 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/orderbook_card_drawable"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
 
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bottom_sheet_bg_drawable"
-    android:padding="10dp">
+    android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/history_item_drawable"
-        android:padding="5dp"
-        android:elevation="2dp"
-        android:layout_margin="5dp"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
 
+        <LinearLayout style="@style/P2PBottomSheetList">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Minimum Boost (10-1000)" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:id="@+id/boost_value_text"
-                android:layout_marginRight="10dp"
-                android:text="Boost Amount 1000"/>
-
-        </RelativeLayout>
-
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:max="1000"
-            android:layout_marginBottom="10dp"
-            android:min="10" />
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:layout_margin="5dp"
-            android:id="@+id/checkBox"
-            android:layout_width="70dp"
-            android:gravity="center"
-            android:checked="true"
-            android:layout_height="35dp"
-            android:textStyle="bold"
-            android:button="@android:color/transparent"
-            android:background="@drawable/my_coustom_checkbox"
-            android:textColor="@drawable/my_coustom_checknox_text"
-            android:text="IMPS" />
-
-        <CheckBox
-            android:layout_margin="5dp"
-            android:id="@+id/checkBox2"
-            android:layout_width="70dp"
-            android:gravity="center"
-            android:layout_height="35dp"
-            android:textStyle="bold"
-            android:button="@android:color/transparent"
-            android:background="@drawable/my_coustom_checkbox"
-            android:textColor="@drawable/my_coustom_checknox_text"
-            android:text="UPI" />
-        <EditText
-            android:id="@+id/etP2PUpiId"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/input_shape"
-            android:hint="UPI ID"
-            android:padding="2dp" />
-
-    </LinearLayout>
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Total Amount"
-                android:layout_height="wrap_content" />
+                style="@style/P2PBottomSheetListLabel"
+                android:text="Total Amount" />
 
             <TextView
                 android:id="@+id/pay_amt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5000"
-                android:textColor="@android:color/black"
-                android:textSize="30sp" />
+                style="@style/P2PBottomSheetListItem"
+                android:text="5000" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="wrap_content">
+        <LinearLayout style="@style/P2PBottomSheetList">
+            <TextView
+                style="@style/P2PBottomSheetListLabel"
+                android:text="Payment method" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:text="Min Amount"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/pay_min_amt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="500"
-                android:textColor="@android:color/black"
-                android:textSize="30sp" />
-
+                android:id="@+id/pay_method"
+                style="@style/P2PBottomSheetListItem"
+                android:text="IMPS UPI" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="wrap_content">
+
+        <LinearLayout style="@style/P2PBottomSheetList">
             <TextView
-                android:layout_width="wrap_content"
-                android:text="Boost Amount"
-                android:layout_height="wrap_content" />
+                style="@style/P2PBottomSheetListLabel"
+                android:text="Buyucoin Token used for this transection" />
 
             <TextView
                 android:id="@+id/pay_boost_amt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100"
-                android:textColor="@android:color/black"
-                android:textSize="30sp" />
+                style="@style/P2PBottomSheetListItem"
+                android:text="100" />
 
         </LinearLayout>
 
@@ -169,14 +56,18 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
     <Button
         android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
+        style="@style/CustomButton.Big"
         android:text="Confirm"
         android:id="@+id/make_p2p_request"
-        android:background="@drawable/pills"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content" />
+        android:layout_margin="10dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 </LinearLayout>
 </androidx.core.widget.NestedScrollView>

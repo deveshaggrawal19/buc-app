@@ -14,7 +14,9 @@
     <color name="marketRow">#F5F0F0</color>
     <color name="windowColorDark">#121212</color>
     <color name="windowColorWhite">#ffffff</color>
-    <color name="orderBookCardColor">#2B2A2A</color>
+    <color name="orderBookCardColor">#303030</color>
+    <color name="colorPasswordButtonText">#4CAAF3</color>
+
 
     <!--INPUT COLORS-->
     <color name="inputShapeDark">#353333</color>

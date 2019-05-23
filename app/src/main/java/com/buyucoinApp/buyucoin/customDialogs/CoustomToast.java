@@ -38,7 +38,8 @@ public class CoustomToast{
         text = view.findViewById(R.id.toast_msg);
         layout = view.findViewById(R.id.toast_background);
         text.setText(message);
-        toast.setGravity(Gravity.FILL_HORIZONTAL|Gravity.TOP,0,0);
+        toast.setGravity(Gravity.FILL | Gravity.TOP, 0, 60);
+
         toast.setDuration(Toast.LENGTH_LONG);
         switchIconAndColor(type);
         toast.setView(view);
