@@ -22,6 +22,13 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import com.buyucoinApp.buyucoin.Dashboard;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
@@ -37,7 +44,7 @@ import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.buyucoinApp.buyucoin.retrofitClients.RetrofitClients;
 import com.buyucoinApp.buyucoin.retrofitRepos.account.AccountResponse;
 import com.buyucoinApp.buyucoin.retrofitRepos.account.Data;
-import com.buyucoinApp.buyucoin.retrofitRepos.login.ResponseData;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,12 +52,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ShareCompat;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -80,7 +81,7 @@ public class AccountFragment extends Fragment {
     private RelativeLayout account_about_us, account_term_policy,change_passcode_layout;
     private String referral_id = "";
     private Button generate_wallet;
-
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -362,11 +363,11 @@ public class AccountFragment extends Fragment {
     }
 
 
-
-
-
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayout.startShimmerAnimation();
+    }
 
     private void getAccountData() {
         OkHttpHandler.auth_get("account", ACCESS_TOKEN, new Callback() {
@@ -412,6 +413,8 @@ public class AccountFragment extends Fragment {
 //                                kyc.getBackground().setTint(Color.green(R.color.kyc_color));
                                 ll.setVisibility(View.VISIBLE);
                                 Utilities.hideProgressBar(pb);
+                                shimmerFrameLayout.stopShimmerAnimation();
+                                shimmerFrameLayout.setVisibility(View.GONE);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -453,7 +456,7 @@ public class AccountFragment extends Fragment {
         ref_id = view.findViewById(R.id.ref_id);
         share_ref_id = view.findViewById(R.id.share_ref_id);
         change_passcode_layout = view.findViewById(R.id.change_passcode_layout);
-
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
     }
 
 

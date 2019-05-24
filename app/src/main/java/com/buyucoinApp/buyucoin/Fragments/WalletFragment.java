@@ -30,6 +30,7 @@ import com.buyucoinApp.buyucoin.Utilities;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +61,7 @@ public class WalletFragment extends Fragment {
     private LinearLayout p2p_history_layout;
     private LinearLayout p2p_active_orders_layout;
     private NestedScrollView nsView;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
 
 
@@ -94,12 +96,6 @@ public class WalletFragment extends Fragment {
                 getWalletData();
                 getAccountData();
         }
-
-
-
-
-
-
 
         WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
         String WALLET_STRING = getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE;
@@ -159,9 +155,16 @@ public class WalletFragment extends Fragment {
         hidezero_checkbox = view.findViewById(R.id.wallet_checkbox);
         welcome = view.findViewById(R.id.welcome);
         total_crypto_portfolio = view.findViewById(R.id.wallet_crypto_port);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
 
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayout.startShimmerAnimation();
     }
 
     private void HistoryClickHandler(){
@@ -274,6 +277,8 @@ public class WalletFragment extends Fragment {
                                 recyclerView.setAdapter(new VerticalAdapter(getContext(),list,false));
                                 Utilities.hideProgressBar(pb);
                                 wallet_process_img.setVisibility(View.GONE);
+                                shimmerFrameLayout.stopShimmerAnimation();
+                                shimmerFrameLayout.setVisibility(View.GONE);
                             }
                         });
                     }

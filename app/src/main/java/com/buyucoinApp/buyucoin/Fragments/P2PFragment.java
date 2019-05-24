@@ -1,5 +1,6 @@
 package com.buyucoinApp.buyucoin.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.buyucoinApp.buyucoin.Interfaces.TriggerActiveOrder;
+import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.bottomsheets.P2P_PayBottomsheet;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
@@ -26,7 +28,12 @@ import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 
 import org.json.JSONArray;
 
+import java.io.IOException;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 public class P2PFragment extends Fragment implements TriggerActiveOrder, CompoundButton.OnCheckedChangeListener {
@@ -48,6 +55,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
     LinearLayout p2p_active_orders_layout;
     JSONArray payment_method_arry = new JSONArray();
     String buc_amount = "0";
+    ProgressDialog p;
 
 
     //    private OnFragmentInteractionListener mListener;
@@ -109,11 +117,16 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
 
         avialable_buc_tv.setText(buc_amount);
 
+        p = new ProgressDialog(getActivity());
+        p.setTitle("Fetching Fees");
+        p.setMessage("please wait while fetching your fees details");
+        p.create();
+
 
         timelimit_sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                require_buc_tv.setText(String.valueOf(progress));
+
             }
 
             @Override
@@ -123,7 +136,18 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                generateFees(String.valueOf(seekBar.getProgress()));
 
+            }
+        });
+
+        notime_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    timelimit_sb.setEnabled(false);
+                else
+                    timelimit_sb.setEnabled(true);
             }
         });
 
@@ -271,5 +295,31 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void generateFees(String s) {
+
+        p.show();
+        OkHttpHandler.auth_post("get_notifications", ACCESS_TOKEN, s, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.body() != null) {
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            p.dismiss();
+                            double d = Math.round(Math.random() * 200);
+                            require_buc_tv.setText(String.valueOf(d + 1));
+                        }
+                    });
+
+                }
+            }
+        });
     }
 }

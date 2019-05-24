@@ -3,6 +3,7 @@
     <declare-styleable name="BucAppTheme">
         <attr name="windowBackGroundColor" format="color"/>
 
+
         <!--EDIT TEXT-->
         <attr name="EditTextBgColor" format="color"/>
         <attr name="EditTextColor" format="color"/>
