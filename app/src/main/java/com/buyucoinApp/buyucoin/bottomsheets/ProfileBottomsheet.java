@@ -1,5 +1,6 @@
 package com.buyucoinApp.buyucoin.bottomsheets;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,17 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.customDialogs.ChangeNameDialog;
 import com.buyucoinApp.buyucoin.customDialogs.ChangePasswordDialog;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 public class ProfileBottomsheet extends BottomSheetDialogFragment {
 
@@ -69,5 +71,11 @@ public class ProfileBottomsheet extends BottomSheetDialogFragment {
 
 
         return view;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new BottomSheetDialog(Objects.requireNonNull(getContext()), R.style.CoustomBottomSheet);
     }
 }

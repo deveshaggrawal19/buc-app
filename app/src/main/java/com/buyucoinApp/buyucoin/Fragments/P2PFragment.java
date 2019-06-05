@@ -90,7 +90,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        BuyucoinPref prefs = new BuyucoinPref(Objects.requireNonNull(getActivity()));
+        BuyucoinPref prefs = new BuyucoinPref(Objects.requireNonNull(getContext()));
 
         ACCESS_TOKEN = prefs.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         buc_amount = prefs.getPrefString("buc_amount");

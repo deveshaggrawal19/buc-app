@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="?attr/windowBackGroundColor"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".VerifyUser">
@@ -11,6 +11,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:visibility="gone"
         android:src="@drawable/conf_otp" />
 
 
@@ -28,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="?attr/textColorHeading"
             android:text="Enter mobile no to get OTP"
             android:textSize="18sp" />
 
@@ -36,27 +38,23 @@
             android:layout_height="20dp" />
 
 
-        <EditText
-            android:id="@+id/enter_number_etv"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/input_shape"
-            android:inputType="number"
-            android:gravity="center"
-            android:maxLength="10"
-            android:maxLines="1"/>
+        <LinearLayout style="@style/BuySellInput.NoMargin">
+
+            <EditText
+                android:id="@+id/enter_number_etv"
+                style="@style/BuySellInputInner"
+                android:hint="1234567890"
+                android:inputType="number"
+                android:maxLength="10"
+                android:maxLines="1" />
+        </LinearLayout>
+
 
         <Button
+            style="@style/CustomButton.Big"
             android:id="@+id/send_otp_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="150dp"
-            android:background="@drawable/pills"
             android:padding="10dp"
-            android:text="Add mobile number"
-            android:textColor="@color/colorWhite" />
+            android:text="Add mobile number" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"
@@ -117,14 +115,10 @@
     </LinearLayout>
 
     <Button
+        style="@style/CustomButton.Big"
         android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="end"
         android:layout_margin="20dp"
-        android:background="@drawable/curr_btn"
         android:elevation="0dp"
-        android:text="logout"
-        android:textColor="@drawable/curr_btn_text" />
+        android:text="logout" />
 
 </LinearLayout>

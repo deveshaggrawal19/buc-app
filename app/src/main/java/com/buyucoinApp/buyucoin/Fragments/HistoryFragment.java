@@ -8,20 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.buyucoinApp.buyucoin.Adapters.History_PagerAdapter;
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Objects;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.viewpager.widget.ViewPager;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -74,7 +73,7 @@ public class HistoryFragment extends DialogFragment {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        getHistory();
+//        getHistory();
 
         History_PagerAdapter history_pagerAdapter = new History_PagerAdapter(getChildFragmentManager(),coin);
         viewPager.setAdapter(history_pagerAdapter);

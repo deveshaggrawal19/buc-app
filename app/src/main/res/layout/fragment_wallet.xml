@@ -4,7 +4,7 @@
     xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBlack"
+    android:background="?attr/windowBackGroundColor"
     android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
@@ -44,111 +44,102 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
                     android:background="@drawable/wallet_header_design"
                     android:orientation="vertical"
-                    android:layout_margin="10dp"
-                   >
+                    android:padding="10dp">
+
                     <TextView
                         android:layout_width="match_parent"
-                        android:text="Welcome"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/colorWhite"
-                        android:gravity="center"
-                        android:layout_height="wrap_content" />
+                        android:text="Welcome"
+                        android:textColor="@color/colorWhite" />
 
                     <TextView
                         android:id="@+id/welcome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:elevation="5dp"
-                        android:gravity="center"
-                        android:padding="5dp"
+                        android:layout_marginTop="10dp"
                         android:text=" Welcome user"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
-                        />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/colorWhite"
-                        android:layout_height="1dp"/>
+                        android:textSize="25sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/wallet_header_design2"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                       android:orientation="horizontal"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
                         <TextView
                             android:id="@+id/textView14"
-                            android:layout_gravity="start"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="start"
                             android:gravity="start|center_vertical"
                             android:text="Your total INR balance is"
-                            android:textColor="@android:color/white"
-                            />
+                            android:textColor="@android:color/white" />
 
                         <TextView
                             android:id="@+id/wallet_inr"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="end|center_vertical"
                             android:text="$43,789.00"
                             android:textColor="@android:color/white"
-                            android:textSize="25sp" />
+                            android:textSize="35sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
                         <TextView
 
-                            android:layout_gravity="start"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="start"
                             android:gravity="start|center_vertical"
                             android:text="Your total Crypto Portfolio"
-                            android:textColor="@android:color/white"
-                            />
+                            android:textColor="@android:color/white" />
 
                         <TextView
                             android:id="@+id/wallet_crypto_port"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="end|center_vertical"
                             android:text="$43,789.00"
                             android:textColor="@android:color/white"
-                            android:textSize="25sp" />
+                            android:textSize="35sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
+                </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:text="Shortcuts"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="#CCFFFFFF"
                         android:textSize="@dimen/headings"
-                        android:textStyle="bold"
                         android:padding="10dp"
                         android:layout_marginTop="20dp"
                         android:layout_height="wrap_content" />
 
 
-
-
-
-
-
-
-
-
                         <HorizontalScrollView
-                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -160,7 +151,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:paddingStart="40dp"
-                                android:layout_height="130dp">
+                                android:layout_height="80dp">
 
                                 <LinearLayout
                                     style="@style/WalletMore"
@@ -247,9 +238,6 @@
 
 
                         </HorizontalScrollView>
-
-
-                </LinearLayout>
 
 
 

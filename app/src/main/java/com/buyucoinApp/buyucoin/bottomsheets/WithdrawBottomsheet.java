@@ -1,5 +1,6 @@
 package com.buyucoinApp.buyucoin.bottomsheets;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.json.JSONArray;
@@ -22,8 +27,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -46,10 +49,18 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
         coin_base_address = bundle.getString("coin_base_address","N/A");
         coin_name = bundle.getString("coin_name","N/A");
 
-            Log.d("===========>",String.valueOf(coin_amount)+"  "+coin_tag);
+            Log.d("===========>", coin_amount + "  " + coin_tag);
         }
         super.onCreate(savedInstanceState);
     }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new BottomSheetDialog(Objects.requireNonNull(getContext()), R.style.CoustomBottomSheet);
+    }
+
+
 
 
 
@@ -86,7 +97,7 @@ public class WithdrawBottomsheet extends BottomSheetDialogFragment {
 
 
         if(bundle!=null){
-            amount.setText("Amount : "+String.valueOf(coin_amount));
+            amount.setText("Amount : " + coin_amount);
             tag.setText("Destination Tag : "+coin_tag);
             address.setText("Address : "+coin_address);
             if(!coin_tag.equals("")) tag.setVisibility(View.VISIBLE);

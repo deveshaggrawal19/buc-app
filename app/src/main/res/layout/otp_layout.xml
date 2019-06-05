@@ -1,72 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="10dp"
-    android:background="@drawable/history_item_drawable"
-    android:theme="@style/fontTheme"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/orderbook_card_drawable"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/conf_otp" />
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:text="Enter OTP"
         android:id="@+id/pin_textview"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textSize="@dimen/headings"
-        android:layout_height="wrap_content" />
-
-    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:id="@+id/otp_edittext"
-        android:layout_width="200dp"
-        android:background="@drawable/input_shape"
-        android:padding="5dp"
-        android:layout_gravity="center"
-        android:inputType="numberPassword"
-        android:hint="Enter Pin"
         android:gravity="center"
-        android:layout_height="70dp" />
+        android:text="Enter OTP"
+        android:textColor="?attr/textColorHeading"
+        android:textSize="?attr/textSizeHeading"
+        android:textStyle="bold"
+        android:theme="@style/CoustomBottomSheet" />
 
+    <LinearLayout
+        style="@style/BuySellInput"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/otp_edittext"
+            style="@style/BuySellInputInner"
+            android:hint="Enter Pin"
+            android:inputType="numberPassword" />
+    </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:gravity="end"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
 
         <Button
-            android:layout_width="match_parent"
-            android:id="@+id/submit_otp_btn"
-            android:background="@drawable/pills"
-            android:textColor="@color/colorWhite"
-            android:text="SUBMIT OTP"
-            android:padding="20dp"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
             android:id="@+id/logout_otp_btn"
-            android:background="@drawable/history_item_drawable"
-            android:textColor="@color/colorBlack"
-            android:elevation="2dp"
-            android:text="Logout"
-            android:layout_gravity="center"
-            android:padding="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content" />
+            style="@style/CustomButton"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/zxing_transparent"
+            android:text="Logout" />
+
+        <Button
+            android:id="@+id/submit_otp_btn"
+            style="@style/CustomButton"
+
+            android:layout_margin="5dp"
+            android:text="SUBMIT OTP" />
 
     </LinearLayout>
 

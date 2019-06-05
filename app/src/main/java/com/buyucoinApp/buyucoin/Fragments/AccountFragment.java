@@ -457,6 +457,8 @@ public class AccountFragment extends Fragment {
         share_ref_id = view.findViewById(R.id.share_ref_id);
         change_passcode_layout = view.findViewById(R.id.change_passcode_layout);
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.setAlpha(0.2f);
+
     }
 
 

@@ -3,51 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/windowBackGroundColor"
     android:orientation="vertical"
     tools:context=".GenerateWallet">
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
-            android:text="Hi"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="38sp"
-            android:textColor="@color/colorBlack"
-            android:layout_height="wrap_content" />
+            android:text="Hi"
+            android:textColor="?attr/textColorHeading"
+            android:textSize="38sp" />
+
         <ImageView
             android:layout_width="match_parent"
-            android:src="@drawable/recreate"
+            android:layout_height="300dp"
             android:layout_gravity="center"
-            android:layout_height="300dp" />
+            android:src="@drawable/recreate"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="we changed somethig to make it better , now you have to recreate your wallet again, or create your wallet if you are new"
-            android:gravity="center"
-            android:textSize="18sp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:padding="10dp"
-            android:layout_height="wrap_content" />
+            android:text="we changed somethig to make it better , now you have to recreate your wallet again, or create your wallet if you are new"
+            android:textColor="?attr/textColorHeading"
+            android:textSize="18sp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:text="lets start"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/pills"
-            android:textColor="@color/colorWhite"
-            android:padding="10dp"
-            android:layout_gravity="center"
             android:id="@+id/generate_wallet"
-            android:layout_height="wrap_content" />
+            style="@style/CustomButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="10dp"
+            android:text="lets start" />
 
     </LinearLayout>
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="?attr/windowBackGroundColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/withdraw_layout"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -23,72 +23,63 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BTC"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-            <EditText
-                android:layout_width="wrap_content"
-                android:hint="0"
-                android:maxLength="10"
-                android:textSize="60sp"
-                android:autoSizeMaxTextSize="60sp"
-                android:inputType="numberDecimal"
-                android:id="@+id/withdraw_layout_amount_et"
-                android:textColor="@android:color/white"
-                android:background="@android:color/transparent"
-                android:layout_height="wrap_content" />
+                android:layout_marginBottom="20dp"
+                android:textColor="?attr/textColorHeading"
+                android:textSize="50sp" />
+
+            <LinearLayout style="@style/BuySellInput">
+
+                <EditText
+                    android:id="@+id/withdraw_layout_amount_et"
+                    style="@style/BuySellInputInner.NoPadding"
+                    android:autoSizeMaxTextSize="60sp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="Enter Quantity"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10" />
+            </LinearLayout>
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="wrap_content">
+        <LinearLayout style="@style/BuySellInput">
 
             <EditText
+                style="@style/BuySellInputInner.NoPadding"
                 android:layout_width="wrap_content"
                 android:hint="Wallet Address"
                 android:gravity="center"
+                android:background="@color/zxing_transparent"
                 android:id="@+id/withdraw_layout_address_et"
-                android:background="@drawable/deposite_withdraw_edittext"
-                android:padding="15dp"
-                android:layout_height="wrap_content"/>
+                android:inputType="text" />
 
 
 
         </LinearLayout>
 
         <LinearLayout
+            style="@style/BuySellInput"
             android:visibility="gone"
-            android:id="@+id/tag_layout"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_height="wrap_content">
+            android:id="@+id/tag_layout">
 
             <EditText
-                android:layout_width="wrap_content"
+                style="@style/BuySellInputInner.NoPadding"
                 android:hint="Destination Tag"
                 android:gravity="center"
-                android:background="@drawable/deposite_withdraw_edittext"
-                android:padding="15dp"
+                android:background="@color/zxing_transparent"
                 android:id="@+id/destination_tag_edittext"
-                android:layout_height="wrap_content"/>
+                android:inputType="text" />
 
 
 
         </LinearLayout>
         <Button
+            style="@style/CustomButton"
             android:layout_width="200dp"
             android:layout_marginTop="50dp"
-            android:textColor="@android:color/white"
             android:text="Withdraw"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:id="@+id/withdraw_layout_btnview"
-            android:background="@drawable/pills"
-            android:layout_height="wrap_content" />
+            android:id="@+id/withdraw_layout_btnview" />
 
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.buyucoinApp.buyucoin.bottomsheets;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,16 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.buyucoinApp.buyucoin.Fragments.HistoryFragment;
 import com.buyucoinApp.buyucoin.LoginActivity;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+import java.util.Objects;
 
 public class SuperSettingsBottomsheet extends BottomSheetDialogFragment {
     RelativeLayout history,about,policy,logout;
@@ -75,5 +79,12 @@ public class SuperSettingsBottomsheet extends BottomSheetDialogFragment {
         });
 
         return view;
+    }
+
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new BottomSheetDialog(Objects.requireNonNull(getContext()), R.style.CoustomBottomSheet);
     }
 }

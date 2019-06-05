@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@android:color/white"
+    android:background="?attr/windowBackGroundColor"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -32,7 +32,7 @@
        android:orientation="vertical"
        android:gravity="center"
        android:layout_margin="10dp"
-       android:background="@drawable/history_item_drawable"
+       android:background="@drawable/orderbook_card_drawable"
        android:elevation="2dp"
        android:padding="20dp"
        android:layout_height="wrap_content">
@@ -44,9 +44,11 @@
            <TextView
                android:layout_width="match_parent"
                android:text="Enter your new name"
+               android:textColor="?attr/textColorHeading"
                android:layout_height="wrap_content" />
            <EditText
                android:background="@drawable/input_shape"
+               android:backgroundTint="#33000000"
                android:id="@+id/new_name"
                android:layout_width="match_parent"
                android:layout_marginTop="5dp"
@@ -63,15 +65,11 @@
            android:visibility="gone"
            android:layout_height="wrap_content" />
        <Button
+           style="@style/CustomButton"
            android:id="@+id/change_name_btn"
            android:layout_marginTop="20dp"
            android:layout_marginBottom="20dp"
-           android:layout_width="wrap_content"
-           android:text="Change Name"
-           android:background="@drawable/pills"
-           android:padding="10dp"
-           android:textColor="@android:color/white"
-           android:layout_height="wrap_content" />
+           android:text="Change Name" />
    </LinearLayout>
 
 </LinearLayout>

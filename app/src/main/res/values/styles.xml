@@ -76,7 +76,7 @@
     </style>
 
     <style name="WalletMore">
-        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_width">200dp</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:padding">10dp</item>

@@ -3,14 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/history_item_drawable">
+    android:background="@drawable/orderbook_card_drawable">
     <TextView
         android:layout_width="match_parent"
         android:text="Your Order"
         android:textSize="30sp"
         android:padding="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
+        android:textColor="?attr/textColorHeading"
         android:gravity="center"
         android:id="@+id/dialog_title"
         android:layout_height="wrap_content" />
@@ -33,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:textColor="?attr/textColorHeading"
                 android:text="Quantity" />
 
             <TextView
@@ -40,7 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/textColorHeading"
+
                 android:text="100" />
         </RelativeLayout>
 
@@ -56,6 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:textColor="?attr/textColorHeading"
+
                 android:text="Price" />
 
             <TextView
@@ -63,7 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/textColorHeading"
+
                 android:text="1000" />
         </RelativeLayout>
 
@@ -79,6 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:textColor="?attr/textColorHeading"
+
                 android:text="Fees" />
 
             <TextView
@@ -86,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/textColorHeading"
+
                 android:text="40 + GST 10%" />
         </RelativeLayout>
 
@@ -104,6 +111,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Total"
+                android:textColor="?attr/textColorHeading"
+
                 android:textStyle="bold" />
 
             <TextView
@@ -113,34 +122,32 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:text="100"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/textColorHeading"
                 android:textStyle="bold" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
+                style="@style/CustomButton"
                 android:id="@+id/cancel_action_btn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="60dp"
-                android:background="@android:color/white"
+                android:layout_margin="5dp"
                 android:text="Cancel" />
 
             <Button
+                style="@style/CustomButton"
                 android:id="@+id/agree_action_btn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="60dp"
-                android:background="@drawable/pills"
-                android:text="Agree"
-                android:textColor="@android:color/white" />
+                android:layout_margin="5dp"
+                android:text="Agree" />
         </LinearLayout>
 
 

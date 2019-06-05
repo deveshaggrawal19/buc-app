@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,16 +78,19 @@ public class WalletFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getContext()));
-        ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
-        list = new ArrayList<>();
+        try {
+            buyucoinPref = new BuyucoinPref(Objects.requireNonNull(getActivity()).getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        ACCESS_TOKEN = buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN);
+        list = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
 
 
@@ -95,6 +99,13 @@ public class WalletFragment extends Fragment {
         if(buyucoinPref.getPrefBoolean("kyc_status") && buyucoinPref.getPrefBoolean("mob_verified") && buyucoinPref.getPrefBoolean("wallet")){
                 getWalletData();
                 getAccountData();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getHistory();
+                }
+            }, 500);
         }
 
         WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
@@ -156,6 +167,7 @@ public class WalletFragment extends Fragment {
         welcome = view.findViewById(R.id.welcome);
         total_crypto_portfolio = view.findViewById(R.id.wallet_crypto_port);
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.setAlpha(0.2f);
 
 
 
@@ -279,6 +291,8 @@ public class WalletFragment extends Fragment {
                                 wallet_process_img.setVisibility(View.GONE);
                                 shimmerFrameLayout.stopShimmerAnimation();
                                 shimmerFrameLayout.setVisibility(View.GONE);
+                                WalletBalance();
+
                             }
                         });
                     }
@@ -341,7 +355,6 @@ public class WalletFragment extends Fragment {
                                 buyucoinPref.setEditpref("mob",data.get("mob").toString());
                                 buyucoinPref.setEditpref("kyc_status",data.getBoolean("kyc_status"));
 
-                                WalletBalance();
 
 
                             } catch (JSONException e) {
@@ -389,6 +402,86 @@ public class WalletFragment extends Fragment {
         super.onDestroy();
         list.clear();
         hidezero_checkbox = null;
+    }
+
+
+    private void getHistory() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpHandler.auth_get("deposit_history", ACCESS_TOKEN, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        assert response.body() != null;
+                        String s = response.body().string();
+                        //Log.d("RESPONSE____", s);
+                        try {
+                            JSONObject jsonArray = new JSONObject(s).getJSONObject("data");
+                            new BuyucoinPref(Objects.requireNonNull(getContext())).setEditpref("deposit_his", jsonArray.toString());
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }, 100);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpHandler.auth_get("withdraw_history", ACCESS_TOKEN, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        assert response.body() != null;
+                        String s = response.body().string();
+                        //Log.d("RESPONSE____", s);
+                        try {
+                            JSONObject jsonArray = new JSONObject(s).getJSONObject("data");
+                            new BuyucoinPref(Objects.requireNonNull(getContext())).setEditpref("withdraw_his", jsonArray.toString());
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }, 110);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpHandler.auth_get("order_history", ACCESS_TOKEN, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        assert response.body() != null;
+                        String s = response.body().string();
+                        Log.d("OOOOOOOOOOORESPONSE____", s);
+                        try {
+                            JSONObject jsonArray = new JSONObject(s).getJSONObject("data");
+                            new BuyucoinPref(Objects.requireNonNull(getContext())).setEditpref("order_his", jsonArray.toString());
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }, 120);
+
     }
 }
 

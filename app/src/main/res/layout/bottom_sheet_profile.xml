@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/bottom_sheet_bg_drawable"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/orderbook_card_drawable">
     <TextView
         android:layout_width="match_parent"
         android:text="@string/bottomsheet_profile"
-        android:background="@drawable/pills"
-        android:textColor="@android:color/white"
+        android:textColor="?attr/textColorHeading"
         android:gravity="center"
         android:layout_margin="10dp"
-        android:textSize="@dimen/headings"
+        android:textSize="?attr/textSizeHeading"
         android:padding="10dp"
         android:layout_height="wrap_content" />
 

@@ -1,5 +1,6 @@
 package com.buyucoinApp.buyucoin.bottomsheets;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.buyucoinApp.buyucoin.R;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.buyucoinApp.buyucoin.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.Objects;
 
 public class HistoryBottomsheet extends BottomSheetDialogFragment {
     private TextView  amount,curr,time,status,tx_hash,address,fee,filled,price,type,value;
@@ -24,6 +28,12 @@ public class HistoryBottomsheet extends BottomSheetDialogFragment {
         Bundle b = getArguments();
         setTextToViews(b);
         return view;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new BottomSheetDialog(Objects.requireNonNull(getContext()), R.style.CoustomBottomSheet);
     }
 
     private void setTextToViews(Bundle b) {

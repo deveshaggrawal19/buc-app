@@ -34,7 +34,7 @@ import okhttp3.Response;
 public class Utilities {
 
     public static boolean isOnline(Context context){
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         return isConnected;
@@ -170,6 +170,7 @@ public class Utilities {
         });
     }
 
+
     public static void getOTPFromUser(final Activity activity, final String ACCESS_TOKEN, final AlertDialog.Builder builder){
         LayoutInflater layoutInflater = activity.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.otp_layout,null,false);
@@ -266,7 +267,7 @@ public class Utilities {
     }
 
     public static void clearPrefs(Activity activity){
-        SharedPreferences.Editor editor = activity.getSharedPreferences("BUYUCOIN_USER_PREFS", activity.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = activity.getSharedPreferences("BUYUCOIN_USER_PREFS", Context.MODE_PRIVATE).edit();
         editor.remove("access_token");
         editor.remove("refresh_token");
         editor.apply();
