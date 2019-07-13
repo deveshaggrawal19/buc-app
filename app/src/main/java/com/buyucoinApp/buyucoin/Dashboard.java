@@ -6,13 +6,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.buyucoinApp.buyucoin.Adapters.Dashboard_PagerAdapter;
 import com.buyucoinApp.buyucoin.Fragments.ServerError;
@@ -30,12 +36,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 import io.fabric.sdk.android.Fabric;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -221,10 +221,15 @@ public class Dashboard extends AppCompatActivity implements ForceUpdateChecker.O
                     buyucoinPref.setEditpref("mob_verified", data.getBoolean("mob_verified"));
                     buyucoinPref.setEditpref("user_status",data.getString("user_status"));
                     buyucoinPref.setEditpref("wallet",data.getBoolean("wallet"));
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
-                    Looper.prepare();
-                    new CoustomToast(Dashboard.this,e.getMessage(),CoustomToast.TYPE_NORMAL).showToast();
+//                    Looper.prepare();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new CoustomToast(Dashboard.this, e.getMessage(), CoustomToast.TYPE_NORMAL).showToast();
+                        }
+                    });
 
 
                 }

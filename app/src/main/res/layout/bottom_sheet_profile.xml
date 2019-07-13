@@ -17,200 +17,172 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/history_item_drawable"
-                android:elevation="2dp"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:tint="@color/g6209c3"
-                    android:src="@drawable/edit_pencil"
-                    android:layout_height="48dp" />
-
-                <TextView
-                    android:id="@+id/profile_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:background="@android:color/white"
-                    android:gravity="center"
-                    android:text="Name"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
-
-                <Button
-                    android:id="@+id/bottomsheet_update_name_btn"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curr_btn"
-                    android:text="update name"
-                    android:textColor="@drawable/curr_btn_text" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@drawable/history_item_drawable"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:elevation="2dp"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:tint="@color/g6209c3"
-                    android:src="@drawable/eye_password"
-                    android:layout_height="48dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="Password"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:background="@android:color/white"
-                    android:textColor="@android:color/black"
-                    />
-
-                <Button
-                    android:id="@+id/bottomsheet_update_password_btn"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curr_btn"
-                    android:text="update password"
-                    android:textColor="@drawable/curr_btn_text" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
 
 
         <RelativeLayout
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_marginLeft="5dp"
-                android:tint="@color/g6209c3"
-                android:src="@drawable/profile_option_list_drawable"
-                android:layout_height="match_parent" />
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/profile_phone"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="90dp"
-                android:background="@android:color/white"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="Mobile No"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                android:layout_height="wrap_content"
+                android:text="NAME"
+                android:textColor="?attr/textColorHeading" />
 
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Name"
+                android:textColor="?attr/textColorHeading"
+                android:textSize="?attr/textSizeHeading" />
+
+            <Button
+                android:id="@+id/bottomsheet_update_name_btn"
+                style="@style/CustomButton.Small"
+                android:layout_alignParentEnd="true"
+                android:padding="15dp"
+                android:text="update name"
+                android:textColor="@color/colorWhite" />
 
 
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10">
 
-            <ImageView
-                android:layout_width="12dp"
-                android:tint="@color/g1b67e8"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/profile_option_list_drawable"
-                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PASSWORD"
+                android:textColor="?attr/textColorHeading" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="********"
+                android:textColor="?attr/textColorHeading"
+                android:textSize="?attr/textSizeHeading" />
+
+            <Button
+                android:id="@+id/bottomsheet_update_password_btn"
+                style="@style/CustomButton.Small"
+                android:layout_alignParentEnd="true"
+                android:padding="15dp"
+                android:text="update Password"
+                android:textColor="@color/colorWhite" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PHONE NUMBER"
+                android:textColor="?attr/textColorHeading" />
+            <TextView
+                android:id="@+id/profile_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Name"
+                android:textColor="?attr/textColorHeading"
+                android:textSize="?attr/textSizeHeading" />
+
+            <Button
+                style="@style/CustomButton.Small"
+                android:layout_alignParentEnd="true"
+                android:padding="15dp"
+                android:text="update name"
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KYC STATUS"
+                android:textColor="?attr/textColorHeading" />
 
             <TextView
                 android:id="@+id/profile_kyc"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="KYC Status"
-                android:textColor="@android:color/black" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Name"
+                android:textColor="?attr/textColorHeading"
+                android:textSize="?attr/textSizeHeading" />
+
+            <Button
+                style="@style/CustomButton.Small"
+                android:layout_alignParentEnd="true"
+                android:padding="15dp"
+                android:text="update name"
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_marginLeft="5dp"
-                android:tint="@color/kyc_color"
-                android:src="@drawable/profile_option_list_drawable"
-                android:layout_height="match_parent" />
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_10">
 
             <TextView
-                android:id="@+id/profile_email"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="Email Id"
-                android:textColor="@android:color/black" />
+                android:layout_height="wrap_content"
+                android:text="EMAIL ID"
+                android:textColor="?attr/textColorHeading" />
+            <TextView
+                android:id="@+id/profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Name"
+                android:textColor="?attr/textColorHeading"
+                android:textSize="?attr/textSizeHeading" />
+
+            <Button
+                style="@style/CustomButton.Small"
+                android:layout_alignParentEnd="true"
+                android:padding="15dp"
+                android:text="update name"
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="#eeeeee"
-            android:layout_height="1dp"/>
-
-
-
-
-
-
 
 
     </LinearLayout>

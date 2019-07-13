@@ -19,7 +19,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/g1b67e8"
+                android:tint="@color/textColor4"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_history"
                 android:layout_height="match_parent" />
@@ -28,6 +28,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
+                android:textSize="@dimen/headings"
                 android:layout_height="match_parent"
                 android:textColor="?attr/textColorHeading"
                 android:text="@string/history"
@@ -45,7 +46,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/g6209c3"
+                android:tint="@color/textColor4"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_info_black_24dp"
                 android:layout_height="match_parent" />
@@ -54,6 +55,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
+                android:textSize="@dimen/headings"
                 android:layout_height="match_parent"
                 android:textColor="?attr/textColorHeading"
 
@@ -72,7 +74,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/colorPrimary"
+                android:tint="@color/textColor4"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_verified_user_black_24dp"
                 android:layout_height="match_parent" />
@@ -81,6 +83,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
+                android:textSize="@dimen/headings"
                 android:layout_height="match_parent"
                 android:text="@string/privacy_policy"
                 android:textColor="?attr/textColorHeading"
@@ -99,7 +102,7 @@
 
             <ImageView
                 android:layout_width="30dp"
-                android:tint="@color/kyc_color"
+                android:tint="@color/textColor4"
                 android:layout_marginStart="5dp"
                 android:src="@drawable/ic_portrait_black_24dp"
                 android:layout_height="match_parent" />
@@ -108,6 +111,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
+                android:textSize="@dimen/headings"
                 android:layout_height="match_parent"
                 android:text="Logout"
                 android:textColor="?attr/textColorHeading"

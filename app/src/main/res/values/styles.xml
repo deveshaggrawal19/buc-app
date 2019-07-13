@@ -384,6 +384,13 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="P2POrdersActivityTab">
+        <item name="android:background">@color/g1b67e8</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:minHeight">?actionBarSize</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="CoustomBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
     </style>

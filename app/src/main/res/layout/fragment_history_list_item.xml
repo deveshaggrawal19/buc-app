@@ -88,15 +88,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bottom_sheet_bg_drawable"
-        android:padding="10dp"
+        android:background="@drawable/history_item_bg_dw"
+        android:padding="5dp"
         android:elevation="0dp"
         android:layout_margin="5dp"
         android:layout_height="60dp">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:layout_height="match_parent">
             <ImageView
@@ -107,61 +107,60 @@
                 android:src="@drawable/history_deposite_icon"
                 android:layout_height="20dp" />
 
+            <ImageView
+                android:id="@+id/ivHistory"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/btc" />
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1.5"
-            android:gravity="center|left"
-            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/btc"
-                android:id="@+id/ivHistory"
-                android:layout_height="20dp" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:text="BTC"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:textSize="12sp"
+                android:textColor="?attr/textColorHeading"
+                android:textStyle="bold"
                 android:id="@+id/tvHistoryCurrency"
                 android:layout_height="wrap_content" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent">
             <TextView
                 android:layout_width="match_parent"
-                android:text="566666.78"
-                android:id="@+id/tvHistoryAmount"
-                android:gravity="center"
-                android:textSize="12sp"
-
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_width="match_parent"
-                android:text="01/01/2019"
-                android:gravity="center"
-                android:textSize="12sp"
-
                 android:id="@+id/tvHistoryOpenTime"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:gravity="left"
+                android:text="01/01/2019"
+                android:textColor="?attr/textColorHeading" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.8"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/tvHistoryAmount"
+                android:gravity="center_vertical"
+                android:text="566666.78"
+                android:textColor="?attr/textColorHeading"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:layout_height="match_parent">
             <TextView
@@ -170,15 +169,12 @@
                 android:tint="@color/g1b67e8"
                 android:id="@+id/tvHistoryStatus"
                 android:text="Success"
-                android:textSize="10sp"
-
-                android:gravity="center"
+                android:gravity="center_vertical|left"
                 android:layout_height="match_parent" />
             <Button
                 android:layout_width="wrap_content"
                 android:text="@string/cancel"
                 android:visibility="gone"
-                android:textSize="10sp"
                 android:id="@+id/cancel_pending_order"
                 android:background="@drawable/pills_red"
                 android:textColor="@color/colorWhite"

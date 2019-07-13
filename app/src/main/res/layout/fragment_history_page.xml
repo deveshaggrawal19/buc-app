@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:background="?attr/windowBackGroundColor"
+    android:orientation="vertical"
     android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
         android:text="Filter By"
         android:padding="10dp"
         android:gravity="center"
-        android:background="#eeeeee"
-        android:textColor="@android:color/black"
+        android:background="?attr/windowBackGroundColor"
+        android:textColor="?attr/textColorHeading"
         android:layout_height="wrap_content" />
     <RadioGroup
         android:layout_width="match_parent"
         android:id="@+id/filter_radio_group"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        android:background="#eeeeee"
+        android:background="?attr/windowBackGroundColor"
         android:layout_height="wrap_content">
         <RadioButton
             android:layout_width="0dp"
