@@ -16,6 +16,7 @@
     <color name="windowColorWhite">#ffffff</color>
     <color name="orderBookCardColor">#303030</color>
     <color name="colorPasswordButtonText">#4CAAF3</color>
+    <color name="buySellItemColor">#15B373</color>
 
 
     <!--INPUT COLORS-->

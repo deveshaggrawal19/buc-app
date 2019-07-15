@@ -93,10 +93,11 @@
             android:layout_width="wrap_content"
             android:background="@drawable/search_dw"
             android:elevation="2dp"
-            android:layout_margin="10dp"
             app:divider="@android:color/transparent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="70dp"
             app:queryHint="Search Coin here"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="end|bottom"
             android:id="@+id/searchview"
             android:layout_height="wrap_content">
 
@@ -111,7 +112,6 @@
             android:layout_height="match_parent"
             tools:context=".Fragments.RateFragment"
             android:layout_marginBottom="60dp"
-            android:layout_marginTop="30dp"
             tools:listitem="@layout/fragment_rate" />
 
         <ProgressBar

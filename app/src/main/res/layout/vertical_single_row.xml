@@ -36,7 +36,8 @@
         android:layout_width="0dp"
         android:layout_weight="0.4"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="left|center"
+        android:paddingLeft="5dp"
         android:orientation="vertical">
 
         <TextView
@@ -51,7 +52,7 @@
             android:id="@+id/wallet_card_portfolio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:text="Portfolio"
             android:textColor="@android:color/white" />
 

@@ -42,13 +42,15 @@ public class MyHistoryOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyHi
     private boolean isCanceld = true;
     private String mainmsg = "";
     Context context;
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+    private BuyucoinPref buyucoinPref;
 
     public MyHistoryOrderRecyclerViewAdapter(ArrayList<History> items, Context context, FragmentManager fragmentManager) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         mValues = items;
         Collections.reverse(mValues);
+        buyucoinPref = new BuyucoinPref(context);
     }
 
     @NonNull
@@ -209,7 +211,7 @@ public class MyHistoryOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyHi
     public boolean cancelOrder(String s1, String s2) {
         Log.d("ccccccccccccccccc", "cancelOrder: "+s1+"   "+s2);
 
-        OkHttpHandler.auth_post("cancel_order?currency="+s1, new BuyucoinPref(context).getPrefString(BuyucoinPref.ACCESS_TOKEN), s2, new Callback() {
+        OkHttpHandler.auth_post("cancel_order?currency="+s1, buyucoinPref.getPrefString(BuyucoinPref.ACCESS_TOKEN), s2, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 isCanceld = false;

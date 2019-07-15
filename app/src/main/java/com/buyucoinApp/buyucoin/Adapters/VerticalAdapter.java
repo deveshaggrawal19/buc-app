@@ -30,6 +30,7 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
 
     private ArrayList<WalletCoinVertical> walletCoinVerticals;
 
+
     public VerticalAdapter(Context context, ArrayList<JSONObject> list, boolean hidezero) {
         Context context1 = context;
         ArrayList<WalletCoinVertical> arrayList = new ArrayList<>();
@@ -134,12 +135,36 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
         base_address = walletCoinVerticals.get(i).getBase_address();
 
 
+
         myViewHolder.coinname.setText(coin_name.toUpperCase());
+
         myViewHolder.portfolio.setText(porfolio);
-        myViewHolder.pending.setText(pending);
+
+        if(porfolio.length()>5){
+            String pf = porfolio.substring(0,4).concat("....");
+            myViewHolder.portfolio.setText(pf);
+        }else{
+            myViewHolder.portfolio.setText(porfolio);
+        }
+
+        if(pending.length()>5) {
+            String new_pending = pending.substring(0, 4).concat("...");
+            myViewHolder.pending.setText(new_pending);
+        }
+        else{
+            myViewHolder.pending.setText(pending);
+        }
 
         if(!coin_name.equals("inr")){
-            myViewHolder.balance.setText(availabel);
+            if(availabel.length()>5){
+                String av = availabel.substring(0,4).concat("....");
+                myViewHolder.balance.setText(av);
+
+
+            }else{
+                myViewHolder.balance.setText(availabel);
+
+            }
         }
 
 //        int r = (int) (Math.random() * 6);
@@ -162,17 +187,23 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
                 public void onClick(View v) {
 
                     Intent intent = new Intent(context,DepositWithdrawActivity.class);
-
-                    intent.putExtra("coin_name",coin_name);
-                    intent.putExtra("available",availabel);
-                    intent.putExtra("pendings",pendings);
-                    intent.putExtra("address",address);
-                    intent.putExtra("base_address",base_address);
-                    intent.putExtra("description",description);
-                    intent.putExtra("tag",tag);
-                    intent.putExtra("full_coin_name",full_coin_name);
-
-                    myViewHolder.itemView.getContext().startActivity(intent);
+                    JSONObject js = new JSONObject();
+                    try {
+                        js.put("coin_name",coin_name);
+                        js.put("available",availabel);
+                        js.put("pendings",pendings);
+                        js.put("base_address",base_address);
+                        js.put("address",address);
+                        js.put("description",description);
+                        js.put("tag",tag);
+                        js.put("full_coin_name",full_coin_name);
+                        js.put("portfolio",porfolio);
+                        js.put("pending",pending);
+                        intent.putExtra("object",js.toString());
+                        myViewHolder.itemView.getContext().startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -185,7 +216,11 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
         if(coin_name.equals("inr")){
             DecimalFormat decimalFormat = new DecimalFormat("0.####");
             String INR = decimalFormat.format(Double.parseDouble(availabel));
-            myViewHolder.balance.setText(INR);
+            if(INR.length()>5){
+                myViewHolder.balance.setText(INR.substring(0,4).concat("...."));
+            }else{
+                myViewHolder.balance.setText(INR);
+            }
            pref.setEditpref("inr_amount",INR);
            pref.setEditpref("portfolio",porfolio);
             myViewHolder.deposite.setOnClickListener(new View.OnClickListener() {
@@ -200,16 +235,26 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,CoinDepositWithdraw.class);
-                    intent.putExtra("type","DEPOSITE");
-                    intent.putExtra("coin_name",coin_name);
-                    intent.putExtra("available",availabel);
-                    intent.putExtra("pendings",pendings);
-                    intent.putExtra("address",address);
-                    intent.putExtra("base_address",base_address);
-                    intent.putExtra("description",description);
-                    intent.putExtra("tag",tag);
-                    intent.putExtra("full_coin_name",full_coin_name);
-                    context.startActivity(intent);
+                    JSONObject js = new JSONObject();
+
+                    try {
+                        js.put("type","DEPOSITE");
+                        js.put("coin_name",coin_name);
+                        js.put("available",availabel);
+                        js.put("pendings",pendings);
+                        js.put("base_address",base_address);
+                        js.put("address",address);
+                        js.put("description",description);
+                        js.put("tag",tag);
+                        js.put("full_coin_name",full_coin_name);
+                        js.put("portfolio",porfolio);
+                        js.put("pending",pending);
+                        intent.putExtra("object",js.toString());
+
+                        context.startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -228,17 +273,30 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
             myViewHolder.withdraw.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     Intent intent = new Intent(context,CoinDepositWithdraw.class);
-                    intent.putExtra("type","WITHDRAW");
-                    intent.putExtra("coin_name",coin_name);
-                    intent.putExtra("available",availabel);
-                    intent.putExtra("pendings",pendings);
-                    intent.putExtra("base_address",base_address);
-                    intent.putExtra("address",address);
-                    intent.putExtra("description",description);
-                    intent.putExtra("tag",tag);
-                    intent.putExtra("full_coin_name",full_coin_name);
-                    context.startActivity(intent);
+                    JSONObject js = new JSONObject();
+
+                    try {
+                        js.put("type","WITHDRAW");
+                        js.put("coin_name",coin_name);
+                        js.put("available",availabel);
+                        js.put("pendings",pendings);
+                        js.put("base_address",base_address);
+                        js.put("address",address);
+                        js.put("description",description);
+                        js.put("tag",tag);
+                        js.put("full_coin_name",full_coin_name);
+                        js.put("portfolio",porfolio);
+                        js.put("pending",pending);
+                        intent.putExtra("object",js.toString());
+
+
+                        context.startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             });
         }

@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.google.zxing.BarcodeFormat;
@@ -21,13 +25,11 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DepositePagerFragment extends Fragment {
 
-    private Bundle b;
     private ClipboardManager clipboardManager;
     private Context context;
     private ImageView deposite_layout_qr_img,deposite_layout_tag_qr_img;
@@ -35,12 +37,18 @@ public class DepositePagerFragment extends Fragment {
     private String tag;
     private TextView deposite_layout_address_txt;
     private TextView deposite_layout_base_address;
+    private JSONObject j;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
-         b = getArguments();
+            Bundle b = getArguments();
+            try {
+                j = new JSONObject(b.getString("object"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -58,19 +66,21 @@ public class DepositePagerFragment extends Fragment {
         deposite_layout_base_address = view.findViewById(R.id.coin_base_address);
         TextView deposite_layout_tag_textview = view.findViewById(R.id.coin_address_tag_tv);
         deposite_layout_tag_qr_img = view.findViewById(R.id.coin_address_tag_qrcode);
-        TextView address_label = view.findViewById(R.id.coin_address_label);
+//        TextView address_label = view.findViewById(R.id.coin_address_label);
         TextView base_address_label = view.findViewById(R.id.coin_base_address_label);
         clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
 
-        String ty = b.getString("type");
-        String co = b.getString("coin");
-        String av = b.getString("available");
-        String ad = b.getString("address");
-        String bd = b.getString("base_address");
-        de = b.getString("description");
-        tag = b.getString("tag");
-        String cfn = b.getString("coin_full_name");
+        try {
+            String ty = j.getString("type");
+
+        String co = j.getString("coin");
+        String av = j.getString("available");
+        String ad = j.getString("address");
+        String bd = j.getString("base_address");
+        de = j.getString("description");
+        tag = j.getString("tag");
+        String cfn = j.getString("coin_full_name");
 
         Log.d("DEPOSIT PAGER FRAGMENT", "ADDRESS=>"+ ad +"  BASE ADDRESS=>"+ bd +"  TAG=>"+tag);
 
@@ -108,7 +118,7 @@ public class DepositePagerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String cd = deposite_layout_address_txt.getText().toString();
-                if(!cd.equals("") && cd!=null){
+                if(!cd.equals("")){
                     ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                     clipboardManager.setPrimaryClip(clipData);
                     new CoustomToast(context, "Address copied !",CoustomToast.TYPE_NORMAL).showToast();
@@ -120,7 +130,7 @@ public class DepositePagerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String cd = deposite_layout_base_address.getText().toString();
-                if(!cd.equals("") && cd!=null){
+                if(!cd.equals("")){
                     ClipData clipData = ClipData.newPlainText("BASE ADDRESS",cd);
                     clipboardManager.setPrimaryClip(clipData);
                     new CoustomToast(context, de+" copied",CoustomToast.TYPE_NORMAL).showToast();
@@ -135,10 +145,14 @@ public class DepositePagerFragment extends Fragment {
 //            qrCodeGenrator(ad,bd);
 //        }
 
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return view;
     }
 
-    public void qrCodeGenrator(String address,String bass_address){
+    private void qrCodeGenrator(String address, String bass_address){
         if(address!=null && !address.equals("null")){
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {

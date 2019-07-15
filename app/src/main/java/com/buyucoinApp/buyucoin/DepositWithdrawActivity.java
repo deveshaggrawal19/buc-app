@@ -51,9 +51,9 @@ import okhttp3.Response;
 
 public class DepositWithdrawActivity extends AppCompatActivity {
     LinearLayout qr_layout, buy_layout, sell_layout, deposite_layout, withdraw_layout,history_layout, empty_layout;
-    ImageView imageView, card_coin_img,big_qr_code_address,big_qr_code_base_address;
+    ImageView  card_coin_img,big_qr_code_address,big_qr_code_base_address;
     RecyclerView history_recyclerview;
-    TextView card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address,big_qr_code_base_address_label;
+    TextView imageView,card_coin_full_name, card_coin_availabel, card_coin_pending, card_coin_address, card_coin_base_address,big_qr_code_base_address_label,coin_address_label;
     Intent i;
     Button address_gen_btn;
     NestedScrollView nestedScrollView;
@@ -64,6 +64,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     static Toolbar toolbar;
     private ClipboardManager clipboardManager;
+    private JSONObject j;
 
     String COIN;
     String AVAILABEL;
@@ -87,14 +88,25 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         i = getIntent();
 
-        COIN = coin = i.getStringExtra("coin_name");
-        AVAILABEL = i.getStringExtra("available");
-        PENDING = i.getStringExtra("pendings");
-        ADDRESS = i.getStringExtra("address");
-        BASE_ADDRESS = i.getStringExtra("base_address");
-        DESCRIPTION = i.getStringExtra("description");
-        TAG = i.getStringExtra("tag");
-        COIN_FULL_NAME = coin_full_name = i.getStringExtra("full_coin_name");
+        try {
+            j = new JSONObject(i.getStringExtra("object"));
+            COIN = coin = j.getString("coin_name");
+            AVAILABEL = j.getString("available");
+            PENDING = j.getString("pendings");
+            ADDRESS = j.getString("address");
+            BASE_ADDRESS = j.getString("base_address");
+            DESCRIPTION = j.getString("description");
+            TAG = j.getString("tag");
+            COIN_FULL_NAME = coin_full_name = j.getString("full_coin_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "onCreate: -----------------------"+i.getStringExtra("object"));
+        Log.d(TAG, "onCreate: ------------------------"+j.toString());
+
+
+
 
         histories = new ArrayList<>();
         InitializeAllViews();
@@ -108,7 +120,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
 
         if(ADDRESS!=null && !ADDRESS.equals("null") && TAG.equals("true")) {
             card_coin_address.setText(ADDRESS);
-            card_coin_base_address.setText(BASE_ADDRESS);
+            card_coin_base_address.setText(DESCRIPTION+" : "+BASE_ADDRESS);
             big_qr_code_base_address_label.setText(ADDRESS_TEXT + " " + DESCRIPTION);
             card_coin_base_address.setVisibility(View.VISIBLE);
 
@@ -142,7 +154,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                     if(!cd.equals("")){
                         ClipData clipData = ClipData.newPlainText("ADDRESS",cd);
                         clipboardManager.setPrimaryClip(clipData);
-                        new CoustomToast(getApplicationContext(), "ADDRESS COPIED !",CoustomToast.TYPE_NORMAL).showToast();
+                        new CoustomToast(getApplicationContext(), DESCRIPTION+" COPIED !",CoustomToast.TYPE_NORMAL).showToast();
                     } }
         });
 
@@ -161,6 +173,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             address_gen_btn.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
             card_coin_base_address.setVisibility(View.GONE);
+            coin_address_label.setVisibility(View.GONE);
 
         }
 
@@ -175,16 +188,17 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                qr_layout.setVisibility(View.VISIBLE);
+
+                if(qr_layout.getVisibility()==View.VISIBLE){
+                    qr_layout.setVisibility(View.GONE);
+                    imageView.setText("Show QR Code");
+                }else{
+                    qr_layout.setVisibility(View.VISIBLE);
+                    imageView.setText("Hide QR Code");
+                }
             }
         });
 
-        qr_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qr_layout.setVisibility(View.GONE);
-            }
-        });
 
         history_recyclerview.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         CoinHistoryAdapter coinHistoryAdapter = new CoinHistoryAdapter(getApplicationContext());
@@ -233,15 +247,15 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CoinDepositWithdraw.class);
-                intent.putExtra("type", "DEPOSITE");
-                intent.putExtra("coin_name", COIN);
-                intent.putExtra("available", AVAILABEL);
-                intent.putExtra("address", ADDRESS);
-                intent.putExtra("base_address", BASE_ADDRESS);
-                intent.putExtra("description", DESCRIPTION);
-                intent.putExtra("tag", TAG);
-                intent.putExtra("full_coin_name", COIN_FULL_NAME);
-                startActivity(intent);
+                try {
+                    j.put("type", "DEPOSITE");
+                    intent.putExtra("object",j.toString());
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
 
             }
         });
@@ -249,15 +263,13 @@ public class DepositWithdrawActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CoinDepositWithdraw.class);
-                intent.putExtra("type", "WITHDRAW");
-                intent.putExtra("coin_name", COIN);
-                intent.putExtra("available", AVAILABEL);
-                intent.putExtra("address", ADDRESS);
-                intent.putExtra("base_address", BASE_ADDRESS);
-                intent.putExtra("description", DESCRIPTION);
-                intent.putExtra("tag", TAG);
-                intent.putExtra("full_coin_name", COIN_FULL_NAME);
-                startActivity(intent);
+                try {
+                    j.put("type", "WITHDRAW");
+                    intent.putExtra("object",j.toString());
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -340,6 +352,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
         card_coin_base_address = findViewById(R.id.card_coin_base_address);
         card_coin_pending = findViewById(R.id.card_coin_pending);
         card_coin_img = findViewById(R.id.card_coin_image);
+        coin_address_label = findViewById(R.id.coin_address_label);
 
         address_gen_btn = findViewById(R.id.card_coin_address_gen_btn);
 
@@ -382,6 +395,7 @@ public class DepositWithdrawActivity extends AppCompatActivity {
                                 break;
                                 case "success": card_coin_address.setText(message);
                                     card_coin_address.setVisibility(View.VISIBLE);
+                                    coin_address_label.setVisibility(View.VISIBLE);
                                     address_gen_btn.setVisibility(View.GONE);
                                 break;
                             }

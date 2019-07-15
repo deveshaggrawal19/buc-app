@@ -13,11 +13,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class DepositeWithdrawPagerAdapter extends FragmentPagerAdapter {
 
-    Bundle b;
+    Bundle bunble;
 
-    public DepositeWithdrawPagerAdapter(@NonNull FragmentManager fm, Bundle b) {
+    public DepositeWithdrawPagerAdapter(@NonNull FragmentManager fm, String b) {
         super(fm);
-        this.b = b;
+        bunble = new Bundle();
+        bunble.putString("object",b);
     }
 
     @NonNull
@@ -26,15 +27,15 @@ public class DepositeWithdrawPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 DepositePagerFragment depositePagerFragment = new DepositePagerFragment();
-                depositePagerFragment.setArguments(b);
+                depositePagerFragment.setArguments(bunble);
                 return depositePagerFragment;
             case 1:
                 WithdrawPagerFragment withdrawPagerFragment = new WithdrawPagerFragment();
-                withdrawPagerFragment.setArguments(b);
+                withdrawPagerFragment.setArguments(bunble);
                 return withdrawPagerFragment;
             default:
                 DepositePagerFragment depositePagerFragment_ = new DepositePagerFragment();
-                depositePagerFragment_.setArguments(b);
+                depositePagerFragment_.setArguments(bunble);
                 return depositePagerFragment_;
         }
     }

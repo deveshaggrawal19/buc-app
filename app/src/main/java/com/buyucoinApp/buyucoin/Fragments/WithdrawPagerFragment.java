@@ -16,14 +16,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class WithdrawPagerFragment extends Fragment {
     private Bundle b;
+    private JSONObject j;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             b = getArguments();
+            try {
+                j = new JSONObject(b.getString("object"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -37,14 +46,16 @@ public class WithdrawPagerFragment extends Fragment {
         TextView withdraw_coin_name;
         final EditText destination_tag, coin_amonut, coin_address;
 
-        ty = b.getString("type");
-        co = b.getString("coin");
-        av = b.getString("available");
-        ad = b.getString("address");
-        bd = b.getString("base_address");
-        de = b.getString("description");
-        tag = b.getString("tag");
-        cfn = b.getString("coin_full_name");
+        try {
+            ty = j.getString("type");
+
+        co = j.getString("coin");
+        av = j.getString("available");
+        ad = j.getString("address");
+        bd = j.getString("base_address");
+        de = j.getString("description");
+        tag = j.getString("tag");
+        cfn = j.getString("coin_full_name");
 
         tag_layout = view.findViewById(R.id.tag_layout);
         withdraw_layout_btnview = view.findViewById(R.id.withdraw_layout_btnview);
@@ -89,6 +100,9 @@ public class WithdrawPagerFragment extends Fragment {
 
             }
         });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         return view;
