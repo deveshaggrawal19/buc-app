@@ -10,112 +10,65 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/supter_setting_history"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
+            style="@style/SuperSettingItem"
+            android:id="@+id/supter_setting_history">
 
             <ImageView
-                android:layout_width="30dp"
-                android:tint="@color/textColor4"
-                android:layout_marginStart="5dp"
+                style="@style/SuperSettingItemIcon"
                 android:src="@drawable/ic_history"
-                android:layout_height="match_parent" />
+                />
 
             <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/headings"
-                android:layout_height="match_parent"
-                android:textColor="?attr/textColorHeading"
+                style="@style/SuperSettingItemText"
                 android:text="@string/history"
                 />
 
 
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/supter_setting_about"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
+            style="@style/SuperSettingItem"
+            android:id="@+id/supter_setting_about">
 
             <ImageView
-                android:layout_width="30dp"
-                android:tint="@color/textColor4"
-                android:layout_marginStart="5dp"
+                style="@style/SuperSettingItemIcon"
                 android:src="@drawable/ic_info_black_24dp"
-                android:layout_height="match_parent" />
+                />
 
             <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/headings"
-                android:layout_height="match_parent"
-                android:textColor="?attr/textColorHeading"
-
+                style="@style/SuperSettingItemText"
                 android:text="@string/about"
                 />
 
 
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/supter_setting_policy"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
+            style="@style/SuperSettingItem"
+            android:id="@+id/supter_setting_policy">
 
             <ImageView
-                android:layout_width="30dp"
-                android:tint="@color/textColor4"
-                android:layout_marginStart="5dp"
+                style="@style/SuperSettingItemIcon"
                 android:src="@drawable/ic_verified_user_black_24dp"
-                android:layout_height="match_parent" />
+                />
 
             <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/headings"
-                android:layout_height="match_parent"
+                style="@style/SuperSettingItemText"
                 android:text="@string/privacy_policy"
-                android:textColor="?attr/textColorHeading"
-
                 />
 
 
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            style="@style/SuperSettingItem"
             android:id="@+id/super_setting_logout"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp">
+            >
 
             <ImageView
-                android:layout_width="30dp"
-                android:tint="@color/textColor4"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/ic_portrait_black_24dp"
-                android:layout_height="match_parent" />
+                style="@style/SuperSettingItemIcon"
+                android:src="@drawable/ic_portrait_black_24dp" />
 
             <TextView
-                android:layout_marginStart="50dp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/headings"
-                android:layout_height="match_parent"
+                style="@style/SuperSettingItemText"
                 android:text="Logout"
-                android:textColor="?attr/textColorHeading"
-
                 />
 
 

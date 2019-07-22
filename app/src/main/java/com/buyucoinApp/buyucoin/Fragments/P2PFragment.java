@@ -45,7 +45,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
     EditText amount;
     CheckBox imps_cb, upi_cb, notime_cb;
     SeekBar timelimit_sb;
-    TextView require_buc_tv, avialable_buc_tv, bonus_tv;
+    TextView require_buc_tv, avialable_buc_tv, bonus_tv,avl_inr_balance;
     LinearLayout upi_layout, buc_token_info, fee_layout;
 
     Button b;
@@ -56,6 +56,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
     JSONArray payment_method_arry = new JSONArray();
     String buc_amount = "0";
     ProgressDialog p;
+    String AVAILABLE_INR;
 
 
     //    private OnFragmentInteractionListener mListener;
@@ -94,6 +95,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
 
         ACCESS_TOKEN = prefs.getPrefString(BuyucoinPref.ACCESS_TOKEN);
         buc_amount = prefs.getPrefString("buc_amount");
+        AVAILABLE_INR = prefs.getPrefString("inr_amount");
     }
 
     @Override
@@ -113,9 +115,12 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
         fee_layout = view.findViewById(R.id.fees_layout);
         buc_token_info = view.findViewById(R.id.buc_token_info_layout);
         upi_layout = view.findViewById(R.id.upi_layout);
+        avl_inr_balance = view.findViewById(R.id.avl_inr_balance);
         payment_method_arry.put("imps");
 
         avialable_buc_tv.setText(buc_amount);
+        String inrString = getString(R.string.rupees)+" "+AVAILABLE_INR+"/-";
+        avl_inr_balance.setText(inrString);
 
         p = new ProgressDialog(getActivity());
         p.setTitle("Fetching Fees");
@@ -291,7 +296,7 @@ public class P2PFragment extends Fragment implements TriggerActiveOrder, Compoun
             if (!imps_cb.isChecked() && !upi_cb.isChecked()) {
                 imps_cb.setChecked(true);
             }
-            new CoustomToast(getActivity(), payment_method_arry.toString(), CoustomToast.TYPE_DANGER).showToast();
+//            new CoustomToast(getActivity(), payment_method_arry.toString(), CoustomToast.TYPE_DANGER).showToast();
         } catch (Exception e) {
             e.printStackTrace();
         }

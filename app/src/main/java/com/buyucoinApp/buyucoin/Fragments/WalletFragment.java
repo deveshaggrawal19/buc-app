@@ -29,6 +29,7 @@ import com.buyucoinApp.buyucoin.OkHttpHandler;
 import com.buyucoinApp.buyucoin.R;
 import com.buyucoinApp.buyucoin.Utilities;
 import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
+import com.buyucoinApp.buyucoin.customDialogs.OtpDialog;
 import com.buyucoinApp.buyucoin.customDialogs.P2pActiveOrdersDialog;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -100,6 +101,14 @@ public class WalletFragment extends Fragment {
                 getWalletData();
                 getAccountData();
 
+                WalletBalance();
+
+//            OtpDialog otpDialog = new OtpDialog();
+//            otpDialog.setCancelable(false);
+//            assert getFragmentManager() != null;
+//            otpDialog.show(getFragmentManager(),"OTP DIALOG");
+
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -107,13 +116,6 @@ public class WalletFragment extends Fragment {
                 }
             }, 500);
         }
-
-        WALLET_INR_BALANCE = buyucoinPref.getPrefString("inr_amount");
-        String WALLET_STRING = getResources().getText(R.string.rupees)+" "+WALLET_INR_BALANCE;
-        wallet_inr.setText(WALLET_STRING);
-        String name = "Weclome ";
-        name += buyucoinPref.getPrefString("name");
-        welcome.setText(name);
 
 
 
@@ -146,6 +148,10 @@ public class WalletFragment extends Fragment {
 
         return view;
     }
+
+
+
+
 
 
 
@@ -355,6 +361,8 @@ public class WalletFragment extends Fragment {
                                 buyucoinPref.setEditpref("mob",data.get("mob").toString());
                                 buyucoinPref.setEditpref("kyc_status",data.getBoolean("kyc_status"));
 
+
+                                WalletBalance();
 
 
                             } catch (JSONException e) {

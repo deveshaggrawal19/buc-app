@@ -15,6 +15,7 @@
         <item name="EditTextLabelColor">@color/inputLabelLight</item>
         <item name="textColorHeading">@color/textColor1</item>
         <item name="OrderBookCardBG">@color/colorWhite</item>
+        <item name="SplashScreenColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.Dark">
@@ -26,6 +27,9 @@
         <item name="EditTextLabelColor">@color/inputLabelDark</item>
         <item name="textColorHeading">@color/textColor4</item>
         <item name="OrderBookCardBG">@color/orderBookCardColor</item>
+        <item name="SplashScreenColor">@color/colorBlack</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorPrimary">@color/colorBlack</item>
     </style>
 
 
@@ -87,13 +91,15 @@
 
     <style name="BuySellRadioButton">
         <item name="android:layout_width">150dp</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:gravity">center</item>
         <item name="android:button">@android:color/transparent</item>
         <item name="android:background">@drawable/my_coustom_radio</item>
         <item name="android:textColor">@drawable/my_coustom_radio_text</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">@dimen/button</item>
+        <item name="android:layout_height">30dp</item>
     </style>
 
 
@@ -148,14 +154,14 @@
     <style name="PasswordButton">
         <item name="android:layout_width">0dp</item>
          <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/password_btn</item>
+        <item name="android:background">@color/zxing_transparent</item>
          <item name="android:layout_margin">2dp</item>
          <item name="android:layout_weight">1</item>
          <item name="android:gravity">center</item>
          <item name="android:onClick">updatepin</item>
          <item name="android:padding">10dp</item>
-        <item name="android:textColor">@color/colorPasswordButtonText</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <!--<item name="android:textStyle">bold</item>-->
          <item name="android:textSize">28sp</item>
     </style>
 
@@ -405,6 +411,28 @@
 
     <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="SuperSettingItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="SuperSettingItemIcon">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:tint">?attr/textColorHeading</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="SuperSettingItemText">
+        <item name="android:layout_marginStart">50dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">?attr/textColorHeading</item>
     </style>
 
 </resources>

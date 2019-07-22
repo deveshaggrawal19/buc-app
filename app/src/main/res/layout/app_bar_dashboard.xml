@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:labelVisibilityMode="labeled"
-            android:background="@color/colorBlack"
+            android:background="?attr/windowBackGroundColor"
             app:itemIconTint="@drawable/bottom_navigation_colors"
             app:itemTextColor="@drawable/bottom_navigation_colors"
             android:id="@+id/_btnbar"

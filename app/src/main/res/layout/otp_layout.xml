@@ -1,60 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/orderbook_card_drawable"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="match_parent"
+    android:background="?attr/windowBackGroundColor"
+    android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/pin_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimary"
+        android:drawableStart="@drawable/common_full_open_on_phone"
         android:gravity="center"
-        android:text="Enter OTP"
+        android:padding="20dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/heading_6" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:padding="@dimen/padding_10"
+        android:text="ENTER OTP"
         android:textColor="?attr/textColorHeading"
-        android:textSize="?attr/textSizeHeading"
-        android:textStyle="bold"
-        android:theme="@style/CoustomBottomSheet" />
+        android:textFontWeight="100"
+        android:textSize="@dimen/heading_6" />
 
-    <LinearLayout
-        style="@style/BuySellInput"
-        android:layout_marginTop="20dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:padding="@dimen/padding_10"
+        android:text="One time password has been send to your mobile no"
+        android:textColor="?attr/textColorHeading"
+        android:textSize="@dimen/body" />
 
-        <EditText
-            android:id="@+id/otp_edittext"
-            style="@style/BuySellInputInner"
-            android:hint="Enter Pin"
-            android:inputType="numberPassword" />
-    </LinearLayout>
+
+    <EditText
+        android:id="@+id/otp_edittext"
+        style="@style/BuySellInputInner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:hint="000000"
+        android:inputType="numberPassword"
+        android:maxLength="6"
+        android:padding="10dp"
+        android:textSize="@dimen/body" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="end"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical">
 
+
+        <Button
+            android:id="@+id/submit_otp_btn"
+            style="@style/CustomButton.Big"
+
+            android:layout_margin="10dp"
+            android:text="SUBMIT OTP" />
 
         <Button
             android:id="@+id/logout_otp_btn"
             style="@style/CustomButton"
-            android:layout_margin="5dp"
             android:backgroundTint="@color/zxing_transparent"
             android:text="Logout" />
 
-        <Button
-            android:id="@+id/submit_otp_btn"
-            style="@style/CustomButton"
-
-            android:layout_margin="5dp"
-            android:text="SUBMIT OTP" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

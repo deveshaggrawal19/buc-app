@@ -23,6 +23,8 @@
 
         <attr name="OrderBookCardBG" format="color"/>
 
+        <attr name="SplashScreenColor" format="color"/>
+
 
     </declare-styleable>
 </resources>

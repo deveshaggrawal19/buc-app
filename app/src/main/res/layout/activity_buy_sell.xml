@@ -11,18 +11,21 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/CustomToolbar"
-            app:titleTextColor="@color/colorWhite"
-            app:elevation="0dp">
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
+            app:elevation="2dp">
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -39,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_margin="20dp"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -46,12 +50,12 @@
                     android:id="@+id/buy_radio_btn"
                     style="@style/BuySellRadioButton"
                     android:checked="true"
-                    android:text="Buy" />
+                    android:text="BUY" />
 
                 <RadioButton
                     android:id="@+id/sell_radio_btn"
                     style="@style/BuySellRadioButton"
-                    android:text="Sell" />
+                    android:text="SELL" />
             </RadioGroup>
 
 

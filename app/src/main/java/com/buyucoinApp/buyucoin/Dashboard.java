@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,11 @@ import com.buyucoinApp.buyucoin.customDialogs.CoustomToast;
 import com.buyucoinApp.buyucoin.pref.BuyucoinPref;
 import com.buyucoinApp.buyucoin.update.ForceUpdateChecker;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +62,7 @@ public class Dashboard extends AppCompatActivity implements ForceUpdateChecker.O
     NotNetworkBroadCastReceiver notNetworkBroadCastReceiver;
     Toolbar toolbar;
     static TextView toolbar_title;
+    FirebaseRemoteConfig remoteConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,44 @@ public class Dashboard extends AppCompatActivity implements ForceUpdateChecker.O
         setUpBottomNavigationListner();
         getNonFreshToken(refresh_token);
 
+        remoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .setMinimumFetchIntervalInSeconds(3600)
+                .build();
+        remoteConfig.setConfigSettings(configSettings);
+        remoteConfig.setDefaults(R.xml.remote_config_defaults);
+
+        remoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        if (task.isSuccessful()) {
+                            boolean updated = task.getResult();
+                            Log.d(TAG, "Config params updated: " + updated);
+                            Toast.makeText(Dashboard.this, "Fetch and activate succeeded",
+                                    Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(Dashboard.this, "Fetch failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        displayWelcomeMessage();
+                    }
+                });
+
+
+    }
+
+    private void displayWelcomeMessage() {
+//        String welcomeMessage = remoteConfig.getString("logoutAll");
+        if (remoteConfig.getBoolean("logoutAll")) {
+            Toast.makeText(Dashboard.this, "Logout Succeed",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(Dashboard.this, "Logout failed",
+                    Toast.LENGTH_SHORT).show();
+        }
 
     }
 

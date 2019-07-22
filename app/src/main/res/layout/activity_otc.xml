@@ -10,17 +10,23 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/CustomToolbar"
-            app:titleTextColor="@color/colorWhite"
-            app:elevation="0dp">
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
+            app:elevation="2dp">
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
 
 
     <!--<TextView-->
@@ -218,7 +224,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/bids_color"
+            android:background="@drawable/otc_btn"
             android:enabled="false"
             android:text="Buy"
             android:textColor="@color/colorWhite" />

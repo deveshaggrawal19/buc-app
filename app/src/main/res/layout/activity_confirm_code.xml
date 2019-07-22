@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/windowBackGroundColor"
+    android:background="@drawable/bsc_options_bg"
     tools:context=".PassCodeActivity">
 
     <LinearLayout
@@ -152,7 +152,7 @@
                     android:onClick="clearPinByOne"
                     android:padding="10dp"
                     android:src="@drawable/ic_clear_passcode"
-                    android:tint="@color/colorPasswordButtonText" />
+                    android:tint="@color/colorWhite" />
 
 
             </LinearLayout>

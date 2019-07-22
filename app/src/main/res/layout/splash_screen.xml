@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:background="@color/windowColorDark"
+    android:background="?attr/SplashScreenColor"
+    tools:context=".SplashActivity"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:src="@drawable/buyucoin_logo"
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:layout_height="150dp" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="60dp"
+            android:src="@drawable/buyucoin_logo"
+            android:layout_height="60dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textFontWeight="100"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/heading_5"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="60dp"
+        android:indeterminateTint="@color/colorWhite"
+        android:progressTint="#00FFFFFF" />
     <TextView
-        android:layout_width="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/g1b67e8"
-        android:textSize="40sp"
-        android:layout_marginTop="0dp"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:text="@string/digital_assets_exchange_wallet"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="bottom|center"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/body_1"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</FrameLayout>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#304ffe</color>
+    <color name="colorPrimaryDark">#304ffe</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorRed">#fd020f</color>
     <color name="kyc_color">#11F083</color>
     <color name="bids_color">#09BE66</color>
-    <color name="g1b67e8">#1b67e8</color>
+    <color name="g1b67e8">#304ffe</color>
     <color name="g6209c3">#6209c3</color>
     <color name="colorPending">@android:color/holo_orange_light</color>
-    <color name="colorWhite">#ffffff</color>
+    <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="marketRow">#F5F0F0</color>
     <color name="windowColorDark">#121212</color>
     <color name="windowColorWhite">#ffffff</color>
     <color name="orderBookCardColor">#303030</color>
-    <color name="colorPasswordButtonText">#4CAAF3</color>
+    <color name="colorPasswordButtonText">#304ffe</color>
     <color name="buySellItemColor">#15B373</color>
 
 
@@ -34,6 +34,26 @@
     <color name="textColor4">#cccccc</color>
     <color name="textColor5">#eeeeee</color>
     <color name="textColor6">#ffffff</color>
+
+    <color name="backgroundColor">#121212</color>
+    <color name="backgroundColor5">#0Dffffff</color>
+    <color name="backgroundColor7">#12FFFFFF</color>
+    <color name="backgroundColor8">#14FFFFFF</color>
+    <color name="backgroundColor9">#17FFFFFF</color>
+    <color name="backgroundColor11">#1CFFFFFF</color>
+    <color name="backgroundColor12">#1FFFFFFF</color>
+    <color name="backgroundColor14">#24FFFFFF</color>
+    <color name="backgroundColor15">#26FFFFFF</color>
+    <color name="backgroundColor16">#29FFFFFF</color>
+
+    <color name="textColorHigh">#DEFFFFFF</color>
+    <color name="textColorMedium">#99FFFFFF</color>
+    <color name="textColorLow">#61FFFFFF</color>
+
+
+
+
+
 
 
 

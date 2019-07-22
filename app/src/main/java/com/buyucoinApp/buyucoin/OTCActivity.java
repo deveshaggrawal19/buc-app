@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.buyucoinApp.buyucoin.bottomsheets.OtcOrderConfirm;
 import com.buyucoinApp.buyucoin.config.Config;
 import com.buyucoinApp.buyucoin.pojos.OTCData;
 import com.google.firebase.database.DataSnapshot;
@@ -23,18 +25,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
 public class OTCActivity extends AppCompatActivity {
      private String OTC_TYPE = "BUY";
      private String OTC_RATE = "0";
+     private String OTC_TOTAL = "0";
     private String OTC_MIN_QTY = null;
     private String OTC_MAX_QTY = null;
      private  OTCData o = null;
      private EditText otc_qty;
      private TextView otc_total_tv;
     private Button otc_btn;
+    private String currency;
+    private JSONObject j;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class OTCActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitle("OTC Desk");
 
-        final String currency = getIntent().getStringExtra("currency");
+        currency = getIntent().getStringExtra("currency");
         final TextView coin_name_tv = findViewById(R.id.coin_name_tv);
 
         final TextView buy_price_tv = findViewById(R.id.buy_price);
@@ -59,6 +65,14 @@ public class OTCActivity extends AppCompatActivity {
         final ImageView otc_img = findViewById(R.id.otc_img);
         otc_qty = findViewById(R.id.otc_qty);
         otc_total_tv = findViewById(R.id.otc_total_tv);
+        j = new JSONObject();
+
+        try {
+            j.put("type",OTC_TYPE);
+            j.put("coin",currency);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         FirebaseDatabase db = new Config().getProductionFirebaseDatabase();
@@ -69,9 +83,15 @@ public class OTCActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.radioButton:
-                        otc_btn.setBackgroundResource(R.color.bids_color);
+                        otc_btn.getBackground().setLevel(0);
                         otc_btn.setText(getResources().getString(R.string.buy));
                         OTC_TYPE = "BUY";
+                        try {
+                            j.put("type",OTC_TYPE);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         if(o!=null) {
                             OTC_MIN_QTY = o.getBuy_min();
                             OTC_MAX_QTY = o.getBuy_max();
@@ -80,9 +100,15 @@ public class OTCActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.radioButton2:
-                        otc_btn.setBackgroundResource(R.color.colorRed);
+                        otc_btn.getBackground().setLevel(1);
                         otc_btn.setText(getResources().getString(R.string.sell));
                         OTC_TYPE = "SELL";
+                        try {
+                            j.put("type",OTC_TYPE);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         if(o!=null) {
                             OTC_MIN_QTY = o.getSell_min();
                             OTC_MAX_QTY = o.getSell_max();
@@ -182,6 +208,17 @@ public class OTCActivity extends AppCompatActivity {
             }
         });
 
+        otc_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OtcOrderConfirm otcOrderConfirm = new OtcOrderConfirm();
+                Bundle b = new Bundle();
+                b.putString("object",j.toString());
+                otcOrderConfirm.setArguments(b);
+                otcOrderConfirm.show(getSupportFragmentManager(),"OTC ORDER FRAGMENT");
+            }
+        });
+
 
 
     }
@@ -219,6 +256,14 @@ public class OTCActivity extends AppCompatActivity {
                 m = "Total : "+total;
                 otc_total_tv.setTextColor(getResources().getColor(R.color.textColor6));
                 otc_btn.setEnabled(true);
+
+                try {
+                    j.put("amount",qty);
+                    j.put("rate",rate);
+                    j.put("total",total);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
             }

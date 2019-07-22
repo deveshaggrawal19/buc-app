@@ -37,11 +37,27 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
 
+//    configurations.all {
+//        resolutionStrategy {
+//            force 'com.google.guava:listenablefuture:1.0'
+//            force 'com.google.guava:guava:26.0-android'
+//        }
+//    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
+
     signingConfigs {
         release_config {
             keyAlias 'release'
             keyPassword '12345678'
-            storeFile file('/home/devesh/keystore/release.jks')
+            storeFile file('/home/vinnu/Documents/dev_key/release.jks')
             storePassword '12345678'
         }
     }
@@ -79,26 +95,32 @@ android {
     packagingOptions {
         exclude 'META-INF/proguard/androidx-annotation.pro'
     }
+
+
 }
 
 
 dependencies {
     def work_version = "1.0.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    api 'com.google.android.material:material:1.1.0-alpha06'
+    api 'com.google.android.material:material:1.1.0-alpha08'
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
-    implementation 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'com.google.android.material:material:1.1.0-alpha08'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-database:17.0.0'
-    implementation 'com.google.firebase:firebase-config:17.0.0'
+
+    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-database:18.0.0'
+    implementation 'com.google.firebase:firebase-config:18.0.0'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:18.0.2'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
+
     implementation 'com.jjoe64:graphview:4.2.2'
-    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.annotation:annotation:1.1.0'
     implementation "android.arch.work:work-runtime:$work_version"
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.google.zxing:core:3.2.1'
@@ -132,11 +154,12 @@ dependencies {
     /* Dagger2 - We are going to use dagger.android which includes
      * support for Activity and fragment injection so we need to include
      * the following dependencies */
-    implementation 'com.google.dagger:dagger-android:2.17'
-    implementation 'com.google.dagger:dagger-android-support:2.17'
+    implementation 'com.google.dagger:dagger-android:2.22'
+    implementation 'com.google.dagger:dagger-android-support:2.22'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
 
     /* Dagger2 - default dependency */
     annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
 
 }
+apply plugin: 'com.google.gms.google-services'

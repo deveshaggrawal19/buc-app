@@ -37,14 +37,14 @@
 
         <RadioButton
             android:id="@+id/deposite_layout_rb"
-            style="@style/BuySellRadioButton.dark"
+            style="@style/BuySellRadioButton"
             android:text="@string/deposit"
             android:checked="true"
             />
 
         <RadioButton
             android:id="@+id/withdraw_layout_rb"
-            style="@style/BuySellRadioButton.dark"
+            style="@style/BuySellRadioButton"
             android:text="Withdraw"
            />
 

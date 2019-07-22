@@ -3,6 +3,7 @@ package com.buyucoinApp.buyucoin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -23,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
-        },500);
+        },4000);
 
     }
 

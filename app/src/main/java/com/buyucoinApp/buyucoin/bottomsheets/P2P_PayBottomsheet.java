@@ -44,6 +44,8 @@ public class P2P_PayBottomsheet extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
